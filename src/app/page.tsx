@@ -4,6 +4,8 @@ import { GlanceSection } from "@/components/home/GlanceSection";
 import { SolutionsSection } from "@/components/home/SolutionsSection";
 import { ProjectsSection } from "@/components/home/ProjectsSection";
 import { ClientsSection } from "@/components/home/ClientsSection";
+import { TypingSection } from "@/components/home/TypingSection";
+import { NewsSection } from "@/components/home/NewsSection";
 
 export default function Home() {
   return (
@@ -25,6 +27,12 @@ export default function Home() {
 
       {/* Sixth Section: Trusted by Leading Organizations */}
       <ClientsSection />
+
+      {/* Seventh Section: Engineering Statement (Typing + Video) */}
+      <TypingSection />
+
+      {/* Eighth Section: News & Announcements */}
+      <NewsSection />
     </main>
   );
 }
