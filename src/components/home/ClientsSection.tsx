@@ -106,14 +106,14 @@ export function ClientsSection() {
 
       {/* Tabs + Nav */}
       <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-nowrap lg:flex-wrap gap-3 overflow-x-auto lg:overflow-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {categories.map((category) => {
             const isActive = category.name === activeCategory;
             return (
               <button
                 key={category.name}
                 onClick={() => setActiveCategory(category.name)}
-                className={`px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 ${
+                className={`shrink-0 px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 whitespace-nowrap ${
                   isActive
                     ? "bg-[#2E368F] text-white border-[#2E368F]"
                     : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"

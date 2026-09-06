@@ -4,13 +4,24 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export function GlanceSection() {
-  const cardClasses = "relative w-[85vw] md:w-[400px] lg:w-[480px] shrink-0 h-[500px] lg:h-[600px] overflow-hidden group";
+  const cardClasses = "relative w-[85vw] md:w-[400px] lg:w-[480px] shrink-0 h-[500px] lg:h-[600px] overflow-hidden group snap-start";
 
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [maxScroll, setMaxScroll] = useState(0);
   const [translateX, setTranslateX] = useState(0);
   const [jeddahTime, setJeddahTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // The pinned scroll-jack effect only applies at desktop (lg) widths — on
+  // mobile the section behaves like a normal slider with native horizontal scroll.
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
 
   // Live clock — tracks the current time in Jeddah (GMT+3)
   useEffect(() => {
@@ -34,8 +45,10 @@ export function GlanceSection() {
   const minuteDeg = jeddahTime.minutes * 6 + jeddahTime.seconds * 0.1;
   const secondDeg = jeddahTime.seconds * 6;
 
-  // Measure how far the track needs to travel horizontally
+  // Measure how far the track needs to travel horizontally (desktop scroll-jack only)
   useEffect(() => {
+    if (!isDesktop) return;
+
     const measure = () => {
       if (!trackRef.current) return;
       const distance = trackRef.current.scrollWidth - window.innerWidth;
@@ -44,11 +57,11 @@ export function GlanceSection() {
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, []);
+  }, [isDesktop]);
 
-  // Drive horizontal translation from vertical scroll position while the section is pinned
+  // Drive horizontal translation from vertical scroll position while the section is pinned (desktop only)
   useEffect(() => {
-    if (maxScroll <= 0) return;
+    if (!isDesktop || maxScroll <= 0) return;
 
     const onScroll = () => {
       if (!sectionRef.current) return;
@@ -60,18 +73,22 @@ export function GlanceSection() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [maxScroll]);
+  }, [isDesktop, maxScroll]);
+
+  // On mobile this stays inert (0) regardless of stale state from a previous desktop measurement.
+  const effectiveMaxScroll = isDesktop ? maxScroll : 0;
 
   return (
     <section
       ref={sectionRef}
       className="relative w-full bg-white font-[family-name:var(--font-futura)]"
-      style={{ height: `calc(100vh + ${maxScroll}px)` }}
+      style={isDesktop ? { height: `calc(100vh + ${effectiveMaxScroll}px)` } : undefined}
     >
-      {/* Pinned viewport: heading + track stay fixed on screen while the page scrolls past,
+      {/* Desktop: pinned viewport — heading + track stay fixed on screen while the page scrolls past,
           driving the horizontal track below via translateX. Once maxScroll is exhausted,
-          the section's extra height runs out and normal vertical scroll resumes. */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden pt-[60px] lg:pt-[100px] pb-0">
+          the section's extra height runs out and normal vertical scroll resumes.
+          Mobile: normal-flow section, no pinning — the track below scrolls natively. */}
+      <div className="lg:sticky lg:top-0 h-auto lg:h-screen w-full flex flex-col justify-start lg:justify-center overflow-hidden pt-[60px] lg:pt-[100px] pb-0">
         {/* Heading */}
         <div className="w-full px-6 lg:px-16 mb-8 lg:mb-12">
           <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
@@ -79,11 +96,12 @@ export function GlanceSection() {
           </h2>
         </div>
 
-        {/* Horizontal Track - driven by page scroll, native overflow as touch/manual fallback */}
+        {/* Horizontal Track — desktop: driven by page scroll via translateX.
+            Mobile: native horizontal scroll/snap slider (no pinning). */}
         <div
           ref={trackRef}
-          className="flex items-start gap-6 px-6 lg:px-16 w-full will-change-transform"
-          style={{ transform: `translateX(${translateX}px)` }}
+          className="flex items-start gap-6 px-6 lg:px-16 w-full will-change-transform overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          style={isDesktop ? { transform: `translateX(${translateX}px)` } : undefined}
         >
           {/* Card 1: 1988 */}
           <div className={`${cardClasses} bg-gray-200`}>
@@ -105,7 +123,7 @@ export function GlanceSection() {
           </div>
 
           {/* Card 2: 30+ Alliances */}
-          <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group bg-[#F9F9F9] flex flex-col justify-between p-8">
+          <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] flex flex-col justify-between p-8">
             <h3 className="text-[60px] lg:text-[80px] font-normal text-gray-900 leading-none">
               30+
             </h3>
@@ -201,7 +219,7 @@ export function GlanceSection() {
           </div>
 
           {/* Card 4: 21B SAR & NEOM */}
-          <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group bg-[#F9F9F9] p-8 flex flex-col justify-between">
+          <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col justify-between">
             <div className="flex flex-col items-start text-start">
               <h3 className="text-[50px] lg:text-[70px] font-normal text-gray-900 leading-none">
                 21B SAR
@@ -273,7 +291,7 @@ export function GlanceSection() {
           </div>
 
           {/* Card 6: Vision 2030 */}
-          <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group bg-[#F9F9F9] p-8 flex flex-col">
+          <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col">
             <div className="flex justify-end mb-8 lg:mb-16">
               <Image
                 src="/images/vis.png"

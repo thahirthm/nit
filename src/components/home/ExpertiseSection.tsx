@@ -69,17 +69,8 @@ export function ExpertiseSection() {
         </div>
 
         {/* Right: Globe — full horizontal, half vertical (top half cropped) */}
-        <div className="w-full lg:w-[42%] relative overflow-hidden" style={{ minHeight: "520px" }}>
-          <div
-            style={{
-              position: "absolute",
-              bottom: "0",
-              right: "-120px",
-              width: "700px",
-              height: "700px",
-              transform: "translateY(50%)",
-            }}
-          >
+        <div className="w-full lg:w-[42%] relative overflow-hidden min-h-[220px] sm:min-h-[320px] lg:min-h-[520px]">
+          <div className="absolute bottom-0 -right-[60px] sm:-right-[90px] lg:-right-[120px] w-[380px] h-[380px] sm:w-[520px] sm:h-[520px] lg:w-[700px] lg:h-[700px] translate-y-1/2">
             <Globe />
           </div>
         </div>
@@ -88,11 +79,15 @@ export function ExpertiseSection() {
 
       {/* Bottom Section: Stats Grid */}
       <div className="w-full border-t border-gray-100">
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat, index) => (
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat, index) => {
+            const isLeftCol = index % 2 === 0;
+            const isLastRow = index >= stats.length - 2;
+            const isLastCol4 = index === stats.length - 1;
+            return (
             <div
               key={index}
-              className={`group relative flex flex-col justify-between p-8 min-h-[220px] overflow-hidden lg:border-r border-gray-100 ${index === stats.length - 1 ? 'lg:border-r-0' : ''} ${index % 2 === 0 ? 'md:border-r' : ''}`}
+              className={`group relative flex flex-col justify-between p-4 sm:p-8 min-h-[160px] sm:min-h-[220px] overflow-hidden border-gray-100 lg:border-b-0 ${isLeftCol ? 'border-r' : ''} ${!isLastRow ? 'border-b' : ''} ${isLastCol4 ? 'lg:border-r-0' : 'lg:border-r'}`}
             >
               {/* Slide-up primary bg — same mechanic as button hover */}
               <div className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out bg-[#2E368F] z-0" />
@@ -100,23 +95,23 @@ export function ExpertiseSection() {
               {/* Content */}
               <div className="relative z-10">
                 <h3
-                  className="leading-none mb-4 tracking-tight text-[#2E368F] group-hover:text-white transition-colors duration-500"
-                  style={{ fontSize: '85px', fontWeight: 200 }}
+                  className="leading-none mb-2 sm:mb-4 tracking-tight text-[#2E368F] group-hover:text-white transition-colors duration-500 text-[40px] sm:text-[60px] lg:text-[85px]"
+                  style={{ fontWeight: 200 }}
                 >
                   {stat.value}
                 </h3>
                 <p
-                  className="font-light leading-relaxed whitespace-pre-line text-[#727272] group-hover:text-white transition-colors duration-500"
-                  style={{ fontSize: '18px' }}
+                  className="font-light leading-relaxed whitespace-pre-line text-[#727272] group-hover:text-white transition-colors duration-500 text-[13px] sm:text-[16px] lg:text-[18px]"
                 >
                   {stat.label}
                 </p>
               </div>
-              <div className="relative z-10 ms-auto md:pt-30 pt-10 transition-all duration-500 [&_path]:transition-all [&_path]:duration-500 group-hover:[&_path]:stroke-white">
+              <div className="relative z-10 ms-auto md:pt-30 pt-6 sm:pt-10 transition-all duration-500 [&_path]:transition-all [&_path]:duration-500 group-hover:[&_path]:stroke-white [&_svg]:w-9 [&_svg]:h-9 sm:[&_svg]:w-auto sm:[&_svg]:h-auto">
                 {stat.icon}
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
