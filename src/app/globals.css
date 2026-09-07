@@ -30,3 +30,12 @@ body {
 .animate-kenburns {
   animation: kenburns 18s ease-in-out infinite alternate;
 }
+
+@keyframes lineDraw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

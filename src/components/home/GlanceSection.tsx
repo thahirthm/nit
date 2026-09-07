@@ -12,6 +12,26 @@ export function GlanceSection() {
   const [translateX, setTranslateX] = useState(0);
   const [jeddahTime, setJeddahTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [isDesktop, setIsDesktop] = useState(false);
+  const chartRef = useRef<HTMLDivElement>(null);
+  const [chartVisible, setChartVisible] = useState(false);
+
+  // Play the growth-chart draw-in animation once the card scrolls into view
+  useEffect(() => {
+    const el = chartRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setChartVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // The pinned scroll-jack effect only applies at desktop (lg) widths — on
   // mobile the section behaves like a normal slider with native horizontal scroll.
@@ -109,7 +129,7 @@ export function GlanceSection() {
               src="/images/glance-1.png"
               alt="NIT 1988"
               fill
-              className="object-cover grayscale"
+              className="object-cover grayscale transition-transform duration-[1500ms] ease-out group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-black/20" />
             <div className="absolute inset-0 p-8 flex flex-col justify-between text-white">
@@ -150,7 +170,7 @@ export function GlanceSection() {
           </div>
 
           {/* Card 3: Growth Chart */}
-          <div className={`${cardClasses} bg-[#2E368F] p-8 flex flex-col text-white`}>
+          <div ref={chartRef} className={`${cardClasses} bg-[#2E368F] p-8 flex flex-col text-white`}>
             <h4 className="text-lg font-normal mb-6">Growth Over Time</h4>
 
             <div className="flex flex-col gap-1 text-xs font-normal text-white/80 mb-6">
@@ -170,41 +190,77 @@ export function GlanceSection() {
                 ))}
               </div>
 
-              {/* Chart SVG — lines always visible; each line highlights slightly on its own hover */}
+              {/* Chart SVG — lines draw in once the card scrolls into view; each line also highlights slightly on hover */}
               <div className="absolute inset-0 z-10">
                 <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full pb-8 overflow-visible">
                   <defs>
                     <marker id="glanceArrowWhite" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
-                      <path d="M0,0 L10,5 L0,10 z" fill="white" />
+                      <path
+                        d="M0,0 L10,5 L0,10 z"
+                        fill="white"
+                        className={`transition-opacity duration-300 ease-out ${chartVisible ? "opacity-100" : "opacity-0"}`}
+                        style={{ transitionDelay: chartVisible ? "1300ms" : "0ms" }}
+                      />
                     </marker>
                     <marker id="glanceArrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
-                      <path d="M0,0 L10,5 L0,10 z" fill="#81D1E8" />
+                      <path
+                        d="M0,0 L10,5 L0,10 z"
+                        fill="#81D1E8"
+                        className={`transition-opacity duration-300 ease-out ${chartVisible ? "opacity-100" : "opacity-0"}`}
+                        style={{ transitionDelay: chartVisible ? "1500ms" : "0ms" }}
+                      />
                     </marker>
                   </defs>
 
                   {/* PROJECTS line */}
                   <path
                     d="M 0,100 L 18,86 L 32,64 L 54,38 L 81,18 L 95,3"
+                    pathLength={1}
                     strokeWidth={0.4}
                     markerEnd="url(#glanceArrowWhite)"
-                    className="stroke-white fill-none opacity-90 hover:opacity-100 hover:stroke-[0.7] transition-[stroke-width,opacity] duration-200 ease-out"
+                    className="stroke-white fill-none opacity-90 hover:opacity-100 hover:stroke-[0.7] transition-[stroke-width,opacity] duration-200 ease-out [stroke-dasharray:1] group-hover:animate-[lineDraw_1.1s_ease-out]"
+                    style={{
+                      strokeDashoffset: chartVisible ? 0 : 1,
+                      transition: "stroke-dashoffset 1300ms ease-out, stroke-width 200ms ease-out, opacity 200ms ease-out",
+                    }}
                   />
                   {/* WORKFORCE line */}
                   <path
                     d="M 0,100 L 16,83 L 37,69 L 57,41 L 83,19 L 97,3"
+                    pathLength={1}
                     strokeWidth={0.4}
                     markerEnd="url(#glanceArrowBlue)"
-                    className="stroke-[#81D1E8] fill-none opacity-90 hover:opacity-100 hover:stroke-[0.7] transition-[stroke-width,opacity] duration-200 ease-out"
+                    className="stroke-[#81D1E8] fill-none opacity-90 hover:opacity-100 hover:stroke-[0.7] transition-[stroke-width,opacity] duration-200 ease-out [stroke-dasharray:1] group-hover:animate-[lineDraw_1.3s_ease-out]"
+                    style={{
+                      strokeDashoffset: chartVisible ? 0 : 1,
+                      transition: "stroke-dashoffset 1500ms ease-out 100ms, stroke-width 200ms ease-out, opacity 200ms ease-out",
+                    }}
                   />
 
                   {/* PROJECTS points */}
                   {[[18, 86], [32, 64], [54, 38], [81, 18]].map(([cx, cy], i) => (
-                    <circle key={`p-${i}`} cx={cx} cy={cy} r="0.6" fill="white" />
+                    <circle
+                      key={`p-${i}`}
+                      cx={cx}
+                      cy={cy}
+                      r="0.6"
+                      fill="white"
+                      className={`transition-opacity duration-300 ease-out ${chartVisible ? "opacity-100" : "opacity-0"}`}
+                      style={{ transitionDelay: chartVisible ? `${260 + i * 260}ms` : "0ms" }}
+                    />
                   ))}
 
                   {/* WORKFORCE points */}
                   {[[16, 83], [37, 69], [57, 41], [83, 19]].map(([cx, cy], i) => (
-                    <circle key={`w-${i}`} cx={cx} cy={cy} r="0.6" fill="#81D1E8" />
+                    <circle
+                      key={`w-${i}`}
+                      cx={cx}
+                      cy={cy}
+                      r="0.6"
+                      fill="#81D1E8"
+                      className={`transition-opacity duration-300 ease-out ${chartVisible ? "opacity-100" : "opacity-0"}`}
+                      style={{ transitionDelay: chartVisible ? `${360 + i * 300}ms` : "0ms" }}
+                    />
                   ))}
                 </svg>
               </div>
@@ -251,7 +307,7 @@ export function GlanceSection() {
               src="/images/glance-time.png"
               alt="Head Quarters"
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-110"
             />
 
             <div className="absolute inset-0 p-8 flex flex-col justify-between text-white">
@@ -275,12 +331,24 @@ export function GlanceSection() {
                   className="absolute w-[1px] h-[95px] bg-[#81D1E8] origin-bottom bottom-1/2 left-1/2"
                   style={{ transform: `rotate(${secondDeg}deg)` }}
                 />
-                {/* Clock markers */}
+                {/* Hour markers */}
                 {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map(deg => (
                   <div key={deg} className="absolute w-full h-full" style={{ transform: `rotate(${deg}deg)` }}>
                     <div className="mx-auto w-[2px] h-[10px] bg-white/50 mt-2" />
                   </div>
                 ))}
+                {/* Minute markers — appear at low visibility on hover */}
+                {Array.from({ length: 60 }, (_, i) => i * 6)
+                  .filter(deg => deg % 30 !== 0)
+                  .map(deg => (
+                    <div
+                      key={deg}
+                      className="absolute w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ transform: `rotate(${deg}deg)` }}
+                    >
+                      <div className="mx-auto w-[1px] h-[6px] bg-white/30 mt-2" />
+                    </div>
+                  ))}
               </div>
 
               <div className="flex items-end justify-between w-full">

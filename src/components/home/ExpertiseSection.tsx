@@ -53,10 +53,10 @@ export function ExpertiseSection() {
   return (
     <section className="w-full bg-white font-[family-name:var(--font-futura)]">
       {/* Top Section: Text + Globe side by side */}
-      <div className="flex flex-col lg:flex-row w-full overflow-hidden">
+      <div className="relative flex flex-col lg:flex-row w-full overflow-hidden">
 
         {/* Left: Text */}
-        <div className="w-full lg:w-[58%] px-6 lg:px-16 lg:pr-0 pt-[60px] lg:pt-[100px] flex flex-col justify-start space-y-6">
+        <div className="relative z-10 w-full lg:w-[58%] px-6 lg:px-16 lg:pr-0 pt-[60px] lg:pt-[100px] flex flex-col justify-start space-y-6">
           <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
             Local expertise. Global reach.
           </h2>
@@ -68,11 +68,15 @@ export function ExpertiseSection() {
           </div>
         </div>
 
-        {/* Right: Globe — full horizontal, half vertical (top half cropped) */}
-        <div className="w-full lg:w-[42%] relative overflow-hidden min-h-[220px] sm:min-h-[320px] lg:min-h-[520px]">
-          <div className="absolute bottom-0 -right-[60px] sm:-right-[90px] lg:-right-[120px] w-[380px] h-[380px] sm:w-[520px] sm:h-[520px] lg:w-[700px] lg:h-[700px] translate-y-1/2">
-            <Globe />
-          </div>
+        {/* Right: Globe spacer — reserves layout height/width; the ball itself is positioned
+            relative to the outer row (below) so it can bleed under the text column without
+            being clipped mid-sphere by this column's own edge. */}
+        <div className="z-0 w-full lg:w-[42%] min-h-[220px] sm:min-h-[320px] lg:min-h-[520px]" />
+
+        {/* Globe — full horizontal, half vertical (top half cropped). Positioned against the
+            outer row so only the row's overflow-hidden (page/section edge) clips it. */}
+        <div className="absolute z-0 bottom-0 -right-[80px] sm:-right-[120px] lg:-right-[160px] w-[500px] h-[500px] sm:w-[680px] sm:h-[680px] lg:w-[900px] lg:h-[900px] translate-y-1/2">
+          <Globe />
         </div>
 
       </div>

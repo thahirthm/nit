@@ -31,6 +31,9 @@ const futura = localFont({
 export const metadata: Metadata = {
   title: "Nesma Infrastructure & Technology",
   description: "Nesma Infrastructure & Technology",
+  icons: {
+    icon: "/images/nit-fav.png",
+  },
 };
 
 export default function RootLayout({

@@ -74,7 +74,7 @@ export function Header() {
                 alt="Nesma Infrastructure & Technology"
                 width={200}
                 height={50}
-                className={`h-9 w-auto object-contain transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
+                className={`h-7 w-auto object-contain transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
                 priority
               />
             </Link>

@@ -15,13 +15,13 @@ const GLOBE_CONFIG: COBEOptions = {
   mapSamples: 16000,
   mapBrightness: 1.2,
   baseColor: [1, 1, 1],
-  markerColor: [46 / 255, 54 / 255, 143 / 255],
+  markerColor: [129 / 255, 209 / 255, 232 / 255],
   glowColor: [1, 1, 1],
   markers: [
-    { location: [24.7136, 46.6753], size: 0.05 }, // Riyadh
-    { location: [21.4858, 39.1925], size: 0.04 }, // Jeddah
-    { location: [25.2048, 55.2708], size: 0.04 }, // Dubai
-    { location: [29.3759, 47.9774], size: 0.04 }, // Kuwait
+    { location: [24.7136, 46.6753], size: 0.08 }, // Riyadh
+    { location: [21.4858, 39.1925], size: 0.07 }, // Jeddah
+    { location: [25.2048, 55.2708], size: 0.07 }, // Dubai
+    { location: [29.3759, 47.9774], size: 0.07 }, // Kuwait
   ],
 }
 
