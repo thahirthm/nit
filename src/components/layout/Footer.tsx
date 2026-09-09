@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Button } from "@/components/ui/Button";
 
 const offices = [
   {
@@ -107,7 +108,7 @@ export function Footer() {
 
           <p className="mt-8 lg:mt-10 text-white/70 text-base sm:text-lg">Delivering excellence across regions</p>
 
-          <div className="mt-4 bg-white/10 max-w-[460px]">
+          <div className="mt-4 bg-white/10 max-w-[460px] transition-opacity duration-300 hover:opacity-80">
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10">
               <span className="text-[13px] font-medium tracking-widest uppercase text-white/80">
                 {office.label}
@@ -127,7 +128,7 @@ export function Footer() {
                 <Image src={office.image} alt={office.label} fill className="object-cover" />
               </div>
               <div className="flex-1 px-3 py-2 sm:px-4 sm:py-3 flex flex-col justify-center gap-2 sm:gap-2.5 text-white">
-                <span className="text-sm sm:text-base">{office.phone}</span>
+                <span className="font-[family-name:var(--font-anek-latin)] text-sm sm:text-base">{office.phone}</span>
                 <span className="text-sm sm:text-base">{office.email}</span>
                 <span className="text-xs sm:text-sm text-white/70 leading-relaxed">
                   {office.address[0]}<br />{office.address[1]}
@@ -160,16 +161,10 @@ export function Footer() {
               className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors resize-y"
             />
 
-            <div className="flex items-stretch gap-2.5 mt-1 w-fit">
-              <button
-                type="submit"
-                className="px-6 py-3 text-[13px] font-medium tracking-wide uppercase bg-white text-[#2E368F] hover:bg-white/90 transition-colors"
-              >
+            <div className="mt-1">
+              <Button type="submit" variant="secondary" iconOutline>
                 Submit
-              </button>
-              <span className="flex items-center justify-center w-[46px] shrink-0 border border-white/40">
-                <ArrowIcon className="text-white w-4 h-4" />
-              </span>
+              </Button>
             </div>
           </form>
         </div>

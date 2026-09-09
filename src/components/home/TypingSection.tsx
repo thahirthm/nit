@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const LINE_1 = "Engineering today's needs,";
-const LINE_2 = "delivering tomorrow's infrat";
+const LINE_2 = "delivering tomorrow's infrastructure";
 const TYPE_SPEED_MS = 45;
 
 export function TypingSection() {
@@ -51,7 +51,7 @@ export function TypingSection() {
     >
       <div className="w-full px-6 lg:px-16 !pr-0 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-10 items-center">
         {/* Left: typing text */}
-        <h2 className="text-[36px] sm:text-[52px] lg:text-[80px] leading-[1.2] font-normal tracking-tight">
+        <h2 className="text-[34px] sm:text-[46px] lg:text-[64px] leading-[1.2] font-extralight tracking-tight">
           <span className="text-gray-500">{LINE_1.slice(0, line1Count)}</span>
           <br />
           <span className="text-[#2E368F]">{LINE_2.slice(0, line2Count)}</span>

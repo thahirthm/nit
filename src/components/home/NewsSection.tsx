@@ -168,13 +168,18 @@ export function NewsSection() {
         >
           {filteredPosts.map((post, i) => (
             <SwiperSlide key={i}>
-              <article className="flex flex-col">
+              <article className="group flex flex-col">
                 <div className="relative w-full h-[280px] lg:h-[330px] overflow-hidden">
-                  <Image src={post.image} alt={post.title} fill className="object-cover" />
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  />
                 </div>
 
                 <div className="mt-5 flex flex-wrap items-center gap-2">
-                  <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
+                  <span className="font-[family-name:var(--font-anek-latin)] px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
                     {post.date}
                   </span>
                   <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">

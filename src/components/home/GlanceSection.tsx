@@ -136,7 +136,7 @@ export function GlanceSection() {
               <p className="text-lg lg:text-xl font-normal leading-relaxed max-w-[100%]">
                 Over three decades delivering infrastructure and technology solutions across the Kingdom.
               </p>
-              <h3 className="text-[60px] lg:text-[90px] font-normal tracking-tight self-end leading-none">
+              <h3 className="font-[family-name:var(--font-anek-latin)] text-[60px] lg:text-[90px] font-normal tracking-tight self-end leading-none">
                 1988
               </h3>
             </div>
@@ -144,7 +144,7 @@ export function GlanceSection() {
 
           {/* Card 2: 30+ Alliances */}
           <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] flex flex-col justify-between p-8">
-            <h3 className="text-[60px] lg:text-[80px] font-normal text-gray-900 leading-none">
+            <h3 className="font-[family-name:var(--font-anek-latin)] text-[60px] lg:text-[80px] font-normal text-gray-900 leading-none">
               30+
             </h3>
 
@@ -266,7 +266,7 @@ export function GlanceSection() {
               </div>
 
               {/* X-axis labels */}
-              <div className="absolute bottom-0 left-0 right-0 flex justify-between text-xl font-normal pt-2">
+              <div className="font-[family-name:var(--font-anek-latin)] absolute bottom-0 left-0 right-0 flex justify-between text-xl font-normal pt-2">
                 <span>1988</span>
                 <span>2010</span>
                 <span>2026</span>
@@ -277,7 +277,7 @@ export function GlanceSection() {
           {/* Card 4: 21B SAR & NEOM */}
           <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col justify-between">
             <div className="flex flex-col items-start text-start">
-              <h3 className="text-[50px] lg:text-[70px] font-normal text-gray-900 leading-none">
+              <h3 className="font-[family-name:var(--font-anek-latin)] text-[50px] lg:text-[70px] font-normal text-gray-900 leading-none">
                 21B SAR
               </h3>
               <p className="max-h-0 opacity-0 group-hover:max-h-10 group-hover:opacity-100 group-hover:mt-3 overflow-hidden text-lg lg:text-xl text-gray-500 font-normal transition-all duration-500 ease-out">
@@ -375,7 +375,7 @@ export function GlanceSection() {
             </p>
 
             <div className="mt-8">
-              <div className="flex justify-between text-[#2E368F] font-medium mb-3">
+              <div className="font-[family-name:var(--font-anek-latin)] flex justify-between text-[#2E368F] font-medium mb-3">
                 <span className="text-xl">37%</span>
                 <span className="text-xl text-gray-400 font-normal">50%</span>
               </div>

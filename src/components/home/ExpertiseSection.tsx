@@ -99,7 +99,7 @@ export function ExpertiseSection() {
               {/* Content */}
               <div className="relative z-10">
                 <h3
-                  className="leading-none mb-2 sm:mb-4 tracking-tight text-[#2E368F] group-hover:text-white transition-colors duration-500 text-[40px] sm:text-[60px] lg:text-[85px]"
+                  className="font-[family-name:var(--font-anek-latin)] leading-none mb-2 sm:mb-4 tracking-tight text-[#2E368F] group-hover:text-white transition-colors duration-500 text-[40px] sm:text-[60px] lg:text-[85px]"
                   style={{ fontWeight: 200 }}
                 >
                   {stat.value}

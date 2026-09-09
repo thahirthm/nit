@@ -6,6 +6,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary';
   href?: string;
   className?: string;
+  /** Arrow box has no fill/navy border until hover — for use on dark backgrounds (e.g. the banner). Defaults to the filled navy box used everywhere else. */
+  iconOutline?: boolean;
 }
 
 const CustomArrow = ({ className }: { className?: string }) => (
@@ -19,23 +21,25 @@ export function Button({
   variant = 'primary',
   href,
   className = '',
+  iconOutline = false,
   ...props
 }: ButtonProps) {
   const isPrimary = variant === 'primary';
 
   const containerClasses = `inline-flex items-stretch gap-2.5 group font-[family-name:var(--font-futura)] ${className}`;
-  
+
   const textContainer = `
     relative overflow-hidden flex items-center justify-center px-4 py-2.5 text-[12px] font-medium leading-normal uppercase z-10 border border-[#2E368F] transition-colors duration-300
     ${isPrimary ? 'text-white bg-[#2E368F]' : 'text-[#2E368F] bg-white'}
   `;
 
   const iconContainer = `
-    relative overflow-hidden flex items-center justify-center aspect-square w-[38px] shrink-0 z-10 border border-[#2E368F]
+    relative overflow-hidden flex items-center justify-center aspect-square w-[38px] shrink-0 z-10 border
+    ${iconOutline ? 'border-white' : 'border-[#2E368F]'}
     ${isPrimary ? 'text-[#2E368F]' : 'text-white'}
   `;
-  
-  const iconBgStatic = `absolute inset-0 -z-20 ${isPrimary ? 'bg-white' : 'bg-[#2E368F]'}`;
+
+  const iconBgStatic = `absolute inset-0 -z-20 ${isPrimary ? 'bg-white' : iconOutline ? 'bg-transparent' : 'bg-[#2E368F]'}`;
   const iconBgHover = `absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out -z-10 bg-[#8ADBF0]`;
 
   const content = (
