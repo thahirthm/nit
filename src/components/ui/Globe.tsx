@@ -42,25 +42,40 @@ export function Globe({ className = "" }: { className?: string }) {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    // @ts-ignore
-    const globe = createGlobe(canvas, {
-      ...GLOBE_CONFIG,
-      width: canvas.offsetWidth * 2,
-      height: canvas.offsetHeight * 2,
-      onRender: (state: Record<string, any>) => {
-        if (!isDragging.current) {
-          // Auto-rotate when not dragging
-          phiRef.current += 0.005
-          // Apply velocity decay when released
-          velocityX.current *= 0.95
-          velocityY.current *= 0.95
-        }
-        state.phi = phiRef.current
-        state.theta = thetaRef.current
-        state.width = canvas.offsetWidth * 2
-        state.height = canvas.offsetHeight * 2
-      },
-    })
+    // WebGL can be unavailable (disabled, unsupported, or missing GPU access) —
+    // skip rendering gracefully instead of letting cobe throw on a null context.
+    let webglSupported = false
+    try {
+      webglSupported = !!(canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+    } catch {
+      webglSupported = false
+    }
+    if (!webglSupported) return
+
+    let globe: ReturnType<typeof createGlobe> | null = null
+    try {
+      // @ts-ignore
+      globe = createGlobe(canvas, {
+        ...GLOBE_CONFIG,
+        width: canvas.offsetWidth * 2,
+        height: canvas.offsetHeight * 2,
+        onRender: (state: Record<string, any>) => {
+          if (!isDragging.current) {
+            // Auto-rotate when not dragging
+            phiRef.current += 0.005
+            // Apply velocity decay when released
+            velocityX.current *= 0.95
+            velocityY.current *= 0.95
+          }
+          state.phi = phiRef.current
+          state.theta = thetaRef.current
+          state.width = canvas.offsetWidth * 2
+          state.height = canvas.offsetHeight * 2
+        },
+      })
+    } catch {
+      return
+    }
 
     setVisible(true)
 
@@ -70,7 +85,7 @@ export function Globe({ className = "" }: { className?: string }) {
     window.addEventListener("resize", handleResize)
 
     return () => {
-      globe.destroy()
+      globe?.destroy()
       window.removeEventListener("resize", handleResize)
     }
   }, [])

@@ -304,7 +304,7 @@ export function GlanceSection() {
           {/* Card 5: Head Quarters */}
           <div className={`${cardClasses} bg-[#1a2332]`}>
             <Image
-              src="/images/glance-time.png"
+              src="/images/jd.png"
               alt="Head Quarters"
               fill
               className="object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-110"
@@ -379,8 +379,8 @@ export function GlanceSection() {
                 <span className="text-xl">37%</span>
                 <span className="text-xl text-gray-400 font-normal">50%</span>
               </div>
-              <div className="w-full h-[2px] bg-gray-200 relative mb-3">
-                <div className="absolute left-0 top-0 h-full bg-[#2E368F] w-[37%]" />
+              <div className="w-full h-[2px] group-hover:h-[3px] bg-gray-200 relative mb-3 transition-all duration-500 ease-out">
+                <div className="absolute left-0 top-0 h-full bg-[#2E368F] w-[4%] group-hover:w-[37%] transition-all duration-700 ease-out" />
               </div>
               <div className="flex justify-between text-xs text-gray-500">
                 <span>LC score 2024</span>
