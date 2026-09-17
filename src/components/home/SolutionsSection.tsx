@@ -39,6 +39,9 @@ const solutions = [
       { name: "Cloud Services", image: "/images/t-4.png" },
       { name: "Cybersecurity", image: "/images/t-5.png" },
       { name: "Blockchain", image: "/images/t-6.png" },
+      { name: "Data Center Services", image: "/images/t-7.png" },
+      { name: "Managed Services", image: "/images/t-8.png" },
+      { name: "Smart Cities", image: "/images/t-9.png" },
     ],
   },
 ];

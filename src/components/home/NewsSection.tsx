@@ -30,14 +30,14 @@ const posts = [
     date: "JAN 15, 2026",
     category: "ARTICLE",
     location: "Riyadh, Saudi Arabia",
-    image: "/images/blog3.png",
+    image: "/images/b3.png",
   },
   {
     title: "NIT Expands Digital Transformation Services Across the Kingdom",
     date: "DEC 20, 2025",
     category: "NEWS",
     location: "Jeddah, Saudi Arabia",
-    image: "/images/blog1.png",
+    image: "/images/blog2.png",
   },
   {
     title: "NIT and NEOM Partner on Smart Grid Rollout for Oxagon",
@@ -58,7 +58,7 @@ const posts = [
     date: "SEP 18, 2025",
     category: "NEWS",
     location: "Dammam, Saudi Arabia",
-    image: "/images/blog2.png",
+    image: "/images/b3.png",
   },
   {
     title: "NIT Ranked Among Top Infrastructure Firms in the Kingdom",

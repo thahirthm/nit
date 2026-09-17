@@ -75,7 +75,7 @@ export function ExpertiseSection() {
 
         {/* Globe — full horizontal, half vertical (top half cropped). Positioned against the
             outer row so only the row's overflow-hidden (page/section edge) clips it. */}
-        <div className="absolute z-0 bottom-0 -right-[80px] sm:-right-[120px] lg:-right-[160px] w-[500px] h-[500px] sm:w-[680px] sm:h-[680px] lg:w-[900px] lg:h-[900px] translate-y-1/2">
+        <div className="absolute z-0 bottom-0 -right-[80px] sm:-right-[120px] lg:-right-[160px] w-[500px] h-[500px] sm:w-[680px] sm:h-[680px] lg:w-[900px] lg:h-[900px] translate-y-1/2 opacity-50">
           <Globe />
         </div>
 
