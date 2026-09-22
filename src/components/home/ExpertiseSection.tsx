@@ -1,7 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Globe } from "@/components/ui/Globe";
 
 export function ExpertiseSection() {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
   const stats = [
     {
       value: "35+",
@@ -88,29 +93,33 @@ export function ExpertiseSection() {
             const isLeftCol = index % 2 === 0;
             const isLastRow = index >= stats.length - 2;
             const isLastCol4 = index === stats.length - 1;
+            const isActive = activeIndex === index;
             return (
             <div
               key={index}
-              className={`group relative flex flex-col justify-between p-4 sm:p-8 min-h-[160px] sm:min-h-[220px] overflow-hidden border-gray-100 lg:border-b-0 ${isLeftCol ? 'border-r' : ''} ${!isLastRow ? 'border-b' : ''} ${isLastCol4 ? 'lg:border-r-0' : 'lg:border-r'}`}
+              onMouseEnter={() => setActiveIndex(index)}
+              onMouseLeave={() => setActiveIndex((prev) => (prev === index ? null : prev))}
+              onClick={() => setActiveIndex((prev) => (prev === index ? null : index))}
+              className={`relative flex flex-col justify-between p-4 sm:p-8 min-h-[160px] sm:min-h-[220px] overflow-hidden cursor-pointer border-gray-100 lg:border-b-0 ${isLeftCol ? 'border-r' : ''} ${!isLastRow ? 'border-b' : ''} ${isLastCol4 ? 'lg:border-r-0' : 'lg:border-r'}`}
             >
-              {/* Slide-up primary bg — same mechanic as button hover */}
-              <div className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out bg-[#2E368F] z-0" />
+              {/* Slide-up primary bg — triggers on tap (mobile) or hover (desktop) */}
+              <div className={`absolute inset-0 transition-transform duration-500 ease-in-out bg-[#2E368F] z-0 ${isActive ? 'translate-y-0' : 'translate-y-full'}`} />
 
               {/* Content */}
               <div className="relative z-10">
                 <h3
-                  className="font-[family-name:var(--font-anek-latin)] leading-none mb-2 sm:mb-4 tracking-tight text-[#2E368F] group-hover:text-white transition-colors duration-500 text-[40px] sm:text-[60px] lg:text-[85px]"
+                  className={`font-[family-name:var(--font-anek-latin)] leading-none mb-2 sm:mb-4 tracking-tight transition-colors duration-500 text-[40px] sm:text-[60px] lg:text-[85px] ${isActive ? 'text-white' : 'text-[#2E368F]'}`}
                   style={{ fontWeight: 200 }}
                 >
                   {stat.value}
                 </h3>
                 <p
-                  className="font-light leading-relaxed whitespace-pre-line text-[#727272] group-hover:text-white transition-colors duration-500 text-[13px] sm:text-[16px] lg:text-[18px]"
+                  className={`font-light leading-relaxed whitespace-pre-line transition-colors duration-500 text-[13px] sm:text-[16px] lg:text-[18px] ${isActive ? 'text-white' : 'text-[#727272]'}`}
                 >
                   {stat.label}
                 </p>
               </div>
-              <div className="relative z-10 ms-auto md:pt-30 pt-6 sm:pt-10 transition-all duration-500 [&_path]:transition-all [&_path]:duration-500 group-hover:[&_path]:stroke-white [&_svg]:w-9 [&_svg]:h-9 sm:[&_svg]:w-auto sm:[&_svg]:h-auto">
+              <div className={`relative z-10 ms-auto md:pt-30 pt-6 sm:pt-10 transition-all duration-500 [&_path]:transition-all [&_path]:duration-500 [&_svg]:w-9 [&_svg]:h-9 sm:[&_svg]:w-auto sm:[&_svg]:h-auto ${isActive ? '[&_path]:stroke-white' : ''}`}>
                 {stat.icon}
               </div>
             </div>

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronDown, Plus, Menu, X } from 'lucide-react';
+import { ChevronDown, Plus, X } from 'lucide-react';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,15 +48,17 @@ export function Header() {
 
   const isTransparent = isHome && !isScrolled;
 
+  // Only the home page is live for now — every other nav link is a placeholder
+  // that shouldn't navigate anywhere until its page is ready.
   const navLinks = [
     { name: 'HOME', href: '/', active: isHome },
-    { name: 'ABOUT', href: '/about', hasDropdown: true },
-    { name: 'SOLUTIONS', href: '/solutions', hasDropdown: true },
-    { name: 'PROJECTS', href: '/projects' },
-    { name: 'INVESTORS', href: '/investors' },
-    { name: 'MEDIA CENTRE', href: '/media' },
-    { name: 'CAREERS', href: '/careers' },
-    { name: 'CONTACT', href: '/contact' },
+    { name: 'ABOUT', href: '#', hasDropdown: true },
+    { name: 'SOLUTIONS', href: '#', hasDropdown: true },
+    { name: 'PROJECTS', href: '#' },
+    { name: 'INVESTORS', href: '#' },
+    { name: 'MEDIA CENTRE', href: '#' },
+    { name: 'CAREERS', href: '#' },
+    { name: 'CONTACT', href: '#' },
   ];
 
   return (
@@ -87,6 +89,7 @@ export function Header() {
                 <div key={link.name} className="relative group h-full flex items-center">
                   <Link
                     href={link.href}
+                    onClick={link.href === '#' ? (e) => e.preventDefault() : undefined}
                     className={`flex items-center text-[11px] font-medium tracking-wider transition-colors pt-1 ${isTransparent ? 'text-white hover:text-gray-200' : 'text-[#2b307d] hover:text-blue-700'}`}
                   >
                     {link.name}
@@ -121,11 +124,15 @@ export function Header() {
             </div>
 
             {/* Mobile Hamburger Button */}
-            <button 
+            <button
               className={`xl:hidden p-2 transition-colors ${isTransparent ? 'text-white' : 'text-[#2b307d]'}`}
               onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu"
             >
-              <Menu className="w-7 h-7" strokeWidth={1.5} />
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" className="w-6 h-6">
+                <rect x="16.2695" y="7.32129" width="1.62697" height="16.2697" transform="rotate(90 16.2695 7.32129)" fill="currentColor" />
+                <rect x="7.32129" width="1.62697" height="16.2697" fill="currentColor" />
+              </svg>
             </button>
           </div>
 

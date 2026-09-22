@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 
@@ -16,11 +19,13 @@ const solutions = [
       </svg>
     ),
     capabilities: [
-      { name: "Energy Infrastructure", image: "/images/in-1.png" },
-      { name: "Transmission & Distribution", image: "/images/in-2.png" },
-      { name: "Water & MEP Systems", image: "/images/in-3.png" },
-      { name: "Industrial Infrastructure", image: "/images/in-4.png" },
-      { name: "Operations & Maintenance", image: "/images/in-5.png" },
+      { name: "Energy Solutions (Energy Efficiency)", image: "/images/in-2.png" },
+      { name: "Transmission & Distribution / Advanced Energy", image: "/images/in-1.png" },
+      { name: "Water Infrastructure", image: "/images/in-3.png" },
+      { name: "Industries  (Industrial Solutions)", image: "/images/in-4.png" },
+      { name: "Communications and Technology (ICT)", image: "/images/in-4.png" },
+
+      { name: "Infrastructure Services (O&M and MEP)", image: "/images/in-5.png" },
     ],
   },
   {
@@ -47,6 +52,8 @@ const solutions = [
 ];
 
 export function SolutionsSection() {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
   return (
     <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
       {/* Heading */}
@@ -56,10 +63,17 @@ export function SolutionsSection() {
         </h2>
       </div>
 
-      {/* Cards */}
-      <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      {/* Cards — horizontal swipe slider on mobile, side-by-side grid from lg up */}
+      <div className="w-full lg:px-16 flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 lg:pb-0 lg:grid lg:grid-cols-2 lg:overflow-visible lg:gap-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        {/* Leading spacer — a real element (not container padding) so it isn't
+            clipped by scroll-snap on mobile; matches the heading's left gutter. */}
+        <div className="w-6 shrink-0 snap-start lg:hidden" />
+
         {solutions.map((solution) => (
-          <div key={solution.title} className="bg-[#F9F9F9] p-6 sm:p-8 lg:p-12 flex flex-col">
+          <div
+            key={solution.title}
+            className="shrink-0 w-[85vw] sm:w-[60vw] lg:w-auto snap-start bg-[#F9F9F9] p-6 sm:p-8 lg:p-12 flex flex-col"
+          >
             {/* Icon + title */}
             <div className="flex items-center gap-3 sm:gap-4">
               {solution.icon}
@@ -80,29 +94,60 @@ export function SolutionsSection() {
                 Capabilities
               </span>
               <div className="mt-3 border-t border-gray-200">
-                {solution.capabilities.map((capability) => (
-                  <div
-                    key={capability.name}
-                    className="group/row relative flex items-center justify-between py-2 sm:py-2.5 border-b border-gray-200 cursor-pointer hover:z-30"
-                  >
-                    <span className="text-[18px] sm:text-[22px] lg:text-[28px] text-gray-600 font-extralight group-hover/row:text-[#2E368F] transition-colors duration-300">
-                      {capability.name}
-                    </span>
-                    <span className="text-lg sm:text-xl text-gray-400 font-light group-hover/row:text-[#2E368F] transition-colors duration-300">
-                      +
-                    </span>
+                {solution.capabilities.map((capability) => {
+                  const key = `${solution.title}-${capability.name}`;
+                  const isOpen = expanded === key;
+                  return (
+                    <div
+                      key={capability.name}
+                      className="group/row relative border-b border-gray-200 lg:hover:z-30"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setExpanded(isOpen ? null : key)}
+                        className="w-full flex items-center justify-between py-2 sm:py-2.5 text-left cursor-pointer"
+                        aria-expanded={isOpen}
+                      >
+                        <span className="text-[18px] sm:text-[22px] lg:text-[28px] text-gray-600 font-extralight group-hover/row:text-[#2E368F] transition-colors duration-300">
+                          {capability.name}
+                        </span>
+                        <span
+                          className={`text-lg sm:text-xl text-gray-400 font-light group-hover/row:text-[#2E368F] transition-all duration-300 shrink-0 ml-4 ${
+                            isOpen ? "rotate-45 lg:rotate-0" : "rotate-0"
+                          }`}
+                        >
+                          +
+                        </span>
+                      </button>
 
-                    {/* Hover preview image */}
-                    <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[170px] h-[130px] opacity-0 scale-95 translate-x-2 group-hover/row:opacity-100 group-hover/row:scale-100 group-hover/row:translate-x-0 transition-all duration-500 ease-out pointer-events-none overflow-hidden shadow-lg">
-                      <Image
-                        src={capability.image}
-                        alt={capability.name}
-                        fill
-                        className="object-cover"
-                      />
+                      {/* Desktop: hover preview image */}
+                      <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[170px] h-[130px] opacity-0 scale-95 translate-x-2 group-hover/row:opacity-100 group-hover/row:scale-100 group-hover/row:translate-x-0 transition-all duration-500 ease-out pointer-events-none overflow-hidden shadow-lg">
+                        <Image
+                          src={capability.image}
+                          alt={capability.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+
+                      {/* Mobile: tap to expand image accordion */}
+                      <div
+                        className={`lg:hidden overflow-hidden transition-all duration-500 ease-out ${
+                          isOpen ? "max-h-[200px] pb-4" : "max-h-0"
+                        }`}
+                      >
+                        <div className="relative w-full h-[160px] sm:h-[200px]">
+                          <Image
+                            src={capability.image}
+                            alt={capability.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -112,6 +157,9 @@ export function SolutionsSection() {
             </div>
           </div>
         ))}
+
+        {/* Trailing spacer so the last mobile slide can rest fully in view */}
+        <div className="w-6 shrink-0 lg:hidden" />
       </div>
     </section>
   );

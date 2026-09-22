@@ -122,7 +122,8 @@ export function ProjectsSection() {
         >
           {projects.map((project, i) => (
             <SwiperSlide key={i} className="!w-[80vw] lg:!w-[1000px]">
-              <div className="group relative w-full h-[420px] sm:h-[550px] lg:h-[700px] overflow-hidden">
+              {/* Desktop: image with hover-swap + slide-up description panel */}
+              <div className="hidden lg:block group relative w-full h-[700px] overflow-hidden">
                 {/* Base image */}
                 <Image
                   src={project.image}
@@ -143,13 +144,13 @@ export function ProjectsSection() {
 
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/0 to-black/70" />
 
-                <div className="absolute inset-0 p-6 sm:p-8 lg:p-10 flex flex-col justify-between text-white">
+                <div className="absolute inset-0 p-10 flex flex-col justify-between text-white">
                   {/* Top: category, title, meta */}
                   <div>
                     <span className="text-xs font-medium tracking-widest uppercase">
                       {project.category}
                     </span>
-                    <h3 className="mt-3 text-[28px] sm:text-[38px] lg:text-[48px] font-normal leading-none">
+                    <h3 className="mt-3 text-[48px] font-normal leading-none">
                       {project.title}
                     </h3>
 
@@ -167,7 +168,6 @@ export function ProjectsSection() {
                       <div className={`relative w-[90px] h-[90px] ${project.logoAlt === "Vision 2030" ? "bg-white/95 p-2" : ""}`}>
                         <Image src={project.logo} alt={project.logoAlt} fill className="object-contain" />
                       </div>
-                   
                     </div>
 
                     <Button variant="secondary">READ MORE</Button>
@@ -175,14 +175,14 @@ export function ProjectsSection() {
                 </div>
 
                 {/* Hover panel — description slides up from the bottom */}
-                <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out delay-150 bg-white/15 backdrop-blur-md p-6 lg:p-8 flex flex-col sm:flex-row sm:items-end gap-6 text-white">
-                  <div className={`relative w-[80px] h-[80px] lg:w-[90px] lg:h-[90px] shrink-0 ${project.logoAlt === "Vision 2030" ? "bg-white/95 p-2" : ""}`}>
+                <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out delay-150 bg-white/15 backdrop-blur-md p-8 flex flex-col sm:flex-row sm:items-end gap-6 text-white">
+                  <div className={`relative w-[90px] h-[90px] shrink-0 ${project.logoAlt === "Vision 2030" ? "bg-white/95 p-2" : ""}`}>
                     <Image src={project.logo} alt={project.logoAlt} fill className="object-contain" />
                   </div>
 
                   <div className="flex-1 space-y-3">
                     {project.description.map((paragraph, idx) => (
-                      <p key={idx} className="text-sm lg:text-base font-light leading-relaxed text-white/90">
+                      <p key={idx} className="text-base font-light leading-relaxed text-white/90">
                         {paragraph}
                       </p>
                     ))}
@@ -190,6 +190,55 @@ export function ProjectsSection() {
 
                   <div className="shrink-0">
                     <Button variant="secondary">READ MORE</Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile/tablet: image on top, description panel always visible below (no hover) */}
+              <div className="lg:hidden w-full">
+                <div className="relative w-full h-[380px] sm:h-[480px] overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover animate-kenburns"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/0 to-black/70" />
+
+                  <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between text-white">
+                    <div>
+                      <span className="text-xs font-medium tracking-widest uppercase">
+                        {project.category}
+                      </span>
+                      <h3 className="mt-3 text-[28px] sm:text-[38px] font-normal leading-none">
+                        {project.title}
+                      </h3>
+                    </div>
+
+                    <div className="flex items-end justify-between gap-4">
+                      <div className="grid grid-cols-[80px_auto] gap-y-2 text-xs font-medium tracking-wider uppercase">
+                        <span className="opacity-70">Location</span>
+                        <span>{project.location}</span>
+                        <span className="opacity-70">Client</span>
+                        <span>{project.client}</span>
+                      </div>
+                      <div className={`relative w-[64px] h-[64px] shrink-0 ${project.logoAlt === "Vision 2030" ? "bg-white/95 p-2" : ""}`}>
+                        <Image src={project.logo} alt={project.logoAlt} fill className="object-contain" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#2E368F] p-6 sm:p-8 text-white">
+                  <div className="space-y-3">
+                    {project.description.map((paragraph, idx) => (
+                      <p key={idx} className="text-sm font-light leading-relaxed text-white/90">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                  <div className="mt-6">
+                    <Button variant="secondary" iconOutline>READ MORE</Button>
                   </div>
                 </div>
               </div>

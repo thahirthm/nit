@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -68,7 +68,10 @@ const categories = [
   { name: "Banking & Telecommunications", logos: ["l41", "l42", "l43", "l44", "l45", "l46", "l47", "l48", "l49", "l50"] },
 ];
 
-const LOGOS_PER_SLIDE = 10;
+// Desktop/tablet shows 2 rows (grid-rows-2) at their column counts — 10 logos per slide.
+// Mobile only has 2 columns, so 10 logos would run 5 rows tall; cap it at 3 rows (6 logos) there.
+const LOGOS_PER_SLIDE_MOBILE = 6;
+const LOGOS_PER_SLIDE_DEFAULT = 10;
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className={className}>
@@ -81,6 +84,18 @@ export function ClientsSection() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  const logosPerSlide = isMobile ? LOGOS_PER_SLIDE_MOBILE : LOGOS_PER_SLIDE_DEFAULT;
 
   const activeLogos = useMemo(
     () => categories.find((c) => c.name === activeCategory)?.logos ?? [],
@@ -89,11 +104,11 @@ export function ClientsSection() {
 
   const slides = useMemo(() => {
     const chunks: string[][] = [];
-    for (let i = 0; i < activeLogos.length; i += LOGOS_PER_SLIDE) {
-      chunks.push(activeLogos.slice(i, i + LOGOS_PER_SLIDE));
+    for (let i = 0; i < activeLogos.length; i += logosPerSlide) {
+      chunks.push(activeLogos.slice(i, i + logosPerSlide));
     }
     return chunks.length ? chunks : [[]];
-  }, [activeLogos]);
+  }, [activeLogos, logosPerSlide]);
 
   return (
     <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
@@ -154,10 +169,12 @@ export function ClientsSection() {
           modules={[Navigation]}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
+            setActiveSlide(0);
           }}
           onSlideChange={(swiper) => {
             setIsBeginning(swiper.isBeginning);
             setIsEnd(swiper.isEnd);
+            setActiveSlide(swiper.activeIndex);
           }}
           slidesPerView={1}
         >
@@ -178,6 +195,22 @@ export function ClientsSection() {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        {/* Slider dots — mobile only, so it's clear more logos are a swipe away */}
+        {slides.length > 1 && (
+          <div className="flex sm:hidden items-center justify-start gap-2 mt-2">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                aria-label={`Go to slide ${i + 1}`}
+                onClick={() => swiperRef.current?.slideTo(i)}
+                className={`w-2 h-2 transition-colors duration-300 ${
+                  i === activeSlide ? "bg-[#2E368F]" : "bg-gray-200"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

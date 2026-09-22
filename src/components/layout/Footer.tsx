@@ -100,13 +100,47 @@ export function Footer() {
   return (
     <footer className="w-full mt-[60px] lg:mt-[100px] bg-[#2E368F] font-[family-name:var(--font-futura)]">
       <div className="w-full px-6 lg:px-16 pt-14 sm:pt-20 lg:pt-28 pb-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-12">
-        {/* Left: Vision statement + office */}
-        <div>
+        {/* Heading — always first */}
+        <div className="order-1 lg:col-start-1 lg:row-start-1">
           <h2 className="text-white text-[44px] sm:text-[60px] lg:text-[70px] font-extralight leading-[1.15] tracking-tight">
             Your vision, Engineered<br />&amp; delivered.
           </h2>
+        </div>
 
-          <p className="mt-8 lg:mt-10 text-white/70 text-base sm:text-lg">Delivering excellence across regions</p>
+        {/* Contact form — second on mobile, right column on desktop (spans both rows) */}
+        <div className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 max-w-[520px] lg:ml-auto">
+          <h3 className="text-white text-[26px] lg:text-[28px] font-normal">
+            Join Our Growth Journey <span className="text-white/40 mx-1">|</span> Invest In The Future!
+          </h3>
+
+          <form className="mt-10  flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
+            />
+            <input
+              type="email"
+              placeholder="Your Email"
+              className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
+            />
+            <textarea
+              placeholder="Message"
+              rows={1}
+              className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors resize-y"
+            />
+
+            <div className="mt-1">
+              <Button type="submit" variant="secondary" iconOutline>
+                Submit
+              </Button>
+            </div>
+          </form>
+        </div>
+
+        {/* Subtext + office card — third on mobile, under the heading on desktop */}
+        <div className="order-3 lg:order-none lg:col-start-1 lg:row-start-2">
+          <p className="text-white/70 text-base sm:text-lg">Delivering excellence across regions</p>
 
           <div className="mt-4 bg-white/10 max-w-[460px] transition-opacity duration-300 hover:opacity-80">
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10">
@@ -136,37 +170,6 @@ export function Footer() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Right: Contact form */}
-        <div className="max-w-[520px] ml-auto">
-          <h3 className="text-white text-[26px] lg:text-[28px] font-normal">
-            Join Our Growth Journey <span className="text-white/40 mx-1">|</span> Invest In The Future!
-          </h3>
-
-          <form className="mt-10  flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
-            />
-            <textarea
-              placeholder="Message"
-              rows={1}
-              className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors resize-y"
-            />
-
-            <div className="mt-1">
-              <Button type="submit" variant="secondary" iconOutline>
-                Submit
-              </Button>
-            </div>
-          </form>
         </div>
       </div>
 

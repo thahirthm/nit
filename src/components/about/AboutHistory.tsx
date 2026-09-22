@@ -144,57 +144,59 @@ export function AboutHistory() {
         </div>
 
         {/* Timeline track */}
-        <div className="mt-10 lg:mt-14">
-          <div className="relative">
-            <div className="absolute top-[8px] left-[5px] right-[5px] h-px bg-gray-200" />
-            <div
-              className="absolute top-[5px] left-0 h-px bg-[#2E368F] transition-all duration-500 ease-out"
-              style={{ width: `${(activeIndex / lastIndex) * 100}%` }}
-            />
-            <div className="relative flex justify-between">
-              {milestones.map((m, i) => (
-                <button
-                  key={m.year}
-                  aria-label={`Show ${m.year}`}
-                  onClick={() => setActiveIndex(i)}
-                  className="p-1"
-                >
-                  <span
-                    className={`block w-[11px] h-[11px] rounded-full border-2 transition-colors duration-500 ${
-                      i <= activeIndex ? "bg-[#2E368F] border-[#2E368F]" : "bg-white border-gray-300 hover:border-gray-400"
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
+        <div className="mt-10 lg:mt-14 flex items-start gap-4 lg:gap-10">
+          {/* Arrows — aligned with the year-label row below the dots */}
+          <div className="flex items-center gap-4 shrink-0 pt-[46px] lg:pt-[50px]">
+            <button
+              aria-label="Previous"
+              onClick={goPrev}
+              disabled={activeIndex === 0}
+              className={`transition-colors ${activeIndex === 0 ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
+            >
+              <ArrowIcon className="rotate-180" />
+            </button>
+            <button
+              aria-label="Next"
+              onClick={goNext}
+              disabled={activeIndex === lastIndex}
+              className={`transition-colors ${activeIndex === lastIndex ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
+            >
+              <ArrowIcon />
+            </button>
           </div>
 
-          <div className="flex items-center justify-between mt-6">
-            <div className="flex items-center gap-4 shrink-0">
-              <button
-                aria-label="Previous"
-                onClick={goPrev}
-                disabled={activeIndex === 0}
-                className={`transition-colors ${activeIndex === 0 ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
-              >
-                <ArrowIcon className="rotate-180" />
-              </button>
-              <button
-                aria-label="Next"
-                onClick={goNext}
-                disabled={activeIndex === lastIndex}
-                className={`transition-colors ${activeIndex === lastIndex ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
-              >
-                <ArrowIcon />
-              </button>
+          {/* Dots + line, and year labels — share the same width so each label sits under its dot */}
+          <div className="flex-1 min-w-0">
+            <div className="relative">
+              <div className="absolute top-[8px] left-[5px] right-[5px] h-px bg-gray-200" />
+              <div
+                className="absolute top-[8px] left-0 h-px bg-[#2E368F] transition-all duration-500 ease-out"
+                style={{ width: `${(activeIndex / lastIndex) * 100}%` }}
+              />
+              <div className="relative flex justify-between">
+                {milestones.map((m, i) => (
+                  <button
+                    key={m.year}
+                    aria-label={`Show ${m.year}`}
+                    onClick={() => setActiveIndex(i)}
+                    className="p-1"
+                  >
+                    <span
+                      className={`block w-[11px] h-[11px] rounded-full border-2 transition-colors duration-500 ${
+                        i <= activeIndex ? "bg-[#2E368F] border-[#2E368F]" : "bg-white border-gray-300 hover:border-gray-400"
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="flex-1 flex justify-between ml-4 lg:ml-10">
+            <div className="flex justify-between mt-6">
               {milestones.map((m, i) => (
                 <button
                   key={m.year}
                   onClick={() => setActiveIndex(i)}
-                  className={`font-[family-name:var(--font-anek-latin)] text-sm sm:text-base lg:text-lg transition-colors duration-300 ${
+                  className={`font-[family-name:var(--font-anek-latin)] text-[13px] sm:text-sm lg:text-base transition-colors duration-300 ${
                     i === activeIndex ? "text-[#2E368F] font-medium" : "text-gray-400 hover:text-gray-600"
                   }`}
                 >

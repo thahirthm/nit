@@ -120,9 +120,13 @@ export function GlanceSection() {
             Mobile: native horizontal scroll/snap slider (no pinning). */}
         <div
           ref={trackRef}
-          className="flex items-start gap-6 px-6 lg:px-16 w-full will-change-transform overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="flex items-start gap-6 lg:px-16 w-full will-change-transform overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           style={isDesktop ? { transform: `translateX(${translateX}px)` } : undefined}
         >
+          {/* Leading spacer — a real element (not container padding) so it isn't
+              clipped by scroll-snap on mobile; matches the heading's left gutter. */}
+          <div className="w-6 shrink-0 snap-start lg:hidden" />
+
           {/* Card 1: 1988 */}
           <div className={`${cardClasses} bg-gray-200`}>
             <Image
@@ -390,7 +394,7 @@ export function GlanceSection() {
           </div>
 
           {/* Trailing spacer so the last card can rest fully in view */}
-          <div className="w-[1px] shrink-0 lg:w-[2rem]" />
+          <div className="w-6 shrink-0 lg:w-[2rem]" />
         </div>
       </div>
     </section>
