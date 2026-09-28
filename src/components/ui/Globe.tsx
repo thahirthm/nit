@@ -142,7 +142,7 @@ export function Globe({ className = "" }: { className?: string }) {
     }
   }
 
-  const handleTap = (clientX: number, clientY: number) => {
+  const handleTap = (clientX: number, clientY: number, autoDismiss = true) => {
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -168,7 +168,9 @@ export function Globe({ className = "" }: { className?: string }) {
 
     if (closest) {
       setActiveMarker(closest)
-      dismissTimer.current = setTimeout(() => setActiveMarker(null), 2500)
+      if (autoDismiss) {
+        dismissTimer.current = setTimeout(() => setActiveMarker(null), 2500)
+      }
     } else {
       setActiveMarker(null)
     }
@@ -186,7 +188,18 @@ export function Globe({ className = "" }: { className?: string }) {
   }
 
   const onPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    if (!isDragging.current) return
+    if (!isDragging.current) {
+      // Idle hover (mouse only — touch has no hover): live-highlight the marker
+      // under the cursor without the tap auto-dismiss timer.
+      if (e.pointerType === "mouse") {
+        if (dismissTimer.current) {
+          clearTimeout(dismissTimer.current)
+          dismissTimer.current = null
+        }
+        handleTap(e.clientX, e.clientY, false)
+      }
+      return
+    }
     const dx = e.clientX - lastPointerX.current
     const dy = e.clientY - lastPointerY.current
 
@@ -198,6 +211,11 @@ export function Globe({ className = "" }: { className?: string }) {
 
     lastPointerX.current = e.clientX
     lastPointerY.current = e.clientY
+  }
+
+  const onPointerLeaveCanvas = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    onPointerUp(e)
+    if (e.pointerType === "mouse") setActiveMarker(null)
   }
 
   const onPointerUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -232,7 +250,7 @@ export function Globe({ className = "" }: { className?: string }) {
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
-        onPointerLeave={onPointerUp}
+        onPointerLeave={onPointerLeaveCanvas}
         onTouchStart={(e) => {
           isDragging.current = true
           lastPointerX.current = e.touches[0].clientX
@@ -283,16 +301,28 @@ export function Globe({ className = "" }: { className?: string }) {
               className="absolute -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#2563EB]"
             />
 
-            {/* Minimal label popup */}
-            <motion.div
-              initial={{ opacity: 0, y: 4, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 4, scale: 0.95 }}
+            {/* Leader line connecting the dot to the label */}
+            <motion.svg
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute -translate-x-1/2 -translate-y-full -mt-3 whitespace-nowrap px-3 py-1.5 bg-[#2E368F] text-white text-xs font-medium shadow-lg"
+              className="absolute overflow-visible pointer-events-none"
+              width="1"
+              height="1"
+            >
+              <line x1={0} y1={0} x2={-42} y2={-34} stroke="#2E368F" strokeWidth={1} />
+            </motion.svg>
+
+            {/* Minimal bordered label popup, offset up-left with a leader line */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="absolute -translate-x-full -translate-y-full -ml-[42px] -mt-[34px] whitespace-nowrap px-3 py-1.5 bg-white border border-[#2E368F] text-[#2E368F] text-[10px] font-semibold tracking-widest uppercase shadow-sm"
             >
               {activeMarker.name}
-              <span className="absolute left-1/2 -translate-x-1/2 top-full w-2 h-2 bg-[#2E368F] rotate-45" />
             </motion.div>
           </div>
         )}

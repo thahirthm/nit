@@ -52,7 +52,96 @@ const solutions = [
 ];
 
 export function SolutionsSection() {
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<string | null>(
+    `${solutions[0].title}-${solutions[0].capabilities[0].name}`
+  );
+  const [activeTab, setActiveTab] = useState(solutions[0].title);
+
+  const renderCard = (solution: (typeof solutions)[number]) => (
+    <div className="w-full h-full bg-[#F9F9F9] p-6 sm:p-8 lg:p-12 flex flex-col">
+      {/* Icon + title */}
+      <div className="flex items-center gap-3 sm:gap-4">
+        {solution.icon}
+        <span className="w-px h-7 sm:h-8 lg:h-10 bg-gray-300 shrink-0" />
+        <h3 className="text-[26px] sm:text-[32px] lg:text-[55px] font-extralight text-[#2E368F] tracking-tight leading-none">
+          {solution.title}
+        </h3>
+      </div>
+
+      {/* Description */}
+      <p className="mt-4 sm:mt-6 text-[15px] sm:text-[17px] lg:text-[20px] text-gray-500 font-normal leading-snug max-w-lg">
+        {solution.description}
+      </p>
+
+      {/* Capabilities */}
+      <div className="mt-6 sm:mt-8 lg:mt-10">
+        <span className="text-[13px] sm:text-[15px] lg:text-[17px] font-medium text-[#2E368F] tracking-widest uppercase">
+          Capabilities
+        </span>
+        <div className="mt-3 border-t border-gray-200">
+          {solution.capabilities.map((capability) => {
+            const key = `${solution.title}-${capability.name}`;
+            const isOpen = expanded === key;
+            return (
+              <div
+                key={capability.name}
+                className="group/row relative border-b border-gray-200 lg:hover:z-30"
+              >
+                <button
+                  type="button"
+                  onClick={() => setExpanded(isOpen ? null : key)}
+                  className="w-full flex items-center justify-between py-2 sm:py-2.5 text-left cursor-pointer"
+                  aria-expanded={isOpen}
+                >
+                  <span className="text-[18px] sm:text-[22px] lg:text-[28px] text-gray-600 font-extralight group-hover/row:text-[#2E368F] transition-colors duration-300">
+                    {capability.name}
+                  </span>
+                  <span
+                    className={`text-lg sm:text-xl text-gray-400 font-light group-hover/row:text-[#2E368F] transition-all duration-300 shrink-0 ml-4 ${
+                      isOpen ? "rotate-45 lg:rotate-0" : "rotate-0"
+                    }`}
+                  >
+                    +
+                  </span>
+                </button>
+
+                {/* Desktop: hover preview image */}
+                <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[170px] h-[130px] opacity-0 scale-95 translate-x-2 group-hover/row:opacity-100 group-hover/row:scale-100 group-hover/row:translate-x-0 transition-all duration-500 ease-out pointer-events-none overflow-hidden shadow-lg">
+                  <Image
+                    src={capability.image}
+                    alt={capability.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Mobile: tap to expand image accordion */}
+                <div
+                  className={`lg:hidden overflow-hidden transition-all duration-500 ease-out ${
+                    isOpen ? "max-h-[200px] pb-4" : "max-h-0"
+                  }`}
+                >
+                  <div className="relative w-full h-[160px] sm:h-[200px]">
+                    <Image
+                      src={capability.image}
+                      alt={capability.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* CTA — pinned to the bottom so both cards' buttons align regardless of capability count */}
+      <div className="mt-8 lg:mt-auto lg:pt-10">
+        <Button variant="primary">EXPLORE SOLUTIONS</Button>
+      </div>
+    </div>
+  );
 
   return (
     <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
@@ -63,103 +152,39 @@ export function SolutionsSection() {
         </h2>
       </div>
 
-      {/* Cards — horizontal swipe slider on mobile, side-by-side grid from lg up */}
-      <div className="w-full lg:px-16 flex overflow-x-auto snap-x snap-mandatory gap-4 pb-2 lg:pb-0 lg:grid lg:grid-cols-2 lg:overflow-visible lg:gap-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        {/* Leading spacer — a real element (not container padding) so it isn't
-            clipped by scroll-snap on mobile; matches the heading's left gutter. */}
-        <div className="w-6 shrink-0 snap-start lg:hidden" />
-
-        {solutions.map((solution) => (
-          <div
-            key={solution.title}
-            className="shrink-0 w-[85vw] sm:w-[60vw] lg:w-auto snap-start bg-[#F9F9F9] p-6 sm:p-8 lg:p-12 flex flex-col"
-          >
-            {/* Icon + title */}
-            <div className="flex items-center gap-3 sm:gap-4">
-              {solution.icon}
-              <span className="w-px h-7 sm:h-8 lg:h-10 bg-gray-300 shrink-0" />
-              <h3 className="text-[26px] sm:text-[32px] lg:text-[55px] font-extralight text-[#2E368F] tracking-tight leading-none">
+      {/* Tablet & mobile: tabs switch between the two solutions, one card shown at a time */}
+      <div className="lg:hidden px-6">
+        <div className="flex gap-3 mb-6">
+          {solutions.map((solution) => {
+            const isActive = solution.title === activeTab;
+            return (
+              <button
+                key={solution.title}
+                onClick={() => setActiveTab(solution.title)}
+                className={`px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 ${
+                  isActive
+                    ? "bg-[#2E368F] text-white border-[#2E368F]"
+                    : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
+                }`}
+              >
                 {solution.title}
-              </h3>
-            </div>
+              </button>
+            );
+          })}
+        </div>
 
-            {/* Description */}
-            <p className="mt-4 sm:mt-6 text-[15px] sm:text-[17px] lg:text-[20px] text-gray-500 font-normal leading-snug max-w-lg">
-              {solution.description}
-            </p>
+        {solutions.filter((solution) => solution.title === activeTab).map((solution) => (
+          <div key={solution.title}>{renderCard(solution)}</div>
+        ))}
+      </div>
 
-            {/* Capabilities */}
-            <div className="mt-6 sm:mt-8 lg:mt-10">
-              <span className="text-[13px] sm:text-[15px] lg:text-[17px] font-medium text-[#2E368F] tracking-widest uppercase">
-                Capabilities
-              </span>
-              <div className="mt-3 border-t border-gray-200">
-                {solution.capabilities.map((capability) => {
-                  const key = `${solution.title}-${capability.name}`;
-                  const isOpen = expanded === key;
-                  return (
-                    <div
-                      key={capability.name}
-                      className="group/row relative border-b border-gray-200 lg:hover:z-30"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setExpanded(isOpen ? null : key)}
-                        className="w-full flex items-center justify-between py-2 sm:py-2.5 text-left cursor-pointer"
-                        aria-expanded={isOpen}
-                      >
-                        <span className="text-[18px] sm:text-[22px] lg:text-[28px] text-gray-600 font-extralight group-hover/row:text-[#2E368F] transition-colors duration-300">
-                          {capability.name}
-                        </span>
-                        <span
-                          className={`text-lg sm:text-xl text-gray-400 font-light group-hover/row:text-[#2E368F] transition-all duration-300 shrink-0 ml-4 ${
-                            isOpen ? "rotate-45 lg:rotate-0" : "rotate-0"
-                          }`}
-                        >
-                          +
-                        </span>
-                      </button>
-
-                      {/* Desktop: hover preview image */}
-                      <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[170px] h-[130px] opacity-0 scale-95 translate-x-2 group-hover/row:opacity-100 group-hover/row:scale-100 group-hover/row:translate-x-0 transition-all duration-500 ease-out pointer-events-none overflow-hidden shadow-lg">
-                        <Image
-                          src={capability.image}
-                          alt={capability.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-
-                      {/* Mobile: tap to expand image accordion */}
-                      <div
-                        className={`lg:hidden overflow-hidden transition-all duration-500 ease-out ${
-                          isOpen ? "max-h-[200px] pb-4" : "max-h-0"
-                        }`}
-                      >
-                        <div className="relative w-full h-[160px] sm:h-[200px]">
-                          <Image
-                            src={capability.image}
-                            alt={capability.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div className="mt-8 lg:mt-10">
-              <Button variant="primary">EXPLORE SOLUTIONS</Button>
-            </div>
+      {/* Desktop: both solutions side by side */}
+      <div className="hidden lg:grid w-full px-16 grid-cols-2 gap-6 items-stretch">
+        {solutions.map((solution) => (
+          <div key={solution.title} className="h-full">
+            {renderCard(solution)}
           </div>
         ))}
-
-        {/* Trailing spacer so the last mobile slide can rest fully in view */}
-        <div className="w-6 shrink-0 lg:hidden" />
       </div>
     </section>
   );

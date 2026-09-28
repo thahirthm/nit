@@ -6,6 +6,8 @@ import { AboutScale } from "@/components/about/AboutScale";
 import { ClientsSection } from "@/components/home/ClientsSection";
 import { AboutCeoMessage } from "@/components/about/AboutCeoMessage";
 import { AboutLeadership } from "@/components/about/AboutLeadership";
+import { AboutGlobal } from "@/components/about/AboutGlobal";
+import { AboutCertifications } from "@/components/about/AboutCertifications";
 
 export default function AboutPage() {
   return (
@@ -18,6 +20,8 @@ export default function AboutPage() {
       <ClientsSection />
       <AboutCeoMessage />
       <AboutLeadership />
+      <AboutGlobal />
+      <AboutCertifications />
     </main>
   );
 }

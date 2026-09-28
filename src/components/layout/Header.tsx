@@ -48,17 +48,15 @@ export function Header() {
 
   const isTransparent = isHome && !isScrolled;
 
-  // Only the home page is live for now — every other nav link is a placeholder
-  // that shouldn't navigate anywhere until its page is ready.
   const navLinks = [
     { name: 'HOME', href: '/', active: isHome },
-    { name: 'ABOUT', href: '#', hasDropdown: true },
-    { name: 'SOLUTIONS', href: '#', hasDropdown: true },
-    { name: 'PROJECTS', href: '#' },
-    { name: 'INVESTORS', href: '#' },
-    { name: 'MEDIA CENTRE', href: '#' },
-    { name: 'CAREERS', href: '#' },
-    { name: 'CONTACT', href: '#' },
+    { name: 'ABOUT', href: '/about', hasDropdown: true },
+    { name: 'SOLUTIONS', href: '/solutions', hasDropdown: true },
+    { name: 'PROJECTS', href: '/projects' },
+    { name: 'INVESTORS', href: '/investors' },
+    { name: 'MEDIA CENTRE', href: '/media' },
+    { name: 'CAREERS', href: '/careers' },
+    { name: 'CONTACT', href: '/contact' },
   ];
 
   return (
@@ -89,7 +87,6 @@ export function Header() {
                 <div key={link.name} className="relative group h-full flex items-center">
                   <Link
                     href={link.href}
-                    onClick={link.href === '#' ? (e) => e.preventDefault() : undefined}
                     className={`flex items-center text-[11px] font-medium tracking-wider transition-colors pt-1 ${isTransparent ? 'text-white hover:text-gray-200' : 'text-[#2b307d] hover:text-blue-700'}`}
                   >
                     {link.name}

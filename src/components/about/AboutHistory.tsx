@@ -98,7 +98,7 @@ export function AboutHistory() {
   const goNext = () => setActiveIndex((i) => Math.min(lastIndex, i + 1));
 
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px] pb-[60px] lg:pb-[100px]">
+    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
       <div className="px-6 lg:px-16">
         <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-12">
           Our history

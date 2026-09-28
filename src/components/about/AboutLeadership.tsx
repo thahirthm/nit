@@ -148,7 +148,7 @@ export function AboutLeadership() {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </div>  
     </section>
   );
 }
