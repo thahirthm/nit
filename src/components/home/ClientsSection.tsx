@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
+import { useLanguage } from "@/context/LanguageContext";
 import "swiper/css";
 
 const logos: Record<string, { src: string; alt: string }> = {
@@ -61,11 +62,11 @@ const logos: Record<string, { src: string; alt: string }> = {
 };
 
 const categories = [
-  { name: "Featured Clients", logos: ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10"] },
-  { name: "Infrastructure", logos: ["l11", "l12", "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20"] },
-  { name: "Government", logos: ["l21", "l22", "l23", "l24", "l25", "l26", "l27", "l28", "l29", "l30"] },
-  { name: "Technology", logos: ["l31", "l32", "l33", "l34", "l35", "l36", "l37", "l38", "l39", "l40"] },
-  { name: "Banking & Telecommunications", logos: ["l41", "l42", "l43", "l44", "l45", "l46", "l47", "l48", "l49", "l50"] },
+  { name: { en: "Featured Clients", ar: "عملاء مختارون" }, logos: ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10"] },
+  { name: { en: "Infrastructure", ar: "البنية التحتية" }, logos: ["l11", "l12", "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20"] },
+  { name: { en: "Government", ar: "القطاع الحكومي" }, logos: ["l21", "l22", "l23", "l24", "l25", "l26", "l27", "l28", "l29", "l30"] },
+  { name: { en: "Technology", ar: "التقنية" }, logos: ["l31", "l32", "l33", "l34", "l35", "l36", "l37", "l38", "l39", "l40"] },
+  { name: { en: "Banking & Telecommunications", ar: "الخدمات المصرفية والاتصالات" }, logos: ["l41", "l42", "l43", "l44", "l45", "l46", "l47", "l48", "l49", "l50"] },
 ];
 
 // Desktop/tablet shows 2 rows (grid-rows-2) at their column counts — 10 logos per slide.
@@ -80,7 +81,8 @@ const ArrowIcon = ({ className }: { className?: string }) => (
 );
 
 export function ClientsSection() {
-  const [activeCategory, setActiveCategory] = useState(categories[0].name);
+  const { language } = useLanguage();
+  const [activeCategory, setActiveCategory] = useState(categories[0].name.en);
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -98,7 +100,7 @@ export function ClientsSection() {
   const logosPerSlide = isMobile ? LOGOS_PER_SLIDE_MOBILE : LOGOS_PER_SLIDE_DEFAULT;
 
   const activeLogos = useMemo(
-    () => categories.find((c) => c.name === activeCategory)?.logos ?? [],
+    () => categories.find((c) => c.name.en === activeCategory)?.logos ?? [],
     [activeCategory]
   );
 
@@ -111,11 +113,11 @@ export function ClientsSection() {
   }, [activeLogos, logosPerSlide]);
 
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
+    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* Heading */}
       <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10">
-        <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
-          Trusted by leading organizations
+        <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
+          {language === "ar" ? "موثوقون لدى جهات رائدة" : "Trusted by leading organizations"}
         </h2>
       </div>
 
@@ -123,18 +125,18 @@ export function ClientsSection() {
       <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <div className="flex flex-nowrap lg:flex-wrap gap-3 overflow-x-auto lg:overflow-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {categories.map((category) => {
-            const isActive = category.name === activeCategory;
+            const isActive = category.name.en === activeCategory;
             return (
               <button
-                key={category.name}
-                onClick={() => setActiveCategory(category.name)}
+                key={category.name.en}
+                onClick={() => setActiveCategory(category.name.en)}
                 className={`shrink-0 px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 whitespace-nowrap ${
                   isActive
                     ? "bg-[#2E368F] text-white border-[#2E368F]"
                     : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
                 }`}
               >
-                {category.name}
+                {language === "ar" ? category.name.ar : category.name.en}
               </button>
             );
           })}
@@ -148,7 +150,7 @@ export function ClientsSection() {
               disabled={isBeginning}
               className={`transition-colors duration-300 ${isBeginning ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
             >
-              <ArrowIcon className="rotate-180" />
+              <ArrowIcon className={language === "ar" ? "" : "rotate-180"} />
             </button>
             <button
               aria-label="Next"
@@ -156,7 +158,7 @@ export function ClientsSection() {
               disabled={isEnd}
               className={`transition-colors duration-300 ${isEnd ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
             >
-              <ArrowIcon />
+              <ArrowIcon className={language === "ar" ? "rotate-180" : ""} />
             </button>
           </div>
         )}

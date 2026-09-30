@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function GlanceSection() {
+  const { language } = useLanguage();
   const cardClasses = "relative w-[85vw] md:w-[400px] lg:w-[480px] shrink-0 h-[500px] lg:h-[600px] overflow-hidden group snap-start";
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -101,25 +103,28 @@ export function GlanceSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-white font-[family-name:var(--font-futura)]"
-      style={isDesktop ? { height: `calc(100vh + ${effectiveMaxScroll}px)` } : undefined}
+      className={`relative w-full bg-white ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
+      style={isDesktop ? { height: `calc(100dvh + ${effectiveMaxScroll}px)` } : undefined}
     >
       {/* Desktop: pinned viewport — heading + track stay fixed on screen while the page scrolls past,
           driving the horizontal track below via translateX. Once maxScroll is exhausted,
           the section's extra height runs out and normal vertical scroll resumes.
           Mobile: normal-flow section, no pinning — the track below scrolls natively. */}
-      <div className="lg:sticky lg:top-0 h-auto lg:h-screen w-full flex flex-col justify-start lg:justify-center overflow-hidden pt-[60px] lg:pt-[100px] pb-0">
+      <div className="lg:sticky lg:top-0 h-auto lg:h-dvh w-full flex flex-col justify-start lg:justify-center lg:overflow-hidden pt-[60px] lg:pt-[100px] pb-0">
         {/* Heading */}
         <div className="w-full px-6 lg:px-16 mb-8 lg:mb-12">
-          <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
-            NIT at a glance
+          <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
+            {language === "ar" ? "نسما للبنية التحتية والتقنية في لمحة" : "NIT at a glance"}
           </h2>
         </div>
 
         {/* Horizontal Track — desktop: driven by page scroll via translateX.
-            Mobile: native horizontal scroll/snap slider (no pinning). */}
+            Mobile: native horizontal scroll/snap slider (no pinning).
+            Always kept LTR: the scroll-jack math (translateX/scrollWidth) assumes
+            left-to-right scrolling, and card order shouldn't reorder by language. */}
         <div
           ref={trackRef}
+          dir="ltr"
           className="flex items-start gap-6 lg:px-16 w-full will-change-transform overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           style={isDesktop ? { transform: `translateX(${translateX}px)` } : undefined}
         >
@@ -137,8 +142,10 @@ export function GlanceSection() {
             />
             <div className="absolute inset-0 bg-black/20" />
             <div className="absolute inset-0 p-8 flex flex-col justify-between text-white">
-              <p className="text-lg lg:text-xl font-normal leading-relaxed max-w-[100%]">
-                Over three decades delivering infrastructure and technology solutions across the Kingdom.
+              <p dir={language === "ar" ? "rtl" : "ltr"} className="text-lg lg:text-xl font-normal leading-relaxed max-w-[100%]">
+                {language === "ar"
+                  ? "أكثر من ثلاثة عقود من تقديم حلول البنية التحتية والتقنية في مختلف أنحاء المملكة."
+                  : "Over three decades delivering infrastructure and technology solutions across the Kingdom."}
               </p>
               <h3 className="font-[family-name:var(--font-anek-latin)] text-[60px] lg:text-[90px] font-normal tracking-tight self-end leading-none">
                 1988
@@ -168,21 +175,21 @@ export function GlanceSection() {
               </svg>
             </div>
 
-            <p className="text-lg lg:text-xl text-gray-900 font-normal leading-snug max-w-[90%] z-10 relative">
-              International Technology<br />Alliances
+            <p dir={language === "ar" ? "rtl" : "ltr"} className="text-lg lg:text-xl text-gray-900 font-normal leading-snug max-w-[90%] z-10 relative">
+              {language === "ar" ? "أكثر من 30 تحالفًا تقنيًا دوليًا" : <>International Technology<br />Alliances</>}
             </p>
           </div>
 
           {/* Card 3: Growth Chart */}
           <div ref={chartRef} className={`${cardClasses} bg-[#2E368F] p-8 flex flex-col text-white`}>
-            <h4 className="text-lg font-normal mb-6">Growth Over Time</h4>
+            <h4 dir={language === "ar" ? "rtl" : "ltr"} className="text-lg font-normal mb-6">{language === "ar" ? "النمو عبر السنوات" : "Growth Over Time"}</h4>
 
-            <div className="flex flex-col gap-1 text-xs font-normal text-white/80 mb-6">
+            <div dir={language === "ar" ? "rtl" : "ltr"} className="flex flex-col gap-1 text-xs font-normal text-white/80 mb-6">
               <div className="flex items-center gap-2">
-                <span className="w-4 h-[1px] bg-white"></span> PROJECTS
+                <span className="w-4 h-[1px] bg-white"></span> {language === "ar" ? "المشاريع" : "PROJECTS"}
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-4 h-[1px] bg-[#81D1E8]"></span> WORKFORCE
+                <span className="w-4 h-[1px] bg-[#81D1E8]"></span> {language === "ar" ? "القوى العاملة" : "WORKFORCE"}
               </div>
             </div>
 
@@ -281,11 +288,11 @@ export function GlanceSection() {
           {/* Card 4: 21B SAR & NEOM */}
           <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col justify-between">
             <div className="flex flex-col items-start text-start">
-              <h3 className="font-[family-name:var(--font-anek-latin)] text-[50px] lg:text-[70px] font-normal text-gray-900 leading-none">
-                21B SAR
+              <h3 dir={language === "ar" ? "rtl" : "ltr"} className={`font-normal text-gray-900 leading-tight ${language === "ar" ? "font-arabic text-[32px] lg:text-[40px]" : "font-[family-name:var(--font-anek-latin)] text-[50px] lg:text-[70px] leading-none"}`}>
+                {language === "ar" ? "21 مليار ريال سعودي" : "21B SAR"}
               </h3>
-              <p className="max-h-0 opacity-0 group-hover:max-h-10 group-hover:opacity-100 group-hover:mt-3 overflow-hidden text-lg lg:text-xl text-gray-500 font-normal transition-all duration-500 ease-out">
-                Greatest Achievement
+              <p dir={language === "ar" ? "rtl" : "ltr"} className="max-h-0 opacity-0 group-hover:max-h-10 group-hover:opacity-100 group-hover:mt-3 overflow-hidden text-lg lg:text-xl text-gray-500 font-normal transition-all duration-500 ease-out">
+                {language === "ar" ? "أبرز إنجاز" : "Greatest Achievement"}
               </p>
             </div>
 
@@ -293,14 +300,14 @@ export function GlanceSection() {
               <div className="w-[70px] h-[70px] lg:w-[120px] lg:h-[120px] relative">
                 <Image
                   src="/images/neom.png"
-                  alt="NEOM"
+                  alt={language === "ar" ? "نيوم" : "NEOM"}
                   fill
                   className="object-contain"
                 />
               </div>
 
-              <p className="max-h-0 opacity-0 group-hover:max-h-10 group-hover:opacity-100 overflow-hidden text-lg lg:text-xl text-gray-900 font-normal transition-all duration-500 ease-out">
-                Oxagon Village
+              <p dir={language === "ar" ? "rtl" : "ltr"} className="max-h-0 opacity-0 group-hover:max-h-10 group-hover:opacity-100 overflow-hidden text-lg lg:text-xl text-gray-900 font-normal transition-all duration-500 ease-out">
+                {language === "ar" ? "قرية أوكساغون" : "Oxagon Village"}
               </p>
             </div>
           </div>
@@ -315,7 +322,7 @@ export function GlanceSection() {
             />
 
             <div className="absolute inset-0 p-8 flex flex-col justify-between text-white">
-              <h4 className="text-xl font-normal">Head Quarters</h4>
+              <h4 dir={language === "ar" ? "rtl" : "ltr"} className="text-xl font-normal">{language === "ar" ? "المقر الرئيسي" : "Head Quarters"}</h4>
 
               {/* Clock Overlay */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] rounded-full border-[1px] border-white/20 flex items-center justify-center bg-black/10 backdrop-blur-sm">
@@ -357,7 +364,7 @@ export function GlanceSection() {
 
               <div className="flex items-end justify-between w-full">
                 <span className="text-lg lg:text-xl font-normal opacity-80">(GMT+3)</span>
-                <span className="text-[40px] lg:text-[50px] font-normal leading-none">Jeddah,Ksa</span>
+                <span className="text-[40px] lg:text-[50px] font-normal leading-none">{language === "ar" ? "جدة، المملكة العربية السعودية" : "Jeddah,Ksa"}</span>
               </div>
             </div>
           </div>
@@ -367,15 +374,17 @@ export function GlanceSection() {
             <div className="flex justify-end mb-8 lg:mb-16">
               <Image
                 src="/images/vis.png"
-                alt="Vision 2030 - Kingdom of Saudi Arabia"
+                alt={language === "ar" ? "رؤية السعودية 2030 – المملكة العربية السعودية" : "Vision 2030 - Kingdom of Saudi Arabia"}
                 width={112}
                 height={76}
                 className="w-[100px] lg:w-[120px] h-auto object-contain"
               />
             </div>
 
-            <p className="text-lg lg:text-xl text-gray-900 font-normal leading-snug mb-auto max-w-[90%]">
-              Targeting 50% local content by 2027, driving digital transformation across the Kingdom&apos;s critical infrastructure sectors.
+            <p dir={language === "ar" ? "rtl" : "ltr"} className="text-lg lg:text-xl text-gray-900 font-normal leading-snug mb-auto max-w-[90%]">
+              {language === "ar"
+                ? "نستهدف الوصول إلى نسبة 50% من المحتوى المحلي بحلول عام 2027، بما يسهم في دفع عجلة التحول الرقمي في قطاعات البنية التحتية الحيوية في المملكة."
+                : "Targeting 50% local content by 2027, driving digital transformation across the Kingdom's critical infrastructure sectors."}
             </p>
 
             <div className="mt-8">
@@ -387,8 +396,8 @@ export function GlanceSection() {
                 <div className="absolute left-0 top-0 h-full bg-[#2E368F] w-[4%] group-hover:w-[37%] transition-all duration-700 ease-out" />
               </div>
               <div className="flex justify-between text-xs text-gray-500">
-                <span>LC score 2024</span>
-                <span>By 2027</span>
+                <span>{language === "ar" ? "نسبة المحتوى المحلي لعام 2024" : "LC score 2024"}</span>
+                <span>{language === "ar" ? "بحلول عام 2027" : "By 2027"}</span>
               </div>
             </div>
           </div>

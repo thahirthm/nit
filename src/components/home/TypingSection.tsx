@@ -1,12 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
-const LINE_1 = "Engineering today's needs,";
-const LINE_2 = "delivering tomorrow's infrastructure";
+const LINES = {
+  en: { line1: "Engineering today's needs,", line2: "delivering tomorrow's infrastructure" },
+  ar: { line1: "نهندس احتياجات اليوم،", line2: "وننفّذ البنية التحتية للغد." },
+};
 const TYPE_SPEED_MS = 45;
 
 export function TypingSection() {
+  const { language } = useLanguage();
+  const LINE_1 = LINES[language].line1;
+  const LINE_2 = LINES[language].line2;
   const sectionRef = useRef<HTMLElement>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const [line1Count, setLine1Count] = useState(0);
@@ -42,16 +48,16 @@ export function TypingSection() {
       const id = setTimeout(() => setLine2Count((c) => c + 1), TYPE_SPEED_MS);
       return () => clearTimeout(id);
     }
-  }, [hasStarted, line1Count, line2Count]);
+  }, [hasStarted, line1Count, line2Count, LINE_1.length, LINE_2.length]);
 
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]"
+      className={`w-full bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
     >
-      <div className="w-full px-6 lg:px-16 !pr-0 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-10 items-center">
+      <div dir="ltr" className="w-full px-6 lg:px-16 !pr-0 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-10 items-center">
         {/* Left: typing text */}
-        <h2 className="text-[34px] sm:text-[46px] lg:text-[64px] leading-[1.2] font-extralight tracking-tight">
+        <h2 dir={language === "ar" ? "rtl" : "ltr"} className={`text-[34px] sm:text-[46px] lg:text-[64px] leading-[1.2] font-extralight tracking-tight ${language === "ar" ? "text-right" : ""}`}>
           <span className="text-gray-500">{LINE_1.slice(0, line1Count)}</span>
           <br />
           <span className="text-[#2E368F]">{LINE_2.slice(0, line2Count)}</span>

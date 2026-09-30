@@ -1,5 +1,8 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -24,9 +27,11 @@ export function Button({
   iconOutline = false,
   ...props
 }: ButtonProps) {
+  const { language } = useLanguage();
   const isPrimary = variant === 'primary';
+  const isRtl = language === 'ar';
 
-  const containerClasses = `inline-flex items-stretch gap-2.5 group font-[family-name:var(--font-futura)] ${className}`;
+  const containerClasses = `inline-flex items-stretch gap-2.5 group ${isRtl ? 'font-arabic' : 'font-[family-name:var(--font-futura)]'} ${className}`;
 
   const textContainer = `
     relative overflow-hidden flex items-center justify-center px-4 py-2.5 text-[12px] font-medium leading-normal uppercase z-10 border border-[#2E368F] transition-colors duration-300
@@ -53,22 +58,22 @@ export function Button({
       <div className={iconContainer}>
         <div className={iconBgStatic} />
         <div className={iconBgHover} />
-        <CustomArrow className={`w-[13px] h-[13px] transition-transform duration-500 ease-in-out group-hover:translate-x-12 ${!isPrimary ? 'group-hover:text-[#2E368F]' : ''}`} />
-        <CustomArrow className={`absolute w-[13px] h-[13px] -translate-x-12 transition-transform duration-500 ease-in-out group-hover:translate-x-0 ${!isPrimary ? 'text-[#2E368F]' : ''}`} />
+        <CustomArrow className={`w-[13px] h-[13px] transition-transform duration-500 ease-in-out ${isRtl ? 'scale-x-[-1] group-hover:-translate-x-12' : 'group-hover:translate-x-12'} ${!isPrimary ? 'group-hover:text-[#2E368F]' : ''}`} />
+        <CustomArrow className={`absolute w-[13px] h-[13px] transition-transform duration-500 ease-in-out group-hover:translate-x-0 ${isRtl ? 'scale-x-[-1] translate-x-12' : '-translate-x-12'} ${!isPrimary ? 'text-[#2E368F]' : ''}`} />
       </div>
     </>
   );
 
   if (href) {
     return (
-      <Link href={href} className={containerClasses}>
+      <Link href={href} dir={isRtl ? 'rtl' : 'ltr'} className={containerClasses}>
         {content}
       </Link>
     );
   }
 
   return (
-    <button className={containerClasses} {...props}>
+    <button dir={isRtl ? 'rtl' : 'ltr'} className={containerClasses} {...props}>
       {content}
     </button>
   );

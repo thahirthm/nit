@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function Banner() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const { language } = useLanguage();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -28,24 +30,30 @@ export function Banner() {
         />
       </div>
 
-      {/* Content Container */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 flex justify-end">
+      {/* Content Container — kept LTR so the text box always bleeds from the same
+          edge of the frame; only the text itself switches reading direction. */}
+      <div dir="ltr" className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 flex justify-end">
         <div className="max-w-[750px] pt-[90px]">
-          <h1 className="text-white text-[43px] leading-[50px] md:text-[55px] md:leading-[62px] font-extralight mb-12 tracking-wide font-[family-name:var(--font-futura)] flex flex-col">
+          <h1
+            dir={language === "ar" ? "rtl" : "ltr"}
+            className={`text-white text-[43px] leading-[50px] md:text-[55px] md:leading-[62px] font-extralight mb-12 tracking-wide flex flex-col ${language === "ar" ? "font-arabic text-right" : "font-[family-name:var(--font-futura)]"}`}
+          >
             <span className="overflow-hidden pb-2 -mb-2">
               <span className={`block transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isLoaded ? 'translate-y-0' : 'translate-y-[120%]'}`}>
-                Engineering Infrastructure.
+                {language === "ar" ? "نهندس البنية التحتية." : "Engineering Infrastructure."}
               </span>
             </span>
             <span className="overflow-hidden pb-2 -mb-2">
               <span className={`block transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-150 ${isLoaded ? 'translate-y-0' : 'translate-y-[120%]'}`}>
-                Enabling Digital Transformation.
+                {language === "ar" ? "ونمكّن التحول الرقمي." : "Enabling Digital Transformation."}
               </span>
             </span>
           </h1>
-          <div className="overflow-hidden pb-4 -mb-4">
+          <div className={`overflow-hidden pb-4 -mb-4 ${language === "ar" ? "flex justify-end" : ""}`}>
             <div className={`transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-300 ${isLoaded ? 'translate-y-0' : 'translate-y-[120%]'}`}>
-              <Button variant="secondary" iconOutline className="mt-2">Know more about us</Button>
+              <Button variant="secondary" iconOutline className="mt-2">
+                {language === "ar" ? "تعرّف علينا أكثر" : "Know more about us"}
+              </Button>
             </div>
           </div>
         </div>

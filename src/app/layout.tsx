@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Anek_Latin } from "next/font/google";
+import { Geist, Geist_Mono, Anek_Latin, Noto_Kufi_Arabic } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +20,12 @@ const anekLatin = Anek_Latin({
   variable: "--font-anek-latin",
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+});
+
+const notoKufiArabic = Noto_Kufi_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const futura = localFont({
@@ -50,14 +57,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${futura.variable} ${anekLatin.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${futura.variable} ${anekLatin.variable} ${notoKufiArabic.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+        <LanguageProvider>
+          <Header />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

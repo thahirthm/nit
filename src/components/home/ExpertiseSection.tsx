@@ -3,14 +3,19 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Globe } from "@/components/ui/Globe";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function ExpertiseSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const { language } = useLanguage();
 
   const stats = [
     {
       value: "35+",
-      label: "Years of Infrastructure &\nEngineering",
+      label: {
+        en: "Years of Infrastructure &\nEngineering",
+        ar: "أكثر من 35 عامًا من الخبرة في\nالبنية التحتية والهندسة",
+      },
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54" fill="none">
           <path d="M32.0625 47.25L48.9375 10.125H32.0625L23.625 28.6875H40.5" stroke="#2E368F" strokeLinecap="round" strokeLinejoin="round" />
@@ -20,7 +25,10 @@ export function ExpertiseSection() {
     },
     {
       value: "63+",
-      label: "Active Infrastructure & Technology\nProjects",
+      label: {
+        en: "Active Infrastructure & Technology\nProjects",
+        ar: "أكثر من 63 مشروعًا نشطًا في\nالبنية التحتية والتقنية",
+      },
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54" fill="none">
           <path d="M3.375 21.9375L27 35.4375L50.625 21.9375L27 8.4375L3.375 21.9375Z" stroke="#2E368F" strokeLinecap="round" strokeLinejoin="round" />
@@ -30,7 +38,10 @@ export function ExpertiseSection() {
     },
     {
       value: "1900+",
-      label: "Engineers & Specialists",
+      label: {
+        en: "Engineers & Specialists",
+        ar: "أكثر من 1,900 مهندس ومتخصص",
+      },
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54" fill="none">
           <path d="M40.5 25.3125C42.4651 25.311 44.4034 25.7678 46.161 26.6467C47.9187 27.5255 49.4471 28.8021 50.625 30.375" stroke="#2E368F" strokeLinecap="round" strokeLinejoin="round" />
@@ -44,7 +55,10 @@ export function ExpertiseSection() {
     },
     {
       value: "60k+",
-      label: "In-Kingdom Resources Across\nNesma Group",
+      label: {
+        en: "In-Kingdom Resources Across\nNesma Group",
+        ar: "أكثر من 60 ألفًا من الكوادر داخل\nالمملكة على مستوى مجموعة نسما",
+      },
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54" fill="none">
           <path d="M27 47.25C38.1838 47.25 47.25 38.1838 47.25 27C47.25 15.8162 38.1838 6.75 27 6.75C15.8162 6.75 6.75 15.8162 6.75 27C6.75 38.1838 15.8162 47.25 27 47.25Z" stroke="#2E368F" strokeLinecap="round" strokeLinejoin="round" />
@@ -56,20 +70,24 @@ export function ExpertiseSection() {
   ];
 
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)]">
-      {/* Top Section: Text + Globe side by side */}
-      <div className="relative flex flex-col lg:flex-row w-full overflow-hidden">
+    <section className={`w-full bg-white ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+      {/* Top Section: Text + Globe side by side — layout stays LTR-structured in both
+          languages (globe always bleeds from the same edge); only the text itself flips
+          reading direction via its own `dir`, so the Arabic switch never reflows the row. */}
+      <div dir="ltr" className="relative flex flex-col lg:flex-row w-full overflow-hidden">
 
         {/* Left: Text */}
         <div className="relative z-10 w-full lg:w-[58%] px-6 lg:px-16 lg:pr-0 pt-[60px] lg:pt-[100px] flex flex-col justify-start space-y-6">
-          <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
-            Local expertise. Global reach.
+          <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
+            {language === "ar" ? "خبرات محلية. حضور عالمي." : "Local expertise. Global reach."}
           </h2>
-          <p className="text-[15px] md:text-[18px] lg:text-[23px] leading-normal font-light  text-[#727272]">
-            NIT operates across Saudi Arabia while collaborating with international partners to deliver infrastructure and technology solutions for complex projects.
+          <p dir={language === "ar" ? "rtl" : "ltr"} className="text-[15px] md:text-[18px] lg:text-[23px] leading-normal font-light  text-[#727272]">
+            {language === "ar"
+              ? "تعمل نسما للبنية التحتية والتقنية في مختلف أنحاء المملكة العربية السعودية، وتتعاون مع شركاء دوليين لتقديم حلول البنية التحتية والتقنية للمشاريع المعقدة."
+              : "NIT operates across Saudi Arabia while collaborating with international partners to deliver infrastructure and technology solutions for complex projects."}
           </p>
           <div className="pt-2">
-            <Button variant="primary">ABOUT US</Button>
+            <Button variant="primary">{language === "ar" ? "من نحن" : "ABOUT US"}</Button>
           </div>
         </div>
 
@@ -86,9 +104,10 @@ export function ExpertiseSection() {
 
       </div>
 
-      {/* Bottom Section: Stats Grid */}
+      {/* Bottom Section: Stats Grid — kept LTR so card order/borders never mirror;
+          only each label's own dir flips for correct Arabic alignment. */}
       <div className="w-full border-t border-gray-100">
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+        <div dir="ltr" className="max-w-[1440px] mx-auto w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => {
             const isLeftCol = index % 2 === 0;
             const isLastRow = index >= stats.length - 2;
@@ -114,9 +133,10 @@ export function ExpertiseSection() {
                   {stat.value}
                 </h3>
                 <p
+                  dir={language === "ar" ? "rtl" : "ltr"}
                   className={`font-light leading-relaxed whitespace-pre-line transition-colors duration-500 text-[13px] sm:text-[16px] lg:text-[18px] ${isActive ? 'text-white' : 'text-[#727272]'}`}
                 >
-                  {stat.label}
+                  {language === "ar" ? stat.label.ar : stat.label.en}
                 </p>
               </div>
               <div className={`relative z-10 ms-auto md:pt-30 pt-6 sm:pt-10 transition-all duration-500 [&_path]:transition-all [&_path]:duration-500 [&_svg]:w-9 [&_svg]:h-9 sm:[&_svg]:w-auto sm:[&_svg]:h-auto ${isActive ? '[&_path]:stroke-white' : ''}`}>

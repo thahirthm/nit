@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown, Plus, X } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,7 +12,8 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
-  
+  const { language, setLanguage } = useLanguage();
+
   const isHome = pathname === '/';
 
   useEffect(() => {
@@ -49,14 +51,14 @@ export function Header() {
   const isTransparent = isHome && !isScrolled;
 
   const navLinks = [
-    { name: 'HOME', href: '/', active: isHome },
-    { name: 'ABOUT', href: '/about', hasDropdown: true },
-    { name: 'SOLUTIONS', href: '/solutions', hasDropdown: true },
-    { name: 'PROJECTS', href: '/projects' },
-    { name: 'INVESTORS', href: '/investors' },
-    { name: 'MEDIA CENTRE', href: '/media' },
-    { name: 'CAREERS', href: '/careers' },
-    { name: 'CONTACT', href: '/contact' },
+    { name: { en: 'HOME', ar: 'الرئيسية' }, href: '/', active: isHome },
+    { name: { en: 'ABOUT', ar: 'من نحن' }, href: '/about', hasDropdown: true },
+    { name: { en: 'SOLUTIONS', ar: 'الحلول' }, href: '/solutions', hasDropdown: true },
+    { name: { en: 'PROJECTS', ar: 'المشاريع' }, href: '/projects' },
+    { name: { en: 'INVESTORS', ar: 'المستثمرون' }, href: '/investors' },
+    { name: { en: 'MEDIA CENTRE', ar: 'المركز الإعلامي' }, href: '/media' },
+    { name: { en: 'CAREERS', ar: 'الوظائف' }, href: '/careers' },
+    { name: { en: 'CONTACT', ar: 'تواصل معنا' }, href: '/contact' },
   ];
 
   return (
@@ -64,7 +66,7 @@ export function Header() {
       <header 
         className={`fixed top-0 left-0 right-0 w-full z-40 transition-all duration-300 ${isHidden && !isMobileMenuOpen ? '-translate-y-full' : 'translate-y-0'} ${isTransparent ? 'bg-transparent border-transparent' : 'bg-white border-b border-gray-100'}`}
       >
-        <div className="mx-auto flex h-[90px] max-w-[1440px] items-center justify-between px-6 lg:px-12">
+        <div dir={language === 'ar' ? 'rtl' : 'ltr'} className="mx-auto flex h-[90px] max-w-[1440px] items-center justify-between px-6 lg:px-12">
           
           {/* Left section: Logo */}
           <div className="flex items-center gap-6 h-full py-4">
@@ -81,17 +83,17 @@ export function Header() {
           </div>
 
           {/* Right section: Navigation and Language */}
-          <div className="flex items-center gap-4 lg:gap-10 h-full font-[family-name:var(--font-futura)]">
-            <nav className="hidden h-full xl:flex items-center gap-8">
+          <div className={`flex items-center gap-4 lg:gap-10 h-full ${language === 'ar' ? 'font-arabic' : 'font-[family-name:var(--font-futura)]'}`}>
+            <nav dir={language === 'ar' ? 'rtl' : 'ltr'} className="hidden h-full xl:flex items-center gap-8">
               {navLinks.map((link) => (
-                <div key={link.name} className="relative group h-full flex items-center">
+                <div key={link.name.en} className="relative group h-full flex items-center">
                   <Link
                     href={link.href}
-                    className={`flex items-center text-[11px] font-medium tracking-wider transition-colors pt-1 ${isTransparent ? 'text-white hover:text-gray-200' : 'text-[#2b307d] hover:text-blue-700'}`}
+                    className={`flex items-center text-[11px] font-medium tracking-wider transition-colors pt-1 ${language === 'ar' ? 'font-arabic' : ''} ${isTransparent ? 'text-white hover:text-gray-200' : 'text-[#2b307d] hover:text-blue-700'}`}
                   >
-                    {link.name}
+                    {language === 'ar' ? link.name.ar : link.name.en}
                     {link.hasDropdown && (
-                      <ChevronDown className="ml-1 h-3.5 w-3.5" strokeWidth={2} />
+                      <ChevronDown className="ms-1 h-3.5 w-3.5" strokeWidth={2} />
                     )}
                   </Link>
                   {/* Active indicator line */}
@@ -105,12 +107,19 @@ export function Header() {
             {/* Language Switcher & Plus */}
             <div className="hidden md:flex items-center gap-6 h-full">
               <div className={`flex items-center border text-[13px] font-semibold h-9 transition-colors duration-300 ${isTransparent ? 'border-white/30' : 'border-[#2b307d]'}`}>
-                <button className={`px-3.5 h-full flex items-center justify-center tracking-wide transition-colors duration-300 ${isTransparent ? 'bg-white text-[#2b307d]' : 'bg-[#2b307d] text-white'}`}>
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`px-3.5 h-full flex items-center justify-center tracking-wide transition-colors duration-300 ${language === 'en' ? (isTransparent ? 'bg-white text-[#2b307d]' : 'bg-[#2b307d] text-white') : (isTransparent ? 'bg-transparent text-white' : 'bg-white text-[#2b307d]')}`}
+                >
                   ENG
                 </button>
                 <div className={`w-[1px] h-full transition-colors duration-300 ${isTransparent ? 'bg-white/30' : 'bg-[#2b307d]'}`}></div>
-                <button className={`px-3.5 h-full flex items-center justify-center tracking-wide font-arabic transition-colors duration-300 ${isTransparent ? 'bg-transparent text-white' : 'bg-white text-[#2b307d]'}`} dir="rtl">
-                  آرا
+                <button
+                  onClick={() => setLanguage('ar')}
+                  className={`px-3.5 h-full flex items-center justify-center tracking-wide font-arabic transition-colors duration-300 ${language === 'ar' ? (isTransparent ? 'bg-white text-[#2b307d]' : 'bg-[#2b307d] text-white') : (isTransparent ? 'bg-transparent text-white' : 'bg-white text-[#2b307d]')}`}
+                  dir="rtl"
+                >
+                  عربي
                 </button>
               </div>
               
@@ -151,15 +160,16 @@ export function Header() {
           </button>
         </div>
         
-        <div className="flex flex-col py-6 px-6 overflow-y-auto font-[family-name:var(--font-futura)] h-full">
+        <div className={`flex flex-col py-6 px-6 overflow-y-auto h-full ${language === 'ar' ? 'font-arabic' : 'font-[family-name:var(--font-futura)]'}`}>
           {navLinks.map((link) => (
-            <div key={link.name} className="py-4 border-b border-gray-50">
+            <div key={link.name.en} className="py-4 border-b border-gray-50">
               <Link
                 href={link.href}
-                className="flex items-center justify-between text-[13px] font-medium tracking-wider text-[#2b307d]"
+                dir={language === 'ar' ? 'rtl' : 'ltr'}
+                className={`flex items-center justify-between text-[13px] font-medium tracking-wider text-[#2b307d] ${language === 'ar' ? 'font-arabic' : ''}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {link.name}
+                <span>{language === 'ar' ? link.name.ar : link.name.en}</span>
                 {link.hasDropdown && <ChevronDown className="w-4 h-4" strokeWidth={1.5} />}
               </Link>
             </div>
@@ -167,12 +177,19 @@ export function Header() {
 
           {/* Mobile Language Switcher */}
           <div className="mt-8 flex md:hidden items-center border border-[#2b307d] text-[13px] font-semibold h-10 w-fit">
-            <button className="bg-[#2b307d] text-white px-5 h-full flex items-center justify-center tracking-wide">
+            <button
+              onClick={() => setLanguage('en')}
+              className={`px-5 h-full flex items-center justify-center tracking-wide transition-colors duration-300 ${language === 'en' ? 'bg-[#2b307d] text-white' : 'bg-white text-[#2b307d]'}`}
+            >
               ENG
             </button>
             <div className="w-[1px] h-full bg-[#2b307d]"></div>
-            <button className="bg-white text-[#2b307d] px-5 h-full flex items-center justify-center tracking-wide font-arabic" dir="rtl">
-              آرا
+            <button
+              onClick={() => setLanguage('ar')}
+              className={`px-5 h-full flex items-center justify-center tracking-wide font-arabic transition-colors duration-300 ${language === 'ar' ? 'bg-[#2b307d] text-white' : 'bg-white text-[#2b307d]'}`}
+              dir="rtl"
+            >
+              عربي
             </button>
           </div>
         </div>

@@ -3,27 +3,47 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/context/LanguageContext";
 
 const offices = [
   {
-    label: "Head Office",
+    label: { en: "Head Office", ar: "المقر الرئيسي" },
     image: "/images/glance-time.png",
     phone: "012 212 2226",
     email: "INFO@NESMA-NIT.COM",
-    address: ["AN NAHDAH,", "JEDDAH, SAUDI ARABIA"],
+    address: {
+      en: ["AN NAHDAH,", "JEDDAH, SAUDI ARABIA"],
+      ar: ["حي النهضة،", "جدة، المملكة العربية السعودية"],
+    },
   },
   {
-    label: "Riyadh Office",
+    label: { en: "Riyadh Office", ar: "مكتب الرياض" },
     image: "/images/fp1.png",
     phone: "011 465 1188",
     email: "RIYADH@NESMA-NIT.COM",
-    address: ["AL OLAYA,", "RIYADH, SAUDI ARABIA"],
+    address: {
+      en: ["AL OLAYA,", "RIYADH, SAUDI ARABIA"],
+      ar: ["حي العليا،", "الرياض، المملكة العربية السعودية"],
+    },
   },
 ];
 
-const navLinks = ["HOME", "ABOUT", "SOLUTIONS", "PROJECTS", "INVESTORS", "MEDIA CENTRE", "CAREERS", "CONTACT"];
+const navLinks = [
+  { en: "HOME", ar: "الرئيسية" },
+  { en: "ABOUT", ar: "من نحن" },
+  { en: "SOLUTIONS", ar: "الحلول" },
+  { en: "PROJECTS", ar: "المشاريع" },
+  { en: "INVESTORS", ar: "المستثمرون" },
+  { en: "MEDIA CENTRE", ar: "المركز الإعلامي" },
+  { en: "CAREERS", ar: "الوظائف" },
+  { en: "CONTACT", ar: "تواصل معنا" },
+];
 
-const policyLinks = ["PRIVACY POLICY", "TERMS OF SERVICE", "COOKIE POLICY"];
+const policyLinks = [
+  { en: "PRIVACY POLICY", ar: "سياسة الخصوصية" },
+  { en: "TERMS OF SERVICE", ar: "شروط الخدمة" },
+  { en: "COOKIE POLICY", ar: "سياسة ملفات تعريف الارتباط" },
+];
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16" fill="none" className={className}>
@@ -91,6 +111,8 @@ const socials = [
 ];
 
 export function Footer() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
   const [officeIndex, setOfficeIndex] = useState(0);
   const office = offices[officeIndex];
 
@@ -98,41 +120,45 @@ export function Footer() {
   const nextOffice = () => setOfficeIndex((i) => (i === offices.length - 1 ? 0 : i + 1));
 
   return (
-    <footer className="w-full mt-[60px] lg:mt-[100px] bg-[#2E368F] font-[family-name:var(--font-futura)]">
-      <div className="w-full px-6 lg:px-16 pt-14 sm:pt-20 lg:pt-28 pb-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-12">
+    <footer className={`w-full mt-[60px] lg:mt-[100px] bg-[#2E368F] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+      <div dir="ltr" className="w-full px-6 lg:px-16 pt-14 sm:pt-20 lg:pt-28 pb-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-12">
         {/* Heading — always first */}
         <div className="order-1 lg:col-start-1 lg:row-start-1">
-          <h2 className="text-white text-[44px] sm:text-[60px] lg:text-[70px] font-extralight leading-[1.15] tracking-tight">
-            Your vision, Engineered<br />&amp; delivered.
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-white text-[44px] sm:text-[60px] lg:text-[70px] font-extralight leading-[1.15] tracking-tight">
+            {isAr ? <>رؤيتكم، نهندسها<br />ونحوّلها إلى واقع.</> : <>Your vision, Engineered<br />&amp; delivered.</>}
           </h2>
         </div>
 
         {/* Contact form — second on mobile, right column on desktop (spans both rows) */}
         <div className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 max-w-[520px] lg:ml-auto">
-          <h3 className="text-white text-[26px] lg:text-[28px] font-normal">
-            Join Our Growth Journey <span className="text-white/40 mx-1">|</span> Invest In The Future!
+          <h3 dir={isAr ? "rtl" : "ltr"} className="text-white text-[26px] lg:text-[28px] font-normal">
+            {isAr ? (
+              <>انضم إلى مسيرة نمونا <span className="text-white/40 mx-1">|</span> استثمر في المستقبل!</>
+            ) : (
+              <>Join Our Growth Journey <span className="text-white/40 mx-1">|</span> Invest In The Future!</>
+            )}
           </h3>
 
-          <form className="mt-10  flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>
+          <form dir={isAr ? "rtl" : "ltr"} className="mt-10  flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>
             <input
               type="text"
-              placeholder="Full Name"
+              placeholder={isAr ? "الاسم الكامل" : "Full Name"}
               className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
             />
             <input
               type="email"
-              placeholder="Your Email"
+              placeholder={isAr ? "البريد الإلكتروني" : "Your Email"}
               className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
             />
             <textarea
-              placeholder="Message"
+              placeholder={isAr ? "الرسالة" : "Message"}
               rows={1}
               className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors resize-y"
             />
 
             <div className="mt-1">
               <Button type="submit" variant="secondary" iconOutline>
-                Submit
+                {isAr ? "إرسال" : "Submit"}
               </Button>
             </div>
           </form>
@@ -140,12 +166,14 @@ export function Footer() {
 
         {/* Subtext + office card — third on mobile, under the heading on desktop */}
         <div className="order-3 lg:order-none lg:col-start-1 lg:row-start-2">
-          <p className="text-white/70 text-base sm:text-lg">Delivering excellence across regions</p>
+          <p dir={isAr ? "rtl" : "ltr"} className="text-white/70 text-base sm:text-lg">
+            {isAr ? "نقدّم التميز في مختلف المناطق" : "Delivering excellence across regions"}
+          </p>
 
           <div className="mt-4 bg-white/10 max-w-[460px] transition-opacity duration-300 hover:opacity-80">
-            <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10">
+            <div dir="ltr" className="flex items-center justify-between px-4 py-2.5 border-b border-white/10">
               <span className="text-[13px] font-medium tracking-widest uppercase text-white/80">
-                {office.label}
+                {isAr ? office.label.ar : office.label.en}
               </span>
               <div className="flex items-center gap-3">
                 <button aria-label="Previous office" onClick={prevOffice} className="text-white/60 hover:text-white transition-colors">
@@ -157,15 +185,15 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="flex">
+            <div dir="ltr" className="flex">
               <div className="relative w-[90px] h-[115px] sm:w-[120px] sm:h-[150px] shrink-0">
-                <Image src={office.image} alt={office.label} fill className="object-cover" />
+                <Image src={office.image} alt={isAr ? office.label.ar : office.label.en} fill className="object-cover" />
               </div>
               <div className="flex-1 px-3 py-2 sm:px-4 sm:py-3 flex flex-col justify-center gap-2 sm:gap-2.5 text-white">
                 <span className="font-[family-name:var(--font-anek-latin)] text-sm sm:text-base">{office.phone}</span>
                 <span className="text-sm sm:text-base">{office.email}</span>
-                <span className="text-xs sm:text-sm text-white/70 leading-relaxed">
-                  {office.address[0]}<br />{office.address[1]}
+                <span dir={isAr ? "rtl" : "ltr"} className="text-xs sm:text-sm text-white/70 leading-relaxed">
+                  {isAr ? <>{office.address.ar[0]}<br />{office.address.ar[1]}</> : <>{office.address.en[0]}<br />{office.address.en[1]}</>}
                 </span>
               </div>
             </div>
@@ -175,17 +203,17 @@ export function Footer() {
 
       {/* Nav links + socials */}
       <div className="w-full px-6 lg:px-16 pb-10">
-        <div className=" pt-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          <nav className="flex flex-wrap gap-x-5 sm:gap-x-8 gap-y-3 border-b border-white/15 pb-5">
+        <div dir="ltr" className=" pt-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <nav dir={isAr ? "rtl" : "ltr"} className="flex flex-wrap gap-x-5 sm:gap-x-8 gap-y-3 border-b border-white/15 pb-5">
             {navLinks.map((link, i) => (
               <a
-                key={link}
+                key={link.en}
                 href="#"
                 className={`text-xs lg:text-sm font-medium tracking-wide uppercase transition-colors ${
                   i === 0 ? "text-white" : "text-white/60 hover:text-white"
                 }`}
               >
-                {link}
+                {isAr ? link.ar : link.en}
               </a>
             ))}
           </nav>
@@ -207,7 +235,7 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div className="w-full px-6 lg:px-16 py-8  border-white/15">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div dir="ltr" className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3">
             <Image
               src="/images/nit-logo.svg"
@@ -219,14 +247,14 @@ export function Footer() {
             />
           </div>
 
-          <p className="text-white/60 text-sm text-center">
-            (C) 2026 NESMA INFRASTRUCTURE &amp; TECHNOLOGY. ALL RIGHTS RESERVED.
+          <p dir={isAr ? "rtl" : "ltr"} className="text-white/60 text-sm text-center">
+            {isAr ? "© 2026 نسما للبنية التحتية والتقنية. جميع الحقوق محفوظة." : <>(C) 2026 NESMA INFRASTRUCTURE &amp; TECHNOLOGY. ALL RIGHTS RESERVED.</>}
           </p>
 
-          <div className="flex items-center gap-2 text-sm text-white/60">
+          <div dir={isAr ? "rtl" : "ltr"} className="flex items-center gap-2 text-sm text-white/60">
             {policyLinks.map((link, i) => (
-              <span key={link} className="flex items-center gap-2">
-                <a href="#" className="hover:text-white transition-colors">{link}</a>
+              <span key={link.en} className="flex items-center gap-2">
+                <a href="#" className="hover:text-white transition-colors">{isAr ? link.ar : link.en}</a>
                 {i < policyLinks.length - 1 && <span className="text-white/30">|</span>}
               </span>
             ))}
