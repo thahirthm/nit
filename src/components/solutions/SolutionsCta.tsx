@@ -7,13 +7,17 @@ const DownloadIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export function SolutionsCta() {
+interface SolutionsCtaProps {
+  heading?: string;
+}
+
+export function SolutionsCta({ heading = "Engineering an energy project?" }: SolutionsCtaProps) {
   return (
     <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
       <div className="w-full px-6 lg:px-16">
         <div className="bg-[#F7F7F7] px-6 sm:px-10 py-14 sm:py-16 lg:py-20 flex flex-col items-center text-center">
           <h2 className="text-[#2E368F] text-[26px] sm:text-[34px] lg:text-[42px] font-light tracking-tight mb-4 lg:mb-6">
-            Engineering an energy project?
+            {heading}
           </h2>
           <p className="text-gray-700 text-[17px] sm:text-[19px] lg:text-[21px] font-light leading-relaxed max-w-2xl mb-8 lg:mb-10">
             Whether it&apos;s a new substation, a grid extension, or an energy efficiency program — our team is ready

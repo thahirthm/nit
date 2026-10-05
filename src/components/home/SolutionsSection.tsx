@@ -22,13 +22,13 @@ const solutions = [
       </svg>
     ),
     capabilities: [
-      { name: { en: "Energy Solutions (Energy Efficiency)", ar: "حلول الطاقة (كفاءة الطاقة)" }, image: "/images/in-2.png" },
-      { name: { en: "Transmission & Distribution / Advanced Energy", ar: "نقل وتوزيع الطاقة / حلول الطاقة المتقدمة" }, image: "/images/in-1.png" },
-      { name: { en: "Water Infrastructure", ar: "البنية التحتية للمياه" }, image: "/images/in-3.png" },
-      { name: { en: "Industries  (Industrial Solutions)", ar: "القطاع الصناعي (الحلول الصناعية)" }, image: "/images/in-4.png" },
-      { name: { en: "Communications and Technology (ICT)", ar: "الاتصالات وتقنية المعلومات" }, image: "/images/in-4.png" },
+      { name: { en: "Energy Solutions (Energy Efficiency)", ar: "حلول الطاقة (كفاءة الطاقة)" }, image: "/images/s-1.png" },
+      { name: { en: "Transmission & Distribution / Advanced Energy", ar: "نقل وتوزيع الطاقة / حلول الطاقة المتقدمة" }, image: "/images/s-1.png" },
+      { name: { en: "Water Infrastructure", ar: "البنية التحتية للمياه" }, image: "/images/s3.png" },
+      { name: { en: "Industries  (Industrial Solutions)", ar: "القطاع الصناعي (الحلول الصناعية)" }, image: "/images/s-4.png" },
+      { name: { en: "Communications and Technology (ICT)", ar: "الاتصالات وتقنية المعلومات" }, image: "/images/s-2.png" },
 
-      { name: { en: "Infrastructure Services (O&M and MEP)", ar: "خدمات البنية التحتية (التشغيل والصيانة)" }, image: "/images/in-5.png" },
+      { name: { en: "Infrastructure Services (O&M and MEP)", ar: "خدمات البنية التحتية (التشغيل والصيانة)" }, image: "/images/s5.png" },
     ],
   },
   {

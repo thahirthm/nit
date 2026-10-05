@@ -1,20 +1,15 @@
-import { SolutionDetailHero } from "@/components/solutions/SolutionDetailHero";
+import { TechnologyHero } from "@/components/solutions/TechnologyHero";
+import { TechnologySolutions } from "@/components/solutions/TechnologySolutions";
+import { TechnologyProjects } from "@/components/solutions/TechnologyProjects";
+import { SolutionsCta } from "@/components/solutions/SolutionsCta";
 
 export default function TechnologyPage() {
   return (
     <main className="min-h-screen">
-      <SolutionDetailHero
-        title="Technology"
-        description="Enabling digital transformation through advanced technology solutions, secure networks, and managed services."
-        image="/images/banner.png"
-        capabilities={[
-          "Digital Transformation",
-          "Data & AI",
-          "Cloud Services",
-          "Cybersecurity",
-          "Managed Services",
-        ]}
-      />
+      <TechnologyHero />
+      <TechnologySolutions />
+      <TechnologyProjects />
+      <SolutionsCta heading="Any technology project in mind?" />
     </main>
   );
 }
