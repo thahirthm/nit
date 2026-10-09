@@ -18,7 +18,7 @@ const categories = [
         title: { en: "Jubail–Buraydah Pipeline", ar: "خط أنابيب الجبيل–بريدة" },
         description: {
           en: "587 km bidirectional water transmission. 650 km³/dy capacity.",
-          ar: "خط نقل مياه ثنائي الاتجاه بطول 587 كم، بسعة 650 ألف م³ يوميًا.",
+          ar: "نقل المياه عبر خط ثنائي الاتجاه بطول 587 كيلومترًا، وبطاقة استيعابية تبلغ 650 كيلومترًا مكعبًا يوميًا.",
         },
         image: "/images/s3.png",
         badges: [
@@ -27,13 +27,13 @@ const categories = [
         ],
         value: "8.5B SAR",
         year: "2025",
-        scope: { en: "EPC", ar: "EPC" },
+        scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
       },
       {
-        title: { en: "Al Henakiyah Solar PV", ar: "محطة الحناكية للطاقة الشمسية" },
+        title: { en: "Al Henakiyah Solar PV", ar: "محطة الحناكية للطاقة الشمسية الكهروضوئية" },
         description: {
           en: "1,100 MW solar PV. Powers ~87,700 homes annually in the kingdom.",
-          ar: "محطة طاقة شمسية بقدرة 1,100 ميغاواط، تزود نحو 87,700 منزل سنويًا بالطاقة في المملكة.",
+          ar: "محطة للطاقة الشمسية الكهروضوئية بقدرة 1,100 ميجاواط، توفر الطاقة لنحو 87,700 منزل سنويًا في المملكة.",
         },
         image: "/images/s-1.png",
         badges: [
@@ -42,19 +42,19 @@ const categories = [
         ],
         value: "3.75B SAR",
         year: "2023",
-        scope: { en: "EPC", ar: "EPC" },
+        scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
       },
       {
-        title: { en: "Rumah 380kV BSP 9077", ar: "محطة رماح 380 كيلوفولت BSP 9077" },
+        title: { en: "Rumah 380kV BSP 9077", ar: "محطة Rumah 380 كيلوفولت BSP 9077" },
         description: {
           en: "Design, procure, construct, install, and commission the Rumah 380kV BSP (A&B) substation",
-          ar: "تصميم وتوريد وإنشاء وتركيب وتشغيل محطة رماح 380 كيلوفولت (A&B)",
+          ar: "تصميم محطة Rumah 380 كيلوفولت الفرعية (A وB)، وتوريد مكوناتها، وإنشاؤها، وتركيبها، وإدخالها حيز التشغيل.",
         },
         image: "/images/s-2.png",
         badges: [{ en: "COMMS", ar: "الاتصالات" }],
         value: "443M SAR",
         year: "2024",
-        scope: { en: "Design+Build", ar: "تصميم وتنفيذ" },
+        scope: { en: "Design+Build", ar: "التصميم والتنفيذ" },
       },
     ],
   },

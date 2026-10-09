@@ -7,7 +7,7 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const offices = [
   {
-    label: { en: "Head Office", ar: "المقر الرئيسي" },
+    label: { en: "Head Office", ar: "المقر الرئيس" },
     image: "/images/glance-time.png",
     phone: "012 212 2226",
     email: "INFO@NESMA-NIT.COM",

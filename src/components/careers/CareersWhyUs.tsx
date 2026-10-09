@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 type IconProps = { active?: boolean };
 
@@ -40,37 +41,48 @@ const HourglassIcon = ({ active }: IconProps) => (
 const reasons = [
   {
     icon: BriefcaseIcon,
-    title: "Meaningful Projects",
-    description:
-      "Work on high-impact national infrastructure and technology initiatives across energy, telecom, transportation, and smart systems.",
+    title: { en: "Meaningful Projects", ar: "مشروعات ذات أثر" },
+    description: {
+      en: "Work on high-impact national infrastructure and technology initiatives across energy, telecom, transportation, and smart systems.",
+      ar: "اعمل على مبادرات وطنية مؤثرة في مجالات البنية التحتية والتقنية، تشمل الطاقة والاتصالات والنقل والأنظمة الذكية.",
+    },
   },
   {
     icon: TrendIcon,
-    title: "Career Goal",
-    description: "Access mentorship, technical development programs, certifications, and leadership opportunities.",
+    title: { en: "Career Goal", ar: "التطور المهني" },
+    description: {
+      en: "Access mentorship, technical development programs, certifications, and leadership opportunities.",
+      ar: "استفد من برامج الإرشاد والتطوير التقني، وبرامج الحصول على الشهادات المهنية، وفرص تولّي الأدوار القيادية.",
+    },
   },
   {
     icon: HandshakeIcon,
-    title: "Innovation Driven Growth",
-    description:
-      "Collaborate with experts in digital transformation, AI, cloud services, cybersecurity, and sustainable infrastructure.",
+    title: { en: "Innovation Driven Growth", ar: "النمو المدفوع بالابتكار" },
+    description: {
+      en: "Collaborate with experts in digital transformation, AI, cloud services, cybersecurity, and sustainable infrastructure.",
+      ar: "تعاون مع خبراء في مجالات التحول الرقمي، والذكاء الاصطناعي، والخدمات السحابية، والأمن السيبراني، والبنية التحتية المستدامة.",
+    },
   },
   {
     icon: HourglassIcon,
-    title: "Long-term Visibility",
-    description:
-      "Join one of Saudi Arabia's established infrastructure and technology organizations with decades of industry leadership.",
+    title: { en: "Long-term Visibility", ar: "آفاق مهنية طويلة الأمد" },
+    description: {
+      en: "Join one of Saudi Arabia's established infrastructure and technology organizations with decades of industry leadership.",
+      ar: "انضم إلى إحدى الجهات الراسخة في المملكة العربية السعودية في مجالَي البنية التحتية والتقنية، والتي تتمتع بعقود من الريادة في القطاع.",
+    },
   },
 ];
 
 export function CareersWhyUs() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
+    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
-          Why work with us
+        <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
+          {isAr ? "لماذا العمل معنا؟" : "Why work with us"}
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
@@ -79,9 +91,10 @@ export function CareersWhyUs() {
             const isActive = hoveredIndex === i;
             return (
               <div
-                key={reason.title}
+                key={reason.title.en}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex((prev) => (prev === i ? null : prev))}
+                dir={isAr ? "rtl" : "ltr"}
                 className="relative border border-gray-200 p-6 sm:p-7 overflow-hidden cursor-pointer"
               >
                 {/* Slide-up navy background on hover */}
@@ -98,14 +111,14 @@ export function CareersWhyUs() {
                       isActive ? "text-white" : "text-[#2E368F]"
                     }`}
                   >
-                    {reason.title}
+                    {isAr ? reason.title.ar : reason.title.en}
                   </h3>
                   <p
                     className={`mt-3 text-[18px] sm:text-[19px] leading-relaxed font-light transition-colors duration-500 ${
                       isActive ? "text-white/80" : "text-gray-400"
                     }`}
                   >
-                    {reason.description}
+                    {isAr ? reason.description.ar : reason.description.en}
                   </p>
                 </div>
               </div>

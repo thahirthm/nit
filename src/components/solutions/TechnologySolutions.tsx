@@ -80,14 +80,14 @@ const tabs = [
     title: { en: "Digital Transformation", ar: "التحول الرقمي" },
     description: {
       en: "Integration of technology into all areas of a business, resulting in fundamental changes to how operations run, decisions get made, and value is delivered.",
-      ar: "دمج التقنية في جميع جوانب الأعمال، مما يحدث تغييرات جوهرية في طريقة سير العمليات، واتخاذ القرارات، وتقديم القيمة.",
+      ar: "دمج التقنية في جميع مجالات الأعمال، بما يؤدي إلى تغييرات جوهرية في آلية تنفيذ العمليات، واتخاذ القرارات، وتقديم القيمة.",
     },
     chips: [
       { en: "Software modernization", ar: "تحديث البرمجيات" },
-      { en: "Industry 4.0", ar: "الثورة الصناعية الرابعة" },
+      { en: "Industry 4.0", ar: "الصناعة 4.0" },
       { en: "Digital workplace", ar: "بيئة العمل الرقمية" },
       { en: "Business automation", ar: "أتمتة الأعمال" },
-      { en: "Digital customer experience", ar: "تجربة العملاء الرقمية" },
+      { en: "Digital customer experience", ar: "تجربة العميل الرقمية" },
     ],
   },
   {
@@ -108,10 +108,10 @@ const tabs = [
     ],
   },
   {
-    tab: { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسات" },
+    tab: { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسة" },
     icon: ERPIcon,
     graphic: "/images/svg3.png",
-    title: { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسات" },
+    title: { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسة" },
     description: {
       en: "ERP solutions that manage day-to-day business activities by connecting planning, logistics, maintenance, and supply chain workflows for better operational control.",
       ar: "حلول تخطيط موارد المؤسسات التي تدير الأنشطة اليومية للأعمال من خلال ربط التخطيط واللوجستيات والصيانة وسلسلة الإمداد لتحقيق تحكم تشغيلي أفضل.",
@@ -123,10 +123,10 @@ const tabs = [
     ],
   },
   {
-    tab: { en: "Blockchain", ar: "تقنية البلوك تشين" },
+    tab: { en: "Blockchain", ar: "سلاسل الكتل" },
     icon: BlockchainIcon,
     graphic: "/images/svg4.png",
-    title: { en: "Blockchain", ar: "تقنية البلوك تشين" },
+    title: { en: "Blockchain", ar: "سلاسل الكتل" },
     description: {
       en: "Utilization of a distributed ledger to facilitate the recording of transactions and tracking of assets.",
       ar: "الاستفادة من دفتر الأستاذ الموزّع لتسهيل تسجيل المعاملات وتتبع الأصول.",

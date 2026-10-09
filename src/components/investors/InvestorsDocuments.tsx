@@ -1,10 +1,22 @@
+"use client";
+
 import Image from "next/image";
+import { useLanguage } from "@/context/LanguageContext";
 
 const documents = [
-  { label: "NIT Company Profile & capability deck", href: "/documents/nit-capability-deck.pdf" },
-  { label: "Annual Report 2025", href: "/documents/annual-report-2025.pdf" },
-  { label: "Annual Report 2024", href: "/documents/annual-report-2024.pdf" },
-  { label: "Sustainability Report", href: "/documents/sustainability-report.pdf" },
+  {
+    en: "NIT Corporate Profile",
+    ar: "الملف التعريفي المؤسسي لنسما للبنية التحتية والتقنية",
+    href: "/documents/nit-capability-deck.pdf",
+  },
+  {
+    en: "Company Overview & Capabilities",
+    ar: "نبذة عن الشركة وإمكاناتها",
+    href: "/documents/nit-company-overview.pdf",
+  },
+  { en: "Annual Report 2025", ar: "التقرير السنوي لعام 2025", href: "/documents/annual-report-2025.pdf" },
+  { en: "Annual Report 2024", ar: "التقرير السنوي لعام 2024", href: "/documents/annual-report-2024.pdf" },
+  { en: "Sustainability Report", ar: "تقرير الاستدامة", href: "/documents/sustainability-report.pdf" },
 ];
 
 const DownloadIcon = ({ className }: { className?: string }) => (
@@ -15,11 +27,14 @@ const DownloadIcon = ({ className }: { className?: string }) => (
 );
 
 export function InvestorsDocuments() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
+
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
+    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight">
-          Document library
+        <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight">
+          {isAr ? "مكتبة الوثائق" : "Document library"}
         </h2>
 
         <div className="relative w-full h-[160px] sm:h-[220px] lg:h-[260px] mt-8 lg:mt-10 overflow-hidden">
@@ -29,12 +44,13 @@ export function InvestorsDocuments() {
         <div className="mt-2 border-t border-gray-200">
           {documents.map((doc) => (
             <a
-              key={doc.label}
+              key={doc.en}
               href={doc.href}
+              dir={isAr ? "rtl" : "ltr"}
               className="group flex items-center justify-between py-5 border-b border-gray-200 transition-colors duration-300"
             >
               <span className="text-[#2E368F] text-[18px] sm:text-[20px] font-light group-hover:text-[#1c2260] transition-colors duration-300">
-                {doc.label}
+                {isAr ? doc.ar : doc.en}
               </span>
               <DownloadIcon className="text-gray-400 group-hover:text-[#2E368F] transition-colors duration-300 shrink-0" />
             </a>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/context/LanguageContext";
 
 const LinkedInIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -39,11 +40,22 @@ const socials = [
   { name: "YouTube", icon: YouTubeIcon },
 ];
 
-function TextField({ label, required, type = "text" }: { label: string; required?: boolean; type?: string }) {
+function TextField({
+  label,
+  required,
+  type = "text",
+  isAr,
+}: {
+  label: string;
+  required?: boolean;
+  type?: string;
+  isAr: boolean;
+}) {
   return (
     <label className="block">
       <input
         type={type}
+        dir={isAr ? "rtl" : "ltr"}
         placeholder={required ? `${label}*` : label}
         className="w-full bg-transparent border-b border-gray-300 pb-3 text-gray-900 placeholder:text-gray-500 placeholder:font-light text-[15px] focus:outline-none focus:border-[#2E368F] transition-colors"
       />
@@ -52,36 +64,54 @@ function TextField({ label, required, type = "text" }: { label: string; required
 }
 
 export function ContactHero() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
+
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[120px] lg:pt-[160px] pb-16 lg:pb-24">
+    <section className={`w-full bg-white pt-[120px] lg:pt-[160px] pb-16 lg:pb-24 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
         {/* Left: intro + contact details */}
-        <div className="flex flex-col">
+        <div dir={isAr ? "rtl" : "ltr"} className="flex flex-col">
           <h1 className="text-gray-900 text-[40px] sm:text-[48px] lg:text-[54px] font-extralight leading-[1.15] tracking-tight">
-            Connect with
-            <br />
-            our experts
+            {isAr ? (
+              "تواصل مع خبرائنا"
+            ) : (
+              <>
+                Connect with
+                <br />
+                our experts
+              </>
+            )}
           </h1>
 
           <p className="mt-6 text-gray-500 text-[17px] sm:text-[18px] leading-relaxed font-light max-w-sm">
-            For project inquiries, partnerships, investor relations, or general information, connect with the
-            relevant NIT team.
+            {isAr
+              ? "للاستفسارات المتعلقة بالمشروعات، أو الشراكات، أو علاقات المستثمرين، أو للحصول على معلومات عامة، يُرجى التواصل مع الفريق المختص في نسما للبنية التحتية والتقنية."
+              : "For project inquiries, partnerships, investor relations, or general information, connect with the relevant NIT team."}
           </p>
 
           <div className="mt-auto pt-16 flex flex-wrap gap-x-16 gap-y-8">
             <div>
-              <span className="block text-gray-400 text-[16px] font-light">Email Address</span>
-              <span className="block mt-1 text-gray-900 text-[22px] font-light">info@Nesma-nit.com</span>
+              <span className="block text-gray-400 text-[16px] font-light">
+                {isAr ? "البريد الإلكتروني" : "Email Address"}
+              </span>
+              <span dir="ltr" className={`block mt-1 text-gray-900 text-[22px] font-light ${isAr ? "text-right" : ""}`}>
+                info@Nesma-nit.com
+              </span>
             </div>
             <div>
-              <span className="block text-gray-400 text-[16px] font-light">Phone</span>
-              <span className="block mt-1 text-gray-900 text-[22px] font-light">+966550634599</span>
+              <span className="block text-gray-400 text-[16px] font-light">{isAr ? "الهاتف" : "Phone"}</span>
+              <span dir="ltr" className={`block mt-1 text-gray-900 text-[22px] font-light ${isAr ? "text-right" : ""}`}>
+                +966550634599
+              </span>
             </div>
           </div>
 
           <div className="mt-10">
-            <span className="block text-gray-400 text-[16px] font-light mb-3">Socials</span>
-            <div className="flex items-center gap-3">
+            <span className="block text-gray-400 text-[16px] font-light mb-3">
+              {isAr ? "حسابات التواصل الاجتماعي" : "Socials"}
+            </span>
+            <div dir="ltr" className="flex items-center gap-3">
               {socials.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -101,21 +131,21 @@ export function ContactHero() {
 
         {/* Right: contact form */}
         <div className="bg-[#F7F7F7] p-6 sm:p-10 lg:p-10">
-          <h2 className="text-gray-900 text-[32px] sm:text-[36px] font-extralight tracking-tight mb-8 lg:mb-10">
-            Contact form
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[32px] sm:text-[36px] font-extralight tracking-tight mb-8 lg:mb-10">
+            {isAr ? "نموذج التواصل" : "Contact form"}
           </h2>
 
           <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-            <TextField label="First Name" required />
-            <TextField label="Last Name" required />
-            <TextField label="Company Name" />
-            <TextField label="Phone Number" type="tel" />
-            <TextField label="Email Address" type="email" />
-            <TextField label="Message" />
+            <TextField label={isAr ? "الاسم الأول" : "First Name"} required isAr={isAr} />
+            <TextField label={isAr ? "اسم العائلة" : "Last Name"} required isAr={isAr} />
+            <TextField label={isAr ? "اسم الشركة" : "Company Name"} isAr={isAr} />
+            <TextField label={isAr ? "رقم الهاتف" : "Phone Number"} type="tel" isAr={isAr} />
+            <TextField label={isAr ? "البريد الإلكتروني" : "Email Address"} type="email" isAr={isAr} />
+            <TextField label={isAr ? "الرسالة" : "Message"} isAr={isAr} />
 
             <div className="pt-4">
               <Button type="submit" variant="primary">
-                Submit
+                {isAr ? "إرسال" : "Submit"}
               </Button>
             </div>
           </form>

@@ -9,7 +9,7 @@ export default function TechnologyPage() {
       <TechnologyHero />
       <TechnologySolutions />
       <TechnologyProjects />
-      <SolutionsCta heading="Any technology project in mind?" />
+      <SolutionsCta heading={{ en: "Any technology project in mind?", ar: "هل لديك مشروع تقني في ذهنك؟" }} />
     </main>
   );
 }

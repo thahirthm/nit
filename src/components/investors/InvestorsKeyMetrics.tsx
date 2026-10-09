@@ -1,16 +1,81 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const metrics = [
-  { label: "Largest Single Project", value: 21, decimals: 0, unit: "B", suffix: "SAR", sub: "Oxagon Village · NEOM", progress: 100 },
-  { label: "Recent Water Award", value: 8.5, decimals: 1, unit: "B", suffix: "SAR", sub: "Jubail-Buraydah pipeline · 2025", progress: 100 },
-  { label: "Clean Energy Delivered", value: 1.1, decimals: 1, unit: "", suffix: "GW", sub: "Al Henakiyah Solar PV", progress: 100 },
-  { label: "Pillar 01 · Saudi Vision 2030", value: 60, decimals: 0, unit: "k", suffix: "+", sub: "Via Nesma Group", progress: 100 },
-  { label: "Local Content Score", value: 37, decimals: 0, unit: "", suffix: "%", sub: "Verified · FY 2024", progress: 37 },
-  { label: "LC Target", value: 50, decimals: 0, unit: "", suffix: "%", sub: "By 2027 · on track", progress: 74 },
-  { label: "Contractor Class", value: 1, decimals: 0, unit: "", suffix: "st", sub: "All activities · MOMRAH", progress: 100 },
-  { label: "ISO Certifications", value: 4, decimals: 0, unit: "", suffix: "", sub: "9001 · 14001 · 45001 · 27001", progress: 100 },
+  {
+    label: { en: "Largest Single Project", ar: "أكبر مشروع منفرد" },
+    value: 21,
+    decimals: 0,
+    unit: "B",
+    suffix: "SAR",
+    sub: { en: "Oxagon Village · NEOM", ar: "قرية أوكساغون · نيوم" },
+    progress: 100,
+  },
+  {
+    label: { en: "Recent Water Award", ar: "أحدث جائزة في قطاع المياه" },
+    value: 8.5,
+    decimals: 1,
+    unit: "B",
+    suffix: "SAR",
+    sub: { en: "Jubail-Buraydah pipeline · 2025", ar: "خط أنابيب الجبيل–بريدة · 2025" },
+    progress: 100,
+  },
+  {
+    label: { en: "Clean Energy Delivered", ar: "الطاقة النظيفة المُنتجة" },
+    value: 1.1,
+    decimals: 1,
+    unit: "",
+    suffix: "GW",
+    sub: { en: "Al Henakiyah Solar PV", ar: "محطة الحناكية للطاقة الشمسية الكهروضوئية" },
+    progress: 100,
+  },
+  {
+    label: { en: "Pillar 01 · Saudi Vision 2030", ar: "الركيزة 01 · رؤية السعودية 2030" },
+    value: 60,
+    decimals: 0,
+    unit: "k",
+    suffix: "+",
+    sub: { en: "Via Nesma Group", ar: "عبر مجموعة نسما" },
+    progress: 100,
+  },
+  {
+    label: { en: "Local Content Score", ar: "نسبة المحتوى المحلي" },
+    value: 37,
+    decimals: 0,
+    unit: "",
+    suffix: "%",
+    sub: { en: "Verified · FY 2024", ar: "مُعتمد · السنة المالية 2024" },
+    progress: 37,
+  },
+  {
+    label: { en: "LC Target", ar: "مستهدف المحتوى المحلي" },
+    value: 50,
+    decimals: 0,
+    unit: "",
+    suffix: "%",
+    sub: { en: "By 2027 · on track", ar: "بحلول 2027 · على المسار الصحيح" },
+    progress: 74,
+  },
+  {
+    label: { en: "Contractor Class", ar: "فئة المقاول" },
+    value: 1,
+    decimals: 0,
+    unit: "",
+    suffix: "st",
+    sub: { en: "All activities · MOMRAH", ar: "جميع الأنشطة · وزارة الشؤون البلدية والقروية والإسكان" },
+    progress: 100,
+  },
+  {
+    label: { en: "ISO Certifications", ar: "شهادات الآيزو" },
+    value: 4,
+    decimals: 0,
+    unit: "",
+    suffix: "",
+    sub: { en: "9001 · 14001 · 45001 · 27001", ar: "9001 · 14001 · 45001 · 27001" },
+    progress: 100,
+  },
 ];
 
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -23,6 +88,8 @@ const DownloadIcon = ({ className }: { className?: string }) => (
 );
 
 export function InvestorsKeyMetrics() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
   const sectionRef = useRef<HTMLElement>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const [counts, setCounts] = useState<number[]>(() => metrics.map(() => 0));
@@ -64,30 +131,33 @@ export function InvestorsKeyMetrics() {
   }, [hasStarted]);
 
   return (
-    <section ref={sectionRef} className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
+    <section
+      ref={sectionRef}
+      className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
+    >
       <div className="w-full px-6 lg:px-16">
-        <div className="flex items-center justify-between">
+        <div dir={isAr ? "rtl" : "ltr"} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight">
-            Key metrics
+            {isAr ? "المؤشرات الرئيسية" : "Key metrics"}
           </h2>
           <a
             href="/documents/nit-fact-sheet.pdf"
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 text-[12px] font-medium tracking-wide uppercase border border-[#2E368F] text-[#2E368F] hover:bg-[#2E368F]/5 transition-colors duration-300"
+            className="inline-flex items-center gap-2 self-start px-4 py-2.5 text-[12px] font-medium tracking-wide uppercase border border-[#2E368F] text-[#2E368F] hover:bg-[#2E368F]/5 transition-colors duration-300"
           >
-            Download fact sheet (PDF)
+            {isAr ? "تحميل صحيفة الحقائق (PDF)" : "Download fact sheet (PDF)"}
             <DownloadIcon />
           </a>
         </div>
 
         <div className="mt-8 lg:mt-10 bg-[#2E368F] p-8 sm:p-14 lg:p-16">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-20">
+          <div dir="ltr" className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-20">
             {metrics.map((metric, i) => (
-              <div key={metric.label} className="border-t border-white/20 pt-7">
+              <div key={metric.label.en} dir={isAr ? "rtl" : "ltr"} className="border-t border-white/20 pt-7">
                 <span className="block text-white/50 text-[13px] font-medium tracking-wider uppercase">
-                  {metric.label}
+                  {isAr ? metric.label.ar : metric.label.en}
                 </span>
 
-                <div className="font-[family-name:var(--font-anek-latin)] mt-4 flex items-baseline gap-2 text-white">
+                <div dir="ltr" className="font-[family-name:var(--font-anek-latin)] mt-4 flex items-baseline gap-2 text-white">
                   <span className="text-[46px] sm:text-[54px] font-light leading-none tabular-nums">
                     {counts[i].toFixed(metric.decimals)}
                     {metric.unit}
@@ -95,7 +165,9 @@ export function InvestorsKeyMetrics() {
                   {metric.suffix && <span className="text-[22px] sm:text-[24px] font-normal opacity-80">{metric.suffix}</span>}
                 </div>
 
-                <span className="block mt-4 text-white/70 text-[16px] font-light">{metric.sub}</span>
+                <span className="block mt-4 text-white/70 text-[16px] font-light">
+                  {isAr ? metric.sub.ar : metric.sub.en}
+                </span>
 
                 <div className="mt-5 h-px bg-white/20 relative overflow-hidden">
                   <div

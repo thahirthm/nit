@@ -1,28 +1,35 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const offices = [
   {
-    tab: "Head Office",
-    name: "NIT- Jeddah Head Office",
-    address: "Randa Tower, King Abdul Aziz Rd, An Nahdah, Jeddah 23523, Saudi Arabia",
+    tab: { en: "Head Office", ar: "المقر الرئيس" },
+    name: { en: "NIT- Jeddah Head Office", ar: "نسما للبنية التحتية والتقنية – المقر الرئيس في جدة" },
+    address: {
+      en: "Randa Tower, King Abdul Aziz Rd, An Nahdah, Jeddah 23523, Saudi Arabia",
+      ar: "برج رندا، طريق الملك عبدالعزيز، حي النهضة، جدة 23523، المملكة العربية السعودية",
+    },
     phone: "+966550634599",
     email: "info@Nesma-nit.com",
     mapQuery: "Randa Tower, King Abdul Aziz Rd, An Nahdah, Jeddah 23523, Saudi Arabia",
   },
   {
-    tab: "Office 1",
-    name: "NIT - Riyadh Office",
-    address: "Al Olaya, Riyadh, Saudi Arabia",
+    tab: { en: "Office 1", ar: "مكتب 1" },
+    name: { en: "NIT - Riyadh Office", ar: "نسما للبنية التحتية والتقنية – مكتب الرياض" },
+    address: { en: "Al Olaya, Riyadh, Saudi Arabia", ar: "حي العليا، الرياض، المملكة العربية السعودية" },
     phone: "011 465 1188",
     email: "riyadh@nesma-nit.com",
     mapQuery: "Al Olaya, Riyadh, Saudi Arabia",
   },
   {
-    tab: "Office 2",
-    name: "NIT - Dammam Office",
-    address: "King Fahd Rd, Al Faisaliyah, Dammam, Saudi Arabia",
+    tab: { en: "Office 2", ar: "مكتب 2" },
+    name: { en: "NIT - Dammam Office", ar: "نسما للبنية التحتية والتقنية – مكتب الدمام" },
+    address: {
+      en: "King Fahd Rd, Al Faisaliyah, Dammam, Saudi Arabia",
+      ar: "طريق الملك فهد، الفيصلية، الدمام، المملكة العربية السعودية",
+    },
     phone: "013 833 0000",
     email: "dammam@nesma-nit.com",
     mapQuery: "King Fahd Rd, Al Faisaliyah, Dammam, Saudi Arabia",
@@ -61,6 +68,8 @@ const ArrowIcon = ({ className }: { className?: string }) => (
 );
 
 export function ContactMap() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
   const [activeIndex, setActiveIndex] = useState(0);
   const office = offices[activeIndex];
 
@@ -68,72 +77,83 @@ export function ContactMap() {
   const nextOffice = () => setActiveIndex((i) => (i === offices.length - 1 ? 0 : i + 1));
 
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pb-16 lg:pb-24">
+    <section className={`w-full bg-white pb-16 lg:pb-24 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <div className="relative w-full h-[420px] sm:h-[500px] lg:h-[560px]">
-          <iframe
-            key={office.mapQuery}
-            title={office.name}
-            src={`https://www.google.com/maps?q=${encodeURIComponent(office.mapQuery)}&output=embed`}
-            className="absolute inset-0 w-full h-full border-0"
-            loading="lazy"
-          />
+        <div className="relative w-full">
+          <div className="relative w-full h-[240px] sm:h-[500px] lg:h-[560px]">
+            <iframe
+              key={office.mapQuery}
+              title={isAr ? office.name.ar : office.name.en}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(office.mapQuery)}&output=embed`}
+              className="absolute inset-0 w-full h-full border-0"
+              loading="lazy"
+            />
+          </div>
 
-          {/* Floating office card */}
-          <div className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bottom-4 sm:bottom-6 lg:bottom-8 bg-white shadow-lg p-6 sm:p-8">
-            <div className="flex items-center gap-6 border-b border-gray-200 pb-3">
+          {/* Office card — normal flow below the map on mobile (so wrapped content never
+              overflows the fixed-height map), becomes a floating overlay from sm+ */}
+          <div className="relative mt-4 sm:mt-0 sm:absolute sm:left-6 sm:right-6 lg:left-8 lg:right-8 sm:bottom-6 lg:bottom-8 bg-white sm:shadow-lg p-6 sm:p-8">
+            <div dir="ltr" className="flex items-center gap-6 border-b border-gray-200 pb-3">
               {offices.map((o, i) => {
                 const isActive = i === activeIndex;
                 return (
                   <button
-                    key={o.tab}
+                    key={o.tab.en}
                     onClick={() => setActiveIndex(i)}
                     className={`pb-3 -mb-[13px] text-[12px] font-medium tracking-wide uppercase border-b-2 transition-colors duration-300 ${
                       isActive ? "text-[#2E368F] border-[#2E368F]" : "text-gray-400 border-transparent hover:text-gray-600"
                     }`}
                   >
-                    {o.tab}
+                    {isAr ? o.tab.ar : o.tab.en}
                   </button>
                 );
               })}
             </div>
 
-            <div className="mt-5 flex items-start justify-between gap-6">
+            <div dir={isAr ? "rtl" : "ltr"} className="mt-5 flex items-start justify-between gap-6">
               <div>
-                <h3 className="text-gray-900 text-[20px] sm:text-[22px] font-light">{office.name}</h3>
+                <h3 className="text-gray-900 text-[20px] sm:text-[22px] font-light">
+                  {isAr ? office.name.ar : office.name.en}
+                </h3>
 
                 <div className="mt-4 flex flex-wrap items-start gap-x-8 gap-y-3">
                   <div className="flex items-start gap-2 text-gray-500 max-w-xs">
                     <span className="mt-0.5 shrink-0">
                       <PinIcon />
                     </span>
-                    <span className="text-[14px] font-light leading-relaxed">{office.address}</span>
+                    <span className="text-[14px] font-light leading-relaxed">
+                      {isAr ? office.address.ar : office.address.en}
+                    </span>
                   </div>
                   <a href={`tel:${office.phone}`} className="flex items-center gap-2 text-[#2E368F] hover:text-[#1c2260] transition-colors">
                     <PhoneIcon />
-                    <span className="text-[14px] font-light underline underline-offset-2">{office.phone}</span>
+                    <span dir="ltr" className="text-[14px] font-light underline underline-offset-2">
+                      {office.phone}
+                    </span>
                   </a>
                   <a href={`mailto:${office.email}`} className="flex items-center gap-2 text-[#2E368F] hover:text-[#1c2260] transition-colors">
                     <MailIcon />
-                    <span className="text-[14px] font-light underline underline-offset-2">{office.email}</span>
+                    <span dir="ltr" className="text-[14px] font-light underline underline-offset-2">
+                      {office.email}
+                    </span>
                   </a>
                 </div>
               </div>
 
               <div className="hidden sm:flex items-center gap-3 shrink-0">
                 <button
-                  aria-label="Previous office"
+                  aria-label={isAr ? "المكتب السابق" : "Previous office"}
                   onClick={prevOffice}
                   className="w-11 h-11 flex items-center justify-center bg-[#F5F5F5] text-gray-400 hover:text-[#2E368F] transition-colors duration-300"
                 >
-                  <ArrowIcon className="rotate-180" />
+                  <ArrowIcon className={isAr ? "" : "rotate-180"} />
                 </button>
                 <button
-                  aria-label="Next office"
+                  aria-label={isAr ? "المكتب التالي" : "Next office"}
                   onClick={nextOffice}
                   className="w-11 h-11 flex items-center justify-center bg-[#F5F5F5] text-[#2E368F] hover:text-[#1c2260] transition-colors duration-300"
                 >
-                  <ArrowIcon />
+                  <ArrowIcon className={isAr ? "rotate-180" : ""} />
                 </button>
               </div>
             </div>

@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
-const rotatingWords = ["returns", "scale", "energy", "water", "silicon"];
+const rotatingWords = [
+  { en: "returns", ar: "العوائد" },
+  { en: "scale", ar: "النمو" },
+  { en: "energy", ar: "الطاقة" },
+  { en: "water", ar: "المياه" },
+  { en: "silicon", ar: "السيليكون" },
+];
 
 const chartPoints = [
   { time: "10:00", value: 27.9 },
@@ -42,6 +49,8 @@ const RiyalIcon = ({ className }: { className?: string }) => (
 );
 
 export function InvestorsHero() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
   const [hovered, setHovered] = useState<number | null>(null);
   const [wordIndex, setWordIndex] = useState(0);
   const maxValue = Math.max(...chartPoints.map((p) => p.value));
@@ -56,33 +65,52 @@ export function InvestorsHero() {
   }, []);
 
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[120px] lg:pt-[160px]">
-      <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 items-start">
+    <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+      <div dir="ltr" className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 items-start">
         {/* Left: headline + copy */}
-        <div>
+        <div dir={isAr ? "rtl" : "ltr"}>
           <h1 className="text-gray-900 text-[32px] sm:text-[44px] lg:text-[54px] font-extralight leading-[1.15] tracking-tight">
-            Engineered for{" "}
-            <span className="inline-block overflow-hidden align-bottom" style={{ lineHeight: 1 }}>
-              <span key={wordIndex} className="inline-block animate-word-in text-[#2E368F]">
-                {rotatingWords[wordIndex]}
-              </span>
-            </span>
-            <br />
-            Built for Vision 2030.
+            {isAr ? (
+              <>
+                صُمم لتحقيق{" "}
+                <span className="inline-block overflow-hidden align-bottom" style={{ lineHeight: 1 }}>
+                  <span key={wordIndex} className="inline-block animate-word-in text-[#2E368F]">
+                    {rotatingWords[wordIndex].ar}
+                  </span>
+                </span>
+                <br />
+                بُني لتحقيق مستهدفات رؤية 2030.
+              </>
+            ) : (
+              <>
+                Engineered for{" "}
+                <span className="inline-block overflow-hidden align-bottom" style={{ lineHeight: 1 }}>
+                  <span key={wordIndex} className="inline-block animate-word-in text-[#2E368F]">
+                    {rotatingWords[wordIndex].en}
+                  </span>
+                </span>
+                <br />
+                Built for Vision 2030.
+              </>
+            )}
           </h1>
 
           <p className="mt-24 lg:mt-32 text-gray-900 text-[17px] sm:text-[19px] font-light">
-            Building the future of infrastructure and technology
+            {isAr ? "نبني مستقبل البنية التحتية والتقنية" : "Building the future of infrastructure and technology"}
           </p>
 
           <p className="mt-6 text-gray-500 text-[16px] sm:text-[17px] leading-relaxed font-light max-w-lg">
-            Access company information, financial reports, governance updates, and investor resources.
+            {isAr
+              ? "الوصول إلى معلومات الشركة، والتقارير المالية، وتحديثات الحوكمة، وموارد المستثمرين."
+              : "Access company information, financial reports, governance updates, and investor resources."}
           </p>
         </div>
 
         {/* Right: share details card */}
         <div className="bg-[#F7F7F7] p-6 sm:p-8">
-          <h3 className="text-gray-900 text-[26px] sm:text-[28px] font-extralight tracking-tight">Today&apos;s share details</h3>
+          <h3 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] sm:text-[28px] font-extralight tracking-tight">
+            {isAr ? "بيانات السهم اليوم" : "Today's share details"}
+          </h3>
           <p className="mt-3 text-gray-500 text-[14px] sm:text-[15px] font-semibold tracking-wide uppercase">
             May 21, 2026
             <br />
@@ -116,7 +144,7 @@ export function InvestorsHero() {
                   className="absolute -top-9 -translate-x-1/2 bg-[#2E368F] text-white text-[11px] font-medium px-2.5 py-1.5 whitespace-nowrap pointer-events-none z-10 shadow-lg"
                   style={{ left: `${((hovered! + 0.5) / chartPoints.length) * 100}%` }}
                 >
-                  {active.value.toFixed(2)} SAR
+                  {active.value.toFixed(2)} {isAr ? "ريال" : "SAR"}
                   <div className="absolute left-1/2 -bottom-1 -translate-x-1/2 w-2 h-2 bg-[#2E368F] rotate-45" />
                 </div>
               )}
