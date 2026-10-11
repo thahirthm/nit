@@ -38,7 +38,7 @@ export function InvestorsDocuments() {
         </h2>
 
         <div className="relative w-full h-[160px] sm:h-[220px] lg:h-[260px] mt-8 lg:mt-10 overflow-hidden">
-          <Image src="/images/invest.png" alt="NIT corporate brand" fill className="object-cover" />
+          <Image quality={95} src="/images/invest.png" alt="NIT corporate brand" fill className="object-cover" />
         </div>
 
         <div className="mt-2 border-t border-gray-200">

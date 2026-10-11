@@ -12,7 +12,7 @@ export function TechnologyHero() {
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
         <div className="relative w-full h-[320px] sm:h-[440px] lg:h-[600px] overflow-hidden">
-          <Image
+          <Image quality={95}
             src="/images/tech-banner.png"
             alt={isAr ? "تصور رقمي مجرد للتقنية" : "Abstract digital technology render"}
             fill

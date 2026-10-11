@@ -196,7 +196,7 @@ export function AboutCertifications() {
                 {slide.map((item, idx) => (
                   <div key={idx} dir={isAr ? "rtl" : "ltr"} className="flex items-start gap-4 bg-gray-50 p-5 sm:p-6">
                     <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-[#2E368F] flex items-center justify-center overflow-hidden">
-                      <Image
+                      <Image quality={95}
                         src={item.image}
                         alt={isAr ? item.title.ar : item.title.en}
                         width={64}

@@ -40,9 +40,9 @@ const navLinks = [
 ];
 
 const policyLinks = [
-  { en: "PRIVACY POLICY", ar: "سياسة الخصوصية" },
-  { en: "TERMS OF SERVICE", ar: "شروط الخدمة" },
-  { en: "COOKIE POLICY", ar: "سياسة ملفات تعريف الارتباط" },
+  { en: "PRIVACY POLICY", ar: "سياسة الخصوصية", href: "/privacy-policy" },
+  { en: "TERMS OF SERVICE", ar: "شروط الخدمة", href: "/terms-of-service" },
+  { en: "COOKIE POLICY", ar: "سياسة ملفات تعريف الارتباط", href: "/cookie-policy" },
 ];
 
 const ArrowIcon = ({ className }: { className?: string }) => (
@@ -187,7 +187,7 @@ export function Footer() {
 
             <div dir="ltr" className="flex">
               <div className="relative w-[90px] h-[115px] sm:w-[120px] sm:h-[150px] shrink-0">
-                <Image src={office.image} alt={isAr ? office.label.ar : office.label.en} fill className="object-cover" />
+                <Image quality={95} src={office.image} alt={isAr ? office.label.ar : office.label.en} fill className="object-cover" />
               </div>
               <div className="flex-1 px-3 py-2 sm:px-4 sm:py-3 flex flex-col justify-center gap-2 sm:gap-2.5 text-white">
                 <span className="font-[family-name:var(--font-anek-latin)] text-sm sm:text-base">{office.phone}</span>
@@ -237,7 +237,7 @@ export function Footer() {
       <div className="w-full px-6 lg:px-16 py-8  border-white/15">
         <div dir="ltr" className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Image
+            <Image quality={95}
               src="/images/nit-logo.svg"
               alt="Nesma Infrastructure & Technology"
               width={110}
@@ -254,7 +254,7 @@ export function Footer() {
           <div dir={isAr ? "rtl" : "ltr"} className="flex items-center gap-2 text-sm text-white/60">
             {policyLinks.map((link, i) => (
               <span key={link.en} className="flex items-center gap-2">
-                <a href="#" className="hover:text-white transition-colors">{isAr ? link.ar : link.en}</a>
+                <a href={link.href} className="hover:text-white transition-colors">{isAr ? link.ar : link.en}</a>
                 {i < policyLinks.length - 1 && <span className="text-white/30">|</span>}
               </span>
             ))}

@@ -10,7 +10,7 @@ function GalleryRow({ hidden, alt }: { hidden?: boolean; alt: string }) {
     <div className="flex items-center gap-6 shrink-0" aria-hidden={hidden}>
       {images.map((src, i) => (
         <div key={i} className="relative w-[240px] sm:w-[280px] h-[300px] sm:h-[340px] overflow-hidden shrink-0">
-          <Image src={src} alt={alt} fill className="object-cover" />
+          <Image quality={95} src={src} alt={alt} fill className="object-cover" />
         </div>
       ))}
     </div>

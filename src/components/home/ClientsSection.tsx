@@ -185,7 +185,7 @@ export function ClientsSection() {
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 grid-rows-2 gap-x-8 gap-y-12 py-4">
                 {slide.map((id) => (
                   <div key={id} className="group relative w-full h-[90px] lg:h-[110px] flex items-center justify-center overflow-hidden">
-                    <Image
+                    <Image quality={95}
                       src={logos[id].src}
                       alt={logos[id].alt}
                       fill

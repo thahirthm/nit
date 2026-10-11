@@ -47,7 +47,7 @@ export function SolutionsCards() {
               onMouseLeave={() => setActiveCard((current) => (current === card.title ? null : current))}
               onClick={() => setActiveCard((current) => (current === card.title ? null : card.title))}
             >
-              <Image src={card.image} alt={card.title} fill className="object-cover" />
+              <Image quality={95} src={card.image} alt={card.title} fill className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0 to-black/10" />
 
               <h3 className="absolute top-6 left-6 sm:top-8 sm:left-8 text-white text-[28px] sm:text-[36px] lg:text-[42px] font-extralight tracking-tight">

@@ -20,7 +20,7 @@ export function SolutionDetailHero({ title, description, image, capabilities }: 
         </p>
 
         <div className="relative w-full h-[220px] sm:h-[340px] lg:h-[480px] mb-12 lg:mb-16 overflow-hidden">
-          <Image src={image} alt={title} fill className="object-cover" />
+          <Image quality={95} src={image} alt={title} fill className="object-cover" />
         </div>
 
         <h2 className="text-gray-900 text-[20px] sm:text-[24px] lg:text-[28px] font-extralight tracking-tight mb-6 lg:mb-8">

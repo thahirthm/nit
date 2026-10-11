@@ -72,7 +72,7 @@ export function MediaNews() {
             return (
               <article key={post.slug} className="group flex flex-col">
                 <Link href={`/media/${post.slug}`} className="relative block w-full h-[280px] lg:h-[330px] overflow-hidden">
-                  <Image
+                  <Image quality={95}
                     src={post.image}
                     alt={title}
                     fill

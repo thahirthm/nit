@@ -71,7 +71,7 @@ export function Header() {
           {/* Left section: Logo */}
           <div className="flex items-center gap-6 h-full py-4">
             <Link href="/" className="flex items-center h-full">
-              <Image
+              <Image quality={95}
                 src="/images/nit-logo.svg"
                 alt="Nesma Infrastructure & Technology"
                 width={200}
@@ -154,7 +154,7 @@ export function Header() {
       {/* Mobile Offcanvas Menu */}
       <div className={`fixed top-0 right-0 h-screen w-full sm:w-[350px] bg-white z-50 xl:hidden transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} flex flex-col shadow-2xl`}>
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <Image src="/images/nit-logo.svg" alt="Logo" width={120} height={30} className="h-7 w-auto object-contain" />
+          <Image quality={95} src="/images/nit-logo.svg" alt="Logo" width={120} height={30} className="h-7 w-auto object-contain" />
           <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#2b307d] hover:bg-gray-50 rounded-full transition-colors">
             <X className="w-6 h-6" strokeWidth={1.5} />
           </button>

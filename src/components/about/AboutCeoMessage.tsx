@@ -70,7 +70,7 @@ export function AboutCeoMessage() {
               isAr ? "left-6 xl:left-12" : "right-6 xl:right-12"
             }`}
           >
-            <Image
+            <Image quality={95}
               src="/images/abt-ceo.png"
               alt={isAr ? "صالح الصنيدي، الرئيس التنفيذي" : "Salah Al Sunaid, CEO"}
               width={496}

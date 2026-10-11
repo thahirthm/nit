@@ -154,7 +154,7 @@ export function ProjectsShowcase() {
           {projects.map((project, i) => (
             <article key={`${project.title}-${i}`} className="h-full flex flex-col">
               <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden shrink-0">
-                <Image src={project.image} alt={project.title} fill className="object-cover" />
+                <Image quality={95} src={project.image} alt={project.title} fill className="object-cover" />
                 <div className="absolute top-4 left-4 flex items-center gap-2">
                   {project.badges.map((badge, bi) => (
                     <span

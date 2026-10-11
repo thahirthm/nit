@@ -280,7 +280,7 @@ export function TechnologySolutions() {
           </div>
 
           <div className="hidden lg:block relative h-full">
-            <Image src={active.graphic} alt="" fill className="object-contain" />
+            <Image quality={95} src={active.graphic} alt="" fill className="object-contain" />
           </div>
         </div>
       </div>

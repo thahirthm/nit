@@ -6,7 +6,7 @@ export function ProjectsHero() {
     <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[120px] lg:pt-[160px]">
       <div className="w-full px-6 lg:px-16">
         <div className="relative w-full h-[320px] sm:h-[440px] lg:h-[600px] overflow-hidden">
-          <Image
+          <Image quality={95}
             src="/images/pr-banner.png"
             alt="NIT engineers on site across the Kingdom"
             fill

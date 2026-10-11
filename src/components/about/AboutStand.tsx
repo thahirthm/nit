@@ -22,7 +22,7 @@ export function AboutStand() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.9fr]">
           <div className="relative w-full h-[320px] sm:h-[440px] lg:h-auto">
-            <Image
+            <Image quality={95}
               src="/images/abt-stand.png"
               alt={isAr ? "ما نقوم عليه" : "What we stand on"}
               fill

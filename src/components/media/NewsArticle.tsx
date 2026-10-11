@@ -56,7 +56,7 @@ export function NewsArticle({ post }: { post: NewsPost }) {
         {/* Hero image + share row */}
         <div className="flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-8">
           <div className="relative w-full lg:flex-1 h-[280px] sm:h-[400px] lg:h-[480px] overflow-hidden">
-            <Image src={post.image} alt={title} fill className="object-cover" />
+            <Image quality={95} src={post.image} alt={title} fill className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2E368F]/50 via-transparent to-transparent" />
           </div>
 
@@ -117,7 +117,7 @@ export function NewsArticle({ post }: { post: NewsPost }) {
                 return (
                   <article key={item.slug} className="group flex flex-col">
                     <Link href={`/media/${item.slug}`} className="relative block w-full h-[220px] sm:h-[260px] overflow-hidden">
-                      <Image
+                      <Image quality={95}
                         src={item.image}
                         alt={itemTitle}
                         fill

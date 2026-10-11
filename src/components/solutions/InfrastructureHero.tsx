@@ -12,7 +12,7 @@ export function InfrastructureHero() {
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
         <div className="relative w-full h-[280px] sm:h-[380px] lg:h-[520px] overflow-hidden">
-          <Image
+          <Image quality={95}
             src="/images/infra-banner.png"
             alt={isAr ? "منظر جوي لأفق مدينة سعودية" : "Aerial view of a Saudi Arabian city skyline"}
             fill

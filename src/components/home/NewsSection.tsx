@@ -193,7 +193,7 @@ export function NewsSection() {
             <SwiperSlide key={i}>
               <article className="group flex flex-col">
                 <div className="relative w-full h-[280px] lg:h-[330px] overflow-hidden">
-                  <Image
+                  <Image quality={95}
                     src={post.image}
                     alt={title}
                     fill

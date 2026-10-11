@@ -94,7 +94,7 @@ export function MediaAwards() {
           {/* Award image — swaps per hovered row */}
           <div className="hidden lg:block relative w-full h-[420px]">
             <div key={activeIndex} className="absolute inset-0 animate-fade-in">
-              <Image
+              <Image quality={95}
                 src={awards[activeIndex].image}
                 alt={isAr ? awards[activeIndex].title.ar : awards[activeIndex].title.en}
                 fill

@@ -129,7 +129,7 @@ export function AboutLeadership() {
                   const personName = isAr ? person.name.ar : person.name.en;
                   return (
                     <div key={id} className="group relative w-full h-[380px] sm:h-[420px] lg:h-[460px] bg-gray-100 overflow-hidden">
-                      <Image
+                      <Image quality={95}
                         src={person.image}
                         alt={personName}
                         fill

@@ -167,7 +167,7 @@ export function ProjectsSection() {
               {/* Desktop: image with hover-swap + slide-up description panel */}
               <div className="hidden lg:block group relative w-full h-[700px] overflow-hidden">
                 {/* Base image */}
-                <Image
+                <Image quality={95}
                   src={project.image}
                   alt={title}
                   fill
@@ -176,7 +176,7 @@ export function ProjectsSection() {
 
                 {/* Hover image — slides down from the top to cover the base image */}
                 <div className="absolute inset-0 -translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out overflow-hidden">
-                  <Image
+                  <Image quality={95}
                     src={project.hoverImage}
                     alt={`${title} at night`}
                     fill
@@ -208,7 +208,7 @@ export function ProjectsSection() {
                   <div dir="ltr" className="flex items-end justify-between transition-opacity duration-300 group-hover:opacity-0">
                     <div className="flex flex-col items-start gap-2">
                       <div className={`relative w-[90px] h-[90px] ${project.isVision2030 ? "bg-white/95 p-2" : ""}`}>
-                        <Image src={project.logo} alt={logoAlt} fill className="object-contain" />
+                        <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
                       </div>
                     </div>
 
@@ -219,7 +219,7 @@ export function ProjectsSection() {
                 {/* Hover panel — description slides up from the bottom */}
                 <div dir={dir} className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out delay-150 bg-white/15 backdrop-blur-md p-8 flex flex-col sm:flex-row sm:items-end gap-6 text-white">
                   <div className={`relative w-[90px] h-[90px] shrink-0 ${project.isVision2030 ? "bg-white/95 p-2" : ""}`}>
-                    <Image src={project.logo} alt={logoAlt} fill className="object-contain" />
+                    <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
                   </div>
 
                   <div className="flex-1 space-y-3">
@@ -239,7 +239,7 @@ export function ProjectsSection() {
               {/* Mobile/tablet: image on top, description panel always visible below (no hover) */}
               <div className="lg:hidden w-full">
                 <div className="relative w-full h-[380px] sm:h-[480px] overflow-hidden">
-                  <Image
+                  <Image quality={95}
                     src={project.image}
                     alt={title}
                     fill
@@ -265,7 +265,7 @@ export function ProjectsSection() {
                         <span>{client}</span>
                       </div>
                       <div className={`relative w-[64px] h-[64px] shrink-0 ${project.isVision2030 ? "bg-white/95 p-2" : ""}`}>
-                        <Image src={project.logo} alt={logoAlt} fill className="object-contain" />
+                        <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
                       </div>
                     </div>
                   </div>

@@ -24,7 +24,7 @@ export function AboutHero() {
         <Button variant="primary">{isAr ? "تواصل معنا" : "CONNECT WITH US"}</Button>
 
         <div className="relative w-full h-[220px] sm:h-[340px] lg:h-[520px] mt-10 lg:mt-16 overflow-hidden">
-          <Image
+          <Image quality={95}
             src="/images/abt-banner.png"
             alt={isAr ? "خلف أساسات المملكة ومستقبلها" : "Behind the kingdom's foundations and its future."}
             fill

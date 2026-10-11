@@ -38,7 +38,7 @@ export function AboutHighlights() {
           </h3>
 
           <div className="relative w-[65%] max-w-[280px] h-[70px] lg:h-[90px]">
-            <Image
+            <Image quality={95}
               src={clientLogos[logoIndex].src}
               alt={isAr ? clientLogos[logoIndex].alt.ar : clientLogos[logoIndex].alt.en}
               fill
@@ -88,7 +88,7 @@ export function AboutHighlights() {
           </h3>
 
           <div className="absolute inset-x-4 bottom-0 top-[70px] lg:top-[90px] pointer-events-none">
-            <Image src="/images/abt-globe.png" alt={isAr ? "حضور عالمي متصل" : "Connected globally"} fill className="object-contain" />
+            <Image quality={95} src="/images/abt-globe.png" alt={isAr ? "حضور عالمي متصل" : "Connected globally"} fill className="object-contain" />
           </div>
 
           <div className={`relative z-10 ${isAr ? "self-start" : "self-end"}`}>

@@ -126,7 +126,7 @@ export function InfrastructureSolutions() {
         <div dir="ltr" className="mt-6 lg:mt-8 grid grid-cols-1 lg:grid-cols-2">
           {/* Left: image with overlay title */}
           <div className="relative h-[280px] sm:h-[380px] lg:h-full overflow-hidden">
-            <Image src={active.image} alt={isAr ? active.title.ar : active.title.en} fill className="object-cover" />
+            <Image quality={95} src={active.image} alt={isAr ? active.title.ar : active.title.en} fill className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-black/0" />
             <h3
               dir={isAr ? "rtl" : "ltr"}

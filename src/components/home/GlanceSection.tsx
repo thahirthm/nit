@@ -134,7 +134,7 @@ export function GlanceSection() {
 
           {/* Card 1: 1988 */}
           <div className={`${cardClasses} bg-gray-200`}>
-            <Image
+            <Image quality={95}
               src="/images/glance-1.png"
               alt="NIT 1988"
               fill
@@ -298,7 +298,7 @@ export function GlanceSection() {
 
             <div className="flex flex-col items-start gap-3">
               <div className="w-[70px] h-[70px] lg:w-[120px] lg:h-[120px] relative">
-                <Image
+                <Image quality={95}
                   src="/images/neom.png"
                   alt={language === "ar" ? "نيوم" : "NEOM"}
                   fill
@@ -314,7 +314,7 @@ export function GlanceSection() {
 
           {/* Card 5: Head Quarters */}
           <div className={`${cardClasses} bg-[#1a2332]`}>
-            <Image
+            <Image quality={95}
               src="/images/jd.png"
               alt="Head Quarters"
               fill
@@ -372,7 +372,7 @@ export function GlanceSection() {
           {/* Card 6: Vision 2030 */}
           <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col">
             <div className="flex justify-end mb-8 lg:mb-16">
-              <Image
+              <Image quality={95}
                 src="/images/vis.png"
                 alt={language === "ar" ? "رؤية السعودية 2030 – المملكة العربية السعودية" : "Vision 2030 - Kingdom of Saudi Arabia"}
                 width={112}

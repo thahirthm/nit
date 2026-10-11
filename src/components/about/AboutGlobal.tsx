@@ -40,7 +40,7 @@ export function AboutGlobal() {
         </h2>
 
         <div className="relative w-full px-6 sm:px-12 lg:px-20">
-          <Image
+          <Image quality={95}
             src="/images/globe-plain.png"
             alt={isAr ? "خريطة العالم لحضور نسما للبنية التحتية والتقنية العالمي" : "World map of Nesma Infrastructure & Technology's global presence"}
             width={1394}
