@@ -124,7 +124,7 @@ export function Footer() {
       <div dir="ltr" className="w-full px-6 lg:px-16 pt-14 sm:pt-20 lg:pt-28 pb-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-12">
         {/* Heading — always first */}
         <div className="order-1 lg:col-start-1 lg:row-start-1">
-          <h2 dir={isAr ? "rtl" : "ltr"} className="text-white text-[44px] sm:text-[60px] lg:text-[70px] font-extralight leading-[1.15] tracking-tight">
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-white text-[44px] sm:text-[50px] lg:text-[60px] font-extralight leading-[1.15] tracking-tight">
             {isAr ? <>رؤيتكم، نهندسها<br />ونحوّلها إلى واقع.</> : <>Your vision, Engineered<br />&amp; delivered.</>}
           </h2>
         </div>
@@ -235,8 +235,8 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div className="w-full px-6 lg:px-16 py-8  border-white/15">
-        <div dir="ltr" className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div dir="ltr" className="flex flex-col items-center text-center gap-4 sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          <div className="flex items-center gap-3 shrink-0">
             <Image quality={95}
               src="/images/nit-logo.svg"
               alt="Nesma Infrastructure & Technology"
@@ -251,9 +251,9 @@ export function Footer() {
             {isAr ? "© 2026 نسما للبنية التحتية والتقنية. جميع الحقوق محفوظة." : <>(C) 2026 NESMA INFRASTRUCTURE &amp; TECHNOLOGY. ALL RIGHTS RESERVED.</>}
           </p>
 
-          <div dir={isAr ? "rtl" : "ltr"} className="flex items-center gap-2 text-sm text-white/60">
+          <div dir={isAr ? "rtl" : "ltr"} className="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-sm text-white/60 sm:flex-nowrap sm:justify-end">
             {policyLinks.map((link, i) => (
-              <span key={link.en} className="flex items-center gap-2">
+              <span key={link.en} className="flex items-center gap-2 whitespace-nowrap">
                 <a href={link.href} className="hover:text-white transition-colors">{isAr ? link.ar : link.en}</a>
                 {i < policyLinks.length - 1 && <span className="text-white/30">|</span>}
               </span>

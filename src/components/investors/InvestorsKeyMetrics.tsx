@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const metrics = [
   {
@@ -136,7 +137,7 @@ export function InvestorsKeyMetrics() {
       className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
     >
       <div className="w-full px-6 lg:px-16">
-        <div dir={isAr ? "rtl" : "ltr"} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <Reveal delay={0} duration={0.8} y={30} dir={isAr ? "rtl" : "ltr"} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight">
             {isAr ? "المؤشرات الرئيسية" : "Key metrics"}
           </h2>
@@ -147,12 +148,12 @@ export function InvestorsKeyMetrics() {
             {isAr ? "تحميل صحيفة الحقائق (PDF)" : "Download fact sheet (PDF)"}
             <DownloadIcon />
           </a>
-        </div>
+        </Reveal>
 
         <div className="mt-8 lg:mt-10 bg-[#2E368F] p-8 sm:p-14 lg:p-16">
           <div dir="ltr" className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-20">
             {metrics.map((metric, i) => (
-              <div key={metric.label.en} dir={isAr ? "rtl" : "ltr"} className="border-t border-white/20 pt-7">
+              <Reveal key={metric.label.en} delay={0.1 + (i % 4) * 0.08} duration={0.7} y={30} dir={isAr ? "rtl" : "ltr"} className="border-t border-white/20 pt-7">
                 <span className="block text-white/50 text-[13px] font-medium tracking-wider uppercase">
                   {isAr ? metric.label.ar : metric.label.en}
                 </span>
@@ -175,7 +176,7 @@ export function InvestorsKeyMetrics() {
                     style={{ width: hasStarted ? `${metric.progress}%` : "0%" }}
                   />
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

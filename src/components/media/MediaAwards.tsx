@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const awards = [
   {
@@ -59,15 +60,20 @@ export function MediaAwards() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
-          {isAr ? "تقديرًا للتميز" : "Recognized for excellence"}
-        </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
+            {isAr ? "تقديرًا للتميز" : "Recognized for excellence"}
+          </h2>
+        </Reveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 items-start">
           <div className="border-t border-gray-200">
             {awards.map((award, i) => (
-              <div
+              <Reveal
                 key={award.title.en}
+                delay={0.1 + i * 0.08}
+                duration={0.6}
+                y={24}
                 onMouseEnter={() => setActiveIndex(i)}
                 dir={isAr ? "rtl" : "ltr"}
                 className="group py-4 border-b border-gray-200 cursor-default"
@@ -87,12 +93,12 @@ export function MediaAwards() {
                   <span className="mx-1.5">|</span>
                   {isAr ? award.tag.ar : award.tag.en}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
 
           {/* Award image — swaps per hovered row */}
-          <div className="hidden lg:block relative w-full h-[420px]">
+          <Reveal delay={0.2} duration={0.8} y={30} className="hidden lg:block relative w-full h-[420px]">
             <div key={activeIndex} className="absolute inset-0 animate-fade-in">
               <Image quality={95}
                 src={awards[activeIndex].image}
@@ -101,7 +107,7 @@ export function MediaAwards() {
                 className="object-contain"
               />
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

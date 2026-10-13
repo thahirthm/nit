@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 function Stat({
   value,
@@ -24,19 +27,29 @@ function Stat({
   );
 }
 
-function StatsRow({ hidden }: { hidden?: boolean }) {
+function StatsRow({ hidden, isAr }: { hidden?: boolean; isAr: boolean }) {
   return (
-    <div className="flex items-center" aria-hidden={hidden}>
-      <Stat value="587" unit="km" label="Jubail–Buraydah water pipeline" />
-      <Stat value="1,100" unit="MW" label="Al Henakiyah solar PV" />
+    <div className="flex items-center" aria-hidden={hidden} dir="ltr">
+      <Stat
+        value={isAr ? "587" : "587"}
+        unit={isAr ? "كم" : "km"}
+        label={isAr ? "خط أنابيب المياه بين الجبيل وبريدة" : "Jubail–Buraydah water pipeline"}
+      />
+      <Stat value="1,100" unit={isAr ? "ميجاواط" : "MW"} label={isAr ? "مشروع الحناكية للطاقة الشمسية" : "Al Henakiyah solar PV"} />
       <Stat
         value="650"
         unit={
-          <>
-            km<sup>3</sup>/d
-          </>
+          isAr ? (
+            <>
+              ألف م<sup>3</sup>/يوم
+            </>
+          ) : (
+            <>
+              km<sup>3</sup>/d
+            </>
+          )
         }
-        label="Desalinated water capacity"
+        label={isAr ? "الطاقة الإنتاجية للمياه المحلّاة" : "Desalinated water capacity"}
       />
       <Stat
         unit={
@@ -50,11 +63,14 @@ function StatsRow({ hidden }: { hidden?: boolean }) {
 }
 
 export function ProjectsStats() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
+
   return (
-    <section className="w-full mt-10 lg:mt-14 bg-[#F5F5F5] font-[family-name:var(--font-futura)] overflow-hidden">
+    <section className={`w-full mt-10 lg:mt-14 bg-[#F5F5F5] overflow-hidden ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="flex w-max py-6 lg:py-4 animate-marquee hover:[animation-play-state:paused]">
-        <StatsRow />
-        <StatsRow hidden />
+        <StatsRow isAr={isAr} />
+        <StatsRow hidden isAr={isAr} />
       </div>
     </section>
   );

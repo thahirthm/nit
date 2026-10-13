@@ -3,12 +3,21 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Map1 } from "@/components/solutions/Map1";
+import { Reveal } from "@/components/ui/Reveal";
+import { useLanguage } from "@/context/LanguageContext";
 
 type Region = {
   id: string;
-  name: string;
+  name: { en: string; ar: string };
   dot: [number, number];
-  stats: { count: string; label: string }[];
+  stats: { count: string; label: { en: string; ar: string } }[];
+};
+
+const statLabels = {
+  energy: { en: "Energy Solutions", ar: "حلول الطاقة" },
+  water: { en: "Water", ar: "المياه" },
+  industrial: { en: "Industrial Installation", ar: "التركيبات الصناعية" },
+  om: { en: "O&M", ar: "التشغيل والصيانة" },
 };
 
 // Dot coordinates are in Map1's own viewBox space (0 0 1035 621), placed at
@@ -16,79 +25,79 @@ type Region = {
 const regions: Region[] = [
   {
     id: "northern",
-    name: "northern",
+    name: { en: "northern", ar: "الشمالية" },
     dot: [380, 100],
     stats: [
-      { count: "09", label: "Energy Solutions" },
-      { count: "02", label: "Water" },
-      { count: "01", label: "Industrial Installation" },
-      { count: "01", label: "O&M" },
+      { count: "09", label: statLabels.energy },
+      { count: "02", label: statLabels.water },
+      { count: "01", label: statLabels.industrial },
+      { count: "01", label: statLabels.om },
     ],
   },
   {
     id: "eastern",
-    name: "eastern",
-    dot: [850, 260],
+    name: { en: "eastern", ar: "الشرقية" },
+    dot: [790, 340],
     stats: [
-      { count: "21", label: "Energy Solutions" },
-      { count: "01", label: "Water" },
-      { count: "01", label: "Industrial Installation" },
-      { count: "02", label: "O&M" },
+      { count: "21", label: statLabels.energy },
+      { count: "01", label: statLabels.water },
+      { count: "01", label: statLabels.industrial },
+      { count: "02", label: statLabels.om },
     ],
   },
   {
     id: "southern",
-    name: "southern",
+    name: { en: "southern", ar: "الجنوبية" },
     dot: [400, 430],
     stats: [
-      { count: "06", label: "Energy Solutions" },
-      { count: "02", label: "Water" },
-      { count: "01", label: "Industrial Installation" },
-      { count: "01", label: "O&M" },
+      { count: "06", label: statLabels.energy },
+      { count: "02", label: statLabels.water },
+      { count: "01", label: statLabels.industrial },
+      { count: "01", label: statLabels.om },
     ],
   },
   {
     id: "central",
-    name: "central",
+    name: { en: "central", ar: "الوسطى" },
     dot: [470, 270],
     stats: [
-      { count: "17", label: "Energy Solutions" },
-      { count: "04", label: "Water" },
-      { count: "02", label: "Industrial Installation" },
-      { count: "03", label: "O&M" },
+      { count: "17", label: statLabels.energy },
+      { count: "04", label: statLabels.water },
+      { count: "02", label: statLabels.industrial },
+      { count: "03", label: statLabels.om },
     ],
   },
   {
     id: "western",
-    name: "western",
+    name: { en: "western", ar: "الغربية" },
     dot: [200, 170],
     stats: [
-      { count: "14", label: "Energy Solutions" },
-      { count: "03", label: "Water" },
-      { count: "02", label: "Industrial Installation" },
-      { count: "01", label: "O&M" },
+      { count: "14", label: statLabels.energy },
+      { count: "03", label: statLabels.water },
+      { count: "02", label: statLabels.industrial },
+      { count: "01", label: statLabels.om },
     ],
   },
   {
     id: "southwestern",
-    name: "southwestern",
+    name: { en: "southwestern", ar: "الجنوبية الغربية" },
     dot: [290, 330],
     stats: [
-      { count: "11", label: "Energy Solutions" },
-      { count: "03", label: "Water" },
-      { count: "01", label: "Industrial Installation" },
-      { count: "02", label: "O&M" },
+      { count: "11", label: statLabels.energy },
+      { count: "03", label: statLabels.water },
+      { count: "01", label: statLabels.industrial },
+      { count: "02", label: statLabels.om },
     ],
   },
   {
     id: "najran",
-    name: "najran",
+    name: { en: "najran", ar: "نجران" },
     dot: [520, 450],
     stats: [
-      { count: "04", label: "Energy Solutions" },
-      { count: "01", label: "Water" },
-      { count: "00", label: "Industrial Installation" },
-      { count: "01", label: "O&M" },
+      { count: "04", label: statLabels.energy },
+      { count: "01", label: statLabels.water },
+      { count: "00", label: statLabels.industrial },
+      { count: "01", label: statLabels.om },
     ],
   },
 ];
@@ -100,6 +109,8 @@ const ArrowIcon = ({ className }: { className?: string }) => (
 );
 
 export function SolutionsMap() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
 
   const activeRegion = useMemo(
@@ -108,12 +119,12 @@ export function SolutionsMap() {
   );
 
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
-      <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-4 lg:gap-6">
+    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-4 lg:gap-6">
         {/* Map card */}
-        <div className="relative bg-[#2E368F] p-8 sm:p-10 lg:p-12 min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] overflow-hidden flex flex-col">
+        <Reveal delay={0} duration={0.8} y={30} className="relative bg-[#2E368F] p-8 sm:p-10 lg:p-12 min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] overflow-hidden flex flex-col">
           <h3 className="relative z-10 text-white text-[20px] sm:text-[24px] lg:text-[28px] font-extralight leading-snug max-w-xs">
-            NIT current projects across the kingdom
+            {isAr ? "مشروعات نسما للبنية التحتية والتقنية الحالية في مختلف أنحاء المملكة" : "NIT current projects across the kingdom"}
           </h3>
 
           <div className="absolute inset-0 flex items-center justify-center">
@@ -125,15 +136,22 @@ export function SolutionsMap() {
                 onHoverRegion={setHoveredRegion}
               />
 
-              {/* Location dots, aligned to the map's own viewBox (0 0 1035 621) */}
-              <svg viewBox="0 0 1035 621" className="absolute inset-0 w-full h-full overflow-visible">
+              {/* Location dots, aligned to the map's own viewBox (0 0 1035 621).
+                  pointer-events: none on the root so this overlay doesn't block clicks/hover
+                  on the province paths in Map1 underneath it — only the hit-circle below
+                  (which sets its own pointer-events: all) should ever intercept. */}
+              <svg
+                viewBox="0 0 1035 621"
+                className="absolute inset-0 w-full h-full overflow-visible"
+                style={{ pointerEvents: "none" }}
+              >
                 {/* Reliable hit-area for "eastern" — it has no solid shape of its own (it's the
                     exposed gap in the base layer), so a dedicated hit-circle guarantees hover works
                     regardless of what decorative bits sit on top of it at any given point. */}
                 <circle
-                  cx={850}
-                  cy={260}
-                  r={90}
+                  cx={770}
+                  cy={320}
+                  r={120}
                   fill="transparent"
                   style={{ pointerEvents: "all", cursor: "pointer" }}
                   onMouseEnter={() => setHoveredRegion("eastern")}
@@ -159,34 +177,38 @@ export function SolutionsMap() {
 
           <div className="relative z-10 mt-auto">
             <div className="text-white text-[42px] sm:text-[52px] lg:text-[64px] font-extralight leading-none">25+</div>
-            <div className="text-[#81D1E8] text-[15px] sm:text-[16px] font-light mt-1">Active projects</div>
+            <div className="text-[#81D1E8] text-[15px] sm:text-[16px] font-light mt-1">
+              {isAr ? "مشروعًا قيد التنفيذ" : "Active projects"}
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* Info panel */}
-        <div className="bg-[#F5F5F5] p-8 sm:p-10 flex flex-col">
+        <Reveal delay={0.12} duration={0.8} y={30} className="bg-[#F5F5F5] p-8 sm:p-10 flex flex-col">
           <h3 className="text-gray-900 text-[22px] sm:text-[26px] font-extralight tracking-tight mb-8 lg:mb-10">
-            Projects in the {activeRegion.name} area
+            {isAr ? `المشروعات في المنطقة ${activeRegion.name.ar}` : `Projects in the ${activeRegion.name.en} area`}
           </h3>
 
           <div className="flex flex-col divide-y divide-gray-300 border-t border-gray-300">
-            {activeRegion.stats.map((item) => (
-              <div key={item.label} className="flex items-center justify-between py-4">
+            {activeRegion.stats.map((item, i) => (
+              <div key={`${item.label.en}-${i}`} className="flex items-center justify-between py-4">
                 <div className="flex items-center gap-3">
                   <span className="text-gray-400 text-sm font-normal w-6 shrink-0">{item.count}</span>
-                  <span className="text-gray-600 text-[15px] sm:text-[16px] font-light">{item.label}</span>
+                  <span className="text-gray-600 text-[15px] sm:text-[16px] font-light">
+                    {isAr ? item.label.ar : item.label.en}
+                  </span>
                 </div>
-                <ArrowIcon className="text-gray-300 shrink-0" />
+                <ArrowIcon className={`text-gray-300 shrink-0 ${isAr ? "rotate-180" : ""}`} />
               </div>
             ))}
           </div>
 
           <div className="mt-auto pt-10 lg:pt-14">
             <Button href="/projects" variant="primary">
-              See our projects
+              {isAr ? "استكشفوا مشروعاتنا" : "See our projects"}
             </Button>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

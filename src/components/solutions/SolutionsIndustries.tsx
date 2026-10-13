@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Reveal } from "@/components/ui/Reveal";
 
 type Industry = {
   title: string;
@@ -216,23 +217,28 @@ export function SolutionsIndustries() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
+    <section id="industries" className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
       <div className="w-full px-6 lg:px-16">
-        <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-6 lg:mb-8">
-          Industries we serve
-        </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-6 lg:mb-8">
+            Industries we serve
+          </h2>
 
-        <p className="text-[17px] sm:text-[19px] leading-relaxed font-light text-[#727272] max-w-2xl mb-10 lg:mb-14">
-          The Kingdom&apos;s most critical sectors rely on the systems we engineer — from energy giants and water
-          authorities to defense, telecom, and national institutions.
-        </p>
+          <p className="text-[17px] sm:text-[19px] leading-relaxed font-light text-[#727272] max-w-2xl mb-10 lg:mb-14">
+            The Kingdom&apos;s most critical sectors rely on the systems we engineer — from energy giants and water
+            authorities to defense, telecom, and national institutions.
+          </p>
+        </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
           {industries.map((industry, i) => {
             const isActive = activeIndex === i;
             return (
-              <div
+              <Reveal
                 key={industry.title}
+                delay={0.15 + i * 0.06}
+                duration={0.6}
+                y={30}
                 className="relative h-[160px] sm:h-[190px] lg:h-[210px] p-6 sm:p-8 flex flex-col justify-between cursor-pointer overflow-hidden bg-white border border-gray-200"
                 onMouseEnter={() => setActiveIndex(i)}
                 onMouseLeave={() => setActiveIndex((current) => (current === i ? null : current))}
@@ -265,7 +271,7 @@ export function SolutionsIndustries() {
                 <div className={`relative z-10 self-end transition-colors duration-300 ${isActive ? "text-white" : "text-[#2E368F]"}`}>
                   {industry.icon(isActive)}
                 </div>
-              </div>
+              </Reveal>
             );
           })}
         </div>

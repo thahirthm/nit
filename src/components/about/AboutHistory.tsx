@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const milestones = [
   {
@@ -123,13 +124,15 @@ export function AboutHistory() {
   const goNext = () => setActiveIndex((i) => Math.min(lastIndex, i + 1));
 
   return (
-    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    <section id="our-history" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="px-6 lg:px-16">
-        <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-12">
-          {isAr ? "تاريخنا" : "Our history"}
-        </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-12">
+            {isAr ? "تاريخنا" : "Our history"}
+          </h2>
+        </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-center">
+        <Reveal delay={0.1} duration={0.8} y={30} className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-center">
           {/* Big year — slides in from the top on change */}
           <div dir="ltr" className="overflow-hidden h-[120px] sm:h-[160px] lg:h-[200px] flex items-center">
             <AnimatePresence mode="wait">
@@ -167,12 +170,12 @@ export function AboutHistory() {
               </p>
             </motion.div>
           </AnimatePresence>
-        </div>
+        </Reveal>
 
         {/* Timeline track — kept LTR so the chronological order never reverses */}
-        <div dir="ltr" className="mt-10 lg:mt-14 flex items-start gap-4 lg:gap-10">
+        <Reveal delay={0.25} duration={0.8} y={30} dir="ltr" className="mt-10 lg:mt-14 flex items-start gap-4 lg:gap-10">
           {/* Arrows — aligned with the year-label row below the dots */}
-          <div className="flex items-center gap-4 shrink-0 pt-[46px] lg:pt-[50px]">
+          <div className="flex items-center gap-4 shrink-0 pt-1 sm:pt-[46px] lg:pt-[50px]">
             <button
               aria-label={isAr ? "السابق" : "Previous"}
               onClick={goPrev}
@@ -191,9 +194,10 @@ export function AboutHistory() {
             </button>
           </div>
 
-          {/* Dots + line, and year labels — share the same width so each label sits under its dot */}
+          {/* Dots + line, and year labels — share the same width so each label sits under its dot.
+              Hidden on mobile: with no label row to anchor to, the lone dot track added little. */}
           <div className="flex-1 min-w-0">
-            <div className="relative">
+            <div className="hidden sm:block relative">
               <div className="absolute top-[8px] left-[5px] right-[5px] h-px bg-gray-200" />
               <div
                 className="absolute top-[8px] left-0 h-px bg-[#2E368F] transition-all duration-500 ease-out"
@@ -217,7 +221,9 @@ export function AboutHistory() {
               </div>
             </div>
 
-            <div className="flex justify-between mt-6">
+            {/* Year labels — hidden on mobile since 11 labels can't fit without overlapping;
+                the dots row above plus the arrows still let mobile users navigate. */}
+            <div className="hidden sm:flex justify-between mt-6">
               {milestones.map((m, i) => (
                 <button
                   key={m.year}
@@ -231,7 +237,7 @@ export function AboutHistory() {
               ))}
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -8,20 +8,49 @@ import { AboutCeoMessage } from "@/components/about/AboutCeoMessage";
 import { AboutLeadership } from "@/components/about/AboutLeadership";
 import { AboutGlobal } from "@/components/about/AboutGlobal";
 import { AboutCertifications } from "@/components/about/AboutCertifications";
+import { Reveal } from "@/components/ui/Reveal";
 
 export default function AboutPage() {
   return (
     <main className="min-h-screen">
+      {/* Hero — no reveal, it's the immediate above-the-fold content */}
       <AboutHero />
-      <AboutHighlights />
-      <AboutStand />
-      <AboutHistory />
-      <AboutScale />
-      <ClientsSection />
-      <AboutCeoMessage />
-      <AboutLeadership />
-      <AboutGlobal />
-      <AboutCertifications />
+
+      <Reveal>
+        <AboutHighlights />
+      </Reveal>
+
+      <Reveal>
+        <AboutStand />
+      </Reveal>
+
+      <Reveal>
+        <AboutHistory />
+      </Reveal>
+
+      <Reveal>
+        <AboutScale />
+      </Reveal>
+
+      <Reveal>
+        <ClientsSection />
+      </Reveal>
+
+      <Reveal>
+        <AboutCeoMessage />
+      </Reveal>
+
+      <Reveal>
+        <AboutLeadership />
+      </Reveal>
+
+      <Reveal>
+        <AboutGlobal />
+      </Reveal>
+
+      <Reveal>
+        <AboutCertifications />
+      </Reveal>
     </main>
   );
 }

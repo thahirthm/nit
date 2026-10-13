@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 type MapMarker = { name: { en: string; ar: string }; x: number; y: number; size?: "sm" | "md" | "lg" };
 
@@ -35,11 +36,13 @@ export function AboutGlobal() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="px-6 lg:px-16">
-        <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-10">
-          {isAr ? "خبرات محلية. حضور عالمي." : "Local expertise. Global reach."}
-        </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-10">
+            {isAr ? "خبرات محلية. حضور عالمي." : "Local expertise. Global reach."}
+          </h2>
+        </Reveal>
 
-        <div className="relative w-full px-6 sm:px-12 lg:px-20">
+        <Reveal delay={0.1} duration={0.9} y={30} className="relative w-full px-6 sm:px-12 lg:px-20">
           <Image quality={95}
             src="/images/globe-plain.png"
             alt={isAr ? "خريطة العالم لحضور نسما للبنية التحتية والتقنية العالمي" : "World map of Nesma Infrastructure & Technology's global presence"}
@@ -49,7 +52,7 @@ export function AboutGlobal() {
             priority={false}
           />
 
-          {MARKERS.map((marker) => {
+          {MARKERS.map((marker, markerIndex) => {
             const markerName = isAr ? marker.name.ar : marker.name.en;
             return (
               <div
@@ -62,9 +65,13 @@ export function AboutGlobal() {
                   setActiveMarker((current) => (current === marker.name.en ? null : marker.name.en))
                 }
               >
-                <button
+                <motion.button
                   type="button"
                   aria-label={markerName}
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ duration: 0.4, delay: 0.3 + markerIndex * 0.03, ease: [0.16, 1, 0.3, 1] }}
                   className={`block rounded-full bg-[#81D1E8] hover:bg-[#2563EB] transition-colors cursor-pointer ${DOT_SIZE[marker.size ?? "sm"]}`}
                 />
 
@@ -99,9 +106,12 @@ export function AboutGlobal() {
               </div>
             );
           })}
-        </div>
+        </Reveal>
 
-        <div
+        <Reveal
+          delay={0.3}
+          duration={0.7}
+          y={24}
           dir={isAr ? "rtl" : "ltr"}
           className={`relative bg-[#F5F5F5] px-6 py-6 sm:px-8 sm:py-8 max-w-xl mt-6 lg:mt-10 ${
             isAr ? "border-r-4" : "border-l-4"
@@ -112,7 +122,7 @@ export function AboutGlobal() {
               ? "تجمع نسما للبنية التحتية والتقنية بين حضور محلي وعالمي قوي، مع سلسلة توريد مستقلة عن الموردين ومبنية على شراكات موثوقة."
               : "Nesma Infrastructure & Technology combines strong local and global presence with a vendor-agnostic supply chain built on trusted partnerships."}
           </p>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -59,23 +59,35 @@ export function LegalPageContent({
           </p>
         )}
 
-        <div className="mt-16 lg:mt-20 grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-10 lg:gap-16">
-          {/* Sidebar nav */}
-          <nav dir={isAr ? "rtl" : "ltr"} className="lg:sticky lg:top-[140px] lg:self-start flex flex-row flex-wrap gap-x-6 gap-y-2 lg:flex-col lg:gap-y-4">
-            {sections.map((s) => {
-              const isActive = s.id === activeId;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => scrollToSection(s.id)}
-                  className={`text-left text-[15px] transition-colors duration-200 ${isAr ? "text-right" : ""} ${
-                    isActive ? "text-[#2E368F] font-medium" : "text-gray-400 hover:text-gray-600 font-light"
-                  }`}
-                >
-                  {isAr ? s.heading.ar : s.heading.en}
-                </button>
-              );
-            })}
+        <div className="mt-8 lg:mt-20 grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 lg:gap-16">
+          {/* Sidebar nav — on mobile/tablet this becomes a sticky, horizontally
+              scrollable tab bar pinned under the header; on desktop it's the
+              usual sticky vertical list. */}
+          <nav
+            dir={isAr ? "rtl" : "ltr"}
+            className="sticky top-0 z-30 -mx-6 bg-white overflow-x-auto [&::-webkit-scrollbar]:hidden lg:mx-0 lg:bg-transparent lg:overflow-visible lg:top-[140px] lg:self-start"
+            style={{ scrollbarWidth: "none" }}
+          >
+            <div className="flex flex-nowrap gap-x-6 px-6 lg:flex-col lg:gap-y-4 lg:px-0">
+              {sections.map((s) => {
+                const isActive = s.id === activeId;
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() => scrollToSection(s.id)}
+                    className={`shrink-0 whitespace-nowrap text-left text-[15px] py-3 border-b-2 transition-colors duration-200 lg:py-0 lg:border-0 ${
+                      isAr ? "text-right" : ""
+                    } ${
+                      isActive
+                        ? "text-[#2E368F] font-medium border-[#2E368F]"
+                        : "text-gray-400 hover:text-gray-600 font-light border-transparent"
+                    }`}
+                  >
+                    {isAr ? s.heading.ar : s.heading.en}
+                  </button>
+                );
+              })}
+            </div>
           </nav>
 
           {/* Content */}

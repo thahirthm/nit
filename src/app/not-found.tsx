@@ -11,10 +11,10 @@ export default function NotFound() {
     <main className="min-h-screen">
       <section className={`w-full bg-white pt-[140px] lg:pt-[180px] pb-16 lg:pb-24 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
         <div className="w-full px-6 lg:px-16">
-          <div className="bg-[#F7F7F7] px-8 sm:px-12 lg:px-16 py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div className="bg-[#F7F7F7] px-8 sm:px-12 lg:px-16 py-16 lg:py-20 min-h-[480px] lg:min-h-[620px] grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             <div
               dir={isAr ? "rtl" : "ltr"}
-              className={`border-gray-200 ${isAr ? "lg:border-l lg:pl-16" : "lg:border-r lg:pr-16"}`}
+              className={`flex flex-col border-gray-200 ${isAr ? "lg:border-l lg:pl-16" : "lg:border-r lg:pr-16"}`}
             >
               <h1 className="text-gray-900 text-[32px] sm:text-[40px] lg:text-[44px] font-extralight tracking-tight leading-[1.15]">
                 {isAr ? "عذرًا! الصفحة غير موجودة" : "Oops! Page not found"}
@@ -36,21 +36,47 @@ export default function NotFound() {
                 )}
               </p>
 
-              <div className="mt-10">
+              <div className="mt-auto pt-10">
                 <Button href="/" variant="primary">
                   {isAr ? "استكشف الصفحة الرئيسية" : "Explore our home"}
                 </Button>
               </div>
             </div>
 
-            <div className="flex justify-center lg:justify-end">
-              <span
+            <div className="flex items-center justify-center lg:justify-end">
+              <svg
                 aria-hidden="true"
-                style={{ WebkitTextStroke: "1.5px #9CA3AF", color: "transparent" }}
-                className="font-[family-name:var(--font-futura)] font-extralight text-[140px] sm:text-[200px] lg:text-[240px] leading-none select-none tracking-tight"
+                viewBox="0 0 716 456"
+                className="w-[260px] sm:w-[380px] lg:w-[460px] h-auto select-none"
+                fill="none"
               >
-                404
-              </span>
+                {/* "4" */}
+                <path
+                  d="M180 40 L20 300 L210 300 M180 40 L180 416"
+                  stroke="#9CA3AF"
+                  strokeWidth="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* "0" — stadium/pill shape */}
+                <rect
+                  x="250"
+                  y="40"
+                  width="180"
+                  height="376"
+                  rx="90"
+                  stroke="#9CA3AF"
+                  strokeWidth="10"
+                />
+                {/* "4" */}
+                <path
+                  d="M650 40 L490 300 L680 300 M650 40 L650 416"
+                  stroke="#9CA3AF"
+                  strokeWidth="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
           </div>
         </div>

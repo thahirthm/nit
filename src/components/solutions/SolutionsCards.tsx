@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
 
 const cards = [
   {
@@ -37,11 +38,14 @@ export function SolutionsCards() {
   return (
     <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
       <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-        {cards.map((card) => {
+        {cards.map((card, cardIndex) => {
           const isActive = activeCard === card.title;
           return (
-            <div
+            <Reveal
               key={card.title}
+              delay={cardIndex * 0.12}
+              duration={0.8}
+              y={40}
               className="relative h-[420px] sm:h-[520px] lg:h-[620px] overflow-hidden"
               onMouseEnter={() => setActiveCard(card.title)}
               onMouseLeave={() => setActiveCard((current) => (current === card.title ? null : current))}
@@ -86,7 +90,7 @@ export function SolutionsCards() {
                   ))}
                 </div>
               </div>
-            </div>
+            </Reveal>
           );
         })}
       </div>

@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 import "swiper/css";
 
 const people: Record<string, { name: { en: string; ar: string }; role: { en: string; ar: string }; image: string }> = {
@@ -56,16 +57,16 @@ export function AboutLeadership() {
   const showNav = slides.length > 1;
 
   return (
-    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    <section id="our-team" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* Heading */}
-      <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10">
+      <Reveal delay={0} duration={0.8} y={30} className="w-full px-6 lg:px-16 mb-8 lg:mb-10">
         <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {isAr ? "العقول وراء المهمة" : "The minds behind the mission"}
         </h2>
-      </div>
+      </Reveal>
 
       {/* Tabs + Nav — kept LTR so tab order and arrow sides stay stable */}
-      <div dir="ltr" className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
+      <Reveal delay={0.1} duration={0.7} y={24} dir="ltr" className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <div className="flex flex-wrap gap-3">
           {categories.map((category) => {
             const isActive = category.key === activeCategory;
@@ -105,7 +106,7 @@ export function AboutLeadership() {
             </button>
           </div>
         )}
-      </div>
+      </Reveal>
 
       {/* Leadership slider */}
       <div className="w-full px-6 lg:px-16">
@@ -124,11 +125,17 @@ export function AboutLeadership() {
           {slides.map((slide, i) => (
             <SwiperSlide key={i}>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                {slide.map((id) => {
+                {slide.map((id, cardIndex) => {
                   const person = people[id];
                   const personName = isAr ? person.name.ar : person.name.en;
                   return (
-                    <div key={id} className="group relative w-full h-[380px] sm:h-[420px] lg:h-[460px] bg-gray-100 overflow-hidden">
+                    <Reveal
+                      key={id}
+                      delay={cardIndex * 0.1}
+                      duration={0.7}
+                      y={40}
+                      className="group relative w-full h-[380px] sm:h-[420px] lg:h-[460px] bg-gray-100 overflow-hidden"
+                    >
                       <Image quality={95}
                         src={person.image}
                         alt={personName}
@@ -148,7 +155,7 @@ export function AboutLeadership() {
                         </div>
                         <span className="text-lg text-gray-400 font-light shrink-0">+</span>
                       </div>
-                    </div>
+                    </Reveal>
                   );
                 })}
               </div>

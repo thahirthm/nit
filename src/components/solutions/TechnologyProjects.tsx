@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { Button } from "@/components/ui/Button";
+import { ProjectOffcanvas, type ProjectOffcanvasProject } from "@/components/ui/ProjectOffcanvas";
 import { useLanguage } from "@/context/LanguageContext";
 import "swiper/css";
 
@@ -175,6 +176,7 @@ export function TechnologyProjects() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<ProjectOffcanvasProject | null>(null);
 
   const active = categories.find((c) => c.key === activeCategory) ?? categories[0];
 
@@ -310,7 +312,9 @@ export function TechnologyProjects() {
                     </div>
 
                     <div className="mt-5">
-                      <Button variant="secondary">{isAr ? "اقرأ المزيد" : "READ MORE"}</Button>
+                      <Button variant="secondary" onClick={() => setSelectedProject(project)}>
+                        {isAr ? "اقرأ المزيد" : "READ MORE"}
+                      </Button>
                     </div>
                   </div>
                 </article>
@@ -319,6 +323,8 @@ export function TechnologyProjects() {
           </Swiper>
         </div>
       </div>
+
+      <ProjectOffcanvas project={selectedProject} onClose={() => setSelectedProject(null)} />
     </section>
   );
 }

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { newsPosts } from "@/data/newsPosts";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const categories = [
   { key: "NEWS", en: "NEWS", ar: "أخبار" },
@@ -29,48 +30,50 @@ export function MediaNews() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        {/* Heading + Nav — kept LTR so the arrows stay on the same side as the rest of the site's sliders */}
-        <div dir="ltr" className="flex items-center justify-between">
-          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
-            {isAr ? "الأخبار والإعلانات" : "News & announcements"}
-          </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          {/* Heading + Nav — kept LTR so the arrows stay on the same side as the rest of the site's sliders */}
+          <div dir="ltr" className="flex items-center justify-between">
+            <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
+              {isAr ? "الأخبار والإعلانات" : "News & announcements"}
+            </h2>
 
-          <div className="hidden sm:flex items-center gap-4 lg:gap-6">
-            <button aria-label={isAr ? "السابق" : "Previous"} disabled className="text-gray-300 cursor-not-allowed">
-              <ArrowIcon className={isAr ? "" : "rotate-180"} />
-            </button>
-            <button aria-label={isAr ? "التالي" : "Next"} disabled className="text-gray-300 cursor-not-allowed">
-              <ArrowIcon className={isAr ? "rotate-180" : ""} />
-            </button>
-          </div>
-        </div>
-
-        {/* Tabs — kept LTR so tab order never reorders by language */}
-        <div dir="ltr" className="mt-8 flex flex-wrap gap-3">
-          {categories.map((category) => {
-            const isActive = category.key === activeCategory;
-            return (
-              <button
-                key={category.key}
-                onClick={() => setActiveCategory(category.key)}
-                className={`px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 ${
-                  isActive
-                    ? "bg-[#2E368F] text-white border-[#2E368F]"
-                    : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
-                }`}
-              >
-                {isAr ? category.ar : category.en}
+            <div className="hidden sm:flex items-center gap-4 lg:gap-6">
+              <button aria-label={isAr ? "السابق" : "Previous"} disabled className="text-gray-300 cursor-not-allowed">
+                <ArrowIcon className={isAr ? "" : "rotate-180"} />
               </button>
-            );
-          })}
-        </div>
+              <button aria-label={isAr ? "التالي" : "Next"} disabled className="text-gray-300 cursor-not-allowed">
+                <ArrowIcon className={isAr ? "rotate-180" : ""} />
+              </button>
+            </div>
+          </div>
+
+          {/* Tabs — kept LTR so tab order never reorders by language */}
+          <div dir="ltr" className="mt-8 flex flex-wrap gap-3">
+            {categories.map((category) => {
+              const isActive = category.key === activeCategory;
+              return (
+                <button
+                  key={category.key}
+                  onClick={() => setActiveCategory(category.key)}
+                  className={`px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 ${
+                    isActive
+                      ? "bg-[#2E368F] text-white border-[#2E368F]"
+                      : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
+                  }`}
+                >
+                  {isAr ? category.ar : category.en}
+                </button>
+              );
+            })}
+          </div>
+        </Reveal>
 
         {/* Post grid */}
         <div className="mt-8 lg:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
-          {newsPosts.map((post) => {
+          {newsPosts.map((post, i) => {
             const title = isAr ? post.title.ar : post.title.en;
             return (
-              <article key={post.slug} className="group flex flex-col">
+              <Reveal key={post.slug} delay={(i % 3) * 0.1} duration={0.7} y={40} className="group flex flex-col">
                 <Link href={`/media/${post.slug}`} className="relative block w-full h-[280px] lg:h-[330px] overflow-hidden">
                   <Image quality={95}
                     src={post.image}
@@ -106,7 +109,7 @@ export function MediaNews() {
                     {isAr ? "اقرأ المزيد" : "READ MORE"}
                   </Button>
                 </div>
-              </article>
+              </Reveal>
             );
           })}
         </div>

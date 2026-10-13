@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const QuoteMark = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 141 278" fill="none" className={className}>
@@ -20,11 +21,13 @@ export function AboutCeoMessage() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="px-6 lg:px-16">
-        <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-10">
-          {isAr ? "رسالة الرئيس التنفيذي" : "CEO's message"}
-        </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-10">
+            {isAr ? "رسالة الرئيس التنفيذي" : "CEO's message"}
+          </h2>
+        </Reveal>
 
-        <div className="relative bg-[#2E368F] overflow-visible min-h-[360px] sm:min-h-[400px] lg:min-h-[440px]">
+        <Reveal delay={0.1} duration={0.9} y={40} className="relative bg-[#2E368F] overflow-visible min-h-[360px] sm:min-h-[400px] lg:min-h-[440px]">
           {/* Decorative quote mark */}
           <QuoteMark
             className={`absolute top-4 sm:top-6 w-[70px] sm:w-[100px] lg:w-[141px] h-auto pointer-events-none ${
@@ -39,7 +42,7 @@ export function AboutCeoMessage() {
               isAr ? "lg:max-w-[55%] lg:ml-auto" : "lg:max-w-[55%]"
             }`}
           >
-            <div className="space-y-8">
+            <Reveal delay={0.25} duration={0.7} y={24} className="space-y-8">
               <p className="text-white text-xl sm:text-2xl lg:text-3xl font-light leading-snug">
                 {isAr ? "بنية الغد لا تشبه بنية اليوم." : "Tomorrow's infrastructure looks nothing like today's."}
               </p>
@@ -48,9 +51,9 @@ export function AboutCeoMessage() {
                   ? "نبنيها بدقة، ونستشرف ما تحتاجه المملكة لاحقًا، ونحققها قبل أن يطلبها السوق."
                   : "We build it with precision, anticipate what the Kingdom needs next, and deliver before the market asks."}
               </p>
-            </div>
+            </Reveal>
 
-            <div className="flex items-center gap-4">
+            <Reveal delay={0.4} duration={0.7} y={24} className="flex items-center gap-4">
               <span className="text-white text-base sm:text-lg font-normal">
                 {isAr ? "صالح الصنيدي - الرئيس التنفيذي" : "Salah Al Sunaid - CEO"}
               </span>
@@ -61,11 +64,14 @@ export function AboutCeoMessage() {
               >
                 in
               </a>
-            </div>
+            </Reveal>
           </div>
 
           {/* CEO image — bleeds slightly above the panel's top edge */}
-          <div
+          <Reveal
+            delay={0.3}
+            duration={0.9}
+            y={50}
             className={`hidden lg:block absolute bottom-0 h-[480px] xl:h-[540px] w-auto z-20 pointer-events-none ${
               isAr ? "left-6 xl:left-12" : "right-6 xl:right-12"
             }`}
@@ -78,8 +84,8 @@ export function AboutCeoMessage() {
               className="h-full w-auto object-contain object-bottom"
               priority={false}
             />
-          </div>
-        </div>
+          </Reveal>
+        </Reveal>
       </div>
     </section>
   );

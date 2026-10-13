@@ -113,7 +113,7 @@ export function ClientsSection() {
   }, [activeLogos, logosPerSlide]);
 
   return (
-    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    <section id="clients-partners" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* Heading */}
       <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10">
         <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">

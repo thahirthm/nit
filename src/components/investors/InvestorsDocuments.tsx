@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const documents = [
   {
@@ -33,27 +34,35 @@ export function InvestorsDocuments() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight">
-          {isAr ? "مكتبة الوثائق" : "Document library"}
-        </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight">
+            {isAr ? "مكتبة الوثائق" : "Document library"}
+          </h2>
+        </Reveal>
 
-        <div className="relative w-full h-[160px] sm:h-[220px] lg:h-[260px] mt-8 lg:mt-10 overflow-hidden">
+        <Reveal delay={0.1} duration={0.9} y={30} className="relative w-full h-[160px] sm:h-[220px] lg:h-[260px] mt-8 lg:mt-10 overflow-hidden">
           <Image quality={95} src="/images/invest.png" alt="NIT corporate brand" fill className="object-cover" />
-        </div>
+        </Reveal>
 
         <div className="mt-2 border-t border-gray-200">
-          {documents.map((doc) => (
-            <a
+          {documents.map((doc, i) => (
+            <Reveal
               key={doc.en}
-              href={doc.href}
+              delay={0.2 + i * 0.06}
+              duration={0.6}
+              y={20}
               dir={isAr ? "rtl" : "ltr"}
-              className="group flex items-center justify-between py-5 border-b border-gray-200 transition-colors duration-300"
             >
-              <span className="text-[#2E368F] text-[18px] sm:text-[20px] font-light group-hover:text-[#1c2260] transition-colors duration-300">
-                {isAr ? doc.ar : doc.en}
-              </span>
-              <DownloadIcon className="text-gray-400 group-hover:text-[#2E368F] transition-colors duration-300 shrink-0" />
-            </a>
+              <a
+                href={doc.href}
+                className="group flex items-center justify-between py-5 border-b border-gray-200 transition-colors duration-300"
+              >
+                <span className="text-[#2E368F] text-[18px] sm:text-[20px] font-light group-hover:text-[#1c2260] transition-colors duration-300">
+                  {isAr ? doc.ar : doc.en}
+                </span>
+                <DownloadIcon className="text-gray-400 group-hover:text-[#2E368F] transition-colors duration-300 shrink-0" />
+              </a>
+            </Reveal>
           ))}
         </div>
       </div>

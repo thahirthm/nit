@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const PaperclipIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className={className}>
@@ -101,12 +102,14 @@ export function CareersApply() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-10 lg:mb-14">
-          {isAr ? "فرصتك الوظيفية القادمة تبدأ من هنا" : "Your next opportunity starts here"}
-        </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-10 lg:mb-14">
+            {isAr ? "فرصتك الوظيفية القادمة تبدأ من هنا" : "Your next opportunity starts here"}
+          </h2>
+        </Reveal>
 
         <form className="w-full" onSubmit={(e) => e.preventDefault()}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 lg:gap-x-16 gap-y-10">
+          <Reveal delay={0.12} duration={0.8} y={30} className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 lg:gap-x-16 gap-y-10">
             <TextField label={isAr ? "الاسم الأول" : "First Name"} required isAr={isAr} />
             <TextField label={isAr ? "اسم العائلة" : "Last Name"} isAr={isAr} />
             <TextField label={isAr ? "البريد الإلكتروني" : "Email Address"} required type="email" isAr={isAr} />
@@ -124,9 +127,9 @@ export function CareersApply() {
               isAr={isAr}
             />
             <TextField label={isAr ? "المؤهل العلمي" : "Degree"} required isAr={isAr} />
-          </div>
+          </Reveal>
 
-          <div dir={isAr ? "rtl" : "ltr"} className="mt-10 lg:mt-14 flex flex-wrap items-center gap-4">
+          <Reveal delay={0.24} duration={0.7} y={24} dir={isAr ? "rtl" : "ltr"} className="mt-10 lg:mt-14 flex flex-wrap items-center gap-4">
             <label className="flex items-center justify-between gap-6 w-full sm:w-[220px] border border-gray-300 px-4 py-3 cursor-pointer hover:border-[#2E368F] transition-colors">
               <span className="text-gray-500 text-[15px] font-light">{isAr ? "إرفاق السيرة الذاتية" : "Attach Your CV"}</span>
               <PaperclipIcon className="text-gray-400 shrink-0" />
@@ -140,13 +143,13 @@ export function CareersApply() {
               {fileName ?? (isAr ? "لم يتم اختيار أي ملف" : "No files chosen")}
               <span className="text-gray-400">*</span>
             </span>
-          </div>
+          </Reveal>
 
-          <div className="mt-10 lg:mt-14">
+          <Reveal delay={0.32} duration={0.7} y={24} className="mt-10 lg:mt-14">
             <Button type="submit" variant="primary">
               {isAr ? "إرسال" : "Submit"}
             </Button>
-          </div>
+          </Reveal>
         </form>
       </div>
     </section>

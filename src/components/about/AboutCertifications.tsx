@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 import "swiper/css";
 
 type Item = { category: { en: string; ar: string }; title: { en: string; ar: string }; description: { en: string; ar: string }; image: string };
@@ -125,16 +126,16 @@ export function AboutCertifications() {
   const showNav = slides.length > 1;
 
   return (
-    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    <section id="certifications" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* Heading */}
-      <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10">
+      <Reveal delay={0} duration={0.8} y={30} className="w-full px-6 lg:px-16 mb-8 lg:mb-10">
         <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {isAr ? "الشهادات والاعتمادات" : "Certifications & accreditations"}
         </h2>
-      </div>
+      </Reveal>
 
       {/* Tabs + Nav — kept LTR so tab order and arrow sides stay stable */}
-      <div dir="ltr" className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
+      <Reveal delay={0.1} duration={0.7} y={24} dir="ltr" className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <div className="flex flex-wrap gap-3">
           {tabs.map((tab) => {
             const isActive = tab.key === activeTab;
@@ -174,7 +175,7 @@ export function AboutCertifications() {
             </button>
           </div>
         )}
-      </div>
+      </Reveal>
 
       {/* Grid slider */}
       <div className="w-full px-6 lg:px-16">
@@ -194,7 +195,14 @@ export function AboutCertifications() {
             <SwiperSlide key={i}>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                 {slide.map((item, idx) => (
-                  <div key={idx} dir={isAr ? "rtl" : "ltr"} className="flex items-start gap-4 bg-gray-50 p-5 sm:p-6">
+                  <Reveal
+                    key={idx}
+                    delay={idx * 0.07}
+                    duration={0.6}
+                    y={30}
+                    dir={isAr ? "rtl" : "ltr"}
+                    className="flex items-start gap-4 bg-gray-50 p-5 sm:p-6"
+                  >
                     <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-[#2E368F] flex items-center justify-center overflow-hidden">
                       <Image quality={95}
                         src={item.image}
@@ -211,7 +219,7 @@ export function AboutCertifications() {
                       <h3 className="text-gray-900 text-base sm:text-lg font-normal mb-1">{isAr ? item.title.ar : item.title.en}</h3>
                       <p className="text-gray-500 text-sm leading-relaxed">{isAr ? item.description.ar : item.description.en}</p>
                     </div>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             </SwiperSlide>

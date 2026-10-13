@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 type IconProps = { active?: boolean };
 
@@ -81,17 +82,22 @@ export function CareersWhyUs() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
-          {isAr ? "لماذا العمل معنا؟" : "Why work with us"}
-        </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
+            {isAr ? "لماذا العمل معنا؟" : "Why work with us"}
+          </h2>
+        </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {reasons.map((reason, i) => {
             const Icon = reason.icon;
             const isActive = hoveredIndex === i;
             return (
-              <div
+              <Reveal
                 key={reason.title.en}
+                delay={0.1 + i * 0.08}
+                duration={0.6}
+                y={30}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex((prev) => (prev === i ? null : prev))}
                 dir={isAr ? "rtl" : "ltr"}
@@ -121,7 +127,7 @@ export function CareersWhyUs() {
                     {isAr ? reason.description.ar : reason.description.en}
                   </p>
                 </div>
-              </div>
+              </Reveal>
             );
           })}
         </div>

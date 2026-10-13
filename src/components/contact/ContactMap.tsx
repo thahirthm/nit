@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const offices = [
   {
@@ -79,7 +80,7 @@ export function ContactMap() {
   return (
     <section className={`w-full bg-white pb-16 lg:pb-24 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <div className="relative w-full">
+        <Reveal delay={0} duration={0.9} y={40} className="relative w-full">
           <div className="relative w-full h-[240px] sm:h-[500px] lg:h-[560px]">
             <iframe
               key={office.mapQuery}
@@ -158,7 +159,7 @@ export function ContactMap() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const images = ["/images/career-1.png", "/images/career-2.png", "/images/career-3.png", "/images/career-4.png"];
 
@@ -26,11 +27,13 @@ export function CareersGallery() {
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] overflow-hidden ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
         <div className={`flex ${isAr ? "justify-start" : "justify-end"}`}>
-          <p dir={isAr ? "rtl" : "ltr"} className="max-w-xl text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light">
-            {isAr
-              ? "اعمل على مبادرات وطنية مؤثرة في مجالات البنية التحتية والتقنية، تشمل الطاقة والاتصالات والنقل والأنظمة الذكية."
-              : "Work on high-impact national infrastructure and technology initiatives across energy, telecom, transportation, and smart systems."}
-          </p>
+          <Reveal delay={0} duration={0.8} y={24} dir={isAr ? "rtl" : "ltr"} className="max-w-xl">
+            <p className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light">
+              {isAr
+                ? "اعمل على مبادرات وطنية مؤثرة في مجالات البنية التحتية والتقنية، تشمل الطاقة والاتصالات والنقل والأنظمة الذكية."
+                : "Work on high-impact national infrastructure and technology initiatives across energy, telecom, transportation, and smart systems."}
+            </p>
+          </Reveal>
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const clientLogos = [
   { src: "/images/abt-logo.png", alt: { en: "Saudi Aramco", ar: "أرامكو السعودية" } },
@@ -29,10 +30,10 @@ export function AboutHighlights() {
   const nextLogo = () => setLogoIndex((i) => (i === clientLogos.length - 1 ? 0 : i + 1));
 
   return (
-    <section className={`w-full bg-white mt-5 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    <section id="who-we-are" className={`w-full bg-white mt-5 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-6 lg:gap-8">
         {/* Card 1: Trusted by many */}
-        <div className={cardClasses}>
+        <Reveal delay={0} duration={0.7} y={40} className={cardClasses}>
           <h3 dir={isAr ? "rtl" : "ltr"} className="text-[28px] lg:text-[30px] font-extralight text-[#2E368F]">
             {isAr ? "موثوق به من الكثيرين." : "Trusted by many."}
           </h3>
@@ -61,10 +62,10 @@ export function AboutHighlights() {
               <ArrowIcon />
             </button>
           </div>
-        </div>
+        </Reveal>
 
         {/* Card 2: The growth story, in figures */}
-        <div className={cardClasses}>
+        <Reveal delay={0.12} duration={0.7} y={40} className={cardClasses}>
           <h3 dir={isAr ? "rtl" : "ltr"} className="text-[28px] lg:text-[30px] font-extralight text-[#2E368F]">
             {isAr ? "قصة النمو، بالأرقام." : "The growth story, in figures."}
           </h3>
@@ -79,10 +80,10 @@ export function AboutHighlights() {
               <p className="text-gray-500 text-sm lg:text-base mt-2">{isAr ? "الموارد داخل المملكة" : "In-Kingdom resources"}</p>
             </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* Card 3: Connected globally */}
-        <div className={cardClasses}>
+        <Reveal delay={0.24} duration={0.7} y={40} className={cardClasses}>
           <h3 dir={isAr ? "rtl" : "ltr"} className="relative z-10 text-[28px] lg:text-[30px] font-extralight text-[#2E368F]">
             {isAr ? "حضور عالمي متصل" : "Connected globally"}
           </h3>
@@ -96,7 +97,7 @@ export function AboutHighlights() {
               <ArrowIcon />
             </button>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
 
 const years = ["2020", "2021", "2022", "2023", "2024", "2025"];
 
@@ -64,15 +65,17 @@ export function SolutionsGrowth() {
   }, []);
 
   return (
-    <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
+    <section id="our-growth" className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
       <div className="w-full px-6 lg:px-16">
-        <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
-          Growth over the past 5 years
-        </h2>
+        <Reveal delay={0} duration={0.8} y={30}>
+          <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
+            Growth over the past 5 years
+          </h2>
+        </Reveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
         {/* Left: tabs, description, CTA — button pinned to the bottom, matching the chart card's height */}
-        <div className="flex flex-col h-full">
+        <Reveal delay={0.1} duration={0.8} y={30} className="flex flex-col h-full">
           <div className="flex flex-wrap gap-3 mb-6 lg:mb-8">
             {tabs.map((tab) => {
               const isActive = tab.name === activeTab;
@@ -101,9 +104,10 @@ export function SolutionsGrowth() {
               See our projects
             </Button>
           </div>
-        </div>
+        </Reveal>
 
         {/* Right: growth chart */}
+        <Reveal delay={0.2} duration={0.8} y={30}>
         <div ref={chartRef} className="bg-[#F5F5F5] p-8 sm:p-10">
           <h3 className="text-[#2E368F] text-[20px] sm:text-[24px] font-extralight tracking-tight mb-8">
             Trajectory of our growth
@@ -181,6 +185,7 @@ export function SolutionsGrowth() {
             </div>
           </div>
         </div>
+        </Reveal>
         </div>
       </div>
     </section>

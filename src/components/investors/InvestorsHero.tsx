@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import { useLanguage } from "@/context/LanguageContext";
+
+const easeOut = [0.16, 1, 0.3, 1] as const;
 
 const rotatingWords = [
   { en: "returns", ar: "العوائد" },
@@ -68,7 +71,12 @@ export function InvestorsHero() {
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div dir="ltr" className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 items-start">
         {/* Left: headline + copy */}
-        <div dir={isAr ? "rtl" : "ltr"}>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: easeOut }}
+          dir={isAr ? "rtl" : "ltr"}
+        >
           <h1 className="text-gray-900 text-[32px] sm:text-[44px] lg:text-[54px] font-extralight leading-[1.15] tracking-tight">
             {isAr ? (
               <>
@@ -104,10 +112,14 @@ export function InvestorsHero() {
               ? "الوصول إلى معلومات الشركة، والتقارير المالية، وتحديثات الحوكمة، وموارد المستثمرين."
               : "Access company information, financial reports, governance updates, and investor resources."}
           </p>
-        </div>
+        </motion.div>
 
         {/* Right: share details card */}
-        <div className="bg-[#F7F7F7] p-6 sm:p-8">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: easeOut }}
+          className="bg-[#F7F7F7] p-6 sm:p-8">
           <h3 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] sm:text-[28px] font-extralight tracking-tight">
             {isAr ? "بيانات السهم اليوم" : "Today's share details"}
           </h3>
@@ -181,7 +193,7 @@ export function InvestorsHero() {
               <span>14:00</span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

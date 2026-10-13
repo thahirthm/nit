@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { Button } from "@/components/ui/Button";
+import { ProjectOffcanvas, type ProjectOffcanvasProject } from "@/components/ui/ProjectOffcanvas";
 import { useLanguage } from "@/context/LanguageContext";
 import "swiper/css";
 
@@ -19,6 +20,10 @@ const categories = [
         description: {
           en: "587 km bidirectional water transmission. 650 km³/dy capacity.",
           ar: "نقل المياه عبر خط ثنائي الاتجاه بطول 587 كيلومترًا، وبطاقة استيعابية تبلغ 650 كيلومترًا مكعبًا يوميًا.",
+        },
+        detail: {
+          en: "Awarded the Jubail–Buraydah Independent Water Transmission Pipeline — 587km, 650,000 m³/day capacity — the first large-scale private-sector potable water link in KSA. Two substations — Rumah 380kV BSP (SAR 915M) and Bisha PV 380/132kV BSP (SAR 644M) — also awarded.",
+          ar: "فاز المشروع بخط أنابيب نقل المياه المستقل الجبيل–بريدة — بطول 587 كم وطاقة استيعابية 650,000 م³/يوم — أول ربط مياه شرب خاص واسع النطاق في المملكة. كما تم ترسية محطتين فرعيتين: Rumah 380 كيلوفولت (915 مليون ريال) و Bisha PV 380/132 كيلوفولت (644 مليون ريال).",
         },
         image: "/images/s3.png",
         badges: [
@@ -151,6 +156,7 @@ export function InfrastructureProjects() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<ProjectOffcanvasProject | null>(null);
 
   const active = categories.find((c) => c.key === activeCategory) ?? categories[0];
 
@@ -286,7 +292,9 @@ export function InfrastructureProjects() {
                     </div>
 
                     <div className="mt-5">
-                      <Button variant="secondary">{isAr ? "اقرأ المزيد" : "READ MORE"}</Button>
+                      <Button variant="secondary" onClick={() => setSelectedProject(project)}>
+                        {isAr ? "اقرأ المزيد" : "READ MORE"}
+                      </Button>
                     </div>
                   </div>
                 </article>
@@ -295,6 +303,8 @@ export function InfrastructureProjects() {
           </Swiper>
         </div>
       </div>
+
+      <ProjectOffcanvas project={selectedProject} onClose={() => setSelectedProject(null)} />
     </section>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const stats = [
   { value: 21, decimals: 0, unit: "B", suffix: "SAR", label: { en: "Largest single project", ar: "أكبر مشروع منفرد" }, progress: 85 },
@@ -59,6 +60,7 @@ export function AboutScale() {
 
   return (
     <section
+      id="our-stats"
       ref={sectionRef}
       className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
     >
@@ -66,19 +68,19 @@ export function AboutScale() {
         <div className="bg-[#2E368F] p-10 sm:p-16 lg:p-20">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
             {/* Heading */}
-            <div dir={isAr ? "rtl" : "ltr"}>
+            <Reveal delay={0} duration={0.8} y={30} dir={isAr ? "rtl" : "ltr"}>
               <h2 className="text-white text-[42px] sm:text-[56px] lg:text-[64px] font-extralight leading-[1.15] tracking-tight">
                 {isAr ? <>نطاق<br />يتحدث عن نفسه.</> : <>Scale that<br />speaks.</>}
               </h2>
               <p className="mt-5 text-white/60 text-base sm:text-lg">
                 {isAr ? "أكثر من 35 عامًا من النمو المستمر." : "35+ years of consistent growth."}
               </p>
-            </div>
+            </Reveal>
 
             {/* Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-14">
               {stats.map((stat, i) => (
-                <div key={stat.label.en} dir={isAr ? "rtl" : "ltr"} className="border-t border-white/20 pt-6">
+                <Reveal key={stat.label.en} delay={0.15 + i * 0.08} duration={0.7} y={30} dir={isAr ? "rtl" : "ltr"} className="border-t border-white/20 pt-6">
                   <div dir="ltr" className="font-[family-name:var(--font-anek-latin)] flex items-baseline gap-2 text-white">
                     <span className="text-[40px] sm:text-[54px] lg:text-[64px] font-light leading-none tabular-nums">
                       {counts[i].toFixed(stat.decimals)}
@@ -95,7 +97,7 @@ export function AboutScale() {
                       style={{ width: hasStarted ? `${stat.progress}%` : "0%" }}
                     />
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>

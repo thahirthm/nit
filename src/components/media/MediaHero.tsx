@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+
+const easeOut = [0.16, 1, 0.3, 1] as const;
 
 export function MediaHero() {
   const { language } = useLanguage();
@@ -11,8 +14,14 @@ export function MediaHero() {
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <div className="relative w-full h-[320px] sm:h-[440px] lg:h-[600px] overflow-hidden">
-          <Image quality={95}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: easeOut }}
+          className="relative w-full h-[320px] sm:h-[440px] lg:h-[600px] overflow-hidden"
+        >
+          <Image
+            quality={95}
             src="/images/media-banner.png"
             alt={isAr ? "مهندس نسما في موقع العمل" : "NIT engineer on site"}
             fill
@@ -21,34 +30,52 @@ export function MediaHero() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/0 to-black/10" />
 
-          <h1
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: easeOut }}
             dir={isAr ? "rtl" : "ltr"}
             className={`absolute top-6 sm:top-8 lg:top-10 text-white text-[28px] sm:text-[38px] lg:text-[48px] font-extralight leading-tight ${
               isAr ? "right-6 sm:right-8 lg:right-10" : "left-6 sm:left-8 lg:left-10"
             }`}
           >
             {isAr ? "المركز الإعلامي" : "Media centre"}
-          </h1>
+          </motion.h1>
 
-          <div className={`absolute bottom-6 sm:bottom-8 ${isAr ? "right-6 sm:right-8" : "left-6 sm:left-8"}`}>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: easeOut }}
+            className={`absolute bottom-6 sm:bottom-8 ${isAr ? "right-6 sm:right-8" : "left-6 sm:left-8"}`}
+          >
             <Button href="/contact" variant="secondary">
               {isAr ? "تواصل معنا" : "Connect with us"}
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <div className={`flex mt-10 lg:mt-14 ${isAr ? "justify-start" : "justify-end"}`}>
           <div dir={isAr ? "rtl" : "ltr"} className="max-w-xl space-y-6">
-            <p className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light">
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: easeOut }}
+              className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light"
+            >
               {isAr
                 ? "اطّلع على أحدث إعلانات نسما للبنية التحتية والتقنية، وإنجازاتها، وجوائزها، وأخبارها المؤسسية في مكان واحد."
                 : "Discover NIT's latest announcements, milestones, awards, and corporate news—all in one place."}
-            </p>
-            <p className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light">
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: easeOut }}
+              className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light"
+            >
               {isAr
                 ? "يجمع المركز الإعلامي أبرز المستجدات والتكريمات والشراكات والقصص المتعلقة بأعمالنا في قطاعي البنية التحتية والتقنية."
                 : "The Media Centre centralizes key updates, recognitions, partnerships, and stories from our infrastructure and technology operations."}
-            </p>
+            </motion.p>
           </div>
         </div>
       </div>

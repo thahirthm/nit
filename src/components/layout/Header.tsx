@@ -5,11 +5,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown, Plus, X } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { HeaderMegaMenu } from './HeaderMegaMenu';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
   const { language, setLanguage } = useLanguage();
@@ -52,8 +54,8 @@ export function Header() {
 
   const navLinks = [
     { name: { en: 'HOME', ar: 'الرئيسية' }, href: '/', active: isHome },
-    { name: { en: 'ABOUT', ar: 'من نحن' }, href: '/about', hasDropdown: true },
-    { name: { en: 'SOLUTIONS', ar: 'الحلول' }, href: '/solutions', hasDropdown: true },
+    { name: { en: 'ABOUT', ar: 'من نحن' }, href: '/about', hasDropdown: true, key: 'about' },
+    { name: { en: 'SOLUTIONS', ar: 'الحلول' }, href: '/solutions', hasDropdown: true, key: 'solutions' },
     { name: { en: 'PROJECTS', ar: 'المشاريع' }, href: '/projects' },
     { name: { en: 'INVESTORS', ar: 'المستثمرون' }, href: '/investors' },
     { name: { en: 'MEDIA CENTRE', ar: 'المركز الإعلامي' }, href: '/media' },
@@ -124,7 +126,11 @@ export function Header() {
               </div>
               
               <div className={`w-[1px] h-8 transition-colors duration-300 ${isTransparent ? 'bg-white/30' : 'bg-gray-200'}`}></div>
-              <button className={`${isTransparent ? 'text-white' : 'text-[#2b307d]'}`}>
+              <button
+                onClick={() => setIsMegaMenuOpen(true)}
+                aria-label="Open full menu"
+                className={`${isTransparent ? 'text-white' : 'text-[#2b307d]'}`}
+              >
                 <Plus className="w-5 h-5" strokeWidth={1.5} />
               </button>
             </div>
@@ -194,6 +200,12 @@ export function Header() {
           </div>
         </div>
       </div>
+
+      <HeaderMegaMenu
+        isOpen={isMegaMenuOpen}
+        onClose={() => setIsMegaMenuOpen(false)}
+        navLinks={navLinks}
+      />
     </>
   );
 }

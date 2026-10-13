@@ -1,7 +1,10 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+
+const easeOut = [0.16, 1, 0.3, 1] as const;
 
 const LinkedInIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -72,7 +75,12 @@ export function ContactHero() {
       <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
         {/* Left: intro + contact details */}
         <div dir={isAr ? "rtl" : "ltr"} className="flex flex-col">
-          <h1 className="text-gray-900 text-[40px] sm:text-[48px] lg:text-[54px] font-extralight leading-[1.15] tracking-tight">
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: easeOut }}
+            className="text-gray-900 text-[40px] sm:text-[48px] lg:text-[54px] font-extralight leading-[1.15] tracking-tight"
+          >
             {isAr ? (
               "تواصل مع خبرائنا"
             ) : (
@@ -82,15 +90,25 @@ export function ContactHero() {
                 our experts
               </>
             )}
-          </h1>
+          </motion.h1>
 
-          <p className="mt-6 text-gray-500 text-[17px] sm:text-[18px] leading-relaxed font-light max-w-sm">
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: easeOut }}
+            className="mt-6 text-gray-500 text-[17px] sm:text-[18px] leading-relaxed font-light max-w-sm"
+          >
             {isAr
               ? "للاستفسارات المتعلقة بالمشروعات، أو الشراكات، أو علاقات المستثمرين، أو للحصول على معلومات عامة، يُرجى التواصل مع الفريق المختص في نسما للبنية التحتية والتقنية."
               : "For project inquiries, partnerships, investor relations, or general information, connect with the relevant NIT team."}
-          </p>
+          </motion.p>
 
-          <div className="mt-auto pt-16 flex flex-wrap gap-x-16 gap-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: easeOut }}
+            className="mt-auto pt-16 flex flex-wrap gap-x-16 gap-y-8"
+          >
             <div>
               <span className="block text-gray-400 text-[16px] font-light">
                 {isAr ? "البريد الإلكتروني" : "Email Address"}
@@ -105,9 +123,14 @@ export function ContactHero() {
                 +966550634599
               </span>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="mt-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: easeOut }}
+            className="mt-10"
+          >
             <span className="block text-gray-400 text-[16px] font-light mb-3">
               {isAr ? "حسابات التواصل الاجتماعي" : "Socials"}
             </span>
@@ -126,11 +149,16 @@ export function ContactHero() {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Right: contact form */}
-        <div className="bg-[#F7F7F7] p-6 sm:p-10 lg:p-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.2, ease: easeOut }}
+          className="bg-[#F7F7F7] p-6 sm:p-10 lg:p-10"
+        >
           <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[32px] sm:text-[36px] font-extralight tracking-tight mb-8 lg:mb-10">
             {isAr ? "نموذج التواصل" : "Contact form"}
           </h2>
@@ -149,7 +177,7 @@ export function ContactHero() {
               </Button>
             </div>
           </form>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

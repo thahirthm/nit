@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 const DownloadIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className={className}>
@@ -24,16 +25,20 @@ export function SolutionsCta({ heading = defaultHeading }: SolutionsCtaProps) {
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
         <div dir={isAr ? "rtl" : "ltr"} className="bg-[#F7F7F7] px-6 sm:px-10 py-14 sm:py-16 lg:py-20 flex flex-col items-center text-center">
-          <h2 className="text-[#2E368F] text-[26px] sm:text-[34px] lg:text-[42px] font-light tracking-tight mb-4 lg:mb-6">
-            {isAr ? heading.ar : heading.en}
-          </h2>
-          <p className="text-gray-700 text-[17px] sm:text-[19px] lg:text-[21px] font-light leading-relaxed max-w-2xl mb-8 lg:mb-10">
-            {isAr
-              ? "سواء كان مشروعك محطة فرعية جديدة، أو توسعة لشبكة، أو برنامجًا لكفاءة الطاقة، فإن فريقنا على استعداد لتصميم المشروع وتنفيذه وتسليمه."
-              : "Whether it's a new substation, a grid extension, or an energy efficiency program — our team is ready to design, build, and deliver."}
-          </p>
+          <Reveal delay={0} duration={0.7} y={24}>
+            <h2 className="text-[#2E368F] text-[26px] sm:text-[34px] lg:text-[42px] font-light tracking-tight mb-4 lg:mb-6">
+              {isAr ? heading.ar : heading.en}
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1} duration={0.7} y={24}>
+            <p className="text-gray-700 text-[17px] sm:text-[19px] lg:text-[21px] font-light leading-relaxed max-w-2xl mb-8 lg:mb-10">
+              {isAr
+                ? "سواء كان مشروعك محطة فرعية جديدة، أو توسعة لشبكة، أو برنامجًا لكفاءة الطاقة، فإن فريقنا على استعداد لتصميم المشروع وتنفيذه وتسليمه."
+                : "Whether it's a new substation, a grid extension, or an energy efficiency program — our team is ready to design, build, and deliver."}
+            </p>
+          </Reveal>
 
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <Reveal delay={0.2} duration={0.7} y={24} className="flex flex-wrap items-center justify-center gap-4">
             <Button href="/contact" variant="primary">
               {isAr ? "تحدث مع فريقنا" : "Talk to our team"}
             </Button>
@@ -60,7 +65,7 @@ export function SolutionsCta({ heading = defaultHeading }: SolutionsCtaProps) {
                 <DownloadIcon className="absolute w-[13px] h-[13px] -translate-y-12 text-[#2E368F] transition-transform duration-500 ease-in-out group-hover:translate-y-0" />
               </div>
             </a>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

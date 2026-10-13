@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+import { Reveal } from "@/components/ui/Reveal";
 
 export function InvestorsNewsletter() {
   const { language } = useLanguage();
@@ -10,7 +11,7 @@ export function InvestorsNewsletter() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <div className="bg-[#F7F7F7] px-6 sm:px-10 py-10 sm:py-12 lg:py-14">
+        <Reveal delay={0} duration={0.8} y={30} className="bg-[#F7F7F7] px-6 sm:px-10 py-10 sm:py-12 lg:py-14">
           <p dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[20px] sm:text-[22px] font-light leading-relaxed max-w-lg">
             {isAr
               ? "اشترك في النشرة الإخبارية لنسما للاطلاع على أحدث الأخبار والاستراتيجيات ورؤى الطرح العام الأولي."
@@ -30,7 +31,7 @@ export function InvestorsNewsletter() {
               </Button>
             </div>
           </form>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

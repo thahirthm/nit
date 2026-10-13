@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+
+const easeOut = [0.16, 1, 0.3, 1] as const;
 
 export function AboutHero() {
   const { language } = useLanguage();
@@ -11,20 +14,44 @@ export function AboutHero() {
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        <h1 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-6 lg:mb-8">
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: easeOut }}
+          dir={isAr ? "rtl" : "ltr"}
+          className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-6 lg:mb-8"
+        >
           {isAr ? "من نحن" : "About us"}
-        </h1>
+        </motion.h1>
 
-        <p dir={isAr ? "rtl" : "ltr"} className="text-[15px] md:text-[18px] lg:text-[20px] leading-relaxed font-light text-[#727272] max-w-3xl mb-8">
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15, ease: easeOut }}
+          dir={isAr ? "rtl" : "ltr"}
+          className="text-[15px] md:text-[18px] lg:text-[20px] leading-relaxed font-light text-[#727272] max-w-3xl mb-8"
+        >
           {isAr
             ? "نسما للبنية التحتية والتقنية (NIT) هي شركة سعودية متخصصة في البنية التحتية والتقنية، تقدم حلولاً محورية في قطاعات الطاقة والاتصالات والصناعة والمياه والتحول الرقمي. ومنذ عام 1988، دعمت NIT التنمية الوطنية من خلال الخبرة الهندسية والتقنية المتقدمة وموثوقية تنفيذ المشاريع."
             : "Nesma Infrastructure & Technology (NIT) is a Saudi-based infrastructure and technology company delivering critical solutions across energy, communications, industrial, water, and digital sectors. Since 1988, NIT has supported national development through engineering expertise, advanced technology, and trusted project delivery."}
-        </p>
+        </motion.p>
 
-        <Button variant="primary">{isAr ? "تواصل معنا" : "CONNECT WITH US"}</Button>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: easeOut }}
+        >
+          <Button variant="primary">{isAr ? "تواصل معنا" : "CONNECT WITH US"}</Button>
+        </motion.div>
 
-        <div className="relative w-full h-[220px] sm:h-[340px] lg:h-[520px] mt-10 lg:mt-16 overflow-hidden">
-          <Image quality={95}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.2, ease: easeOut }}
+          className="relative w-full h-[220px] sm:h-[340px] lg:h-[520px] mt-10 lg:mt-16 overflow-hidden"
+        >
+          <Image
+            quality={95}
             src="/images/abt-banner.png"
             alt={isAr ? "خلف أساسات المملكة ومستقبلها" : "Behind the kingdom's foundations and its future."}
             fill
@@ -32,14 +59,17 @@ export function AboutHero() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-10">
-            <h2
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6, ease: easeOut }}
               dir={isAr ? "rtl" : "ltr"}
               className={`text-white text-[18px] sm:text-[28px] lg:text-[50px] font-extralight leading-tight whitespace-nowrap ${isAr ? "text-right" : ""}`}
             >
               {isAr ? "خلف أساسات المملكة ومستقبلها." : "Behind the kingdom's foundations and its future."}
-            </h2>
+            </motion.h2>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
