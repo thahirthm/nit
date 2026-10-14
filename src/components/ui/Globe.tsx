@@ -30,7 +30,7 @@ const GLOBE_CONFIG: COBEOptions = {
   mapSamples: 16000,
   mapBrightness: 1.2,
   baseColor: [1, 1, 1],
-  markerColor: [37 / 255, 99 / 255, 235 / 255],
+  markerColor: [129 / 255, 209 / 255, 232 / 255],
   glowColor: [1, 1, 1],
   markers: MARKERS.map(({ location, size }) => ({ location, size })),
 }
@@ -292,13 +292,13 @@ export function Globe({ className = "" }: { className?: string }) {
               initial={{ scale: 0.4, opacity: 0.8 }}
               animate={{ scale: 2.2, opacity: 0 }}
               transition={{ duration: 1, ease: "easeOut" }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#2563EB]"
+              className="absolute -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#81D1E8]"
             />
             <motion.span
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#2563EB]"
+              className="absolute -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#81D1E8]"
             />
 
             {/* Leader line connecting the dot to the label */}

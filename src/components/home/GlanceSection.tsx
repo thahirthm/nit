@@ -13,7 +13,6 @@ export function GlanceSection() {
   const [maxScroll, setMaxScroll] = useState(0);
   const [translateX, setTranslateX] = useState(0);
   const [jeddahTime, setJeddahTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
-  const [isDesktop, setIsDesktop] = useState(false);
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartVisible, setChartVisible] = useState(false);
 
@@ -33,16 +32,6 @@ export function GlanceSection() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
-
-  // The pinned scroll-jack effect only applies at desktop (lg) widths — on
-  // mobile the section behaves like a normal slider with native horizontal scroll.
-  useEffect(() => {
-    const query = window.matchMedia("(min-width: 1024px)");
-    const update = () => setIsDesktop(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
   }, []);
 
   // Live clock — tracks the current time in Jeddah (GMT+3)
@@ -67,10 +56,8 @@ export function GlanceSection() {
   const minuteDeg = jeddahTime.minutes * 6 + jeddahTime.seconds * 0.1;
   const secondDeg = jeddahTime.seconds * 6;
 
-  // Measure how far the track needs to travel horizontally (desktop scroll-jack only)
+  // Measure how far the track needs to travel horizontally (drives the scroll-jack pin on every breakpoint)
   useEffect(() => {
-    if (!isDesktop) return;
-
     const measure = () => {
       if (!trackRef.current) return;
       const distance = trackRef.current.scrollWidth - window.innerWidth;
@@ -79,11 +66,11 @@ export function GlanceSection() {
     measure();
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, [isDesktop]);
+  }, []);
 
-  // Drive horizontal translation from vertical scroll position while the section is pinned (desktop only)
+  // Drive horizontal translation from vertical scroll position while the section is pinned
   useEffect(() => {
-    if (!isDesktop || maxScroll <= 0) return;
+    if (maxScroll <= 0) return;
 
     const onScroll = () => {
       if (!sectionRef.current) return;
@@ -95,22 +82,18 @@ export function GlanceSection() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isDesktop, maxScroll]);
-
-  // On mobile this stays inert (0) regardless of stale state from a previous desktop measurement.
-  const effectiveMaxScroll = isDesktop ? maxScroll : 0;
+  }, [maxScroll]);
 
   return (
     <section
       ref={sectionRef}
       className={`relative w-full bg-white ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
-      style={isDesktop ? { height: `calc(100dvh + ${effectiveMaxScroll}px)` } : undefined}
+      style={{ height: `calc(100dvh + ${maxScroll}px)` }}
     >
-      {/* Desktop: pinned viewport — heading + track stay fixed on screen while the page scrolls past,
+      {/* Pinned viewport — heading + track stay fixed on screen while the page scrolls past,
           driving the horizontal track below via translateX. Once maxScroll is exhausted,
-          the section's extra height runs out and normal vertical scroll resumes.
-          Mobile: normal-flow section, no pinning — the track below scrolls natively. */}
-      <div className="lg:sticky lg:top-0 h-auto lg:h-dvh w-full flex flex-col justify-start lg:justify-center lg:overflow-hidden pt-[60px] lg:pt-[100px] pb-0">
+          the section's extra height runs out and normal vertical scroll resumes to the next section. */}
+      <div className="sticky top-0 h-dvh w-full flex flex-col justify-center overflow-hidden pt-[60px] lg:pt-[100px] pb-0">
         {/* Heading */}
         <div className="w-full px-6 lg:px-16 mb-8 lg:mb-12">
           <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
@@ -118,19 +101,15 @@ export function GlanceSection() {
           </h2>
         </div>
 
-        {/* Horizontal Track — desktop: driven by page scroll via translateX.
-            Mobile: native horizontal scroll/snap slider (no pinning).
+        {/* Horizontal Track — driven by page scroll via translateX on every breakpoint.
             Always kept LTR: the scroll-jack math (translateX/scrollWidth) assumes
             left-to-right scrolling, and card order shouldn't reorder by language. */}
         <div
           ref={trackRef}
           dir="ltr"
-          className="flex items-start gap-6 lg:px-16 w-full will-change-transform overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none pb-6 lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-          style={isDesktop ? { transform: `translateX(${translateX}px)` } : undefined}
+          className="flex items-start gap-6 px-6 lg:px-16 w-full will-change-transform overflow-visible"
+          style={{ transform: `translateX(${translateX}px)` }}
         >
-          {/* Leading spacer — a real element (not container padding) so it isn't
-              clipped by scroll-snap on mobile; matches the heading's left gutter. */}
-          <div className="w-6 shrink-0 snap-start lg:hidden" />
 
           {/* Card 1: 1988 */}
           <div className={`${cardClasses} bg-gray-200`}>

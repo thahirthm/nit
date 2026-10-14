@@ -46,7 +46,7 @@ export function SolutionsCards() {
               delay={cardIndex * 0.12}
               duration={0.8}
               y={40}
-              className="relative h-[420px] sm:h-[520px] lg:h-[620px] overflow-hidden"
+              className="relative h-[600px] sm:h-[560px] lg:h-[620px] overflow-hidden"
               onMouseEnter={() => setActiveCard(card.title)}
               onMouseLeave={() => setActiveCard((current) => (current === card.title ? null : current))}
               onClick={() => setActiveCard((current) => (current === card.title ? null : card.title))}
@@ -59,17 +59,17 @@ export function SolutionsCards() {
               </h3>
 
               <div
-                className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8"
+                className="absolute z-20 bottom-6 left-6 sm:bottom-8 sm:left-8"
                 onClick={(e) => e.stopPropagation()}
               >
-                <Button href={`/solutions/${card.slug}`} variant="secondary" iconOutline>
+                <Button href={`/solutions/${card.slug}`} variant="secondary">
                   Read more
                 </Button>
               </div>
 
               {/* Capabilities panel — slides in from the right on hover (desktop) / tap (mobile) */}
               <div
-                className={`absolute top-4 right-4 bottom-4 sm:top-5 sm:right-5 sm:bottom-5 lg:top-6 lg:right-6 lg:bottom-6 w-[80%] sm:w-[65%] lg:w-[55%] bg-[#F5F5F5] flex flex-col px-6 sm:px-7 lg:px-8 py-6 sm:py-7 transition-transform duration-500 ease-out ${
+                className={`absolute top-4 right-4 bottom-4 sm:top-5 sm:right-5 sm:bottom-5 lg:top-6 lg:right-6 lg:bottom-6 w-[62%] sm:w-[65%] lg:w-[55%] bg-[#F5F5F5] flex flex-col px-6 sm:px-7 lg:px-8 py-6 sm:py-7 transition-transform duration-500 ease-out ${
                   isActive ? "translate-x-0" : "translate-x-[calc(100%+2rem)]"
                 }`}
               >

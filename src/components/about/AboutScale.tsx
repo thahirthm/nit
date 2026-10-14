@@ -65,7 +65,7 @@ export function AboutScale() {
       className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
     >
       <div className="px-6 lg:px-16">
-        <div className="bg-[#2E368F] p-10 sm:p-16 lg:p-20">
+        <div className="bg-[#2E368F] p-8 sm:p-16 lg:p-20">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
             {/* Heading */}
             <Reveal delay={0} duration={0.8} y={30} dir={isAr ? "rtl" : "ltr"}>
@@ -78,9 +78,9 @@ export function AboutScale() {
             </Reveal>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-14">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-10">
               {stats.map((stat, i) => (
-                <Reveal key={stat.label.en} delay={0.15 + i * 0.08} duration={0.7} y={30} dir={isAr ? "rtl" : "ltr"} className="border-t border-white/20 pt-6">
+                <Reveal key={stat.label.en} delay={0.15 + i * 0.08} duration={0.7} y={30} dir={isAr ? "rtl" : "ltr"}>
                   <div dir="ltr" className="font-[family-name:var(--font-anek-latin)] flex items-baseline gap-2 text-white">
                     <span className="text-[40px] sm:text-[54px] lg:text-[64px] font-light leading-none tabular-nums">
                       {counts[i].toFixed(stat.decimals)}

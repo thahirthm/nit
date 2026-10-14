@@ -75,6 +75,22 @@ export function CareersHero() {
                 ? "انضم إلى فريق تسهم أعماله في تنفيذ مشروعات على نطاق وطني، وتعزيز موثوقية العمليات، ودعم المرحلة المقبلة من نمو المملكة."
                 : "Join a team where your work contributes to national-scale projects, reliable operations, and the Kingdom's next phase of growth."}
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: easeOut }}
+              className="sm:hidden"
+            >
+              <Button
+                variant="primary"
+                onClick={() =>
+                  document.getElementById("apply-form")?.scrollIntoView({ behavior: "smooth", block: "start" })
+                }
+              >
+                {isAr ? "الانتقال إلى النموذج" : "Go to form"}
+              </Button>
+            </motion.div>
           </div>
         </div>
       </div>

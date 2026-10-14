@@ -153,7 +153,7 @@ export function AboutLeadership() {
                           </span>
                           <span className="block mt-2 text-lg text-gray-900 font-normal">{personName}</span>
                         </div>
-                        <span className="text-lg text-gray-400 font-light shrink-0">+</span>
+                        <span className="text-2xl text-gray-400 font-light shrink-0">+</span>
                       </div>
                     </Reveal>
                   );

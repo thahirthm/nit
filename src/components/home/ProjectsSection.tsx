@@ -271,7 +271,7 @@ export function ProjectsSection() {
                   </div>
                 </div>
 
-                <div dir={dir} className="bg-[#2E368F] p-6 sm:p-8 text-white">
+                <div dir={dir} className="bg-[#2E368F] p-6 sm:p-8 text-white min-h-[320px] sm:min-h-[360px] flex flex-col">
                   <div className="space-y-3">
                     {description.map((paragraph, idx) => (
                       <p key={idx} className="text-sm font-light leading-relaxed text-white/90">
@@ -279,7 +279,7 @@ export function ProjectsSection() {
                       </p>
                     ))}
                   </div>
-                  <div className="mt-6">
+                  <div className="mt-auto pt-6">
                     <Button variant="secondary" iconOutline>{readMore}</Button>
                   </div>
                 </div>

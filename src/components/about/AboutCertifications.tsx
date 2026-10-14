@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -94,7 +94,8 @@ const tabs = [
   { key: "accreditations", name: { en: "Accreditations", ar: "الاعتمادات" }, items: accreditations },
 ];
 
-const ITEMS_PER_SLIDE = 6;
+const ITEMS_PER_SLIDE_MOBILE = 3;
+const ITEMS_PER_SLIDE_DEFAULT = 6;
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className={className}>
@@ -109,6 +110,18 @@ export function AboutCertifications() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  const itemsPerSlide = isMobile ? ITEMS_PER_SLIDE_MOBILE : ITEMS_PER_SLIDE_DEFAULT;
 
   const activeItems = useMemo(
     () => tabs.find((t) => t.key === activeTab)?.items ?? [],
@@ -117,11 +130,11 @@ export function AboutCertifications() {
 
   const slides = useMemo(() => {
     const chunks: Item[][] = [];
-    for (let i = 0; i < activeItems.length; i += ITEMS_PER_SLIDE) {
-      chunks.push(activeItems.slice(i, i + ITEMS_PER_SLIDE));
+    for (let i = 0; i < activeItems.length; i += itemsPerSlide) {
+      chunks.push(activeItems.slice(i, i + itemsPerSlide));
     }
     return chunks.length ? chunks : [[]];
-  }, [activeItems]);
+  }, [activeItems, itemsPerSlide]);
 
   const showNav = slides.length > 1;
 
@@ -184,10 +197,12 @@ export function AboutCertifications() {
           modules={[Navigation]}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
+            setActiveSlide(0);
           }}
           onSlideChange={(swiper) => {
             setIsBeginning(swiper.isBeginning);
             setIsEnd(swiper.isEnd);
+            setActiveSlide(swiper.activeIndex);
           }}
           slidesPerView={1}
         >
@@ -225,6 +240,22 @@ export function AboutCertifications() {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        {/* Slider dots — mobile only, so it's clear more items are a swipe away */}
+        {slides.length > 1 && (
+          <div className="flex sm:hidden items-center justify-start gap-2 mt-4">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                aria-label={`Go to slide ${i + 1}`}
+                onClick={() => swiperRef.current?.slideTo(i)}
+                className={`w-2 h-2 transition-colors duration-300 ${
+                  i === activeSlide ? "bg-[#2E368F]" : "bg-gray-200"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

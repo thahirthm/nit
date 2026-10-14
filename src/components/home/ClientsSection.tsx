@@ -122,8 +122,8 @@ export function ClientsSection() {
       </div>
 
       {/* Tabs + Nav */}
-      <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
-        <div className="flex flex-nowrap lg:flex-wrap gap-3 overflow-x-auto lg:overflow-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="w-full pl-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
+        <div className="min-w-0 flex flex-nowrap lg:flex-wrap gap-3 overflow-x-auto lg:overflow-visible pr-6 lg:pr-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {categories.map((category) => {
             const isActive = category.name.en === activeCategory;
             return (

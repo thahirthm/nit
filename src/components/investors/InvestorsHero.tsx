@@ -81,7 +81,7 @@ export function InvestorsHero() {
             {isAr ? (
               <>
                 صُمم لتحقيق{" "}
-                <span className="inline-block overflow-hidden align-bottom" style={{ lineHeight: 1 }}>
+                <span className="inline-block overflow-hidden align-bottom pb-[0.2em] -mb-[0.2em]" style={{ lineHeight: 1 }}>
                   <span key={wordIndex} className="inline-block animate-word-in text-[#2E368F]">
                     {rotatingWords[wordIndex].ar}
                   </span>
@@ -92,7 +92,7 @@ export function InvestorsHero() {
             ) : (
               <>
                 Engineered for{" "}
-                <span className="inline-block overflow-hidden align-bottom" style={{ lineHeight: 1 }}>
+                <span className="inline-block overflow-hidden align-bottom pb-[0.2em] -mb-[0.2em]" style={{ lineHeight: 1 }}>
                   <span key={wordIndex} className="inline-block animate-word-in text-[#2E368F]">
                     {rotatingWords[wordIndex].en}
                   </span>
@@ -103,7 +103,7 @@ export function InvestorsHero() {
             )}
           </h1>
 
-          <p className="mt-24 lg:mt-32 text-gray-900 text-[17px] sm:text-[19px] font-light">
+          <p className="mt-6 lg:mt-32 text-gray-900 text-[17px] sm:text-[19px] font-light">
             {isAr ? "نبني مستقبل البنية التحتية والتقنية" : "Building the future of infrastructure and technology"}
           </p>
 

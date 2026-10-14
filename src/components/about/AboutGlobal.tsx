@@ -42,7 +42,8 @@ export function AboutGlobal() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1} duration={0.9} y={30} className="relative w-full px-6 sm:px-12 lg:px-20">
+        <Reveal delay={0.1} duration={0.9} y={30} className="relative w-full -mx-6 sm:-mx-4 lg:-mx-8 px-0 sm:px-2 lg:px-4 pt-8 sm:pt-0">
+        <div className="relative w-[135%] -ml-[17.5%] sm:w-full sm:ml-0">
           <Image quality={95}
             src="/images/globe-plain.png"
             alt={isAr ? "خريطة العالم لحضور نسما للبنية التحتية والتقنية العالمي" : "World map of Nesma Infrastructure & Technology's global presence"}
@@ -54,6 +55,8 @@ export function AboutGlobal() {
 
           {MARKERS.map((marker, markerIndex) => {
             const markerName = isAr ? marker.name.ar : marker.name.en;
+            const flipRight = marker.x < 50;
+            const flipDown = marker.y < 25;
             return (
               <div
                 key={marker.name.en}
@@ -87,7 +90,7 @@ export function AboutGlobal() {
                         width="1"
                         height="1"
                       >
-                        <line x1={0} y1={0} x2={-42} y2={-34} stroke="#2E368F" strokeWidth={1} />
+                        <line x1={0} y1={0} x2={flipRight ? 42 : -42} y2={flipDown ? 34 : -34} stroke="#2E368F" strokeWidth={0.75} />
                       </motion.svg>
 
                       <motion.div
@@ -96,7 +99,9 @@ export function AboutGlobal() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute -translate-x-full -translate-y-full -ml-[42px] -mt-[34px] whitespace-nowrap px-3 py-1.5 bg-white border border-[#2E368F] text-[#2E368F] text-[10px] font-semibold tracking-widest uppercase shadow-sm"
+                        className={`absolute whitespace-nowrap px-3 py-1.5 bg-white border border-[#2E368F] text-[#2E368F] text-[10px] font-semibold tracking-widest uppercase shadow-sm ${
+                          flipRight ? "ml-[42px]" : "-translate-x-full -ml-[42px]"
+                        } ${flipDown ? "mt-[34px]" : "-translate-y-full -mt-[34px]"}`}
                       >
                         {markerName}
                       </motion.div>
@@ -106,6 +111,7 @@ export function AboutGlobal() {
               </div>
             );
           })}
+        </div>
         </Reveal>
 
         <Reveal

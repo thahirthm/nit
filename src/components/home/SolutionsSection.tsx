@@ -65,6 +65,7 @@ export function SolutionsSection() {
   const isAr = language === "ar";
   const [activeKey, setActiveKey] = useState(solutions[0].key);
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
+  const [openCapability, setOpenCapability] = useState<string | null>(null);
   const active = solutions.find((s) => s.key === activeKey) ?? solutions[0];
   const displayedImage =
     hoveredImage && active.capabilities.some((c) => c.image === hoveredImage) ? hoveredImage : active.image;
@@ -72,6 +73,7 @@ export function SolutionsSection() {
   const selectTab = (key: string) => {
     setActiveKey(key);
     setHoveredImage(null);
+    setOpenCapability(null);
   };
 
   return (
@@ -133,28 +135,57 @@ export function SolutionsSection() {
                 <div className="mt-3 border-t border-gray-200">
                   {active.capabilities.map((capability) => {
                     const isHovered = hoveredImage === capability.image;
+                    const isOpen = openCapability === capability.en;
                     return (
-                      <div
-                        key={capability.en}
-                        dir={isAr ? "rtl" : "ltr"}
-                        onMouseEnter={() => setHoveredImage(capability.image)}
-                        onMouseLeave={() => setHoveredImage((current) => (current === capability.image ? null : current))}
-                        className="group/row flex items-center justify-between py-2.5 sm:py-3 border-b border-gray-200 cursor-default"
-                      >
-                        <span
-                          className={`text-[16px] sm:text-[18px] lg:text-[20px] font-extralight transition-colors duration-300 ${
-                            isHovered ? "text-[#2E368F]" : "text-gray-600"
-                          }`}
+                      <div key={capability.en} className="border-b border-gray-200">
+                        <button
+                          type="button"
+                          dir={isAr ? "rtl" : "ltr"}
+                          onMouseEnter={() => setHoveredImage(capability.image)}
+                          onMouseLeave={() => setHoveredImage((current) => (current === capability.image ? null : current))}
+                          onClick={() =>
+                            setOpenCapability((current) => (current === capability.en ? null : capability.en))
+                          }
+                          className="group/row w-full flex items-center justify-between py-2.5 sm:py-3 text-left"
+                          aria-expanded={isOpen}
                         >
-                          {isAr ? capability.ar : capability.en}
-                        </span>
-                        <span
-                          className={`text-lg font-light shrink-0 transition-colors duration-300 ${
-                            isHovered ? "text-[#2E368F]" : "text-gray-400"
-                          }`}
-                        >
-                          +
-                        </span>
+                          <span
+                            className={`text-[16px] sm:text-[18px] lg:text-[20px] font-extralight transition-colors duration-300 ${
+                              isHovered || isOpen ? "text-[#2E368F]" : "text-gray-600"
+                            }`}
+                          >
+                            {isAr ? capability.ar : capability.en}
+                          </span>
+                          <span
+                            className={`text-lg font-light shrink-0 transition-all duration-300 ${
+                              isHovered || isOpen ? "text-[#2E368F]" : "text-gray-400"
+                            } ${isOpen ? "rotate-45" : "rotate-0"}`}
+                          >
+                            +
+                          </span>
+                        </button>
+
+                        <AnimatePresence initial={false}>
+                          {isOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                              className="overflow-hidden lg:hidden"
+                            >
+                              <div className="relative w-full h-[160px] sm:h-[200px] mb-4">
+                                <Image
+                                  quality={95}
+                                  src={capability.image}
+                                  alt={isAr ? capability.ar : capability.en}
+                                  fill
+                                  className="object-cover"
+                                />
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     );
                   })}
@@ -169,7 +200,7 @@ export function SolutionsSection() {
             </motion.div>
           </AnimatePresence>
 
-          <div className="relative w-full min-h-[280px] lg:min-h-0 overflow-hidden">
+          <div className="hidden lg:block relative w-full min-h-[280px] lg:min-h-0 overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={displayedImage}

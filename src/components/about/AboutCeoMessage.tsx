@@ -67,13 +67,13 @@ export function AboutCeoMessage() {
             </Reveal>
           </div>
 
-          {/* CEO image — bleeds slightly above the panel's top edge */}
+          {/* CEO image — bleeds slightly above the panel's top edge on desktop; sits below the text on mobile */}
           <Reveal
             delay={0.3}
             duration={0.9}
             y={50}
-            className={`hidden lg:block absolute bottom-0 h-[480px] xl:h-[540px] w-auto z-20 pointer-events-none ${
-              isAr ? "left-6 xl:left-12" : "right-6 xl:right-12"
+            className={`relative mt-2 h-[260px] sm:h-[320px] w-full flex justify-center lg:absolute lg:mt-0 lg:bottom-0 lg:h-[480px] xl:h-[540px] lg:w-auto lg:block z-20 pointer-events-none ${
+              isAr ? "lg:left-6 xl:left-12" : "lg:right-6 xl:right-12"
             }`}
           >
             <Image quality={95}

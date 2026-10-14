@@ -70,14 +70,14 @@ export function AboutHighlights() {
             {isAr ? "قصة النمو، بالأرقام." : "The growth story, in figures."}
           </h3>
 
-          <div dir="ltr" className="flex items-end justify-between gap-6">
-            <Button variant="primary">{isAr ? "عرض الإحصائيات" : "VIEW STATS"}</Button>
+          <div dir="ltr" className="flex items-end justify-between gap-3 sm:gap-6">
+            <Button variant="primary" className="shrink-0">{isAr ? "عرض الإحصائيات" : "VIEW STATS"}</Button>
 
-            <div className="text-right">
-              <div className="font-[family-name:var(--font-anek-latin)] text-[56px] lg:text-[70px] font-light text-[#2E368F] leading-none">
+            <div className="text-right shrink-0">
+              <div className="font-[family-name:var(--font-anek-latin)] text-[34px] sm:text-[44px] lg:text-[70px] font-light text-[#2E368F] leading-none">
                 60k +
               </div>
-              <p className="text-gray-500 text-sm lg:text-base mt-2">{isAr ? "الموارد داخل المملكة" : "In-Kingdom resources"}</p>
+              <p className="text-gray-500 text-xs sm:text-sm lg:text-base mt-1 sm:mt-2 whitespace-nowrap">{isAr ? "الموارد داخل المملكة" : "In-Kingdom resources"}</p>
             </div>
           </div>
         </Reveal>

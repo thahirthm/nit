@@ -195,9 +195,10 @@ export function AboutHistory() {
           </div>
 
           {/* Dots + line, and year labels — share the same width so each label sits under its dot.
-              Hidden on mobile: with no label row to anchor to, the lone dot track added little. */}
+              The progress line/dots show at all sizes; the year-label row below is desktop-only
+              since 11 labels can't fit on mobile without overlapping. */}
           <div className="flex-1 min-w-0">
-            <div className="hidden sm:block relative">
+            <div className="block relative">
               <div className="absolute top-[8px] left-[5px] right-[5px] h-px bg-gray-200" />
               <div
                 className="absolute top-[8px] left-0 h-px bg-[#2E368F] transition-all duration-500 ease-out"
@@ -221,8 +222,7 @@ export function AboutHistory() {
               </div>
             </div>
 
-            {/* Year labels — hidden on mobile since 11 labels can't fit without overlapping;
-                the dots row above plus the arrows still let mobile users navigate. */}
+            {/* Year labels — desktop only; 11 labels can't fit on mobile without overlapping. */}
             <div className="hidden sm:flex justify-between mt-6">
               {milestones.map((m, i) => (
                 <button
