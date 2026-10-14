@@ -19,11 +19,21 @@ const offices = [
   {
     label: { en: "Riyadh Office", ar: "مكتب الرياض" },
     image: "/images/fp1.png",
-    phone: "011 465 1188",
-    email: "RIYADH@NESMA-NIT.COM",
+    phone: "+966550634599",
+    email: "NIT@NIT.COM.SA",
     address: {
-      en: ["AL OLAYA,", "RIYADH, SAUDI ARABIA"],
-      ar: ["حي العليا،", "الرياض، المملكة العربية السعودية"],
+      en: ["KING KHALID RD, AR RIHAB,", "DIRIYAH 13715, SAUDI ARABIA"],
+      ar: ["طريق الملك خالد، الرحاب،", "الدرعية 13715، المملكة العربية السعودية"],
+    },
+  },
+  {
+    label: { en: "Alkhobar Office", ar: "مكتب الخبر" },
+    image: "/images/fp1.png",
+    phone: "+966550634599",
+    email: "NIT@NIT.COM.SA",
+    address: {
+      en: ["KING FAHD ROAD, AL QASHLAH,", "DHAHRAN 34232, SAUDI ARABIA"],
+      ar: ["طريق الملك فهد، القشلة،", "الظهران 34232، المملكة العربية السعودية"],
     },
   },
 ];

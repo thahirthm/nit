@@ -7,6 +7,7 @@ import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+import { ProjectOffcanvas, type ProjectOffcanvasProject } from "@/components/ui/ProjectOffcanvas";
 import "swiper/css";
 
 const projects = [
@@ -20,6 +21,9 @@ const projects = [
     logo: "/images/neom-white.png",
     logoAlt: { en: "NEOM", ar: "نيوم" },
     isVision2030: false,
+    value: "1.8B SAR",
+    year: "2025",
+    scope: { en: "Design+Build", ar: "التصميم والتنفيذ" },
     description: {
       en: [
         "Dedicated living community within NEOM's Oxagon, designed to house approximately 20,000 residents.",
@@ -41,6 +45,9 @@ const projects = [
     logo: "/images/vis.png",
     logoAlt: { en: "Vision 2030", ar: "رؤية 2030" },
     isVision2030: true,
+    value: "2.1B SAR",
+    year: "2024",
+    scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
     description: {
       en: [
         "One of the largest wind energy facilities in the Middle East, delivering clean power to the national grid.",
@@ -62,6 +69,9 @@ const projects = [
     logo: "/images/neom-white.png",
     logoAlt: { en: "NEOM", ar: "نيوم" },
     isVision2030: false,
+    value: "540M SAR",
+    year: "2025",
+    scope: { en: "Design+Build", ar: "التصميم والتنفيذ" },
     description: {
       en: [
         "A nationwide smart grid deployment enabling real-time monitoring, automated fault detection, and demand-responsive distribution.",
@@ -83,6 +93,9 @@ const projects = [
     logo: "/images/vis.png",
     logoAlt: { en: "Vision 2030", ar: "رؤية 2030" },
     isVision2030: true,
+    value: "1.2B SAR",
+    year: "2024",
+    scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
     description: {
       en: [
         "A large-scale desalination facility securing sustainable freshwater supply for Jeddah and surrounding communities.",
@@ -96,6 +109,19 @@ const projects = [
   },
 ];
 
+function toOffcanvasProject(project: (typeof projects)[number]): ProjectOffcanvasProject {
+  return {
+    title: project.title,
+    description: { en: project.description.en[0], ar: project.description.ar[0] },
+    detail: { en: project.description.en[1], ar: project.description.ar[1] },
+    image: project.image,
+    badges: project.isVision2030 ? [project.category, { en: "VISION 2030", ar: "رؤية 2030" }] : [project.category],
+    value: project.value,
+    year: project.year,
+    scope: project.scope,
+  };
+}
+
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className={className}>
     <path d="M7.4375 15.2939L14.8725 7.85886L7.4375 0.423828M14.8725 7.85886L0.00247078 7.85886" stroke="currentColor" strokeWidth="1.2" />
@@ -107,6 +133,7 @@ export function ProjectsSection() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<ProjectOffcanvasProject | null>(null);
 
   return (
     <section className={`w-full overflow-x-hidden bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
@@ -212,7 +239,7 @@ export function ProjectsSection() {
                       </div>
                     </div>
 
-                    <Button variant="secondary">{readMore}</Button>
+                    <Button variant="secondary" onClick={() => setSelectedProject(toOffcanvasProject(project))}>{readMore}</Button>
                   </div>
                 </div>
 
@@ -231,7 +258,7 @@ export function ProjectsSection() {
                   </div>
 
                   <div className="shrink-0">
-                    <Button variant="secondary">{readMore}</Button>
+                    <Button variant="secondary" onClick={() => setSelectedProject(toOffcanvasProject(project))}>{readMore}</Button>
                   </div>
                 </div>
               </div>
@@ -280,7 +307,7 @@ export function ProjectsSection() {
                     ))}
                   </div>
                   <div className="mt-auto pt-6">
-                    <Button variant="secondary" iconOutline>{readMore}</Button>
+                    <Button variant="secondary" iconOutline onClick={() => setSelectedProject(toOffcanvasProject(project))}>{readMore}</Button>
                   </div>
                 </div>
               </div>
@@ -289,6 +316,8 @@ export function ProjectsSection() {
           })}
         </Swiper>
       </div>
+
+      <ProjectOffcanvas project={selectedProject} onClose={() => setSelectedProject(null)} />
     </section>
   );
 }

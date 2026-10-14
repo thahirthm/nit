@@ -132,9 +132,9 @@ export function AboutHistory() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1} duration={0.8} y={30} className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 lg:items-center">
           {/* Big year — slides in from the top on change */}
-          <div dir="ltr" className="overflow-hidden h-[120px] sm:h-[160px] lg:h-[200px] flex items-center">
+          <Reveal delay={0.1} duration={0.8} y={30} dir="ltr" className="order-1 overflow-hidden h-[120px] sm:h-[160px] lg:h-[200px] flex items-center">
             <AnimatePresence mode="wait">
               <motion.h3
                 key={active.year}
@@ -147,57 +147,20 @@ export function AboutHistory() {
                 {active.year}
               </motion.h3>
             </AnimatePresence>
-          </div>
+          </Reveal>
 
-          {/* Right: label + title + description */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active.year}
-              dir={isAr ? "rtl" : "ltr"}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <span className="inline-block px-4 py-2 text-[14px] lg:text-[15px] font-normal bg-gray-100 text-[#2E368F]">
-                {isAr ? active.label.ar : active.label.en}
-              </span>
-              <h4 className="mt-4 text-[22px] lg:text-[28px] font-normal text-gray-900">
-                {isAr ? active.title.ar : active.title.en}
-              </h4>
-              <p className="mt-3 text-gray-500 text-base lg:text-lg leading-relaxed max-w-2xl">
-                {isAr ? active.description.ar : active.description.en}
-              </p>
-            </motion.div>
-          </AnimatePresence>
-        </Reveal>
-
-        {/* Timeline track — kept LTR so the chronological order never reverses */}
-        <Reveal delay={0.25} duration={0.8} y={30} dir="ltr" className="mt-10 lg:mt-14 flex items-start gap-4 lg:gap-10">
-          {/* Arrows — aligned with the year-label row below the dots */}
-          <div className="flex items-center gap-4 shrink-0 pt-1 sm:pt-[46px] lg:pt-[50px]">
-            <button
-              aria-label={isAr ? "السابق" : "Previous"}
-              onClick={goPrev}
-              disabled={activeIndex === 0}
-              className={`transition-colors ${activeIndex === 0 ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
-            >
-              <ArrowIcon className="rotate-180" />
-            </button>
-            <button
-              aria-label={isAr ? "التالي" : "Next"}
-              onClick={goNext}
-              disabled={activeIndex === lastIndex}
-              className={`transition-colors ${activeIndex === lastIndex ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
-            >
-              <ArrowIcon />
-            </button>
-          </div>
-
+          {/* Timeline track — shown right under the year on mobile; below both columns on desktop. Kept LTR so the chronological order never reverses */}
+          <Reveal
+            delay={0.25}
+            duration={0.8}
+            y={30}
+            dir="ltr"
+            className="order-2 lg:order-3 lg:col-span-2 mt-2 lg:mt-14 flex flex-col lg:flex-row items-stretch lg:items-start gap-3 lg:gap-10"
+          >
           {/* Dots + line, and year labels — share the same width so each label sits under its dot.
               The progress line/dots show at all sizes; the year-label row below is desktop-only
               since 11 labels can't fit on mobile without overlapping. */}
-          <div className="flex-1 min-w-0">
+          <div className="order-1 lg:order-2 flex-1 min-w-0">
             <div className="block relative">
               <div className="absolute top-[8px] left-[5px] right-[5px] h-px bg-gray-200" />
               <div
@@ -237,7 +200,51 @@ export function AboutHistory() {
               ))}
             </div>
           </div>
-        </Reveal>
+
+          {/* Arrows — sit below the progress bar on mobile, to the left of it on desktop */}
+          <div className="order-2 lg:order-1 flex items-center gap-4 shrink-0 lg:pt-[50px]">
+            <button
+              aria-label={isAr ? "السابق" : "Previous"}
+              onClick={goPrev}
+              disabled={activeIndex === 0}
+              className={`transition-colors ${activeIndex === 0 ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
+            >
+              <ArrowIcon className="rotate-180" />
+            </button>
+            <button
+              aria-label={isAr ? "التالي" : "Next"}
+              onClick={goNext}
+              disabled={activeIndex === lastIndex}
+              className={`transition-colors ${activeIndex === lastIndex ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
+            >
+              <ArrowIcon />
+            </button>
+          </div>
+          </Reveal>
+
+          {/* Label + title + description */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active.year}
+              dir={isAr ? "rtl" : "ltr"}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="order-3 lg:order-2"
+            >
+              <span className="inline-block px-4 py-2 text-[14px] lg:text-[15px] font-normal bg-gray-100 text-[#2E368F]">
+                {isAr ? active.label.ar : active.label.en}
+              </span>
+              <h4 className="mt-4 text-[22px] lg:text-[28px] font-normal text-gray-900">
+                {isAr ? active.title.ar : active.title.en}
+              </h4>
+              <p className="mt-3 text-gray-500 text-base lg:text-lg leading-relaxed max-w-2xl">
+                {isAr ? active.description.ar : active.description.en}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

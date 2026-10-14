@@ -15,6 +15,7 @@ export function GlanceSection() {
   const [jeddahTime, setJeddahTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartVisible, setChartVisible] = useState(false);
+  const [visionActive, setVisionActive] = useState(false);
 
   // Play the growth-chart draw-in animation once the card scrolls into view
   useEffect(() => {
@@ -349,7 +350,10 @@ export function GlanceSection() {
           </div>
 
           {/* Card 6: Vision 2030 */}
-          <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col">
+          <div
+            onClick={() => setVisionActive((v) => !v)}
+            className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[430px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col"
+          >
             <div className="flex justify-end mb-8 lg:mb-16">
               <Image quality={95}
                 src="/images/vis.png"
@@ -371,8 +375,16 @@ export function GlanceSection() {
                 <span className="text-xl">37%</span>
                 <span className="text-xl text-gray-400 font-normal">50%</span>
               </div>
-              <div className="w-full h-[2px] group-hover:h-[3px] bg-gray-200 relative mb-3 transition-all duration-500 ease-out">
-                <div className="absolute left-0 top-0 h-full bg-[#2E368F] w-[4%] group-hover:w-[37%] transition-all duration-700 ease-out" />
+              <div
+                className={`w-full bg-gray-200 relative mb-3 transition-all duration-500 ease-out ${
+                  visionActive ? "h-[3px]" : "h-[2px] group-hover:h-[3px]"
+                }`}
+              >
+                <div
+                  className={`absolute left-0 top-0 h-full bg-[#2E368F] transition-all duration-700 ease-out ${
+                    visionActive ? "w-[37%]" : "w-[4%] group-hover:w-[37%]"
+                  }`}
+                />
               </div>
               <div className="flex justify-between text-xs text-gray-500">
                 <span>{language === "ar" ? "نسبة المحتوى المحلي لعام 2024" : "LC score 2024"}</span>
@@ -382,7 +394,7 @@ export function GlanceSection() {
           </div>
 
           {/* Trailing spacer so the last card can rest fully in view */}
-          <div className="w-6 shrink-0 lg:w-[2rem]" />
+          <div className="w-6 shrink-0 lg:w-16" />
         </div>
       </div>
     </section>
