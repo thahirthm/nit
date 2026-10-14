@@ -116,8 +116,12 @@ export function ExpertiseSection() {
             return (
             <div
               key={index}
-              onMouseEnter={() => setActiveIndex(index)}
-              onMouseLeave={() => setActiveIndex((prev) => (prev === index ? null : prev))}
+              onPointerEnter={(e) => {
+                if (e.pointerType === "mouse") setActiveIndex(index);
+              }}
+              onPointerLeave={(e) => {
+                if (e.pointerType === "mouse") setActiveIndex((prev) => (prev === index ? null : prev));
+              }}
               onClick={() => setActiveIndex((prev) => (prev === index ? null : index))}
               className={`relative flex flex-col justify-between p-4 sm:p-8 min-h-[160px] sm:min-h-[220px] overflow-hidden cursor-pointer border-gray-100 lg:border-b-0 ${isLeftCol ? 'border-r' : ''} ${!isLastRow ? 'border-b' : ''} ${isLastCol4 ? 'lg:border-r-0' : 'lg:border-r'}`}
             >

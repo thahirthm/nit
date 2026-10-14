@@ -68,22 +68,28 @@ export function MediaAwards() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 items-start">
           <div className="border-t border-gray-200">
-            {awards.map((award, i) => (
+            {awards.map((award, i) => {
+              const isActive = activeIndex === i;
+              const title = isAr ? award.title.ar : award.title.en;
+              return (
               <Reveal
                 key={award.title.en}
                 delay={0.1 + i * 0.08}
                 duration={0.6}
                 y={24}
-                onMouseEnter={() => setActiveIndex(i)}
+                onClick={() => setActiveIndex(i)}
+                onPointerEnter={(e) => {
+                  if (e.pointerType === "mouse") setActiveIndex(i);
+                }}
                 dir={isAr ? "rtl" : "ltr"}
-                className="group py-4 border-b border-gray-200 cursor-default"
+                className="group py-4 border-b border-gray-200 cursor-pointer lg:cursor-default"
               >
                 <div className="flex items-baseline gap-4">
                   <span className="font-[family-name:var(--font-anek-latin)] text-[#2E368F] text-[28px] sm:text-[32px] font-normal shrink-0">
                     {award.year}
                   </span>
-                  <h3 className="text-gray-700 text-[22px] sm:text-[26px] font-light group-hover:text-[#2E368F] transition-colors duration-300">
-                    {isAr ? award.title.ar : award.title.en}
+                  <h3 className={`text-gray-700 text-[22px] sm:text-[26px] font-light transition-colors duration-300 group-hover:text-[#2E368F] ${isActive ? "lg:text-gray-700 text-[#2E368F]" : ""}`}>
+                    {title}
                   </h3>
                 </div>
                 <p className="mt-2 text-gray-400 text-[16px] sm:text-[17px] font-light">
@@ -93,8 +99,20 @@ export function MediaAwards() {
                   <span className="mx-1.5">|</span>
                   {isAr ? award.tag.ar : award.tag.en}
                 </p>
+
+                {/* Accordion image — mobile/tablet only; desktop uses the side panel instead */}
+                <div
+                  className={`lg:hidden overflow-hidden transition-all duration-500 ease-out ${
+                    isActive ? "max-h-[300px] opacity-100 mt-4" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="relative w-full h-[220px] sm:h-[280px]">
+                    <Image quality={95} src={award.image} alt={title} fill className="object-contain" />
+                  </div>
+                </div>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
 
           {/* Award image — swaps per hovered row */}

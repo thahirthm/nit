@@ -107,6 +107,7 @@ export function NewsSection() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const filteredPosts = useMemo(
     () => posts.filter((post) => post.category === activeCategory),
@@ -132,7 +133,10 @@ export function NewsSection() {
             return (
               <button
                 key={category}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => {
+                  setActiveCategory(category);
+                  setActiveSlide(0);
+                }}
                 className={`px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 ${
                   isActive
                     ? "bg-[#2E368F] text-white border-[#2E368F]"
@@ -178,6 +182,7 @@ export function NewsSection() {
           onSlideChange={(swiper) => {
             setIsBeginning(swiper.isBeginning);
             setIsEnd(swiper.isEnd);
+            setActiveSlide(swiper.activeIndex);
           }}
           spaceBetween={24}
           slidesPerView={1}
@@ -225,6 +230,22 @@ export function NewsSection() {
             );
           })}
         </Swiper>
+
+        {/* Dot pagination — mobile only (slidesPerView: 1, so each dot maps to one post) */}
+        {filteredPosts.length > 1 && (
+          <div className="flex sm:hidden items-center justify-center gap-2 mt-6">
+            {filteredPosts.map((post, i) => (
+              <button
+                key={post.title.en}
+                aria-label={`Go to slide ${i + 1}`}
+                onClick={() => swiperRef.current?.slideTo(i)}
+                className={`rounded-full transition-all duration-300 ${
+                  i === activeSlide ? "w-5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

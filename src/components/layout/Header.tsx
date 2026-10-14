@@ -12,6 +12,7 @@ export function Header() {
   const [isHidden, setIsHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [expandedMobileKey, setExpandedMobileKey] = useState<string | null>(null);
   const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
   const { language, setLanguage } = useLanguage();
@@ -47,6 +48,7 @@ export function Header() {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
+      setExpandedMobileKey(null);
     }
   }, [isMobileMenuOpen]);
 
@@ -193,19 +195,56 @@ export function Header() {
         </div>
         
         <div className={`flex flex-col py-6 px-6 overflow-y-auto h-full ${language === 'ar' ? 'font-arabic' : 'font-[family-name:var(--font-futura)]'}`}>
-          {navLinks.map((link) => (
-            <div key={link.name.en} className="py-4 border-b border-gray-50">
-              <Link
-                href={link.href}
-                dir={language === 'ar' ? 'rtl' : 'ltr'}
-                className={`flex items-center justify-between text-[13px] font-medium tracking-wider text-[#2b307d] ${language === 'ar' ? 'font-arabic' : ''}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span>{language === 'ar' ? link.name.ar : link.name.en}</span>
-                {link.hasDropdown && <ChevronDown className="w-4 h-4" strokeWidth={1.5} />}
-              </Link>
-            </div>
-          ))}
+          {navLinks.map((link) => {
+            const isExpanded = link.hasDropdown && expandedMobileKey === link.key;
+            const subLinks = link.key ? submenus[link.key] : undefined;
+
+            return (
+              <div key={link.name.en} className="py-4 border-b border-gray-50">
+                <div
+                  dir={language === 'ar' ? 'rtl' : 'ltr'}
+                  className={`flex items-center justify-between text-[13px] font-medium tracking-wider text-[#2b307d] ${language === 'ar' ? 'font-arabic' : ''}`}
+                >
+                  <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)} className="flex-1">
+                    {language === 'ar' ? link.name.ar : link.name.en}
+                  </Link>
+                  {link.hasDropdown && (
+                    <button
+                      type="button"
+                      aria-label={isExpanded ? 'Collapse' : 'Expand'}
+                      aria-expanded={isExpanded}
+                      onClick={() => setExpandedMobileKey((current) => (current === link.key ? null : link.key ?? null))}
+                      className="p-1 -m-1"
+                    >
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                        strokeWidth={1.5}
+                      />
+                    </button>
+                  )}
+                </div>
+
+                {link.hasDropdown && subLinks && (
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-96 mt-3' : 'max-h-0'}`}
+                  >
+                    <div dir={language === 'ar' ? 'rtl' : 'ltr'} className="flex flex-col gap-3 pl-1">
+                      {subLinks.map((sub) => (
+                        <Link
+                          key={sub.en}
+                          href={sub.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="text-[12px] font-medium tracking-wider text-gray-500 hover:text-[#2b307d] transition-colors"
+                        >
+                          {language === 'ar' ? sub.ar : sub.en}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
 
           {/* Mobile Language Switcher */}
           <div className="mt-8 flex md:hidden items-center border border-[#2b307d] text-[13px] font-semibold h-10 w-fit">

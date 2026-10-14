@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
 import { Button } from "@/components/ui/Button";
 import { newsPosts } from "@/data/newsPosts";
 import { useLanguage } from "@/context/LanguageContext";
 import { Reveal } from "@/components/ui/Reveal";
+import "swiper/css";
 
 const categories = [
   { key: "NEWS", en: "NEWS", ar: "أخبار" },
@@ -26,6 +30,10 @@ export function MediaNews() {
   // The category tabs act as a visual filter toggle; all posts stay visible
   // together, matching the design (every tab shows the same mixed set of cards).
   const [activeCategory, setActiveCategory] = useState<(typeof categories)[number]["key"]>("NEWS");
+  const swiperRef = useRef<SwiperType | null>(null);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
@@ -38,10 +46,20 @@ export function MediaNews() {
             </h2>
 
             <div className="hidden sm:flex items-center gap-4 lg:gap-6">
-              <button aria-label={isAr ? "السابق" : "Previous"} disabled className="text-gray-300 cursor-not-allowed">
+              <button
+                aria-label={isAr ? "السابق" : "Previous"}
+                onClick={() => swiperRef.current?.slidePrev()}
+                disabled={isBeginning}
+                className={`transition-colors duration-300 ${isBeginning ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
+              >
                 <ArrowIcon className={isAr ? "" : "rotate-180"} />
               </button>
-              <button aria-label={isAr ? "التالي" : "Next"} disabled className="text-gray-300 cursor-not-allowed">
+              <button
+                aria-label={isAr ? "التالي" : "Next"}
+                onClick={() => swiperRef.current?.slideNext()}
+                disabled={isEnd}
+                className={`transition-colors duration-300 ${isEnd ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
+              >
                 <ArrowIcon className={isAr ? "rotate-180" : ""} />
               </button>
             </div>
@@ -68,50 +86,86 @@ export function MediaNews() {
           </div>
         </Reveal>
 
-        {/* Post grid */}
-        <div className="mt-8 lg:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
-          {newsPosts.map((post, i) => {
-            const title = isAr ? post.title.ar : post.title.en;
-            return (
-              <Reveal key={post.slug} delay={(i % 3) * 0.1} duration={0.7} y={40} className="group flex flex-col">
-                <Link href={`/media/${post.slug}`} className="relative block w-full h-[280px] lg:h-[330px] overflow-hidden">
-                  <Image quality={95}
-                    src={post.image}
-                    alt={title}
-                    fill
-                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                  />
-                </Link>
+        {/* Post slider */}
+        <div className="mt-8 lg:mt-10">
+          <Swiper
+            modules={[Navigation]}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            onSlideChange={(swiper) => {
+              setIsBeginning(swiper.isBeginning);
+              setIsEnd(swiper.isEnd);
+              setActiveSlide(swiper.activeIndex);
+            }}
+            spaceBetween={24}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+          >
+            {newsPosts.map((post, i) => {
+              const title = isAr ? post.title.ar : post.title.en;
+              return (
+                <SwiperSlide key={post.slug}>
+                  <Reveal delay={(i % 3) * 0.1} duration={0.7} y={40} className="group flex flex-col">
+                    <Link href={`/media/${post.slug}`} className="relative block w-full h-[280px] lg:h-[330px] overflow-hidden">
+                      <Image quality={95}
+                        src={post.image}
+                        alt={title}
+                        fill
+                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                    </Link>
 
-                <div dir="ltr" className="mt-5 flex flex-wrap items-center gap-2">
-                  <span className="font-[family-name:var(--font-anek-latin)] px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-                    {isAr ? post.date.ar : post.date.en}
-                  </span>
-                  <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-                    {isAr ? post.badge.ar : post.badge.en}
-                  </span>
-                  <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-                    {isAr ? post.location.ar : post.location.en}
-                  </span>
-                </div>
+                    <div dir="ltr" className="mt-5 flex flex-wrap items-center gap-2">
+                      <span className="font-[family-name:var(--font-anek-latin)] px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
+                        {isAr ? post.date.ar : post.date.en}
+                      </span>
+                      <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
+                        {isAr ? post.badge.ar : post.badge.en}
+                      </span>
+                      <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
+                        {isAr ? post.location.ar : post.location.en}
+                      </span>
+                    </div>
 
-                <Link href={`/media/${post.slug}`}>
-                  <h3
-                    dir={isAr ? "rtl" : "ltr"}
-                    className="mt-4 text-[26px] lg:text-[28px] font-light text-gray-900 leading-snug line-clamp-2 group-hover:text-[#2E368F] transition-colors duration-300"
-                  >
-                    {title}
-                  </h3>
-                </Link>
+                    <Link href={`/media/${post.slug}`}>
+                      <h3
+                        dir={isAr ? "rtl" : "ltr"}
+                        className="mt-4 text-[26px] lg:text-[28px] font-light text-gray-900 leading-snug line-clamp-2 group-hover:text-[#2E368F] transition-colors duration-300"
+                      >
+                        {title}
+                      </h3>
+                    </Link>
 
-                <div className="mt-6">
-                  <Button href={`/media/${post.slug}`} variant="secondary">
-                    {isAr ? "اقرأ المزيد" : "READ MORE"}
-                  </Button>
-                </div>
-              </Reveal>
-            );
-          })}
+                    <div className="mt-6">
+                      <Button href={`/media/${post.slug}`} variant="secondary">
+                        {isAr ? "اقرأ المزيد" : "READ MORE"}
+                      </Button>
+                    </div>
+                  </Reveal>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+
+          {/* Dot pagination — mobile only (slidesPerView: 1, so each dot maps to one post) */}
+          {newsPosts.length > 1 && (
+            <div className="flex sm:hidden items-center justify-center gap-2 mt-6">
+              {newsPosts.map((post, i) => (
+                <button
+                  key={post.slug}
+                  aria-label={`Go to slide ${i + 1}`}
+                  onClick={() => swiperRef.current?.slideTo(i)}
+                  className={`rounded-full transition-all duration-300 ${
+                    i === activeSlide ? "w-5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

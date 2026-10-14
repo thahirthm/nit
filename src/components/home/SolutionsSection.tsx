@@ -50,6 +50,7 @@ const solutions = [
     },
     image: "/images/tech-banner.png",
     icon: <TechnologyIcon />,
+    capLimit: 5,
     capabilities: [
       { en: "Digital Transformation", ar: "التحول الرقمي", image: "/images/tech-1.png" },
       { en: "Data & AI", ar: "البيانات والذكاء الاصطناعي", image: "/images/tech-2.png" },
@@ -69,8 +70,9 @@ export function SolutionsSection() {
   const isAr = language === "ar";
   const [activeKey, setActiveKey] = useState(solutions[0].key);
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
-  const [openCapability, setOpenCapability] = useState<string | null>(null);
+  const [openCapability, setOpenCapability] = useState<string | null>(solutions[0].capabilities[0]?.en ?? null);
   const [selectedCapability, setSelectedCapability] = useState<string | null>(solutions[0].capabilities[0]?.en ?? null);
+  const [capExpanded, setCapExpanded] = useState(false);
   const active = solutions.find((s) => s.key === activeKey) ?? solutions[0];
   const selectedCapabilityImage = active.capabilities.find((c) => c.en === selectedCapability)?.image;
   const displayedImage =
@@ -78,11 +80,21 @@ export function SolutionsSection() {
     selectedCapabilityImage ??
     active.image;
 
+  const hasCapLimit = "capLimit" in active && typeof active.capLimit === "number";
+  const visibleCapabilities = hasCapLimit
+    ? capExpanded
+      ? active.capabilities.slice(active.capLimit)
+      : active.capabilities.slice(0, active.capLimit)
+    : active.capabilities;
+  const showViewMore = hasCapLimit && active.capabilities.length > (active.capLimit ?? 0);
+
   const selectTab = (key: string) => {
+    const firstCapability = solutions.find((s) => s.key === key)?.capabilities[0]?.en ?? null;
     setActiveKey(key);
     setHoveredImage(null);
-    setOpenCapability(null);
-    setSelectedCapability(solutions.find((s) => s.key === key)?.capabilities[0]?.en ?? null);
+    setOpenCapability(firstCapability);
+    setCapExpanded(false);
+    setSelectedCapability(firstCapability);
   };
 
   return (
@@ -142,7 +154,7 @@ export function SolutionsSection() {
                   {isAr ? "القدرات" : "Capabilities"}
                 </span>
                 <div className="mt-3 border-t border-gray-200">
-                  {active.capabilities.map((capability) => {
+                  {visibleCapabilities.map((capability) => {
                     const isHovered = hoveredImage === capability.image;
                     const isOpen = openCapability === capability.en;
                     const isSelected = !hoveredImage && selectedCapability === capability.en;
@@ -185,7 +197,7 @@ export function SolutionsSection() {
                               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                               className="overflow-hidden lg:hidden"
                             >
-                              <div className="relative w-full h-[160px] sm:h-[200px] mb-4">
+                              <div className="relative w-full h-[200px] sm:h-[240px] mb-4">
                                 <Image
                                   quality={95}
                                   src={capability.image}
@@ -201,6 +213,26 @@ export function SolutionsSection() {
                     );
                   })}
                 </div>
+
+                {showViewMore && (
+                  <div dir={isAr ? "rtl" : "ltr"} className="mt-5 flex justify-end">
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={() => {
+                        const nextExpanded = !capExpanded;
+                        setCapExpanded(nextExpanded);
+                        setHoveredImage(null);
+                        const nextFirstIndex = nextExpanded ? active.capLimit ?? 0 : 0;
+                        const nextFirstCapability = active.capabilities[nextFirstIndex]?.en ?? null;
+                        setOpenCapability(nextFirstCapability);
+                        setSelectedCapability(nextFirstCapability);
+                      }}
+                    >
+                      {isAr ? "عرض المزيد" : "View More"}
+                    </Button>
+                  </div>
+                )}
               </div>
 
               <div className="mt-8 lg:mt-auto lg:pt-10">
