@@ -6,9 +6,9 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
-type SubLink = { en: string; ar: string; href: string };
+export type SubLink = { en: string; ar: string; href: string };
 
-const submenus: Record<string, SubLink[]> = {
+export const submenus: Record<string, SubLink[]> = {
   about: [
     { en: "WHO WE ARE", ar: "من نحن", href: "/about#who-we-are" },
     { en: "MISSION & VISION", ar: "الرسالة والرؤية", href: "/about#mission-vision" },
@@ -44,12 +44,14 @@ interface HeaderMegaMenuProps {
 export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProps) {
   const { language } = useLanguage();
   const isAr = language === "ar";
-  const firstDropdownKey = navLinks.find((l) => l.hasDropdown)?.key ?? null;
-  const [activeKey, setActiveKey] = useState<string | null>(firstDropdownKey);
+  const currentPageLink = navLinks.find((l) => l.active) ?? null;
+  // No submenu is shown until the visitor hovers a link that has one — the
+  // initially-highlighted link is just whichever page they're already on.
+  const [hoveredKey, setHoveredKey] = useState<string | null>(null);
 
   useEffect(() => {
-    if (isOpen) setActiveKey(firstDropdownKey);
-  }, [isOpen, firstDropdownKey]);
+    if (isOpen) setHoveredKey(null);
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -64,7 +66,7 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
     };
   }, [isOpen, onClose]);
 
-  const activeSublinks = activeKey ? submenus[activeKey] : null;
+  const activeSublinks = hoveredKey ? submenus[hoveredKey] : null;
   const Chevron = isAr ? ChevronRight : ChevronLeft;
 
   return (
@@ -73,43 +75,17 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
       className={`fixed inset-0 z-[100] bg-[#2E368F] overflow-hidden transition-opacity duration-500 ${
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
+      style={{
+        backgroundImage: "url(/images/mega-menu-bg.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
-      {/* Decorative dotted world map, bleeding off the right edge */}
-      <div
-        className="hidden lg:block absolute top-1/2 -translate-y-1/2 -right-[260px] w-[1000px] h-[1000px] rounded-full overflow-hidden pointer-events-none"
-        style={{ background: "radial-gradient(circle at 40% 45%, rgba(255,255,255,0.06), rgba(255,255,255,0) 70%)" }}
-      >
-        <div
-          className="absolute inset-0 opacity-80"
-          style={{
-            backgroundColor: "#81D1E8",
-            WebkitMaskImage: "url(/images/globe-plain.png)",
-            maskImage: "url(/images/globe-plain.png)",
-            WebkitMaskSize: "cover",
-            maskSize: "cover",
-            WebkitMaskPosition: "center",
-            maskPosition: "center",
-            WebkitMaskRepeat: "no-repeat",
-            maskRepeat: "no-repeat",
-          }}
-        />
-        {[
-          { top: "15%", left: "62%" }, { top: "26%", left: "78%" }, { top: "44%", left: "33%" },
-          { top: "48%", left: "52%" }, { top: "47%", left: "69%" }, { top: "62%", left: "41%" },
-          { top: "67%", left: "57%" }, { top: "82%", left: "44%" },
-        ].map((pos, i) => (
-          <span
-            key={i}
-            className="absolute w-[6px] h-[6px] rounded-full bg-[#81D1E8]"
-            style={{ top: pos.top, left: pos.left, boxShadow: "0 0 8px 2px rgba(129,209,232,0.7)" }}
-          />
-        ))}
-      </div>
-
       <button
         onClick={onClose}
         aria-label={isAr ? "إغلاق" : "Close"}
-        className="absolute top-6 right-6 lg:top-10 lg:right-12 text-white/80 hover:text-white transition-colors"
+        className="absolute z-20 top-6 right-6 lg:top-10 lg:right-12 text-white/80 hover:text-white transition-colors cursor-pointer"
       >
         <X className="w-7 h-7" strokeWidth={1.5} />
       </button>
@@ -126,22 +102,31 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
           {/* Main nav column */}
           <nav className="flex flex-col gap-6 lg:gap-7 shrink-0">
             {navLinks.map((link) => {
-              const isActiveDropdown = !!link.key && link.key === activeKey;
-              const isDim = !!activeKey && link.hasDropdown && !isActiveDropdown;
+              // Highlighted = the submenu currently being hovered, or (when nothing's
+              // hovered) whichever link is the current page.
+              const isHighlighted = hoveredKey
+                ? link.key === hoveredKey
+                : link.href === currentPageLink?.href;
+              const isDim = !!hoveredKey && link.hasDropdown && link.key !== hoveredKey;
               return (
                 <div
                   key={link.name.en}
-                  onMouseEnter={() => link.hasDropdown && link.key && setActiveKey(link.key)}
+                  onMouseEnter={() => setHoveredKey(link.hasDropdown && link.key ? link.key : null)}
                 >
                   <Link
                     href={link.href}
                     onClick={() => !link.hasDropdown && onClose()}
                     className={`flex items-center gap-2 text-[22px] lg:text-[26px] font-light tracking-wide transition-colors duration-300 ${
-                      isActiveDropdown ? "text-white" : isDim ? "text-white/40 hover:text-white/70" : "text-white/70 hover:text-white"
+                      isHighlighted ? "text-white" : isDim ? "text-white/40 hover:text-white/70" : "text-white/70 hover:text-white"
                     }`}
                   >
                     {isAr ? link.name.ar : link.name.en}
-                    {link.hasDropdown && <Chevron className="w-4 h-4" strokeWidth={1.5} />}
+                    {link.hasDropdown && (
+                      <Chevron
+                        className={`w-4 h-4 transition-transform duration-300 ${hoveredKey === link.key ? "rotate-180" : ""}`}
+                        strokeWidth={1.5}
+                      />
+                    )}
                   </Link>
                 </div>
               );

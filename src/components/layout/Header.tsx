@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronDown, Plus, X } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-import { HeaderMegaMenu } from './HeaderMegaMenu';
+import { HeaderMegaMenu, submenus } from './HeaderMegaMenu';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -87,7 +87,9 @@ export function Header() {
           {/* Right section: Navigation and Language */}
           <div className={`flex items-center gap-4 lg:gap-10 h-full ${language === 'ar' ? 'font-arabic' : 'font-[family-name:var(--font-futura)]'}`}>
             <nav dir={language === 'ar' ? 'rtl' : 'ltr'} className="hidden h-full xl:flex items-center gap-8">
-              {navLinks.map((link) => (
+              {navLinks.map((link) => {
+                const RowChevron = language === 'ar' ? ChevronLeft : ChevronRight;
+                return (
                 <div key={link.name.en} className="relative group h-full flex items-center">
                   <Link
                     href={link.href}
@@ -95,15 +97,39 @@ export function Header() {
                   >
                     {language === 'ar' ? link.name.ar : link.name.en}
                     {link.hasDropdown && (
-                      <ChevronDown className="ms-1 h-3.5 w-3.5" strokeWidth={2} />
+                      <ChevronDown className="ms-1 h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-180" strokeWidth={2} />
                     )}
                   </Link>
                   {/* Active indicator line */}
                   {link.active && (
                     <div className={`absolute bottom-[30px] left-0 right-0 h-[2px] ${isTransparent ? 'bg-white' : 'bg-[#2b307d]'}`}></div>
                   )}
+                  {/* Hover indicator line — only for dropdown items, matches the active-page line */}
+                  {link.hasDropdown && !link.active && (
+                    <div
+                      className={`absolute bottom-[30px] left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ${isTransparent ? 'bg-white' : 'bg-[#2b307d]'}`}
+                    ></div>
+                  )}
+
+                  {/* Dropdown panel — fades/slides in on hover */}
+                  {link.hasDropdown && link.key && (
+                    <div className="absolute top-full start-0 pt-2 opacity-0 invisible -translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-out">
+                      <div className="w-[300px] bg-[#2E368F]/95 backdrop-blur-md shadow-xl py-2">
+                        {submenus[link.key]?.map((sub) => (
+                          <Link
+                            key={sub.en}
+                            href={sub.href}
+                            className="flex items-center justify-between px-6 py-4 text-[13px] font-medium tracking-wide text-white/75 hover:bg-white/10 hover:text-white transition-colors duration-200"
+                          >
+                            {language === 'ar' ? sub.ar : sub.en}
+                            <RowChevron className="w-3.5 h-3.5 shrink-0 opacity-70" strokeWidth={1.5} />
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ))}
+              );})}
             </nav>
 
             {/* Language Switcher & Plus */}

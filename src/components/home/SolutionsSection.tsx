@@ -51,11 +51,15 @@ const solutions = [
     image: "/images/tech-banner.png",
     icon: <TechnologyIcon />,
     capabilities: [
-      { en: "Digital Transformation", ar: "التحول الرقمي", image: "/images/t-1.png" },
-      { en: "Data & AI", ar: "البيانات والذكاء الاصطناعي", image: "/images/t-2.png" },
-      { en: "Cloud Services", ar: "الخدمات السحابية", image: "/images/t-4.png" },
-      { en: "Cybersecurity", ar: "الأمن السيبراني", image: "/images/t-5.png" },
-      { en: "Managed Services", ar: "الخدمات المُدارة", image: "/images/t-8.png" },
+      { en: "Digital Transformation", ar: "التحول الرقمي", image: "/images/tech-1.png" },
+      { en: "Data & AI", ar: "البيانات والذكاء الاصطناعي", image: "/images/tech-2.png" },
+      { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسة", image: "/images/tech-3.png" },
+      { en: "Cloud Services", ar: "الخدمات السحابية", image: "/images/tech-4.png" },
+      { en: "Cybersecurity", ar: "الأمن السيبراني", image: "/images/tech-5.png" },
+      { en: "Blockchain", ar: "تقنية سلسلة الكتل (البلوك تشين)", image: "/images/tech-6.png" },
+      { en: "Data Center Services", ar: "خدمات مراكز البيانات", image: "/images/tech-7.png" },
+      { en: "Managed Services", ar: "الخدمات المُدارة", image: "/images/tech-8.png" },
+      { en: "Smart Cities", ar: "المدن الذكية", image: "/images/tech-1.png" },
     ],
   },
 ];
@@ -66,14 +70,19 @@ export function SolutionsSection() {
   const [activeKey, setActiveKey] = useState(solutions[0].key);
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
   const [openCapability, setOpenCapability] = useState<string | null>(null);
+  const [selectedCapability, setSelectedCapability] = useState<string | null>(solutions[0].capabilities[0]?.en ?? null);
   const active = solutions.find((s) => s.key === activeKey) ?? solutions[0];
+  const selectedCapabilityImage = active.capabilities.find((c) => c.en === selectedCapability)?.image;
   const displayedImage =
-    hoveredImage && active.capabilities.some((c) => c.image === hoveredImage) ? hoveredImage : active.image;
+    (hoveredImage && active.capabilities.some((c) => c.image === hoveredImage) ? hoveredImage : null) ??
+    selectedCapabilityImage ??
+    active.image;
 
   const selectTab = (key: string) => {
     setActiveKey(key);
     setHoveredImage(null);
     setOpenCapability(null);
+    setSelectedCapability(solutions.find((s) => s.key === key)?.capabilities[0]?.en ?? null);
   };
 
   return (
@@ -136,6 +145,7 @@ export function SolutionsSection() {
                   {active.capabilities.map((capability) => {
                     const isHovered = hoveredImage === capability.image;
                     const isOpen = openCapability === capability.en;
+                    const isSelected = !hoveredImage && selectedCapability === capability.en;
                     return (
                       <div key={capability.en} className="border-b border-gray-200">
                         <button
@@ -143,22 +153,23 @@ export function SolutionsSection() {
                           dir={isAr ? "rtl" : "ltr"}
                           onMouseEnter={() => setHoveredImage(capability.image)}
                           onMouseLeave={() => setHoveredImage((current) => (current === capability.image ? null : current))}
-                          onClick={() =>
-                            setOpenCapability((current) => (current === capability.en ? null : capability.en))
-                          }
+                          onClick={() => {
+                            setSelectedCapability(capability.en);
+                            setOpenCapability((current) => (current === capability.en ? null : capability.en));
+                          }}
                           className="group/row w-full flex items-center justify-between py-2.5 sm:py-3 text-left"
                           aria-expanded={isOpen}
                         >
                           <span
                             className={`text-[16px] sm:text-[18px] lg:text-[20px] font-extralight transition-colors duration-300 ${
-                              isHovered || isOpen ? "text-[#2E368F]" : "text-gray-600"
+                              isHovered || isOpen || isSelected ? "text-[#2E368F]" : "text-gray-600"
                             }`}
                           >
                             {isAr ? capability.ar : capability.en}
                           </span>
                           <span
                             className={`text-lg font-light shrink-0 transition-all duration-300 ${
-                              isHovered || isOpen ? "text-[#2E368F]" : "text-gray-400"
+                              isHovered || isOpen || isSelected ? "text-[#2E368F]" : "text-gray-400"
                             } ${isOpen ? "rotate-45" : "rotate-0"}`}
                           >
                             +

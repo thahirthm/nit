@@ -7,17 +7,82 @@ import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { useLanguage } from "@/context/LanguageContext";
 import { Reveal } from "@/components/ui/Reveal";
+import { LeadershipOffcanvas, type LeadershipOffcanvasPerson } from "@/components/about/LeadershipOffcanvas";
 import "swiper/css";
 
-const people: Record<string, { name: { en: string; ar: string }; role: { en: string; ar: string }; image: string }> = {
-  p1: { name: { en: "Majed Al Faiya", ar: "ماجد الفايع" }, role: { en: "COO", ar: "الرئيس التنفيذي للعمليات" }, image: "/images/abt-t1.png" },
-  p2: { name: { en: "Khalid Mengash", ar: "خالد منقاش" }, role: { en: "CHRO", ar: "الرئيس التنفيذي للموارد البشرية" }, image: "/images/abt-t2.png" },
-  p3: { name: { en: "Hassan El Melegi", ar: "حسن الملجي" }, role: { en: "CFO", ar: "الرئيس التنفيذي المالي" }, image: "/images/abt-t3.png" },
-  p4: { name: { en: "Nahil Bakri", ar: "نهيل بكري" }, role: { en: "Chief Audit Executive", ar: "الرئيس التنفيذي للتدقيق" }, image: "/images/abt-t4.png" },
-  b1: { name: { en: "Salah Al Sunaid", ar: "صالح الصنيدي" }, role: { en: "Chairman", ar: "رئيس مجلس الإدارة" }, image: "/images/abt-t2.png" },
-  b2: { name: { en: "Majed Al Faiya", ar: "ماجد الفايع" }, role: { en: "Vice Chairman", ar: "نائب رئيس مجلس الإدارة" }, image: "/images/abt-t1.png" },
-  b3: { name: { en: "Hassan El Melegi", ar: "حسن الملجي" }, role: { en: "Board Member", ar: "عضو مجلس الإدارة" }, image: "/images/abt-t3.png" },
-  b4: { name: { en: "Nahil Bakri", ar: "نهيل بكري" }, role: { en: "Board Member", ar: "عضو مجلس الإدارة" }, image: "/images/abt-t4.png" },
+const people: Record<string, LeadershipOffcanvasPerson> = {
+  p1: {
+    name: { en: "Majed Al Faiya", ar: "ماجد الفايع" },
+    role: { en: "COO", ar: "الرئيس التنفيذي للعمليات" },
+    image: "/images/abt-t1.png",
+    bio: {
+      en: "Awarded the Jubail–Buraydah Independent Water Transmission Pipeline — 587km, 650,000 m³/day capacity — the first large-scale private-sector potable water link in KSA. Two substations — Rumah 380kV BSP (SAR 915M) and Bisha PV 380/132kV BSP (SAR 644M) — also awarded.",
+      ar: "أشرف على خط أنابيب نقل المياه المستقل بين الجبيل وبريدة بطول 587 كم وبطاقة 650,000 م³/يوم، وهو أول رابط مياه شرب خاص واسع النطاق في المملكة. كما أُسندت له محطتا تحويل روضة 380 كيلوفولت (915 مليون ريال) وبيشا الكهروضوئية 380/132 كيلوفولت (644 مليون ريال).",
+    },
+  },
+  p2: {
+    name: { en: "Khalid Mengash", ar: "خالد منقاش" },
+    role: { en: "CHRO", ar: "الرئيس التنفيذي للموارد البشرية" },
+    image: "/images/abt-t2.png",
+    bio: {
+      en: "Leads NIT's workforce strategy across infrastructure and technology, building talent pipelines that support national-scale projects and the Kingdom's Vision 2030 local content goals.",
+      ar: "يقود استراتيجية القوى العاملة في NIT عبر قطاعي البنية التحتية والتقنية، ويبني مسارات للمواهب تدعم المشاريع ذات النطاق الوطني وأهداف المحتوى المحلي ضمن رؤية 2030.",
+    },
+  },
+  p3: {
+    name: { en: "Hassan El Melegi", ar: "حسن الملجي" },
+    role: { en: "CFO", ar: "الرئيس التنفيذي المالي" },
+    image: "/images/abt-t3.png",
+    bio: {
+      en: "Oversees financial strategy and capital structure across NIT's project portfolio, ensuring disciplined investment in giga-projects and long-term financial resilience.",
+      ar: "يشرف على الاستراتيجية المالية وهيكل رأس المال عبر محفظة مشاريع NIT، ويضمن انضباط الاستثمار في المشاريع العملاقة والمتانة المالية على المدى الطويل.",
+    },
+  },
+  p4: {
+    name: { en: "Nahil Bakri", ar: "نهيل بكري" },
+    role: { en: "Chief Audit Executive", ar: "الرئيس التنفيذي للتدقيق" },
+    image: "/images/abt-t4.png",
+    bio: {
+      en: "Leads independent assurance and risk oversight across NIT's operations, strengthening governance standards in line with regulatory and Vision 2030 compliance requirements.",
+      ar: "تقود أعمال التدقيق المستقل والإشراف على المخاطر في عمليات NIT، وتعزز معايير الحوكمة بما يتماشى مع متطلبات الامتثال التنظيمي ورؤية 2030.",
+    },
+  },
+  b1: {
+    name: { en: "Salah Al Sunaid", ar: "صالح الصنيدي" },
+    role: { en: "Chairman", ar: "رئيس مجلس الإدارة" },
+    image: "/images/abt-t2.png",
+    bio: {
+      en: "Sets the board's long-term direction for NIT, guiding the Group's growth across energy, water, industrial, and technology infrastructure in the Kingdom.",
+      ar: "يضع التوجه طويل المدى لمجلس إدارة NIT، ويقود نمو المجموعة عبر قطاعات الطاقة والمياه والصناعة وبنية التقنية التحتية في المملكة.",
+    },
+  },
+  b2: {
+    name: { en: "Majed Al Faiya", ar: "ماجد الفايع" },
+    role: { en: "Vice Chairman", ar: "نائب رئيس مجلس الإدارة" },
+    image: "/images/abt-t1.png",
+    bio: {
+      en: "Supports board governance and strategic oversight, drawing on operational leadership experience across NIT's infrastructure and technology projects.",
+      ar: "يدعم حوكمة المجلس والإشراف الاستراتيجي، بالاستناد إلى خبرته القيادية التشغيلية عبر مشاريع NIT في البنية التحتية والتقنية.",
+    },
+  },
+  b3: {
+    name: { en: "Hassan El Melegi", ar: "حسن الملجي" },
+    role: { en: "Board Member", ar: "عضو مجلس الإدارة" },
+    image: "/images/abt-t3.png",
+    bio: {
+      en: "Brings financial governance expertise to the board, supporting sound capital allocation and risk management across the Group.",
+      ar: "يقدم خبرة في الحوكمة المالية للمجلس، ويدعم التخصيص السليم لرأس المال وإدارة المخاطر عبر المجموعة.",
+    },
+  },
+  b4: {
+    name: { en: "Nahil Bakri", ar: "نهيل بكري" },
+    role: { en: "Board Member", ar: "عضو مجلس الإدارة" },
+    image: "/images/abt-t4.png",
+    bio: {
+      en: "Contributes audit and risk oversight expertise to the board, reinforcing governance and compliance standards across NIT.",
+      ar: "تسهم بخبرتها في التدقيق والإشراف على المخاطر ضمن المجلس، وتعزز معايير الحوكمة والامتثال عبر NIT.",
+    },
+  },
 };
 
 const categories = [
@@ -40,6 +105,7 @@ export function AboutLeadership() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [selectedPerson, setSelectedPerson] = useState<LeadershipOffcanvasPerson | null>(null);
 
   const activePeople = useMemo(
     () => categories.find((c) => c.key === activeCategory)?.people ?? [],
@@ -134,7 +200,13 @@ export function AboutLeadership() {
                       delay={cardIndex * 0.1}
                       duration={0.7}
                       y={40}
-                      className="group relative w-full h-[380px] sm:h-[420px] lg:h-[460px] bg-gray-100 overflow-hidden"
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => setSelectedPerson(person)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") setSelectedPerson(person);
+                      }}
+                      className="group relative w-full h-[380px] sm:h-[420px] lg:h-[460px] bg-gray-100 overflow-hidden cursor-pointer"
                     >
                       <Image quality={95}
                         src={person.image}
@@ -163,6 +235,8 @@ export function AboutLeadership() {
           ))}
         </Swiper>
       </div>
+
+      <LeadershipOffcanvas person={selectedPerson} onClose={() => setSelectedPerson(null)} />
     </section>
   );
 }

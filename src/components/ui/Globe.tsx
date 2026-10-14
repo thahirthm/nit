@@ -18,6 +18,27 @@ const MARKERS: { name: string; location: [number, number]; size: number }[] = [
   { name: "United States", location: [38.9072, -77.0369], size: 0.07 },
 ]
 
+const GLOBE_THEMES: Record<"light" | "dark", Pick<COBEOptions, "dark" | "diffuse" | "mapBrightness" | "baseColor" | "glowColor">> = {
+  // Default — bright white sphere, used on the light-background home page section.
+  light: {
+    dark: 0,
+    diffuse: 0.4,
+    mapBrightness: 1.2,
+    baseColor: [1, 1, 1],
+    glowColor: [1, 1, 1],
+  },
+  // Matte navy sphere that blends into a dark navy background (e.g. the full-screen nav menu).
+  // Same shading intensity as "light" (dark:1 made the unlit hemisphere render near-black) —
+  // only the base/glow color changes.
+  dark: {
+    dark: 0,
+    diffuse: 0.4,
+    mapBrightness: 1.2,
+    baseColor: [46 / 255, 54 / 255, 143 / 255],
+    glowColor: [46 / 255, 54 / 255, 143 / 255],
+  },
+}
+
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
@@ -25,14 +46,10 @@ const GLOBE_CONFIG: COBEOptions = {
   devicePixelRatio: 2,
   phi: 0,
   theta: 0.3,
-  dark: 0,
-  diffuse: 0.4,
   mapSamples: 16000,
-  mapBrightness: 1.2,
-  baseColor: [1, 1, 1],
   markerColor: [129 / 255, 209 / 255, 232 / 255],
-  glowColor: [1, 1, 1],
   markers: MARKERS.map(({ location, size }) => ({ location, size })),
+  ...GLOBE_THEMES.light,
 }
 
 const DRAG_DAMPING = 0.004
@@ -41,7 +58,18 @@ const MARKER_HIT_RADIUS = 18
 
 type ActiveMarker = { name: string; x: number; y: number }
 
-export function Globe({ className = "" }: { className?: string }) {
+export function Globe({
+  className = "",
+  variant = "light",
+  interactive = true,
+}: {
+  className?: string
+  variant?: "light" | "dark"
+  /** When false, the globe only auto-rotates — no drag, tap-to-highlight, or pointer handling at all.
+   *  Use this for a purely decorative placement where the globe sits near other clickable UI,
+   *  since a <canvas> always hit-tests as a full rectangle and could otherwise swallow clicks. */
+  interactive?: boolean
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const phiRef = useRef(0)
   const thetaRef = useRef(0.3)
@@ -74,6 +102,7 @@ export function Globe({ className = "" }: { className?: string }) {
       // @ts-ignore
       globe = createGlobe(canvas, {
         ...GLOBE_CONFIG,
+        ...GLOBE_THEMES[variant],
         width: canvas.offsetWidth * 2,
         height: canvas.offsetHeight * 2,
         onRender: (state: Record<string, any>) => {
@@ -105,7 +134,7 @@ export function Globe({ className = "" }: { className?: string }) {
       globe?.destroy()
       window.removeEventListener("resize", handleResize)
     }
-  }, [])
+  }, [variant])
 
   useEffect(() => {
     return () => {
@@ -247,35 +276,47 @@ export function Globe({ className = "" }: { className?: string }) {
     <div className={`w-full h-full relative ${className}`}>
       <canvas
         ref={canvasRef}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerLeave={onPointerLeaveCanvas}
-        onTouchStart={(e) => {
-          isDragging.current = true
-          lastPointerX.current = e.touches[0].clientX
-          lastPointerY.current = e.touches[0].clientY
-          pointerDownPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
-        }}
-        onTouchMove={onTouchMove}
-        onTouchEnd={(e) => {
-          isDragging.current = false
-          if (canvasRef.current) canvasRef.current.style.cursor = "grab"
-          const touch = e.changedTouches[0]
-          if (touch) {
-            const moved = Math.hypot(
-              touch.clientX - pointerDownPos.current.x,
-              touch.clientY - pointerDownPos.current.y
-            )
-            if (moved < CLICK_MOVE_THRESHOLD) handleTap(touch.clientX, touch.clientY)
-          }
-        }}
+        {...(interactive
+          ? {
+              onPointerDown,
+              onPointerMove,
+              onPointerUp,
+              onPointerLeave: onPointerLeaveCanvas,
+              onTouchStart: (e: React.TouchEvent<HTMLCanvasElement>) => {
+                isDragging.current = true
+                lastPointerX.current = e.touches[0].clientX
+                lastPointerY.current = e.touches[0].clientY
+                pointerDownPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+              },
+              onTouchMove,
+              onTouchEnd: (e: React.TouchEvent<HTMLCanvasElement>) => {
+                isDragging.current = false
+                if (canvasRef.current) canvasRef.current.style.cursor = "grab"
+                const touch = e.changedTouches[0]
+                if (touch) {
+                  const moved = Math.hypot(
+                    touch.clientX - pointerDownPos.current.x,
+                    touch.clientY - pointerDownPos.current.y
+                  )
+                  if (moved < CLICK_MOVE_THRESHOLD) handleTap(touch.clientX, touch.clientY)
+                }
+              },
+            }
+          : {})}
         style={{
           width: "100%",
           height: "100%",
           opacity: visible ? 1 : 0,
           transition: "opacity 0.5s ease",
-          cursor: "grab",
+          cursor: interactive ? "grab" : "default",
+          // A <canvas> hit-tests as a full rectangle by default — clip both the paint
+          // and the pointer/drag hit-area to the visible circular sphere so the
+          // transparent corners of the box never swallow clicks meant for anything
+          // placed around/behind the globe.
+          clipPath: "circle(50% at 50% 50%)",
+          // Non-interactive placements (e.g. the full-screen nav menu) get zero hit-testing —
+          // nothing the canvas does can ever intercept a click, regardless of clip-path support.
+          pointerEvents: interactive ? "auto" : "none",
         }}
       />
 

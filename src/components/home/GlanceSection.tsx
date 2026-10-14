@@ -108,7 +108,7 @@ export function GlanceSection() {
         <div
           ref={trackRef}
           dir="ltr"
-          className="flex items-start gap-6 px-6 lg:px-16 w-full will-change-transform overflow-visible"
+          className="flex items-start gap-6 pl-6 lg:pl-16 w-full will-change-transform overflow-visible"
           style={{ transform: `translateX(${translateX}px)` }}
         >
 
@@ -393,7 +393,7 @@ export function GlanceSection() {
             </div>
           </div>
 
-          {/* Trailing spacer so the last card can rest fully in view */}
+          {/* Trailing spacer — matches the left gutter so the last card gets the same breathing room on the right */}
           <div className="w-6 shrink-0 lg:w-16" />
         </div>
       </div>
