@@ -42,7 +42,7 @@ const projects = [
     client: { en: "Principal Buyer", ar: "الجهة المالكة الرئيسية" },
     image: "/images/fp1.png",
     hoverImage: "/images/h-fp.png",
-    logo: "/images/vis.png",
+    logo: "/images/vision-2030.svg",
     logoAlt: { en: "Vision 2030", ar: "رؤية 2030" },
     isVision2030: true,
     value: "2.1B SAR",
@@ -90,7 +90,7 @@ const projects = [
     client: { en: "Principal Buyer", ar: "الجهة المالكة الرئيسية" },
     image: "/images/fp1.png",
     hoverImage: "/images/h-fp.png",
-    logo: "/images/vis.png",
+    logo: "/images/vision-2030.svg",
     logoAlt: { en: "Vision 2030", ar: "رؤية 2030" },
     isVision2030: true,
     value: "1.2B SAR",
@@ -163,8 +163,10 @@ export function ProjectsSection() {
         </div>
       </div>
 
-      {/* Slider */}
-      <div className="w-full pl-6 lg:pl-16">
+      {/* Slider — the left gutter is applied via slidesOffsetBefore (inside the scroll track)
+          instead of container padding, so it scrolls away once the user swipes past the first
+          card, and cards run fully edge-to-edge on both sides from then on. */}
+      <div className="w-full">
         <Swiper
           modules={[Navigation]}
           onSwiper={(swiper) => {
@@ -176,6 +178,10 @@ export function ProjectsSection() {
           }}
           slidesPerView="auto"
           spaceBetween={24}
+          slidesOffsetBefore={24}
+          breakpoints={{
+            1024: { slidesOffsetBefore: 64 },
+          }}
         >
           {projects.map((project, i) => {
             const title = language === "ar" ? project.title.ar : project.title.en;
@@ -234,7 +240,7 @@ export function ProjectsSection() {
                   {/* Bottom: logo + CTA (default state) */}
                   <div dir="ltr" className="flex items-end justify-between transition-opacity duration-300 group-hover:opacity-0">
                     <div className="flex flex-col items-start gap-2">
-                      <div className={`relative w-[90px] h-[90px] ${project.isVision2030 ? "bg-white/95 p-2" : ""}`}>
+                      <div className="relative w-[90px] h-[90px]">
                         <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
                       </div>
                     </div>
@@ -245,7 +251,7 @@ export function ProjectsSection() {
 
                 {/* Hover panel — description slides up from the bottom */}
                 <div dir={dir} className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out delay-150 bg-white/15 backdrop-blur-md p-8 flex flex-col sm:flex-row sm:items-end gap-6 text-white">
-                  <div className={`relative w-[90px] h-[90px] shrink-0 ${project.isVision2030 ? "bg-white/95 p-2" : ""}`}>
+                  <div className="relative w-[90px] h-[90px] shrink-0">
                     <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
                   </div>
 
@@ -291,7 +297,7 @@ export function ProjectsSection() {
                         <span className="opacity-70">{clientLabel}</span>
                         <span>{client}</span>
                       </div>
-                      <div className={`relative w-[64px] h-[64px] shrink-0 ${project.isVision2030 ? "bg-white/95 p-2" : ""}`}>
+                      <div className="relative w-[64px] h-[64px] shrink-0">
                         <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
                       </div>
                     </div>
