@@ -105,8 +105,9 @@ export function SolutionsSection() {
             {isAr ? "حلولنا" : "Our solutions"}
           </h2>
 
-          {/* Tabs — kept LTR so tab order never reorders by language */}
-          <div dir="ltr" className="flex flex-wrap gap-3 mb-8 lg:mb-10">
+          {/* Tabs — kept LTR so tab order never reorders by language, but the row itself
+              still aligns to the reading-start side (right in Arabic) to match the heading above it. */}
+          <div dir="ltr" className={`flex flex-wrap gap-3 mb-8 lg:mb-10 ${isAr ? "justify-end" : "justify-start"}`}>
             {solutions.map((s) => {
               const isActive = s.key === activeKey;
               return (

@@ -228,7 +228,7 @@ export function Header() {
                   <div
                     className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-96 mt-3' : 'max-h-0'}`}
                   >
-                    <div dir={language === 'ar' ? 'rtl' : 'ltr'} className="flex flex-col gap-3 pl-1">
+                    <div dir={language === 'ar' ? 'rtl' : 'ltr'} className="flex flex-col gap-5">
                       {subLinks.map((sub) => (
                         <Link
                           key={sub.en}

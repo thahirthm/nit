@@ -31,6 +31,9 @@ const chartPoints = [
   { time: "14:20", value: 27.6 },
 ];
 
+const CURRENT_VALUE = 27.82;
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
 const RiyalIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61 76" fill="none" className={className}>
     <g clipPath="url(#riyal-icon-clip)">
@@ -56,6 +59,7 @@ export function InvestorsHero() {
   const isAr = language === "ar";
   const [hovered, setHovered] = useState<number | null>(null);
   const [wordIndex, setWordIndex] = useState(0);
+  const [countValue, setCountValue] = useState(0);
   const maxValue = Math.max(...chartPoints.map((p) => p.value));
   const minValue = Math.min(...chartPoints.map((p) => p.value));
   const active = hovered !== null ? chartPoints[hovered] : null;
@@ -65,6 +69,22 @@ export function InvestorsHero() {
       setWordIndex((i) => (i + 1) % rotatingWords.length);
     }, 2400);
     return () => clearInterval(id);
+  }, []);
+
+  // Count the share price up from 0 to its current value on load
+  useEffect(() => {
+    const duration = 1400;
+    const start = performance.now();
+    let raf: number;
+
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / duration, 1);
+      setCountValue(CURRENT_VALUE * easeOutCubic(t));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   return (
@@ -132,8 +152,8 @@ export function InvestorsHero() {
           <div className="mt-5 pt-5 border-t border-gray-200">
             <div className="flex items-center gap-2">
               <RiyalIcon className="w-7 h-9 sm:w-8 sm:h-10 text-gray-900" />
-              <span className="font-[family-name:var(--font-anek-latin)] text-gray-900 text-[44px] sm:text-[54px] font-normal leading-none">
-                {active ? active.value.toFixed(2) : "27.82"}
+              <span className="font-[family-name:var(--font-anek-latin)] text-gray-900 text-[44px] sm:text-[54px] font-normal leading-none tabular-nums">
+                {active ? active.value.toFixed(2) : countValue.toFixed(2)}
               </span>
             </div>
 

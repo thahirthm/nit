@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronRight, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export type SubLink = { en: string; ar: string; href: string };
@@ -67,7 +67,7 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
   }, [isOpen, onClose]);
 
   const activeSublinks = hoveredKey ? submenus[hoveredKey] : null;
-  const Chevron = isAr ? ChevronRight : ChevronLeft;
+  const Chevron = ChevronRight;
 
   return (
     <div
@@ -77,7 +77,7 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
       }`}
       style={{
         backgroundImage: "url(/images/mega-menu-bg.png)",
-        backgroundSize: "cover",
+        backgroundSize: "60%",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
@@ -100,7 +100,7 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
           className={`flex-1 flex flex-col lg:flex-row px-6 lg:px-12 pt-10 lg:pt-16 gap-8 lg:gap-16 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
         >
           {/* Main nav column */}
-          <nav className="flex flex-col gap-6 lg:gap-7 shrink-0">
+          <nav className="relative flex flex-col gap-6 lg:gap-7 shrink-0">
             {navLinks.map((link) => {
               // Highlighted = the submenu currently being hovered, or (when nothing's
               // hovered) whichever link is the current page.
@@ -131,10 +131,13 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
                 </div>
               );
             })}
-          </nav>
 
-          {/* Divider */}
-          <div className="hidden lg:block w-px bg-white/20 self-stretch" />
+            {/* Divider — sized to this column's own content height (not the full-height row),
+                so it ends exactly where the last nav link ends, same as the nav items above it. */}
+            <div
+              className={`hidden lg:block absolute top-0 bottom-0 w-px bg-white/20 ${isAr ? "left-0 lg:-translate-x-8" : "right-0 lg:translate-x-8"}`}
+            />
+          </nav>
 
           {/* Submenu column */}
           <div className="flex flex-col gap-6 lg:gap-7">
