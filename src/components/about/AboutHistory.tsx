@@ -155,12 +155,12 @@ export function AboutHistory() {
             duration={0.8}
             y={30}
             dir="ltr"
-            className="order-2 lg:order-3 lg:col-span-2 mt-2 lg:mt-14 flex flex-col lg:flex-row items-stretch lg:items-start gap-3 lg:gap-10"
+            className="order-2 lg:order-3 lg:col-span-2 mt-2 lg:mt-14 flex flex-col gap-3 lg:gap-6"
           >
           {/* Dots + line, and year labels — share the same width so each label sits under its dot.
               The progress line/dots show at all sizes; the year-label row below is desktop-only
               since 11 labels can't fit on mobile without overlapping. */}
-          <div className="order-1 lg:order-2 flex-1 min-w-0">
+          <div className="order-1 flex-1 min-w-0">
             <div className="block relative">
               <div className="absolute top-[8px] left-[5px] right-[5px] h-px bg-gray-200" />
               <div
@@ -201,8 +201,8 @@ export function AboutHistory() {
             </div>
           </div>
 
-          {/* Arrows — sit below the progress bar on mobile, to the left of it on desktop */}
-          <div className="order-2 lg:order-1 flex items-center gap-4 shrink-0 lg:pt-[50px]">
+          {/* Arrows — sit below the progress bar / year labels at every breakpoint */}
+          <div className="order-2 flex items-center gap-4 shrink-0">
             <button
               aria-label={isAr ? "السابق" : "Previous"}
               onClick={goPrev}

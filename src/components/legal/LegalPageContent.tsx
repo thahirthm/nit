@@ -75,7 +75,7 @@ export function LegalPageContent({
                   <button
                     key={s.id}
                     onClick={() => scrollToSection(s.id)}
-                    className={`shrink-0 whitespace-nowrap text-left text-[15px] py-3 border-b-2 transition-colors duration-200 lg:py-0 lg:border-0 ${
+                    className={`shrink-0 whitespace-nowrap text-left text-[15px] py-3 border-b-2 transition-colors duration-200 lg:py-0 lg:border-0 outline-none focus-visible:ring-2 focus-visible:ring-[#2E368F]/40 rounded-sm ${
                       isAr ? "text-right" : ""
                     } ${
                       isActive

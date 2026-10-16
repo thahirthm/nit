@@ -12,6 +12,16 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  /* Always reserve the scrollbar's width, even when it's not needed (or is briefly
+     removed, e.g. by an offcanvas/modal setting body { overflow: hidden }). Without
+     this, hiding the scrollbar shifts the whole page wider by the scrollbar's width,
+     which — combined with any fixed-position element sized against the viewport
+     (like an offcanvas panel) — can leave a sliver of it visible at the edge even
+     after it's supposed to be fully off-screen. */
+  scrollbar-gutter: stable;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

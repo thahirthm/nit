@@ -47,18 +47,25 @@ export function LeadershipOffcanvas({ person, onClose }: LeadershipOffcanvasProp
   const closeLabel = isAr ? "إغلاق" : "Close";
 
   return (
-    <div aria-hidden={!isOpen} className={`fixed inset-0 z-[100] ${isOpen ? "" : "pointer-events-none"}`}>
+    <div aria-hidden={!isOpen} className={`fixed inset-0 z-[100] overflow-hidden ${isOpen ? "" : "pointer-events-none"}`}>
       {/* Overlay */}
       <div
         onClick={onClose}
         className={`absolute inset-0 bg-black/50 transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-0"}`}
       />
 
-      {/* Panel */}
+      {/* Panel — closed transform uses calc(100% + inset) rather than plain translate-x-full:
+          the panel is inset from the viewport edge (right-4/right-10 for the floating-card
+          look), so shifting it by only its own width (100%) left a sliver equal to that inset
+          still on-screen. Adding the inset to the translate distance clears it fully. */}
       <div
         dir="ltr"
         className={`absolute top-6 bottom-6 sm:top-10 sm:bottom-10 ${isAr ? "left-4 sm:left-10" : "right-4 sm:right-10"} w-[calc(100%-2rem)] sm:w-full max-w-[480px] bg-white shadow-2xl transition-transform duration-500 ease-in-out overflow-y-auto ${
-          isOpen ? "translate-x-0" : isAr ? "-translate-x-full" : "translate-x-full"
+          isOpen
+            ? "translate-x-0"
+            : isAr
+            ? "-translate-x-[calc(100%+1rem)] sm:-translate-x-[calc(100%+2.5rem)]"
+            : "translate-x-[calc(100%+1rem)] sm:translate-x-[calc(100%+2.5rem)]"
         }`}
       >
         {person && (

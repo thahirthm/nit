@@ -125,8 +125,8 @@ export function NewsSection() {
         </h2>
       </div>
 
-      {/* Tabs + Nav */}
-      <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
+      {/* Tabs + Nav — kept LTR so tab order and arrow sides stay stable across languages */}
+      <div dir="ltr" className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <div className="flex flex-wrap gap-3">
           {categories.map((category) => {
             const isActive = category === activeCategory;
@@ -157,7 +157,7 @@ export function NewsSection() {
               disabled={isBeginning}
               className={`transition-colors duration-300 ${isBeginning ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
             >
-              <ArrowIcon className={language === "ar" ? "" : "rotate-180"} />
+              <ArrowIcon className="rotate-180" />
             </button>
             <button
               aria-label="Next"
@@ -165,7 +165,7 @@ export function NewsSection() {
               disabled={isEnd}
               className={`transition-colors duration-300 ${isEnd ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
             >
-              <ArrowIcon className={language === "ar" ? "rotate-180" : ""} />
+              <ArrowIcon />
             </button>
           </div>
         )}
@@ -233,13 +233,13 @@ export function NewsSection() {
 
         {/* Dot pagination — mobile only (slidesPerView: 1, so each dot maps to one post) */}
         {filteredPosts.length > 1 && (
-          <div className="flex sm:hidden items-center justify-center gap-2 mt-6">
+          <div className="flex sm:hidden items-center justify-start gap-2 mt-6">
             {filteredPosts.map((post, i) => (
               <button
                 key={post.title.en}
                 aria-label={`Go to slide ${i + 1}`}
                 onClick={() => swiperRef.current?.slideTo(i)}
-                className={`rounded-full transition-all duration-300 ${
+                className={`transition-all duration-300 ${
                   i === activeSlide ? "w-5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
                 }`}
               />

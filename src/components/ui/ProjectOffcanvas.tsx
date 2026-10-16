@@ -46,7 +46,7 @@ export function ProjectOffcanvas({ project, onClose }: ProjectOffcanvasProps) {
   return (
     <div
       aria-hidden={!isOpen}
-      className={`fixed inset-0 z-[100] ${isOpen ? "" : "pointer-events-none"}`}
+      className={`fixed inset-0 z-[100] overflow-hidden ${isOpen ? "" : "pointer-events-none"}`}
     >
       {/* Overlay */}
       <div

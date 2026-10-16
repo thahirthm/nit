@@ -137,7 +137,12 @@ export function Footer() {
       <div dir="ltr" className="w-full px-6 lg:px-16 pt-14 sm:pt-20 lg:pt-28 pb-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-12">
         {/* Heading — always first */}
         <div className="order-1 lg:col-start-1 lg:row-start-1">
-          <h2 dir={isAr ? "rtl" : "ltr"} className="text-white text-[35px] sm:text-[50px] lg:text-[60px] font-extralight leading-[1.15] tracking-tight">
+          <h2
+            dir={isAr ? "rtl" : "ltr"}
+            className={`text-white font-extralight leading-[1.15] tracking-tight ${
+              isAr ? "text-right text-[26px] sm:text-[36px] lg:text-[44px]" : "text-[35px] sm:text-[50px] lg:text-[60px]"
+            }`}
+          >
             {isAr ? <>رؤيتكم، نهندسها<br />ونحوّلها إلى واقع.</> : <>Your vision, Engineered<br />&amp; delivered.</>}
           </h2>
         </div>
@@ -202,9 +207,9 @@ export function Footer() {
               <div className="relative w-[90px] h-[115px] sm:w-[120px] sm:h-[150px] shrink-0">
                 <Image quality={95} src={office.image} alt={isAr ? office.label.ar : office.label.en} fill className="object-cover" />
               </div>
-              <div className="flex-1 px-3 py-2 sm:px-4 sm:py-3 flex flex-col justify-center gap-2 sm:gap-2.5 text-white">
-                <span className="font-[family-name:var(--font-anek-latin)] text-sm sm:text-base">{office.phone}</span>
-                <span className="text-sm sm:text-base">{office.email}</span>
+              <div className={`flex-1 px-3 py-2 sm:px-4 sm:py-3 flex flex-col justify-center gap-2 sm:gap-2.5 text-white ${isAr ? "text-right" : "text-left"}`}>
+                <span dir="ltr" className={`font-[family-name:var(--font-anek-latin)] text-sm sm:text-base ${isAr ? "text-right" : ""}`}>{office.phone}</span>
+                <span dir="ltr" className={`text-sm sm:text-base ${isAr ? "text-right" : ""}`}>{office.email}</span>
                 <span dir={isAr ? "rtl" : "ltr"} className="text-xs sm:text-sm text-white/70 leading-relaxed">
                   {isAr ? <>{office.address.ar[0]}<br />{office.address.ar[1]}</> : <>{office.address.en[0]}<br />{office.address.en[1]}</>}
                 </span>

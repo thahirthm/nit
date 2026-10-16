@@ -186,7 +186,7 @@ export function SolutionsSection() {
                               isHovered || isOpen || isSelected ? "text-[#2E368F]" : "text-gray-400"
                             }`}
                           >
-                            {isOpen ? (
+                            {isOpen || isHovered ? (
                               <ArrowRight className={`w-5 h-5 sm:w-6 sm:h-6 ${isAr ? "scale-x-[-1]" : ""}`} strokeWidth={1.5} />
                             ) : (
                               <Plus className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} />

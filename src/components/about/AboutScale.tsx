@@ -89,7 +89,7 @@ export function AboutScale() {
                     <span className="text-xl sm:text-2xl lg:text-3xl font-normal opacity-80">{stat.suffix}</span>
                   </div>
 
-                  <p className="mt-3 text-white/70 text-base sm:text-lg">{isAr ? stat.label.ar : stat.label.en}</p>
+                  <p className="mt-3 text-white/70 text-base sm:text-lg leading-snug min-h-[2.6em]">{isAr ? stat.label.ar : stat.label.en}</p>
 
                   <div className="mt-6 h-px bg-white/20 relative overflow-hidden">
                     <div

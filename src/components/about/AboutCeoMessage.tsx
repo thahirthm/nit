@@ -27,7 +27,7 @@ export function AboutCeoMessage() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1} duration={0.9} y={40} className="relative bg-[#2E368F] overflow-visible min-h-[360px] sm:min-h-[400px] lg:min-h-[440px]">
+        <Reveal delay={0.1} duration={0.9} y={40} className="group relative bg-[#2E368F] overflow-hidden min-h-[360px] sm:min-h-[400px] lg:min-h-[500px] xl:min-h-[560px]">
           {/* Decorative quote mark */}
           <QuoteMark
             className={`absolute top-4 sm:top-6 w-[70px] sm:w-[100px] lg:w-[141px] h-auto pointer-events-none ${
@@ -81,7 +81,7 @@ export function AboutCeoMessage() {
               alt={isAr ? "صالح الصنيدي، الرئيس التنفيذي" : "Salah Al Sunaid, CEO"}
               width={496}
               height={647}
-              className="h-full w-auto object-contain object-bottom"
+              className="h-full w-auto object-contain object-bottom origin-bottom transition-transform duration-500 ease-out group-hover:scale-[1.03]"
               priority={false}
             />
           </Reveal>

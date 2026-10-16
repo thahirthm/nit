@@ -46,8 +46,13 @@ export function GlanceSection() {
   const [visionActive, setVisionActive] = useState(false);
   const [achievementActive, setAchievementActive] = useState(false);
 
-  // Play the growth-chart draw-in animation once the card scrolls into view
+  // Play the growth-chart draw-in animation once the card scrolls into view.
+  // Re-runs on `isDesktop` because that flag switches between two separate DOM trees
+  // (desktop scroll-jack vs. mobile Swiper) — without this, the observer can end up
+  // watching a stale, already-unmounted element from the branch that was active on
+  // first mount, and chartVisible would never flip to true on the other branch.
   useEffect(() => {
+    if (chartVisible) return;
     const el = chartRef.current;
     if (!el) return;
 
@@ -62,7 +67,7 @@ export function GlanceSection() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [isDesktop, chartVisible]);
 
   // Live clock — tracks the current time in Jeddah (GMT+3)
   useEffect(() => {
@@ -294,12 +299,11 @@ export function GlanceSection() {
       onClick={() => setAchievementActive((v) => !v)}
       className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col justify-between"
     >
-      <div className="flex flex-col items-start text-start">
-        <h3 dir={language === "ar" ? "rtl" : "ltr"} className={`font-normal text-gray-900 leading-tight ${language === "ar" ? "font-arabic text-[32px] lg:text-[40px]" : "font-[family-name:var(--font-anek-latin)] text-[50px] lg:text-[70px] leading-none"}`}>
+      <div dir={language === "ar" ? "rtl" : "ltr"} className={`flex flex-col ${language === "ar" ? "items-end text-end" : "items-start text-start"}`}>
+        <h3 className={`font-normal text-gray-900 leading-tight ${language === "ar" ? "font-arabic text-[32px] lg:text-[40px]" : "font-[family-name:var(--font-anek-latin)] text-[50px] lg:text-[70px] leading-none"}`}>
           {language === "ar" ? "21 مليار ريال سعودي" : "21B SAR"}
         </h3>
         <p
-          dir={language === "ar" ? "rtl" : "ltr"}
           className={`max-h-0 opacity-0 overflow-hidden text-lg lg:text-xl text-gray-500 font-normal transition-all duration-500 ease-out group-hover:max-h-10 group-hover:opacity-100 group-hover:mt-3 ${
             achievementActive ? "max-h-10 opacity-100 mt-3" : ""
           }`}
@@ -308,7 +312,7 @@ export function GlanceSection() {
         </p>
       </div>
 
-      <div className="flex flex-col items-start gap-3">
+      <div dir={language === "ar" ? "rtl" : "ltr"} className={`flex flex-col gap-3 ${language === "ar" ? "items-end" : "items-start"}`}>
         <div className="w-[70px] h-[70px] lg:w-[120px] lg:h-[120px] relative">
           <Image quality={95}
             src="/images/neom.png"
@@ -381,9 +385,15 @@ export function GlanceSection() {
             ))}
         </div>
 
-        <div className="flex items-end justify-between w-full">
-          <span className="text-lg lg:text-xl font-normal opacity-80">(GMT+3)</span>
-          <span className="text-[40px] lg:text-[50px] font-normal leading-none">{language === "ar" ? "جدة، المملكة العربية السعودية" : "Jeddah,Ksa"}</span>
+        <div dir={language === "ar" ? "rtl" : "ltr"} className="flex items-end justify-between gap-3 w-full">
+          <span className="text-lg lg:text-xl font-normal opacity-80 shrink-0">(GMT+3)</span>
+          <span
+            className={`font-normal leading-tight text-right ${
+              language === "ar" ? "text-xl lg:text-2xl" : "text-[40px] lg:text-[50px] leading-none"
+            }`}
+          >
+            {language === "ar" ? "جدة، المملكة العربية السعودية" : "Jeddah,Ksa"}
+          </span>
         </div>
       </div>
     </div>
@@ -393,9 +403,11 @@ export function GlanceSection() {
   const card6 = (
     <div
       onClick={() => setVisionActive((v) => !v)}
-      className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[430px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col"
+      className={`relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 overflow-hidden group snap-start bg-[#F9F9F9] p-8 pb-10 flex flex-col ${
+        language === "ar" ? "h-[480px] lg:h-[500px]" : "h-[430px] lg:h-[450px]"
+      }`}
     >
-      <div className="flex justify-end mb-8 lg:mb-16">
+      <div dir={language === "ar" ? "rtl" : "ltr"} className="flex justify-end mb-8 lg:mb-16">
         <Image quality={95}
           src="/images/vis.png"
           alt={language === "ar" ? "رؤية السعودية 2030 – المملكة العربية السعودية" : "Vision 2030 - Kingdom of Saudi Arabia"}
@@ -411,7 +423,7 @@ export function GlanceSection() {
           : "Targeting 50% local content by 2027, driving digital transformation across the Kingdom's critical infrastructure sectors."}
       </p>
 
-      <div className="mt-8">
+      <div dir={language === "ar" ? "rtl" : "ltr"} className="mt-8">
         <div className="font-[family-name:var(--font-anek-latin)] flex justify-between text-[#2E368F] font-medium mb-3">
           <span className="text-xl">37%</span>
           <span className="text-xl text-gray-400 font-normal">50%</span>
@@ -422,9 +434,9 @@ export function GlanceSection() {
           }`}
         >
           <div
-            className={`absolute left-0 top-0 h-full bg-[#2E368F] transition-all duration-700 ease-out ${
-              visionActive ? "w-[37%]" : "w-[4%] group-hover:w-[37%]"
-            }`}
+            className={`absolute top-0 h-full bg-[#2E368F] transition-all duration-700 ease-out ${
+              language === "ar" ? "right-0" : "left-0"
+            } ${visionActive ? "w-[37%]" : "w-[4%] group-hover:w-[37%]"}`}
           />
         </div>
         <div className="flex justify-between text-xs text-gray-500">

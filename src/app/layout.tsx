@@ -59,7 +59,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${futura.variable} ${anekLatin.variable} ${notoKufiArabic.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col overflow-x-hidden">
         <LanguageProvider>
           <Header />
           <main className="flex-grow">

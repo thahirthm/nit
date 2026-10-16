@@ -86,7 +86,7 @@ export function ExpertiseSection() {
               ? "تعمل نسما للبنية التحتية والتقنية في مختلف أنحاء المملكة العربية السعودية، وتتعاون مع شركاء دوليين لتقديم حلول البنية التحتية والتقنية للمشاريع المعقدة."
               : "NIT operates across Saudi Arabia while collaborating with international partners to deliver infrastructure and technology solutions for complex projects."}
           </p>
-          <div className="pt-2">
+          <div className={`pt-2 flex ${language === "ar" ? "justify-end" : "justify-start"}`}>
             <Button variant="primary">{language === "ar" ? "من نحن" : "ABOUT US"}</Button>
           </div>
         </div>
@@ -98,7 +98,7 @@ export function ExpertiseSection() {
 
         {/* Globe — full horizontal, half vertical (top half cropped). Positioned against the
             outer row so only the row's overflow-hidden (page/section edge) clips it. */}
-        <div className="absolute z-0 bottom-0 -right-[80px] sm:-right-[120px] lg:-right-[160px] w-[500px] h-[500px] sm:w-[680px] sm:h-[680px] lg:w-[900px] lg:h-[900px] translate-y-1/2 opacity-70">
+        <div className="absolute z-0 bottom-0 -right-[80px] sm:-right-[120px] lg:-right-[160px] w-[500px] h-[500px] sm:w-[680px] sm:h-[680px] lg:w-[900px] lg:h-[900px] translate-y-1/2 opacity-55">
           <Globe />
         </div>
 
