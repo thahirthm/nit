@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -39,14 +41,14 @@ const offices = [
 ];
 
 const navLinks = [
-  { en: "HOME", ar: "الرئيسية" },
-  { en: "ABOUT", ar: "من نحن" },
-  { en: "SOLUTIONS", ar: "الحلول" },
-  { en: "PROJECTS", ar: "المشاريع" },
-  { en: "INVESTORS", ar: "المستثمرون" },
-  { en: "MEDIA CENTRE", ar: "المركز الإعلامي" },
-  { en: "CAREERS", ar: "الوظائف" },
-  { en: "CONTACT", ar: "تواصل معنا" },
+  { en: "HOME", ar: "الرئيسية", href: "/" },
+  { en: "ABOUT", ar: "من نحن", href: "/about" },
+  { en: "SOLUTIONS", ar: "الحلول", href: "/solutions" },
+  { en: "PROJECTS", ar: "المشاريع", href: "/projects" },
+  { en: "INVESTORS", ar: "المستثمرون", href: "/investors" },
+  { en: "MEDIA CENTRE", ar: "المركز الإعلامي", href: "/media" },
+  { en: "CAREERS", ar: "الوظائف", href: "/careers" },
+  { en: "CONTACT", ar: "تواصل معنا", href: "/contact" },
 ];
 
 const policyLinks = [
@@ -123,6 +125,7 @@ const socials = [
 export function Footer() {
   const { language } = useLanguage();
   const isAr = language === "ar";
+  const pathname = usePathname();
   const [officeIndex, setOfficeIndex] = useState(0);
   const office = offices[officeIndex];
 
@@ -215,17 +218,20 @@ export function Footer() {
       <div className="w-full px-6 lg:px-16 pb-10">
         <div dir="ltr" className=" pt-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <nav dir={isAr ? "rtl" : "ltr"} className="flex flex-wrap gap-x-5 sm:gap-x-8 gap-y-3 border-b border-white/15 pb-5">
-            {navLinks.map((link, i) => (
-              <a
-                key={link.en}
-                href="#"
-                className={`text-xs lg:text-sm font-medium tracking-wide uppercase transition-colors ${
-                  i === 0 ? "text-white" : "text-white/60 hover:text-white"
-                }`}
-              >
-                {isAr ? link.ar : link.en}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.en}
+                  href={link.href}
+                  className={`text-xs lg:text-sm font-medium tracking-wide uppercase transition-colors ${
+                    isActive ? "text-white" : "text-white/60 hover:text-white"
+                  }`}
+                >
+                  {isAr ? link.ar : link.en}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-3">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
+import { ArrowRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
 import { Reveal } from "@/components/ui/Reveal";
@@ -60,7 +61,7 @@ const solutions = [
       { en: "Blockchain", ar: "تقنية سلسلة الكتل (البلوك تشين)", image: "/images/tech-6.png" },
       { en: "Data Center Services", ar: "خدمات مراكز البيانات", image: "/images/tech-7.png" },
       { en: "Managed Services", ar: "الخدمات المُدارة", image: "/images/tech-8.png" },
-      { en: "Smart Cities", ar: "المدن الذكية", image: "/images/tech-1.png" },
+      { en: "Smart Cities", ar: "المدن الذكية", image: "/images/tech-9.png" },
     ],
   },
 ];
@@ -181,11 +182,15 @@ export function SolutionsSection() {
                             {isAr ? capability.ar : capability.en}
                           </span>
                           <span
-                            className={`text-lg font-light shrink-0 transition-all duration-300 ${
+                            className={`shrink-0 transition-colors duration-300 ${
                               isHovered || isOpen || isSelected ? "text-[#2E368F]" : "text-gray-400"
-                            } ${isOpen ? "rotate-45" : "rotate-0"}`}
+                            }`}
                           >
-                            +
+                            {isOpen ? (
+                              <ArrowRight className={`w-5 h-5 sm:w-6 sm:h-6 ${isAr ? "scale-x-[-1]" : ""}`} strokeWidth={1.5} />
+                            ) : (
+                              <Plus className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} />
+                            )}
                           </span>
                         </button>
 
@@ -216,10 +221,9 @@ export function SolutionsSection() {
                 </div>
 
                 {showViewMore && (
-                  <div dir={isAr ? "rtl" : "ltr"} className="mt-5 flex justify-end">
-                    <Button
+                  <div dir={isAr ? "rtl" : "ltr"} className="mt-5">
+                    <button
                       type="button"
-                      variant="secondary"
                       onClick={() => {
                         const nextExpanded = !capExpanded;
                         setCapExpanded(nextExpanded);
@@ -229,9 +233,17 @@ export function SolutionsSection() {
                         setOpenCapability(nextFirstCapability);
                         setSelectedCapability(nextFirstCapability);
                       }}
+                      className="inline-flex items-center gap-1.5 text-[13px] font-medium tracking-wide uppercase text-[#2E368F] hover:text-[#1c2260] transition-colors duration-300"
                     >
-                      {isAr ? "عرض المزيد" : "View More"}
-                    </Button>
+                      {capExpanded
+                        ? isAr
+                          ? "عرض أقل"
+                          : "SHOW LESS"
+                        : isAr
+                          ? "عرض جميع الحلول"
+                          : "SHOW ALL SOLUTIONS"}
+                      <span>{capExpanded ? "−" : "+"}</span>
+                    </button>
                   </div>
                 )}
               </div>

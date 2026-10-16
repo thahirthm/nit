@@ -212,7 +212,7 @@ export function AboutLeadership() {
                         src={person.image}
                         alt={personName}
                         fill
-                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                        className="object-cover transition-transform duration-500 ease-out group-hover:-translate-y-3"
                       />
 
                       <div
