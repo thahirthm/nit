@@ -204,7 +204,8 @@ export function SolutionsMap() {
           </div>
 
           <div className="mt-auto pt-10 lg:pt-14">
-            <Button href="/projects" variant="primary">
+            {/* Jumps to the projects list — scrolls down on /projects, navigates there from /solutions */}
+            <Button href="/projects#projects-showcase" variant="primary">
               {isAr ? "استكشفوا مشروعاتنا" : "See our projects"}
             </Button>
           </div>

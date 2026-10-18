@@ -54,8 +54,12 @@ export function Header() {
 
   const isTransparent = isHome && !isScrolled;
 
+  // A section stays active on its sub-pages too (e.g. /solutions/technology, /media/<slug>).
+  const isActiveLink = (href: string) =>
+    href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`);
+
   const navLinks = [
-    { name: { en: 'HOME', ar: 'الرئيسية' }, href: '/', active: isHome },
+    { name: { en: 'HOME', ar: 'الرئيسية' }, href: '/' },
     { name: { en: 'ABOUT', ar: 'من نحن' }, href: '/about', hasDropdown: true, key: 'about' },
     { name: { en: 'SOLUTIONS', ar: 'الحلول' }, href: '/solutions', hasDropdown: true, key: 'solutions' },
     { name: { en: 'PROJECTS', ar: 'المشاريع' }, href: '/projects' },
@@ -91,6 +95,7 @@ export function Header() {
             <nav dir={language === 'ar' ? 'rtl' : 'ltr'} className="hidden h-full xl:flex items-center gap-8">
               {navLinks.map((link) => {
                 const RowChevron = language === 'ar' ? ChevronLeft : ChevronRight;
+                const isActive = isActiveLink(link.href);
                 return (
                 <div key={link.name.en} className="relative group h-full flex items-center">
                   <Link
@@ -103,11 +108,11 @@ export function Header() {
                     )}
                   </Link>
                   {/* Active indicator line */}
-                  {link.active && (
+                  {isActive && (
                     <div className={`absolute bottom-[30px] left-0 right-0 h-[2px] ${isTransparent ? 'bg-white' : 'bg-[#2b307d]'}`}></div>
                   )}
                   {/* Hover indicator line — only for dropdown items, matches the active-page line */}
-                  {link.hasDropdown && !link.active && (
+                  {link.hasDropdown && !isActive && (
                     <div
                       className={`absolute bottom-[30px] left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ${isTransparent ? 'bg-white' : 'bg-[#2b307d]'}`}
                     ></div>

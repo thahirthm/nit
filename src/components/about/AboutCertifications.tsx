@@ -147,8 +147,8 @@ export function AboutCertifications() {
         </h2>
       </Reveal>
 
-      {/* Tabs + Nav — kept LTR so tab order and arrow sides stay stable */}
-      <Reveal delay={0.1} duration={0.7} y={24} dir="ltr" className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
+      {/* Tabs + Nav — follow the page direction: tabs start on the right in Arabic, arrows mirror to match the RTL slider */}
+      <Reveal delay={0.1} duration={0.7} y={24} dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <div className="flex flex-wrap gap-3">
           {tabs.map((tab) => {
             const isActive = tab.key === activeTab;
@@ -176,7 +176,7 @@ export function AboutCertifications() {
               disabled={isBeginning}
               className={`transition-colors duration-300 ${isBeginning ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
             >
-              <ArrowIcon className="rotate-180" />
+              <ArrowIcon className={isAr ? "" : "rotate-180"} />
             </button>
             <button
               aria-label={isAr ? "التالي" : "Next"}
@@ -184,7 +184,7 @@ export function AboutCertifications() {
               disabled={isEnd}
               className={`transition-colors duration-300 ${isEnd ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
             >
-              <ArrowIcon />
+              <ArrowIcon className={isAr ? "rotate-180" : ""} />
             </button>
           </div>
         )}
@@ -193,10 +193,14 @@ export function AboutCertifications() {
       {/* Grid slider */}
       <div className="w-full px-6 lg:px-16">
         <Swiper
-          key={activeTab}
+          // Remount on language change too, so Swiper re-reads the page direction (RTL in Arabic).
+          key={`${activeTab}-${language}`}
           modules={[Navigation]}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
+            // Re-sync arrows after a remount instead of keeping the previous tab's state.
+            setIsBeginning(swiper.isBeginning);
+            setIsEnd(swiper.isEnd);
             setActiveSlide(0);
           }}
           onSlideChange={(swiper) => {

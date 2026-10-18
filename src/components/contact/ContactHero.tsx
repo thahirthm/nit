@@ -2,7 +2,10 @@
 
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
+import { Honeypot } from "@/components/ui/Honeypot";
 import { useLanguage } from "@/context/LanguageContext";
+import { submitEnquiry } from "@/lib/api";
+import { useApiForm } from "@/lib/useApiForm";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 
@@ -69,23 +72,39 @@ const socials = [
 
 function TextField({
   label,
+  name,
   required,
   type = "text",
+  autoComplete,
+  error,
   isAr,
 }: {
   label: string;
+  name: string;
   required?: boolean;
   type?: string;
+  autoComplete?: string;
+  error?: string;
   isAr: boolean;
 }) {
   return (
     <label className="block">
       <input
         type={type}
+        name={name}
+        autoComplete={autoComplete}
+        aria-invalid={error ? true : undefined}
         dir={isAr ? "rtl" : "ltr"}
         placeholder={required ? `${label}*` : label}
-        className="w-full bg-transparent border-b border-gray-300 pb-3 text-gray-900 placeholder:text-gray-500 placeholder:font-light text-[15px] focus:outline-none focus:border-[#2E368F] transition-colors"
+        className={`w-full bg-transparent border-b pb-3 text-gray-900 placeholder:text-gray-500 placeholder:font-light text-[15px] focus:outline-none focus:border-[#2E368F] transition-colors ${
+          error ? "border-red-500" : "border-gray-300"
+        }`}
       />
+      {error && (
+        <span dir={isAr ? "rtl" : "ltr"} className="block mt-2 text-[13px] text-red-600">
+          {error}
+        </span>
+      )}
     </label>
   );
 }
@@ -93,6 +112,9 @@ function TextField({
 export function ContactHero() {
   const { language } = useLanguage();
   const isAr = language === "ar";
+  const enquiry = useApiForm((form) =>
+    submitEnquiry("contact", Object.fromEntries(new FormData(form)) as Record<string, string>, language)
+  );
 
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] pb-16 lg:pb-24 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
@@ -184,17 +206,29 @@ export function ContactHero() {
             {isAr ? "نموذج التواصل" : "Contact form"}
           </h2>
 
-          <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-            <TextField label={isAr ? "الاسم الأول" : "First Name"} required isAr={isAr} />
-            <TextField label={isAr ? "اسم العائلة" : "Last Name"} required isAr={isAr} />
-            <TextField label={isAr ? "اسم الشركة" : "Company Name"} isAr={isAr} />
-            <TextField label={isAr ? "رقم الهاتف" : "Phone Number"} type="tel" isAr={isAr} />
-            <TextField label={isAr ? "البريد الإلكتروني" : "Email Address"} type="email" isAr={isAr} />
-            <TextField label={isAr ? "الرسالة" : "Message"} isAr={isAr} />
+          <form className="relative space-y-8" noValidate onSubmit={enquiry.onSubmit} onChange={enquiry.onChange}>
+            <Honeypot />
+            <TextField label={isAr ? "الاسم الأول" : "First Name"} name="first_name" autoComplete="given-name" required error={enquiry.fieldError("first_name")} isAr={isAr} />
+            <TextField label={isAr ? "اسم العائلة" : "Last Name"} name="last_name" autoComplete="family-name" required error={enquiry.fieldError("last_name")} isAr={isAr} />
+            <TextField label={isAr ? "اسم الشركة" : "Company Name"} name="company_name" autoComplete="organization" error={enquiry.fieldError("company_name")} isAr={isAr} />
+            <TextField label={isAr ? "رقم الهاتف" : "Phone Number"} name="phone" type="tel" autoComplete="tel" error={enquiry.fieldError("phone")} isAr={isAr} />
+            <TextField label={isAr ? "البريد الإلكتروني" : "Email Address"} name="email" type="email" autoComplete="email" required error={enquiry.fieldError("email")} isAr={isAr} />
+            <TextField label={isAr ? "الرسالة" : "Message"} name="message" error={enquiry.fieldError("message")} isAr={isAr} />
 
-            <div className="pt-4">
-              <Button type="submit" variant="primary">
-                {isAr ? "إرسال" : "Submit"}
+            {enquiry.message && (
+              <p
+                role="status"
+                dir={isAr ? "rtl" : "ltr"}
+                className={`text-[15px] ${enquiry.status === "success" ? "text-[#2E368F]" : "text-red-600"}`}
+              >
+                {enquiry.message}
+              </p>
+            )}
+
+            {/* In Arabic the form is RTL, so justify-end puts the submit button on the left */}
+            <div className={`pt-4 ${isAr ? "flex justify-end" : ""}`}>
+              <Button type="submit" variant="primary" disabled={enquiry.submitting} className={enquiry.submitting ? "opacity-60 pointer-events-none" : ""}>
+                {enquiry.submitting ? (isAr ? "جارٍ الإرسال..." : "Sending...") : isAr ? "إرسال" : "Submit"}
               </Button>
             </div>
           </form>

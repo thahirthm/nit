@@ -199,8 +199,8 @@ export function TechnologySolutions() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        {/* Heading + Nav — kept LTR so the arrows stay on the same side as the rest of the site's sliders */}
-        <div dir="ltr" className="flex items-center justify-between">
+        {/* Heading + Nav — follow the page direction: heading on the right in Arabic, arrows on the left */}
+        <div dir={isAr ? "rtl" : "ltr"} className="flex items-center justify-between">
           <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
             {isAr ? "حلول التقنية" : "Technology solutions"}
           </h2>
@@ -227,8 +227,8 @@ export function TechnologySolutions() {
           </div>
         </div>
 
-        {/* Tabs — kept LTR so tab order never reorders by language */}
-        <div dir="ltr" className="mt-8 lg:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+        {/* Tabs — start on the right in Arabic */}
+        <div dir={isAr ? "rtl" : "ltr"} className="mt-8 lg:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
           {tabs.map((tab, i) => {
             const isActive = i === activeIndex;
             const Icon = tab.icon;

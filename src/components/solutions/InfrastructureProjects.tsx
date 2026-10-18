@@ -163,8 +163,8 @@ export function InfrastructureProjects() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        {/* Heading + Nav — kept LTR so the arrows stay on the same side as the rest of the site's sliders */}
-        <div dir="ltr" className="flex items-center justify-between">
+        {/* Heading + Nav — follow the page direction: heading on the right in Arabic, arrows on the left */}
+        <div dir={isAr ? "rtl" : "ltr"} className="flex items-center justify-between">
           <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
             {isAr ? "مشاريع مختارة" : "Featured projects"}
           </h2>
@@ -193,8 +193,8 @@ export function InfrastructureProjects() {
           </div>
         </div>
 
-        {/* Tabs — kept LTR so tab order never reorders by language */}
-        <div dir="ltr" className="mt-6 lg:mt-8 flex flex-wrap gap-3">
+        {/* Tabs — start on the right in Arabic */}
+        <div dir={isAr ? "rtl" : "ltr"} className="mt-6 lg:mt-8 flex flex-wrap gap-3">
           {categories.map((category) => {
             const isActive = category.key === activeCategory;
             return (
@@ -219,7 +219,8 @@ export function InfrastructureProjects() {
         {/* Project cards */}
         <div className="mt-8 lg:mt-10">
           <Swiper
-            key={activeCategory}
+            // Remount on language change too, so Swiper re-reads the page direction (RTL in Arabic).
+            key={`${activeCategory}-${language}`}
             modules={[Navigation]}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
@@ -242,7 +243,8 @@ export function InfrastructureProjects() {
                 <article className="h-full flex flex-col">
                   <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden shrink-0">
                     <Image quality={95} src={project.image} alt={isAr ? project.title.ar : project.title.en} fill className="object-cover" />
-                    <div dir="ltr" className="absolute top-4 left-4 flex items-center gap-2">
+                    {/* Badges sit top-right and read right-to-left in Arabic */}
+                    <div dir={isAr ? "rtl" : "ltr"} className={`absolute top-4 ${isAr ? "right-4" : "left-4"} flex items-center gap-2`}>
                       {project.badges.map((badge, bi) => (
                         <span
                           key={bi}
@@ -263,7 +265,7 @@ export function InfrastructureProjects() {
                     {isAr ? project.description.ar : project.description.en}
                   </p>
 
-                  <div dir="ltr" className="mt-auto pt-5">
+                  <div dir={isAr ? "rtl" : "ltr"} className="mt-auto pt-5">
                     <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-200">
                       <div>
                         <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">

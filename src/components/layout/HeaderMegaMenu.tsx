@@ -85,7 +85,8 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
       <button
         onClick={onClose}
         aria-label={isAr ? "إغلاق" : "Close"}
-        className="absolute z-20 top-6 right-6 lg:top-10 lg:right-12 text-white/80 hover:text-white transition-colors cursor-pointer"
+        // Opposite the logo: right in English, left in Arabic (the logo moves right in RTL)
+        className={`absolute z-20 top-6 lg:top-10 ${isAr ? "left-6 lg:left-12" : "right-6 lg:right-12"} text-white/80 hover:text-white transition-colors cursor-pointer`}
       >
         <X className="w-7 h-7" strokeWidth={1.5} />
       </button>

@@ -96,13 +96,17 @@ export function LeadershipOffcanvas({ person, onClose }: LeadershipOffcanvasProp
                   <span className="text-[13px] font-medium tracking-widest uppercase text-[#2E368F]">
                     {isAr ? person.role.ar : person.role.en}
                   </span>
-                  <a
-                    href={person.linkedin ?? "#"}
-                    aria-label="LinkedIn"
-                    className="shrink-0 flex items-center justify-center w-9 h-9 bg-[#2E368F] text-white hover:bg-[#1c2260] transition-colors duration-300"
-                  >
-                    <LinkedInIcon />
-                  </a>
+                  {person.linkedin && (
+                    <a
+                      href={person.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`LinkedIn — ${person.name.en}`}
+                      className="shrink-0 flex items-center justify-center w-9 h-9 bg-[#2E368F] text-white hover:bg-[#1c2260] transition-colors duration-300"
+                    >
+                      <LinkedInIcon />
+                    </a>
+                  )}
                 </div>
 
                 <h3 className="mt-3 text-[26px] sm:text-[28px] font-light text-gray-900">

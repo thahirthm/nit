@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { Honeypot } from "@/components/ui/Honeypot";
 import { useLanguage } from "@/context/LanguageContext";
+import { submitEnquiry } from "@/lib/api";
+import { useApiForm } from "@/lib/useApiForm";
 
 const offices = [
   {
@@ -122,12 +125,25 @@ const socials = [
   },
 ];
 
+function FooterField({ error, children }: { error?: string; children: ReactNode }) {
+  return (
+    <div>
+      {children}
+      {error && <p className="mt-2 text-sm text-red-300">{error}</p>}
+    </div>
+  );
+}
+
 export function Footer() {
   const { language } = useLanguage();
   const isAr = language === "ar";
   const pathname = usePathname();
   const [officeIndex, setOfficeIndex] = useState(0);
   const office = offices[officeIndex];
+
+  const enquiry = useApiForm((form) =>
+    submitEnquiry("footer", Object.fromEntries(new FormData(form)) as Record<string, string>, language)
+  );
 
   const prevOffice = () => setOfficeIndex((i) => (i === 0 ? offices.length - 1 : i - 1));
   const nextOffice = () => setOfficeIndex((i) => (i === offices.length - 1 ? 0 : i + 1));
@@ -140,7 +156,7 @@ export function Footer() {
           <h2
             dir={isAr ? "rtl" : "ltr"}
             className={`text-white font-extralight leading-[1.15] tracking-tight ${
-              isAr ? "text-right text-[26px] sm:text-[36px] lg:text-[44px]" : "text-[35px] sm:text-[50px] lg:text-[60px]"
+              isAr ? "text-left text-[26px] sm:text-[36px] lg:text-[44px]" : "text-[35px] sm:text-[50px] lg:text-[60px]"
             }`}
           >
             {isAr ? <>رؤيتكم، نهندسها<br />ونحوّلها إلى واقع.</> : <>Your vision, Engineered<br />&amp; delivered.</>}
@@ -157,26 +173,50 @@ export function Footer() {
             )}
           </h3>
 
-          <form dir={isAr ? "rtl" : "ltr"} className="mt-10  flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>
-            <input
-              type="text"
-              placeholder={isAr ? "الاسم الكامل" : "Full Name"}
-              className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
-            />
-            <input
-              type="email"
-              placeholder={isAr ? "البريد الإلكتروني" : "Your Email"}
-              className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
-            />
-            <textarea
-              placeholder={isAr ? "الرسالة" : "Message"}
-              rows={1}
-              className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors resize-y"
-            />
+          <form
+            dir={isAr ? "rtl" : "ltr"}
+            className="relative mt-10  flex flex-col gap-8"
+            noValidate
+            onSubmit={enquiry.onSubmit}
+            onChange={enquiry.onChange}
+          >
+            <Honeypot />
+            <FooterField error={enquiry.fieldError("full_name")}>
+              <input
+                type="text"
+                name="full_name"
+                autoComplete="name"
+                placeholder={isAr ? "الاسم الكامل" : "Full Name"}
+                className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
+              />
+            </FooterField>
+            <FooterField error={enquiry.fieldError("email")}>
+              <input
+                type="email"
+                name="email"
+                autoComplete="email"
+                placeholder={isAr ? "البريد الإلكتروني" : "Your Email"}
+                className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors"
+              />
+            </FooterField>
+            <FooterField error={enquiry.fieldError("message")}>
+              <textarea
+                name="message"
+                placeholder={isAr ? "الرسالة" : "Message"}
+                rows={1}
+                className="w-full bg-transparent border-b border-white/30 pb-2 text-white placeholder:text-white/50 text-base sm:text-lg focus:outline-none focus:border-white transition-colors resize-y"
+              />
+            </FooterField>
+
+            {enquiry.message && (
+              <p role="status" className={`text-sm sm:text-base ${enquiry.status === "success" ? "text-[#8ADBF0]" : "text-red-300"}`}>
+                {enquiry.message}
+              </p>
+            )}
 
             <div className="mt-1">
-              <Button type="submit" variant="secondary" iconOutline>
-                {isAr ? "إرسال" : "Submit"}
+              <Button type="submit" variant="secondary" iconOutline disabled={enquiry.submitting} className={enquiry.submitting ? "opacity-60 pointer-events-none" : ""}>
+                {enquiry.submitting ? (isAr ? "جارٍ الإرسال..." : "Sending...") : isAr ? "إرسال" : "Submit"}
               </Button>
             </div>
           </form>
@@ -184,7 +224,8 @@ export function Footer() {
 
         {/* Subtext + office card — third on mobile, under the heading on desktop */}
         <div className="order-3 lg:order-none lg:col-start-1 lg:row-start-2">
-          <p dir={isAr ? "rtl" : "ltr"} className="text-white/70 text-base sm:text-lg">
+          {/* Arabic copy stays RTL but is left-aligned to line up with the office card below */}
+          <p dir={isAr ? "rtl" : "ltr"} className={`text-white/70 text-base sm:text-lg ${isAr ? "text-left" : ""}`}>
             {isAr ? "نقدّم التميز في مختلف المناطق" : "Delivering excellence across regions"}
           </p>
 

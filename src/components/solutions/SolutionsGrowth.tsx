@@ -3,34 +3,43 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { useLanguage } from "@/context/LanguageContext";
 
 const years = ["2020", "2021", "2022", "2023", "2024", "2025"];
 
 const tabs = [
   {
-    name: "Infrastructure",
-    description:
-      "NIT's recent project portfolio shows steady growth across critical infrastructure sectors, spanning power, water, communications, industrial systems, and operations support across Saudi Arabia.",
+    key: "infrastructure",
+    name: { en: "Infrastructure", ar: "البنية التحتية" },
+    description: {
+      en: "NIT's recent project portfolio shows steady growth across critical infrastructure sectors, spanning power, water, communications, industrial systems, and operations support across Saudi Arabia.",
+      ar: "تُظهر محفظة مشاريع نسما للبنية التحتية والتقنية الأخيرة نموًا مطّردًا عبر قطاعات البنية التحتية الحيوية، بما يشمل الطاقة والمياه والاتصالات والأنظمة الصناعية ودعم العمليات في جميع أنحاء المملكة العربية السعودية.",
+    },
     values: [350, 750, 1150, 1650, 2100, 2450],
     axisTop: 2995,
-    axisLabels: ["2995 M", "2410 M", "1825 M", "1240 M", "655 M"],
+    axisLabels: [2995, 2410, 1825, 1240, 655],
   },
   {
-    name: "Technology",
-    description:
-      "NIT's technology portfolio has scaled rapidly, driven by digital transformation, cloud, cybersecurity, and managed services demand across the Kingdom.",
+    key: "technology",
+    name: { en: "Technology", ar: "التقنية" },
+    description: {
+      en: "NIT's technology portfolio has scaled rapidly, driven by digital transformation, cloud, cybersecurity, and managed services demand across the Kingdom.",
+      ar: "شهدت محفظة نسما التقنية توسعًا سريعًا، مدفوعةً بالطلب المتزايد على التحول الرقمي والحوسبة السحابية والأمن السيبراني والخدمات المُدارة في جميع أنحاء المملكة.",
+    },
     values: [130, 280, 480, 690, 950, 1024],
     axisTop: 1288,
-    axisLabels: ["1288 M", "1024 M", "760 M", "496 M", "232 M"],
+    axisLabels: [1288, 1024, 760, 496, 232],
   },
 ];
 
 export function SolutionsGrowth() {
-  const [activeTab, setActiveTab] = useState(tabs[0].name);
+  const { language } = useLanguage();
+  const isAr = language === "ar";
+  const [activeTab, setActiveTab] = useState(tabs[0].key);
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartVisible, setChartVisible] = useState(false);
 
-  const activeData = useMemo(() => tabs.find((t) => t.name === activeTab) ?? tabs[0], [activeTab]);
+  const activeData = useMemo(() => tabs.find((t) => t.key === activeTab) ?? tabs[0], [activeTab]);
 
   const points = useMemo(
     () =>
@@ -65,43 +74,44 @@ export function SolutionsGrowth() {
   }, []);
 
   return (
-    <section id="our-growth" className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
+    <section id="our-growth" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
         <Reveal delay={0} duration={0.8} y={30}>
-          <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
-            Growth over the past 5 years
+          <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-8 lg:mb-10">
+            {isAr ? "النمو خلال السنوات الخمس الماضية" : "Growth over the past 5 years"}
           </h2>
         </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        {/* RTL in Arabic: the text column moves to the right and the chart to the left */}
+        <div dir={isAr ? "rtl" : "ltr"} className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
         {/* Left: tabs, description, CTA — button pinned to the bottom, matching the chart card's height */}
         <Reveal delay={0.1} duration={0.8} y={30} className="flex flex-col h-full">
           <div className="flex flex-wrap gap-3 mb-6 lg:mb-8">
             {tabs.map((tab) => {
-              const isActive = tab.name === activeTab;
+              const isActive = tab.key === activeTab;
               return (
                 <button
-                  key={tab.name}
-                  onClick={() => setActiveTab(tab.name)}
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
                   className={`px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 ${
                     isActive
                       ? "bg-[#2E368F] text-white border-[#2E368F]"
                       : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
                   }`}
                 >
-                  {tab.name}
+                  {isAr ? tab.name.ar : tab.name.en}
                 </button>
               );
             })}
           </div>
 
           <p className="text-[15px] sm:text-[16px] leading-relaxed font-light text-[#727272] max-w-md">
-            {activeData.description}
+            {isAr ? activeData.description.ar : activeData.description.en}
           </p>
 
           <div className="mt-auto pt-10 lg:pt-14">
             <Button href="/projects" variant="primary">
-              See our projects
+              {isAr ? "اطّلع على مشاريعنا" : "See our projects"}
             </Button>
           </div>
         </Reveal>
@@ -110,20 +120,21 @@ export function SolutionsGrowth() {
         <Reveal delay={0.2} duration={0.8} y={30}>
         <div ref={chartRef} className="bg-[#F5F5F5] p-8 sm:p-10">
           <h3 className="text-[#2E368F] text-[20px] sm:text-[24px] font-extralight tracking-tight mb-8">
-            Trajectory of our growth
+            {isAr ? "مسار نمونا" : "Trajectory of our growth"}
           </h3>
 
           <div className="flex justify-end mb-4">
             <div className="flex items-center gap-2 text-[11px] font-medium tracking-wide uppercase text-gray-500">
-              <span className="w-4 h-[1px] bg-[#2E368F]" /> Project value million (SAR)
+              <span className="w-4 h-[1px] bg-[#2E368F]" /> {isAr ? "قيمة المشاريع (مليون ريال)" : "Project value million (SAR)"}
             </div>
           </div>
 
-          <div className="flex gap-4">
+          {/* Chart stays LTR so years read oldest → newest and the axis sits on the left */}
+          <div dir="ltr" className="flex gap-4">
             {/* Y-axis labels */}
             <div className="flex flex-col justify-between text-[13px] text-gray-500 h-[220px] sm:h-[260px] pb-6">
               {activeData.axisLabels.map((label) => (
-                <span key={label}>{label}</span>
+                <span key={label}>{label} {isAr ? "مليون" : "M"}</span>
               ))}
             </div>
 

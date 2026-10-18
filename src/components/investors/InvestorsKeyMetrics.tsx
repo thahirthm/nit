@@ -153,12 +153,13 @@ export function InvestorsKeyMetrics() {
         <div className="mt-8 lg:mt-10 bg-[#2E368F] p-8 sm:p-14 lg:p-16">
           <div dir="ltr" className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-20">
             {metrics.map((metric, i) => (
-              <Reveal key={metric.label.en} delay={0.1 + (i % 4) * 0.08} duration={0.7} y={30} dir={isAr ? "rtl" : "ltr"} className="border-t border-white/20 pt-7">
+              <Reveal key={metric.label.en} delay={0.1 + (i % 4) * 0.08} duration={0.7} y={30} dir={isAr ? "rtl" : "ltr"} className="flex flex-col">
                 <span className="block text-white/50 text-[13px] font-medium tracking-wider uppercase">
                   {isAr ? metric.label.ar : metric.label.en}
                 </span>
 
-                <div dir="ltr" className="font-[family-name:var(--font-anek-latin)] mt-4 flex items-baseline gap-2 text-white">
+                {/* Stays LTR so "21B SAR" keeps its order; in Arabic the row is pushed to the right */}
+                <div dir="ltr" className={`font-[family-name:var(--font-anek-latin)] mt-4 flex items-baseline gap-2 text-white ${isAr ? "justify-end" : ""}`}>
                   <span className="text-[46px] sm:text-[54px] font-light leading-none tabular-nums">
                     {counts[i].toFixed(metric.decimals)}
                     {metric.unit}
@@ -170,11 +171,14 @@ export function InvestorsKeyMetrics() {
                   {isAr ? metric.sub.ar : metric.sub.en}
                 </span>
 
-                <div className="mt-5 h-px bg-white/20 relative overflow-hidden">
+                {/* mt-auto pins the line to the card bottom, so lines in the same row align even when a sub-label wraps */}
+                <div className="mt-auto pt-5">
+                <div className="h-px bg-white/20 relative overflow-hidden">
                   <div
-                    className="absolute left-0 top-0 h-px bg-[#81D1E8] transition-all duration-[1600ms] ease-out"
+                    className="absolute start-0 top-0 h-px bg-[#81D1E8] transition-all duration-[1600ms] ease-out"
                     style={{ width: hasStarted ? `${metric.progress}%` : "0%" }}
                   />
+                </div>
                 </div>
               </Reveal>
             ))}

@@ -7,8 +7,11 @@ import { ClientsSection } from "@/components/home/ClientsSection";
 import { TypingSection } from "@/components/home/TypingSection";
 import { NewsSection } from "@/components/home/NewsSection";
 import { Reveal } from "@/components/ui/Reveal";
+import { getNewsSectionData, NEWS_PAGE_SIZE } from "@/lib/api";
 
-export default function Home() {
+export default async function Home() {
+  const news = await getNewsSectionData(NEWS_PAGE_SIZE.home);
+
   return (
     <main className="min-h-screen">
       {/* Banner Section — no reveal, it's the immediate hero */}
@@ -46,7 +49,7 @@ export default function Home() {
 
       {/* Eighth Section: News & Announcements */}
       <Reveal>
-        <NewsSection />
+        <NewsSection initialCategories={news.categories} initialPosts={news.posts} />
       </Reveal>
     </main>
   );

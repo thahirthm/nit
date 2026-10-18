@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { newsPosts, type NewsPost } from "@/data/newsPosts";
+import type { BlogDetail, Seed } from "@/lib/api";
+import { useApiData } from "@/lib/useApiData";
 import { useLanguage } from "@/context/LanguageContext";
 
 const LinkedInIcon = () => (
@@ -29,26 +30,13 @@ const XIcon = () => (
   </svg>
 );
 
-function renderBody(paragraph: string) {
-  const parts = paragraph.split(/(\[\[[^\]]+\]\])/g);
-  return parts.map((part, i) => {
-    const match = part.match(/^\[\[([^\]]+)\]\]$/);
-    if (match) {
-      return (
-        <span key={i} className="underline underline-offset-2 text-gray-700">
-          {match[1]}
-        </span>
-      );
-    }
-    return <span key={i}>{part}</span>;
-  });
-}
-
-export function NewsArticle({ post }: { post: NewsPost }) {
+export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & { data: BlogDetail } }) {
   const { language } = useLanguage();
   const isAr = language === "ar";
-  const similar = newsPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
-  const title = isAr ? post.title.ar : post.title.en;
+  // Server renders English; the Arabic version is fetched client-side when that language is active.
+  const post = useApiData<BlogDetail>(initialPost.path, initialPost).data ?? initialPost.data;
+  const similar = post.related;
+  const title = post.title;
 
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
@@ -56,7 +44,7 @@ export function NewsArticle({ post }: { post: NewsPost }) {
         {/* Hero image + share row */}
         <div className="flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-8">
           <div className="relative w-full lg:flex-1 h-[280px] sm:h-[400px] lg:h-[480px] overflow-hidden">
-            <Image quality={95} src={post.image} alt={title} fill className="object-cover" />
+            <Image quality={95} src={post.image ?? "/images/blog1.png"} alt={title} fill className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2E368F]/50 via-transparent to-transparent" />
           </div>
 
@@ -79,15 +67,15 @@ export function NewsArticle({ post }: { post: NewsPost }) {
         </div>
 
         {/* Badges */}
-        <div dir="ltr" className="mt-6 flex flex-wrap items-center gap-2">
+        <div dir={isAr ? "rtl" : "ltr"} className="mt-6 flex flex-wrap items-center gap-2">
           <span className="font-[family-name:var(--font-anek-latin)] px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-            {isAr ? post.date.ar : post.date.en}
+            {post.formatted_date}
           </span>
           <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-            {isAr ? post.badge.ar : post.badge.en}
+            {post.category.name}
           </span>
           <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-            {isAr ? post.location.ar : post.location.en}
+            {post.location}
           </span>
         </div>
 
@@ -96,13 +84,12 @@ export function NewsArticle({ post }: { post: NewsPost }) {
           {title}
         </h1>
 
-        <div dir={isAr ? "rtl" : "ltr"} className="mt-6 max-w-4xl space-y-5">
-          {(isAr ? post.body.ar : post.body.en).map((paragraph, i) => (
-            <p key={i} className="text-gray-500 text-[17px] sm:text-[18px] leading-relaxed font-light">
-              {renderBody(paragraph)}
-            </p>
-          ))}
-        </div>
+        {/* Body HTML is authored by NIT admins in the admin panel's rich-text editor */}
+        <div
+          dir={isAr ? "rtl" : "ltr"}
+          className="mt-6 max-w-4xl space-y-5 text-gray-500 text-[17px] sm:text-[18px] leading-relaxed font-light [&_strong]:font-light [&_strong]:text-gray-700 [&_strong]:underline [&_strong]:underline-offset-2 [&_a]:text-[#2E368F] [&_a]:underline [&_h2]:text-gray-900 [&_h2]:text-[26px] [&_h2]:font-extralight [&_h3]:text-gray-900 [&_h3]:text-[22px] [&_h3]:font-light [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:ps-6 [&_ol]:ps-6 [&_li]:mt-2 [&_img]:max-w-full [&_img]:h-auto"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
 
         {/* Similar news & announcements */}
         {similar.length > 0 && (
@@ -113,27 +100,27 @@ export function NewsArticle({ post }: { post: NewsPost }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
               {similar.map((item) => {
-                const itemTitle = isAr ? item.title.ar : item.title.en;
+                const itemTitle = item.title;
                 return (
                   <article key={item.slug} className="group flex flex-col">
                     <Link href={`/media/${item.slug}`} className="relative block w-full h-[220px] sm:h-[260px] overflow-hidden">
                       <Image quality={95}
-                        src={item.image}
+                        src={item.image ?? "/images/blog1.png"}
                         alt={itemTitle}
                         fill
                         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                       />
                     </Link>
 
-                    <div dir="ltr" className="mt-5 flex flex-wrap items-center gap-2">
+                    <div dir={isAr ? "rtl" : "ltr"} className="mt-5 flex flex-wrap items-center gap-2">
                       <span className="font-[family-name:var(--font-anek-latin)] px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-                        {isAr ? item.date.ar : item.date.en}
+                        {item.formatted_date}
                       </span>
                       <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-                        {isAr ? item.badge.ar : item.badge.en}
+                        {item.category.name}
                       </span>
                       <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-                        {isAr ? item.location.ar : item.location.en}
+                        {item.location}
                       </span>
                     </div>
 

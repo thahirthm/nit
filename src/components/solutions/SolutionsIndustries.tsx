@@ -2,17 +2,23 @@
 
 import { useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
+import { useLanguage } from "@/context/LanguageContext";
+
+type Localized = { en: string; ar: string };
 
 type Industry = {
-  title: string;
-  description: string;
+  title: Localized;
+  description: Localized;
   icon: (active: boolean) => React.ReactNode;
 };
 
 const industries: Industry[] = [
   {
-    title: "Energy & Power",
-    description: "Power infrastructure for national utilities and industrial operations.",
+    title: { en: "Energy & Power", ar: "الطاقة والكهرباء" },
+    description: {
+      en: "Power infrastructure for national utilities and industrial operations.",
+      ar: "بنية تحتية للطاقة تخدم المرافق الوطنية والعمليات الصناعية.",
+    },
     icon: (active) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path d="M28.875 2.75V11" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.57529" strokeLinecap="round" strokeLinejoin="round" />
@@ -37,8 +43,11 @@ const industries: Industry[] = [
     ),
   },
   {
-    title: "Telecommunications",
-    description: "Network infrastructure enabling nationwide connectivity and communications.",
+    title: { en: "Telecommunications", ar: "الاتصالات" },
+    description: {
+      en: "Network infrastructure enabling nationwide connectivity and communications.",
+      ar: "بنية تحتية للشبكات تتيح الاتصال والتواصل على مستوى المملكة.",
+    },
     icon: (active) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path d="M9.625 39.875L22 15.125L34.375 39.875" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -62,8 +71,11 @@ const industries: Industry[] = [
     ),
   },
   {
-    title: "Water & Utilities",
-    description: "Water treatment and distribution systems built for scale and reliability.",
+    title: { en: "Water & Utilities", ar: "المياه والمرافق" },
+    description: {
+      en: "Water treatment and distribution systems built for scale and reliability.",
+      ar: "أنظمة لمعالجة المياه وتوزيعها، مصممة لتلبية متطلبات التوسع والموثوقية.",
+    },
     icon: (active) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path
@@ -78,8 +90,11 @@ const industries: Industry[] = [
     ),
   },
   {
-    title: "Oil & Gas",
-    description: "Engineering solutions supporting upstream and downstream operations.",
+    title: { en: "Oil & Gas", ar: "النفط والغاز" },
+    description: {
+      en: "Engineering solutions supporting upstream and downstream operations.",
+      ar: "حلول هندسية تدعم عمليات قطاعي المنبع والمصب.",
+    },
     icon: (active) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path
@@ -103,8 +118,11 @@ const industries: Industry[] = [
     ),
   },
   {
-    title: "Transport & Mobility",
-    description: "Smart transport systems connecting the Kingdom's cities and regions.",
+    title: { en: "Transport & Mobility", ar: "النقل والتنقل" },
+    description: {
+      en: "Smart transport systems connecting the Kingdom's cities and regions.",
+      ar: "أنظمة نقل ذكية تربط مدن المملكة ومناطقها.",
+    },
     icon: (active) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path d="M2.75 19.25H41.25" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -135,8 +153,11 @@ const industries: Industry[] = [
     ),
   },
   {
-    title: "Renewable Energy",
-    description: "Solar and wind systems advancing the Kingdom's clean energy goals.",
+    title: { en: "Renewable Energy", ar: "الطاقة المتجددة" },
+    description: {
+      en: "Solar and wind systems advancing the Kingdom's clean energy goals.",
+      ar: "أنظمة للطاقة الشمسية وطاقة الرياح تدعم أهداف المملكة في مجال الطاقة النظيفة.",
+    },
     icon: (active) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path
@@ -160,8 +181,11 @@ const industries: Industry[] = [
     ),
   },
   {
-    title: "Government & Defense",
-    description: "Mission-critical systems built to national security standards.",
+    title: { en: "Government & Defense", ar: "الحكومة والدفاع" },
+    description: {
+      en: "Mission-critical systems built to national security standards.",
+      ar: "أنظمة بالغة الأهمية مصممة وفق معايير الأمن الوطني.",
+    },
     icon: (active) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path d="M22 16.5V23.375" stroke={active ? "#FFFFFF" : "#81D1E8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -180,8 +204,11 @@ const industries: Industry[] = [
     ),
   },
   {
-    title: "Technology & Digital",
-    description: "Digital platforms and infrastructure powering the Kingdom's transformation.",
+    title: { en: "Technology & Digital", ar: "التقنية والرقمنة" },
+    description: {
+      en: "Digital platforms and infrastructure powering the Kingdom's transformation.",
+      ar: "منصات رقمية وبنية تحتية تدعم مسيرة التحول في المملكة.",
+    },
     icon: (active) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path
@@ -214,19 +241,23 @@ const industries: Industry[] = [
 ];
 
 export function SolutionsIndustries() {
+  const { language } = useLanguage();
+  const isAr = language === "ar";
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section id="industries" className="w-full bg-white font-[family-name:var(--font-futura)] pt-[60px] lg:pt-[100px]">
-      <div className="w-full px-6 lg:px-16">
+    <section id="industries" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+      {/* RTL in Arabic: text aligns right, cards fill from the right and each icon sits bottom-left */}
+      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:px-16">
         <Reveal delay={0} duration={0.8} y={30}>
           <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-6 lg:mb-8">
-            Industries we serve
+            {isAr ? "القطاعات التي نخدمها" : "Industries we serve"}
           </h2>
 
           <p className="text-[17px] sm:text-[19px] leading-relaxed font-light text-[#727272] max-w-2xl mb-10 lg:mb-14">
-            The Kingdom&apos;s most critical sectors rely on the systems we engineer — from energy giants and water
-            authorities to defense, telecom, and national institutions.
+            {isAr
+              ? "تعتمد أكثر قطاعات المملكة حيويةً على الأنظمة التي نصممها، بدءًا من كبرى شركات الطاقة وهيئات المياه، وصولًا إلى قطاعات الدفاع والاتصالات والمؤسسات الوطنية."
+              : "The Kingdom's most critical sectors rely on the systems we engineer — from energy giants and water authorities to defense, telecom, and national institutions."}
           </p>
         </Reveal>
 
@@ -235,7 +266,7 @@ export function SolutionsIndustries() {
             const isActive = activeIndex === i;
             return (
               <Reveal
-                key={industry.title}
+                key={industry.title.en}
                 delay={0.15 + i * 0.06}
                 duration={0.6}
                 y={30}
@@ -261,14 +292,14 @@ export function SolutionsIndustries() {
                       isActive ? "text-white" : "text-gray-700"
                     }`}
                   >
-                    {industry.title}
+                    {isAr ? industry.title.ar : industry.title.en}
                   </h3>
                   <p
                     className={`mt-3 text-[14px] sm:text-[16px] leading-relaxed font-light max-w-[220px] transition-opacity duration-300 ${
                       isActive ? "text-white/80 opacity-100" : "text-transparent opacity-0"
                     }`}
                   >
-                    {industry.description}
+                    {isAr ? industry.description.ar : industry.description.en}
                   </p>
                 </div>
 

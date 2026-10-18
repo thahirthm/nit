@@ -100,8 +100,8 @@ export function InfrastructureSolutions() {
           {isAr ? "حلول البنية التحتية" : "Infrastructure solutions"}
         </h2>
 
-        {/* Tabs — kept LTR so tab order never reorders by language */}
-        <div dir="ltr" className="mt-8 lg:mt-10 flex flex-wrap gap-3">
+        {/* Tabs — start on the right in Arabic */}
+        <div dir={isAr ? "rtl" : "ltr"} className="mt-8 lg:mt-10 flex flex-wrap gap-3">
           {tabs.map((tab, i) => {
             const isActive = i === activeIndex;
             return (

@@ -130,8 +130,9 @@ export function ExpertiseSection() {
 
               {/* Content */}
               <div className="relative z-10">
+                {/* Stays LTR so "35+" doesn't flip to "+35"; only the alignment follows the language */}
                 <h3
-                  className={`font-[family-name:var(--font-anek-latin)] leading-none mb-2 sm:mb-4 tracking-tight transition-colors duration-500 text-[40px] sm:text-[60px] lg:text-[85px] ${isActive ? 'text-white' : 'text-[#2E368F]'}`}
+                  className={`font-[family-name:var(--font-anek-latin)] leading-none mb-2 sm:mb-4 tracking-tight transition-colors duration-500 text-[40px] sm:text-[60px] lg:text-[85px] ${language === "ar" ? 'text-right' : 'text-left'} ${isActive ? 'text-white' : 'text-[#2E368F]'}`}
                   style={{ fontWeight: 200 }}
                 >
                   {stat.value}
@@ -143,7 +144,7 @@ export function ExpertiseSection() {
                   {language === "ar" ? stat.label.ar : stat.label.en}
                 </p>
               </div>
-              <div className={`relative z-10 ms-auto md:pt-30 pt-6 sm:pt-10 transition-all duration-500 [&_path]:transition-all [&_path]:duration-500 [&_svg]:w-9 [&_svg]:h-9 sm:[&_svg]:w-auto sm:[&_svg]:h-auto ${isActive ? '[&_path]:stroke-white' : ''}`}>
+              <div className={`relative z-10 ${language === "ar" ? 'me-auto' : 'ms-auto'} md:pt-30 pt-6 sm:pt-10 transition-all duration-500 [&_path]:transition-all [&_path]:duration-500 [&_svg]:w-9 [&_svg]:h-9 sm:[&_svg]:w-auto sm:[&_svg]:h-auto ${isActive ? '[&_path]:stroke-white' : ''}`}>
                 {stat.icon}
               </div>
             </div>
