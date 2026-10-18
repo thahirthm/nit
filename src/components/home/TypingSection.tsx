@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 
 const LINES = {
   en: { line1: "Engineering today's needs,", line2: "delivering tomorrow's infrastructure" },
@@ -72,14 +73,7 @@ export function TypingSection() {
 
         {/* Right: video */}
         <div className="relative w-full h-[420px] sm:h-[580px] lg:h-[760px] flex justify-end">
-          <video
-            src="/images/rotate.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="h-full w-auto max-w-full object-contain"
-          />
+          <BackgroundVideo src="/images/rotate.mp4" poster="/images/rotate-poster.jpg" posterClassName="object-contain object-right" className="relative h-full w-auto max-w-full object-contain" />
         </div>
       </div>
     </section>

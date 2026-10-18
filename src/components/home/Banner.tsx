@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
+import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 
 export function Banner() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -15,14 +16,7 @@ export function Banner() {
     <section className="relative w-full h-screen min-h-[600px] flex items-center overflow-hidden">
       {/* Background Video */}
       <div className={`absolute inset-0 z-0 transition-transform duration-[2000ms] ease-out ${isLoaded ? 'scale-100' : 'scale-105'}`}>
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          src="/images/ban-video.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
+        <BackgroundVideo className="absolute inset-0 w-full h-full object-cover" src="/images/ban-video.mp4" poster="/images/ban-video-poster.jpg" priority />
         {/* #2E368F overlay with Overlay blend mode */}
         <div
           className="absolute inset-0"

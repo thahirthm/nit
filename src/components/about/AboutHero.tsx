@@ -64,7 +64,7 @@ export function AboutHero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6, ease: easeOut }}
               dir={isAr ? "rtl" : "ltr"}
-              className={`text-white text-[18px] sm:text-[28px] lg:text-[50px] font-extralight leading-tight whitespace-nowrap ${isAr ? "text-right" : ""}`}
+              className={`text-white text-[18px] sm:text-[28px] lg:text-[50px] font-extralight leading-tight text-balance ${isAr ? "text-right" : ""}`}
             >
               {isAr ? "خلف أساسات المملكة ومستقبلها." : "Behind the kingdom's foundations and its future."}
             </motion.h2>
