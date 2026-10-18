@@ -495,7 +495,8 @@ export function GlanceSection() {
       <div className="w-full px-6 lg:px-16 mb-8 lg:mb-12 flex items-center justify-between">
         {heading}
 
-        <div className="flex items-center gap-3">
+        {/* Kept LTR to match the slider below (dir="ltr"): prev ← on the left, next → on the right in both languages */}
+        <div dir="ltr" className="flex items-center gap-3">
           <button
             aria-label="Previous"
             onClick={() => swiperRef.current?.slidePrev()}

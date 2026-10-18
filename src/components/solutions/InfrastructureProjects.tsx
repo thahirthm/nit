@@ -221,6 +221,9 @@ export function InfrastructureProjects() {
           <Swiper
             // Remount on language change too, so Swiper re-reads the page direction (RTL in Arabic).
             key={`${activeCategory}-${language}`}
+            // Explicit direction: Swiper reads it on init, which runs before LanguageProvider
+            // flips <html dir>, so relying on the inherited direction left slides offset in Arabic.
+            dir={language === "ar" ? "rtl" : "ltr"}
             modules={[Navigation]}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;

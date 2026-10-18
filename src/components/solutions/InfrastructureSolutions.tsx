@@ -160,13 +160,14 @@ export function InfrastructureSolutions() {
               ))}
             </div>
 
-            <div className="shrink-0 mt-8 flex items-center justify-end gap-6">
+            {/* Follows the tab row's direction: in Arabic the tabs run right-to-left, so prev (→) sits on the right and next (←) on the left */}
+            <div dir={isAr ? "rtl" : "ltr"} className="shrink-0 mt-8 flex items-center justify-end gap-6">
               <button
                 aria-label={isAr ? "السابق" : "Previous"}
                 onClick={prevTab}
                 className="text-gray-400 hover:text-[#2E368F] transition-colors duration-300"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className="rotate-180">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className={isAr ? "" : "rotate-180"}>
                   <path d="M7.4375 15.2939L14.8725 7.85886L7.4375 0.423828M14.8725 7.85886L0.00247078 7.85886" stroke="currentColor" strokeWidth="1.2" />
                 </svg>
               </button>
@@ -175,7 +176,7 @@ export function InfrastructureSolutions() {
                 onClick={nextTab}
                 className="text-[#2E368F] hover:text-[#1c2260] transition-colors duration-300"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className={isAr ? "rotate-180" : ""}>
                   <path d="M7.4375 15.2939L14.8725 7.85886L7.4375 0.423828M14.8725 7.85886L0.00247078 7.85886" stroke="currentColor" strokeWidth="1.2" />
                 </svg>
               </button>

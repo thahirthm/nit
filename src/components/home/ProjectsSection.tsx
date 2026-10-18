@@ -168,9 +168,17 @@ export function ProjectsSection() {
           card, and cards run fully edge-to-edge on both sides from then on. */}
       <div className="w-full">
         <Swiper
+          // Remount on language change so Swiper re-reads the page direction (RTL in Arabic).
+          key={language}
+          // Explicit direction: Swiper reads it on init, which runs before LanguageProvider
+          // flips <html dir>, so relying on the inherited direction left slides offset in Arabic.
+          dir={language === "ar" ? "rtl" : "ltr"}
           modules={[Navigation]}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
+            // Re-sync arrows after a remount instead of keeping the previous state.
+            setIsBeginning(swiper.isBeginning);
+            setIsEnd(swiper.isEnd);
           }}
           onSlideChange={(swiper) => {
             setIsBeginning(swiper.isBeginning);

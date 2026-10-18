@@ -98,6 +98,9 @@ export function NewsSection({
       <div className="w-full px-6 lg:px-16">
         <Swiper
           key={`${activeCategory}-${language}`}
+          // Explicit direction: Swiper reads it on init, which runs before LanguageProvider
+          // flips <html dir>, so relying on the inherited direction left slides offset in Arabic.
+          dir={language === "ar" ? "rtl" : "ltr"}
           modules={[Navigation]}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
