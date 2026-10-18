@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Reveal } from "@/components/ui/Reveal";
@@ -117,14 +117,30 @@ export function AboutHistory() {
   const { language } = useLanguage();
   const isAr = language === "ar";
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const active = milestones[activeIndex];
   const lastIndex = milestones.length - 1;
 
-  const goPrev = () => setActiveIndex((i) => Math.max(0, i - 1));
-  const goNext = () => setActiveIndex((i) => Math.min(lastIndex, i + 1));
+  const goPrev = () => setActiveIndex((i) => (i === 0 ? lastIndex : i - 1));
+  const goNext = () => setActiveIndex((i) => (i === lastIndex ? 0 : i + 1));
+
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev === lastIndex ? 0 : prev + 1));
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [activeIndex, isPaused, lastIndex]);
 
   return (
-    <section id="our-history" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    <section
+      id="our-history"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
+    >
       <div className="px-6 lg:px-16">
         <Reveal delay={0} duration={0.8} y={30}>
           <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-12">
@@ -173,7 +189,7 @@ export function AboutHistory() {
                     key={m.year}
                     aria-label={`Show ${m.year}`}
                     onClick={() => setActiveIndex(i)}
-                    className="p-1"
+                    className="p-1 cursor-pointer focus:outline-none"
                   >
                     <span
                       className={`block w-[11px] h-[11px] rounded-full border-2 transition-colors duration-500 ${
@@ -191,7 +207,7 @@ export function AboutHistory() {
                 <button
                   key={m.year}
                   onClick={() => setActiveIndex(i)}
-                  className={`font-[family-name:var(--font-anek-latin)] text-[13px] sm:text-sm lg:text-base transition-colors duration-300 ${
+                  className={`cursor-pointer font-[family-name:var(--font-anek-latin)] text-[13px] sm:text-sm lg:text-base transition-colors duration-300 focus:outline-none ${
                     i === activeIndex ? "text-[#2E368F] font-medium" : "text-gray-400 hover:text-gray-600"
                   }`}
                 >
@@ -206,16 +222,14 @@ export function AboutHistory() {
             <button
               aria-label={isAr ? "السابق" : "Previous"}
               onClick={goPrev}
-              disabled={activeIndex === 0}
-              className={`transition-colors ${activeIndex === 0 ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
+              className="cursor-pointer transition-colors text-gray-400 hover:text-[#2E368F]"
             >
               <ArrowIcon className="rotate-180" />
             </button>
             <button
               aria-label={isAr ? "التالي" : "Next"}
               onClick={goNext}
-              disabled={activeIndex === lastIndex}
-              className={`transition-colors ${activeIndex === lastIndex ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
+              className="cursor-pointer transition-colors text-[#2E368F] hover:text-[#1c2260]"
             >
               <ArrowIcon />
             </button>

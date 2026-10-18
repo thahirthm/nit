@@ -41,7 +41,7 @@ const projects = [
     location: { en: "Dumat Al Jandal", ar: "دومة الجندل" },
     client: { en: "Principal Buyer", ar: "الجهة المالكة الرئيسية" },
     image: "/images/pr2.png",
-    hoverImage: "/images/h-fp.png",
+    hoverImage: "/images/pr2-hover.png",
     logo: "/images/vision-2030.svg",
     logoAlt: { en: "Vision 2030", ar: "رؤية 2030" },
     isVision2030: true,

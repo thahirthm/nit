@@ -144,14 +144,14 @@ export function Header() {
               <div className={`flex items-center border text-[13px] font-semibold h-9 transition-colors duration-300 ${isTransparent ? 'border-white/30' : 'border-[#2b307d]'}`}>
                 <button
                   onClick={() => setLanguage('en')}
-                  className={`px-3.5 h-full flex items-center justify-center tracking-wide transition-colors duration-300 ${language === 'en' ? (isTransparent ? 'bg-white text-[#2b307d]' : 'bg-[#2b307d] text-white') : (isTransparent ? 'bg-transparent text-white' : 'bg-white text-[#2b307d]')}`}
+                  className={`cursor-pointer px-3.5 h-full flex items-center justify-center tracking-wide transition-colors duration-300 ${language === 'en' ? (isTransparent ? 'bg-white text-[#2b307d]' : 'bg-[#2b307d] text-white') : (isTransparent ? 'bg-transparent text-white' : 'bg-white text-[#2b307d]')}`}
                 >
                   ENG
                 </button>
                 <div className={`w-[1px] h-full transition-colors duration-300 ${isTransparent ? 'bg-white/30' : 'bg-[#2b307d]'}`}></div>
                 <button
                   onClick={() => setLanguage('ar')}
-                  className={`px-3.5 h-full flex items-center justify-center tracking-wide font-arabic transition-colors duration-300 ${language === 'ar' ? (isTransparent ? 'bg-white text-[#2b307d]' : 'bg-[#2b307d] text-white') : (isTransparent ? 'bg-transparent text-white' : 'bg-white text-[#2b307d]')}`}
+                  className={`cursor-pointer px-3.5 h-full flex items-center justify-center tracking-wide font-arabic transition-colors duration-300 ${language === 'ar' ? (isTransparent ? 'bg-white text-[#2b307d]' : 'bg-[#2b307d] text-white') : (isTransparent ? 'bg-transparent text-white' : 'bg-white text-[#2b307d]')}`}
                   dir="rtl"
                 >
                   عربي
@@ -162,7 +162,7 @@ export function Header() {
               <button
                 onClick={() => setIsMegaMenuOpen(true)}
                 aria-label="Open full menu"
-                className={`${isTransparent ? 'text-white' : 'text-[#2b307d]'}`}
+                className={`cursor-pointer ${isTransparent ? 'text-white' : 'text-[#2b307d]'}`}
               >
                 <Plus className="w-5 h-5" strokeWidth={1.5} />
               </button>
@@ -170,7 +170,7 @@ export function Header() {
 
             {/* Mobile Hamburger Button */}
             <button
-              className={`xl:hidden p-2 transition-colors ${isTransparent ? 'text-white' : 'text-[#2b307d]'}`}
+              className={`cursor-pointer xl:hidden p-2 transition-colors ${isTransparent ? 'text-white' : 'text-[#2b307d]'}`}
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open menu"
             >
@@ -194,7 +194,7 @@ export function Header() {
       <div className={`fixed top-0 right-0 h-screen w-full sm:w-[350px] bg-white z-50 xl:hidden transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} flex flex-col shadow-2xl`}>
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <Image quality={95} src="/images/nit-logo.svg" alt="Logo" width={120} height={30} className="h-7 w-auto object-contain" />
-          <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#2b307d] hover:bg-gray-50 rounded-full transition-colors">
+          <button onClick={() => setIsMobileMenuOpen(false)} className="cursor-pointer p-2 text-[#2b307d] hover:bg-gray-50 rounded-full transition-colors">
             <X className="w-6 h-6" strokeWidth={1.5} />
           </button>
         </div>
@@ -210,7 +210,7 @@ export function Header() {
                   dir={language === 'ar' ? 'rtl' : 'ltr'}
                   className={`flex items-center justify-between text-[13px] font-medium tracking-wider text-[#2b307d] ${language === 'ar' ? 'font-arabic' : ''}`}
                 >
-                  <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)} className="flex-1">
+                  <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)} className="flex-1 cursor-pointer">
                     {language === 'ar' ? link.name.ar : link.name.en}
                   </Link>
                   {link.hasDropdown && (
@@ -219,7 +219,7 @@ export function Header() {
                       aria-label={isExpanded ? 'Collapse' : 'Expand'}
                       aria-expanded={isExpanded}
                       onClick={() => setExpandedMobileKey((current) => (current === link.key ? null : link.key ?? null))}
-                      className="p-1 -m-1"
+                      className="cursor-pointer p-1 -m-1"
                     >
                       <ChevronDown
                         className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
@@ -239,7 +239,7 @@ export function Header() {
                           key={sub.en}
                           href={sub.href}
                           onClick={() => setIsMobileMenuOpen(false)}
-                          className="text-[12px] font-medium tracking-wider text-gray-500 hover:text-[#2b307d] transition-colors"
+                          className="cursor-pointer text-[12px] font-medium tracking-wider text-gray-500 hover:text-[#2b307d] transition-colors"
                         >
                           {language === 'ar' ? sub.ar : sub.en}
                         </Link>
@@ -255,14 +255,14 @@ export function Header() {
           <div className="mt-8 flex md:hidden items-center border border-[#2b307d] text-[13px] font-semibold h-10 w-fit">
             <button
               onClick={() => setLanguage('en')}
-              className={`px-5 h-full flex items-center justify-center tracking-wide transition-colors duration-300 ${language === 'en' ? 'bg-[#2b307d] text-white' : 'bg-white text-[#2b307d]'}`}
+              className={`cursor-pointer px-5 h-full flex items-center justify-center tracking-wide transition-colors duration-300 ${language === 'en' ? 'bg-[#2b307d] text-white' : 'bg-white text-[#2b307d]'}`}
             >
               ENG
             </button>
             <div className="w-[1px] h-full bg-[#2b307d]"></div>
             <button
               onClick={() => setLanguage('ar')}
-              className={`px-5 h-full flex items-center justify-center tracking-wide font-arabic transition-colors duration-300 ${language === 'ar' ? 'bg-[#2b307d] text-white' : 'bg-white text-[#2b307d]'}`}
+              className={`cursor-pointer px-5 h-full flex items-center justify-center tracking-wide font-arabic transition-colors duration-300 ${language === 'ar' ? 'bg-[#2b307d] text-white' : 'bg-white text-[#2b307d]'}`}
               dir="rtl"
             >
               عربي
