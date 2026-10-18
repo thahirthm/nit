@@ -52,7 +52,7 @@ export function SolutionsCards() {
               delay={cardIndex * 0.12}
               duration={0.8}
               y={40}
-              className="relative h-[600px] sm:h-[560px] lg:h-[620px] overflow-hidden"
+              className="relative h-[460px] sm:h-[560px] lg:h-[620px] overflow-hidden"
               onMouseEnter={() => setActiveCard(card.slug)}
               onMouseLeave={() => setActiveCard((current) => (current === card.slug ? null : current))}
               onClick={() => setActiveCard((current) => (current === card.slug ? null : card.slug))}
@@ -75,14 +75,14 @@ export function SolutionsCards() {
 
               {/* Capabilities panel — slides in from the end side (right in English, left in Arabic) on hover (desktop) / tap (mobile) */}
               <div
-                className={`absolute top-4 end-4 bottom-4 sm:top-5 sm:end-5 sm:bottom-5 lg:top-6 lg:end-6 lg:bottom-6 w-[62%] sm:w-[65%] lg:w-[55%] bg-[#F5F5F5] flex flex-col px-6 sm:px-7 lg:px-8 py-6 sm:py-7 transition-transform duration-500 ease-out ${
+                className={`absolute top-4 start-4 end-4 sm:start-auto sm:top-5 sm:end-5 sm:bottom-5 lg:top-6 lg:end-6 lg:bottom-6 sm:w-[65%] lg:w-[55%] bg-[#F5F5F5] flex flex-col px-5 sm:px-7 lg:px-8 py-5 sm:py-7 transition-transform duration-500 ease-out ${
                   isActive ? "translate-x-0" : isAr ? "-translate-x-[calc(100%+2rem)]" : "translate-x-[calc(100%+2rem)]"
                 }`}
               >
                 <h4 className="text-gray-900 text-[22px] sm:text-[26px] lg:text-[30px] font-extralight tracking-tight">
                   {isAr ? "قدراتنا:" : "Our Capabilities:"}
                 </h4>
-                <div className="border-t border-gray-300 mt-auto">
+                <div className="border-t border-gray-300 mt-4 sm:mt-auto">
                   {card.capabilities.map((capability) => (
                     <div
                       key={capability.en}
