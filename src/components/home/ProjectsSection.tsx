@@ -40,7 +40,7 @@ const projects = [
     title: { en: "400 MW Wind farm", ar: "مزرعة رياح بقدرة 400 ميغاواط" },
     location: { en: "Dumat Al Jandal", ar: "دومة الجندل" },
     client: { en: "Principal Buyer", ar: "الجهة المالكة الرئيسية" },
-    image: "/images/fp1.png",
+    image: "/images/pr2.png",
     hoverImage: "/images/h-fp.png",
     logo: "/images/vision-2030.svg",
     logoAlt: { en: "Vision 2030", ar: "رؤية 2030" },
@@ -108,6 +108,9 @@ const projects = [
     },
   },
 ];
+
+// Only the first two projects are shown for now; raise this to bring the others back.
+const VISIBLE_PROJECTS = 2;
 
 function toOffcanvasProject(project: (typeof projects)[number]): ProjectOffcanvasProject {
   return {
@@ -191,7 +194,7 @@ export function ProjectsSection() {
             1024: { slidesOffsetBefore: 64 },
           }}
         >
-          {projects.map((project, i) => {
+          {projects.slice(0, VISIBLE_PROJECTS).map((project, i) => {
             const title = language === "ar" ? project.title.ar : project.title.en;
             const category = language === "ar" ? project.category.ar : project.category.en;
             const location = language === "ar" ? project.location.ar : project.location.en;
