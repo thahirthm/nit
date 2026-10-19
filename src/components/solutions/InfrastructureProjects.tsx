@@ -108,9 +108,21 @@ export function InfrastructureProjects() {
           >
             {active.projects.map((project, i) => (
               <SwiperSlide key={i} className="h-auto">
-                <article className="h-full flex flex-col">
+                {/* The whole card opens the details panel, not just the READ MORE button. */}
+                <article
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setSelectedProject(project)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedProject(project);
+                    }
+                  }}
+                  className="group/card h-full flex flex-col cursor-pointer"
+                >
                   <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden shrink-0">
-                    <Image quality={95} src={project.image} alt={isAr ? project.title.ar : project.title.en} fill className="object-cover" />
+                    <Image quality={95} src={project.image} alt={isAr ? project.title.ar : project.title.en} fill className="object-cover transition-transform duration-700 ease-out group-hover/card:scale-105" />
                     {/* Badges sit top-right and read right-to-left in Arabic */}
                     <div dir={isAr ? "rtl" : "ltr"} className={`absolute top-4 ${isAr ? "right-4" : "left-4"} flex items-center gap-2`}>
                       {project.badges.map((badge, bi) => (

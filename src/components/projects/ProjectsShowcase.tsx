@@ -38,9 +38,21 @@ export function ProjectsShowcase() {
   const projects = (sectorChips.find((chip) => chip.key === activeChip) ?? sectorChips[0]).projects;
 
   const renderCard = (project: ProjectOffcanvasProject) => (
-    <>
+    // The whole card opens the details panel, not just the READ MORE button.
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => setSelectedProject(project)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setSelectedProject(project);
+        }
+      }}
+      className="group/card h-full flex flex-col cursor-pointer"
+    >
       <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden shrink-0">
-        <Image quality={95} src={project.image} alt={project.title.en} fill className="object-cover" />
+        <Image quality={95} src={project.image} alt={project.title.en} fill className="object-cover transition-transform duration-700 ease-out group-hover/card:scale-105" />
         <div className={`absolute top-4 flex items-center gap-2 ${isAr ? "right-4" : "left-4"}`}>
           {project.badges.map((badge, bi) => (
             <span
@@ -96,7 +108,7 @@ export function ProjectsShowcase() {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 
   return (
@@ -183,7 +195,7 @@ export function ProjectsShowcase() {
           >
             {projects.map((project, i) => (
               <SwiperSlide key={`${project.title.en}-${i}`} className="!w-[calc(100%-72px)] !h-auto">
-                <div className="h-full flex flex-col">{renderCard(project)}</div>
+                {renderCard(project)}
               </SwiperSlide>
             ))}
           </Swiper>
