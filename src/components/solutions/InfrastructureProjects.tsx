@@ -7,147 +7,12 @@ import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { Button } from "@/components/ui/Button";
 import { ProjectOffcanvas, type ProjectOffcanvasProject } from "@/components/ui/ProjectOffcanvas";
+import { infrastructureCategories } from "@/data/projects";
 import { useLanguage } from "@/context/LanguageContext";
 import "swiper/css";
 
-const categories = [
-  {
-    key: "energy",
-    label: { en: "Energy Solutions", ar: "حلول الطاقة" },
-    projects: [
-      {
-        title: { en: "Jubail–Buraydah Pipeline", ar: "خط أنابيب الجبيل–بريدة" },
-        description: {
-          en: "587 km bidirectional water transmission. 650 km³/dy capacity.",
-          ar: "نقل المياه عبر خط ثنائي الاتجاه بطول 587 كيلومترًا، وبطاقة استيعابية تبلغ 650 كيلومترًا مكعبًا يوميًا.",
-        },
-        detail: {
-          en: "Awarded the Jubail–Buraydah Independent Water Transmission Pipeline — 587km, 650,000 m³/day capacity — the first large-scale private-sector potable water link in KSA. Two substations — Rumah 380kV BSP (SAR 915M) and Bisha PV 380/132kV BSP (SAR 644M) — also awarded.",
-          ar: "فاز المشروع بخط أنابيب نقل المياه المستقل الجبيل–بريدة — بطول 587 كم وطاقة استيعابية 650,000 م³/يوم — أول ربط مياه شرب خاص واسع النطاق في المملكة. كما تم ترسية محطتين فرعيتين: Rumah 380 كيلوفولت (915 مليون ريال) و Bisha PV 380/132 كيلوفولت (644 مليون ريال).",
-        },
-        image: "/images/s3.png",
-        badges: [
-          { en: "PROJECT OF THE YEAR", ar: "مشروع العام" },
-          { en: "WATER", ar: "المياه" },
-        ],
-        value: "8.5B SAR",
-        year: "2025",
-        scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
-      },
-      {
-        title: { en: "Al Henakiyah Solar PV", ar: "محطة الحناكية للطاقة الشمسية الكهروضوئية" },
-        description: {
-          en: "1,100 MW solar PV. Powers ~87,700 homes annually in the kingdom.",
-          ar: "محطة للطاقة الشمسية الكهروضوئية بقدرة 1,100 ميجاواط، توفر الطاقة لنحو 87,700 منزل سنويًا في المملكة.",
-        },
-        image: "/images/s-1.png",
-        badges: [
-          { en: "PROJECT OF THE YEAR", ar: "مشروع العام" },
-          { en: "ENERGY", ar: "الطاقة" },
-        ],
-        value: "3.75B SAR",
-        year: "2023",
-        scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
-      },
-      {
-        title: { en: "Rumah 380kV BSP 9077", ar: "محطة Rumah 380 كيلوفولت BSP 9077" },
-        description: {
-          en: "Design, procure, construct, install, and commission the Rumah 380kV BSP (A&B) substation",
-          ar: "تصميم محطة Rumah 380 كيلوفولت الفرعية (A وB)، وتوريد مكوناتها، وإنشاؤها، وتركيبها، وإدخالها حيز التشغيل.",
-        },
-        image: "/images/s-2.png",
-        badges: [{ en: "COMMS", ar: "الاتصالات" }],
-        value: "443M SAR",
-        year: "2024",
-        scope: { en: "Design+Build", ar: "التصميم والتنفيذ" },
-      },
-    ],
-  },
-  {
-    key: "water",
-    label: { en: "Water & MEP", ar: "المياه والكهروميكانيكية" },
-    projects: [
-      {
-        title: { en: "Jeddah Water Transmission Line", ar: "خط نقل مياه جدة" },
-        description: {
-          en: "Large-diameter transmission pipeline securing water supply for Jeddah's growing districts.",
-          ar: "خط نقل مياه كبير القطر يؤمّن إمدادات المياه للأحياء المتنامية في جدة.",
-        },
-        image: "/images/s3.png",
-        badges: [{ en: "WATER", ar: "المياه" }],
-        value: "1.2B SAR",
-        year: "2024",
-        scope: { en: "EPC", ar: "EPC" },
-      },
-      {
-        title: { en: "Regional Pumping Station Upgrade", ar: "تحديث محطة الضخ الإقليمية" },
-        description: {
-          en: "Capacity expansion and modernization of a regional water pumping station network.",
-          ar: "توسعة وتحديث شبكة محطات الضخ الإقليمية للمياه.",
-        },
-        image: "/images/s3.png",
-        badges: [{ en: "WATER", ar: "المياه" }],
-        value: "620M SAR",
-        year: "2023",
-        scope: { en: "Design+Build", ar: "تصميم وتنفيذ" },
-      },
-    ],
-  },
-  {
-    key: "industrial",
-    label: { en: "Industrial Solutions", ar: "الحلول الصناعية" },
-    projects: [
-      {
-        title: { en: "Process Plant Refurbishment", ar: "تجديد مصنع العمليات" },
-        description: {
-          en: "Full refurbishment and efficiency enhancement of a continuous-process industrial facility.",
-          ar: "تجديد شامل وتعزيز كفاءة منشأة صناعية ذات عمليات مستمرة.",
-        },
-        image: "/images/s-4.png",
-        badges: [{ en: "INDUSTRIAL", ar: "صناعي" }],
-        value: "950M SAR",
-        year: "2024",
-        scope: { en: "EPC", ar: "EPC" },
-      },
-    ],
-  },
-  {
-    key: "communication",
-    label: { en: "Communication", ar: "الاتصالات" },
-    projects: [
-      {
-        title: { en: "National Fiber Backbone Expansion", ar: "توسعة العمود الفقري الوطني للألياف الضوئية" },
-        description: {
-          en: "Expansion of fiber optic backbone infrastructure connecting major regional hubs.",
-          ar: "توسعة البنية التحتية للعمود الفقري للألياف الضوئية الرابطة بين المراكز الإقليمية الرئيسية.",
-        },
-        image: "/images/s-2.png",
-        badges: [{ en: "COMMS", ar: "الاتصالات" }],
-        value: "780M SAR",
-        year: "2023",
-        scope: { en: "EPC", ar: "EPC" },
-      },
-    ],
-  },
-  {
-    key: "om",
-    label: { en: "Operations & Maintenance", ar: "التشغيل والصيانة" },
-    projects: [
-      {
-        title: { en: "Substation O&M Program", ar: "برنامج تشغيل وصيانة محطات التحويل" },
-        description: {
-          en: "Long-term operations and maintenance contract across a network of regional substations.",
-          ar: "عقد تشغيل وصيانة طويل الأمد لشبكة من محطات التحويل الإقليمية.",
-        },
-        image: "/images/s5.png",
-        badges: [{ en: "O&M", ar: "التشغيل والصيانة" }],
-        value: "310M SAR",
-        year: "2025",
-        scope: { en: "O&M", ar: "تشغيل وصيانة" },
-      },
-    ],
-  },
-];
+// Same project lists as the Projects page showcase — maintained in @/data/projects.
+const categories = infrastructureCategories;
 
 export function InfrastructureProjects() {
   const { language } = useLanguage();
@@ -288,10 +153,10 @@ export function InfrastructureProjects() {
                       </div>
                       <div>
                         <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">
-                          {isAr ? "النطاق" : "Scope"}
+                          {project.completion ? (isAr ? "موعد الإنجاز" : "Completion on") : isAr ? "النطاق" : "Scope"}
                         </span>
                         <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">
-                          {isAr ? project.scope.ar : project.scope.en}
+                          {project.completion ?? (isAr ? project.scope.ar : project.scope.en)}
                         </span>
                       </div>
                     </div>

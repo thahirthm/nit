@@ -215,15 +215,20 @@ export function ProjectsSection() {
                   src={project.image}
                   alt={title}
                   fill
+                  sizes="1000px"
                   className="object-cover animate-kenburns"
                 />
 
                 {/* Hover image — slides down from the top to cover the base image */}
                 <div className="absolute inset-0 -translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out overflow-hidden">
+                  {/* Eager: the hover image sits off-screen until hover, so lazy loading
+                      would only start fetching it (it's a very large file) once the user hovers. */}
                   <Image quality={95}
                     src={project.hoverImage}
                     alt={`${title} at night`}
                     fill
+                    loading="eager"
+                    sizes="1000px"
                     className="object-cover animate-kenburns"
                   />
                 </div>

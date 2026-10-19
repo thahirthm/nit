@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { ProjectOffcanvas, type ProjectOffcanvasProject } from "@/components/ui/ProjectOffcanvas";
+import { infrastructureCategories, technologyCategories, type ProjectCategory } from "@/data/projects";
 import { useLanguage } from "@/context/LanguageContext";
 
 import "swiper/css";
@@ -15,98 +16,11 @@ const primaryTabs = [
   { en: "Technology", ar: "التقنية" },
 ] as const;
 
-const sectorChips = [
-  { en: "What's hot", ar: "الأبرز", count: 9 },
-  { en: "Water", ar: "المياه", count: 3 },
-  { en: "Energy", ar: "الطاقة", count: 2 },
-  { en: "Technology", ar: "التقنية", count: 2 },
-  { en: "Industrial", ar: "الصناعي", count: 1 },
-  { en: "Communication", ar: "الاتصالات", count: 1 },
-];
-
-type Project = ProjectOffcanvasProject;
-
-const badgeOfTheYear = { en: "PROJECT OF THE YEAR", ar: "مشروع العام" };
-const badgeWater = { en: "WATER", ar: "المياه" };
-const badgeEnergy = { en: "ENERGY", ar: "الطاقة" };
-const badgeComms = { en: "COMMS", ar: "الاتصالات" };
-const scopeEpc = { en: "EPC", ar: "الهندسة والتوريد والإنشاء (EPC)" };
-const scopeDesignBuild = { en: "Design+Build", ar: "التصميم والتنفيذ" };
-
-const projects: Project[] = [
-  {
-    title: { en: "Jubail–Buraydah Pipeline", ar: "خط أنابيب المياه بين الجبيل وبريدة" },
-    description: {
-      en: "587 km bidirectional water transmission. 650,000 m³/day capacity.",
-      ar: "خط لنقل المياه في الاتجاهين بطول 587 كيلومترًا، وبطاقة نقل تبلغ 650,000 متر مكعب يوميًا.",
-    },
-    image: "/images/pr-1.png",
-    badges: [badgeOfTheYear, badgeWater],
-    value: "8.5B SAR",
-    year: "2025",
-    scope: scopeEpc,
-  },
-  {
-    title: { en: "Al Henakiyah Solar PV", ar: "مشروع الحناكية للطاقة الشمسية الكهروضوئية" },
-    description: {
-      en: "1,100 MW solar PV. Powers ~87,700 homes annually in the kingdom.",
-      ar: "مشروع للطاقة الشمسية الكهروضوئية بقدرة 1,100 ميجاواط، يوفّر الطاقة اللازمة لنحو 87,700 منزل سنويًا في المملكة.",
-    },
-    image: "/images/pr-2.png",
-    badges: [badgeOfTheYear, badgeEnergy],
-    value: "3.75B SAR",
-    year: "2023",
-    scope: scopeEpc,
-  },
-  {
-    title: { en: "Rumah 380kV BSP 9077", ar: "محطة تحويل روضة 380 كيلوفولت BSP 9077" },
-    description: {
-      en: "Design, procure, construct, install, and commission the Rumah 380kV BSP (A&B) substation.",
-      ar: "تصميم محطة تحويل روضة 380 كيلوفولت (BSP) — القسمين (A وB) — وتوريد مكوناتها وإنشائها وتركيبها وإجراء الاختبارات اللازمة ووضعها في الخدمة.",
-    },
-    image: "/images/pr-3.png",
-    badges: [badgeComms],
-    value: "443M SAR",
-    year: "2024",
-    scope: scopeDesignBuild,
-  },
-  {
-    title: { en: "NEOM Fixed Network", ar: "شبكة نيوم الثابتة" },
-    description: {
-      en: "Optical network across access, aggregation, and backbone layers.",
-      ar: "شبكة ألياف ضوئية تشمل طبقات الوصول وتجميع البيانات والشبكة الأساسية.",
-    },
-    image: "/images/pr-3.png",
-    badges: [badgeComms],
-    value: "443M SAR",
-    year: "2024",
-    scope: scopeDesignBuild,
-  },
-  {
-    title: { en: "Al Henakiyah Solar PV", ar: "مشروع الحناكية للطاقة الشمسية الكهروضوئية" },
-    description: {
-      en: "1,100 MW solar PV. Powers ~87,700 homes annually in the kingdom.",
-      ar: "مشروع للطاقة الشمسية الكهروضوئية بقدرة 1,100 ميجاواط، يوفّر الطاقة اللازمة لنحو 87,700 منزل سنويًا في المملكة.",
-    },
-    image: "/images/pr-2.png",
-    badges: [badgeOfTheYear, badgeEnergy],
-    value: "3.75B SAR",
-    year: "2023",
-    scope: scopeEpc,
-  },
-  {
-    title: { en: "Jubail–Buraydah Pipeline", ar: "خط أنابيب المياه بين الجبيل وبريدة" },
-    description: {
-      en: "587 km bidirectional water transmission. 650,000 m³/day capacity.",
-      ar: "خط لنقل المياه في الاتجاهين بطول 587 كيلومترًا، وبطاقة نقل تبلغ 650,000 متر مكعب يوميًا.",
-    },
-    image: "/images/pr-1.png",
-    badges: [badgeOfTheYear, badgeWater],
-    value: "8.5B SAR",
-    year: "2025",
-    scope: scopeEpc,
-  },
-];
+// Sector chips per primary tab — each chip shows its own projects; the count is derived from the list.
+const tabChips: Record<(typeof primaryTabs)[number]["en"], ProjectCategory[]> = {
+  Infrastructure: infrastructureCategories,
+  Technology: technologyCategories,
+};
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className={className}>
@@ -118,10 +32,12 @@ export function ProjectsShowcase() {
   const { language } = useLanguage();
   const isAr = language === "ar";
   const [activeTab, setActiveTab] = useState<(typeof primaryTabs)[number]["en"]>("Infrastructure");
-  const [activeChip, setActiveChip] = useState("What's hot");
+  const [activeChip, setActiveChip] = useState("whats-hot");
   const [selectedProject, setSelectedProject] = useState<ProjectOffcanvasProject | null>(null);
+  const sectorChips = tabChips[activeTab];
+  const projects = (sectorChips.find((chip) => chip.key === activeChip) ?? sectorChips[0]).projects;
 
-  const renderCard = (project: Project) => (
+  const renderCard = (project: ProjectOffcanvasProject) => (
     <>
       <div className="relative w-full h-[220px] sm:h-[260px] overflow-hidden shrink-0">
         <Image quality={95} src={project.image} alt={project.title.en} fill className="object-cover" />
@@ -166,10 +82,10 @@ export function ProjectsShowcase() {
           </div>
           <div>
             <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">
-              {isAr ? "نطاق الأعمال" : "Scope"}
+              {project.completion ? (isAr ? "موعد الإنجاز" : "Completion on") : isAr ? "نطاق الأعمال" : "Scope"}
             </span>
             <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">
-              {isAr ? project.scope.ar : project.scope.en}
+              {project.completion ?? (isAr ? project.scope.ar : project.scope.en)}
             </span>
           </div>
         </div>
@@ -210,7 +126,10 @@ export function ProjectsShowcase() {
               return (
                 <button
                   key={tab.en}
-                  onClick={() => setActiveTab(tab.en)}
+                  onClick={() => {
+                    setActiveTab(tab.en);
+                    setActiveChip("whats-hot");
+                  }}
                   className={`px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 ${
                     isActive
                       ? "bg-[#2E368F] text-white border-[#2E368F]"
@@ -226,12 +145,12 @@ export function ProjectsShowcase() {
           {/* Sector chips */}
           <div className="mt-5 flex flex-nowrap sm:flex-wrap items-center gap-x-6 gap-y-2 overflow-x-auto sm:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden border-b border-gray-200 pt-3 pb-4">
             {sectorChips.map((chip) => {
-              const isActive = chip.en === activeChip;
+              const isActive = chip.key === activeChip;
               return (
                 <button
-                  key={chip.en}
+                  key={chip.key}
                   onClick={(e) => {
-                    setActiveChip(chip.en);
+                    setActiveChip(chip.key);
                     // On mobile the chips are a horizontal slider — bring the tapped chip into view
                     e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
                   }}
@@ -239,8 +158,8 @@ export function ProjectsShowcase() {
                     isActive ? "text-[#2E368F] border-[#2E368F]" : "text-gray-400 border-transparent hover:text-gray-600"
                   }`}
                 >
-                  {isAr ? chip.ar : chip.en}
-                  {chip.count !== null && <span className="mx-1">{chip.count}</span>}
+                  {isAr ? chip.label.ar : chip.label.en}
+                  {chip.projects.length > 0 && <span className="mx-1">{chip.projects.length}</span>}
                 </button>
               );
             })}
@@ -250,8 +169,9 @@ export function ProjectsShowcase() {
         {/* Project cards — Swiper slider on mobile, grid from sm up */}
         <div className="mt-8 lg:mt-10 sm:hidden -mx-6">
           <Swiper
-            // Remount on language change so Swiper re-reads the page direction (RTL in Arabic).
-            key={language}
+            // Remount on language change so Swiper re-reads the page direction (RTL in Arabic),
+            // and on tab/chip change so the slider starts from the first card of the new list.
+            key={`${language}-${activeTab}-${activeChip}`}
             // Explicit direction: Swiper reads it on init, which runs before LanguageProvider
             // flips <html dir>, so relying on the inherited direction left slides offset in Arabic.
             dir={isAr ? "rtl" : "ltr"}
@@ -271,7 +191,7 @@ export function ProjectsShowcase() {
 
         <div className="mt-8 lg:mt-10 hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14 lg:gap-y-16">
           {projects.map((project, i) => (
-            <Reveal key={`${project.title.en}-${i}`} delay={(i % 3) * 0.1} duration={0.7} y={40} className="h-full flex flex-col">
+            <Reveal key={`${activeTab}-${activeChip}-${project.title.en}-${i}`} delay={(i % 3) * 0.1} duration={0.7} y={40} className="h-full flex flex-col">
               {renderCard(project)}
             </Reveal>
           ))}

@@ -13,6 +13,8 @@ export interface ProjectOffcanvasProject {
   value: string;
   year: string;
   scope: { en: string; ar: string };
+  /** When set, the third stat shows "Completion on" with this year instead of the scope. */
+  completion?: string;
 }
 
 interface ProjectOffcanvasProps {
@@ -113,9 +115,11 @@ export function ProjectOffcanvas({ project, onClose }: ProjectOffcanvasProps) {
                   <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">{project.year}</span>
                 </div>
                 <div className={isAr ? "text-right" : "text-left"}>
-                  <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">{scopeLabel}</span>
+                  <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">
+                    {project.completion ? (isAr ? "موعد الإنجاز" : "COMPLETION ON") : scopeLabel}
+                  </span>
                   <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">
-                    {isAr ? project.scope.ar : project.scope.en}
+                    {project.completion ?? (isAr ? project.scope.ar : project.scope.en)}
                   </span>
                 </div>
               </div>

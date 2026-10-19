@@ -7,167 +7,12 @@ import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { Button } from "@/components/ui/Button";
 import { ProjectOffcanvas, type ProjectOffcanvasProject } from "@/components/ui/ProjectOffcanvas";
+import { technologyCategories } from "@/data/projects";
 import { useLanguage } from "@/context/LanguageContext";
 import "swiper/css";
 
-const categories = [
-  {
-    key: "digital-transformation",
-    label: { en: "Digital Transformation", ar: "التحول الرقمي" },
-    projects: [
-      {
-        title: { en: "Jubail–Buraydah Pipeline", ar: "خط أنابيب الجبيل–بريدة" },
-        description: {
-          en: "587 km bidirectional water transmission. 650 km³/dy capacity.",
-          ar: "نقل المياه عبر خط ثنائي الاتجاه بطول 587 كيلومترًا، وبطاقة استيعابية تبلغ 650 كيلومترًا مكعبًا يوميًا.",
-        },
-        image: "/images/pr-1.png",
-        badges: [
-          { en: "PROJECT OF THE YEAR", ar: "مشروع العام" },
-          { en: "WATER", ar: "المياه" },
-        ],
-        value: "8.5B SAR",
-        year: "2025",
-        scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
-      },
-      {
-        title: { en: "Al Henakiyah Solar PV", ar: "محطة الحناكية للطاقة الشمسية الكهروضوئية" },
-        description: {
-          en: "1,100 MW solar PV. Powers ~87,700 homes annually in the kingdom.",
-          ar: "محطة للطاقة الشمسية الكهروضوئية بقدرة 1,100 ميجاواط، توفر الطاقة لنحو 87,700 منزل سنويًا في المملكة.",
-        },
-        image: "/images/pr-2.png",
-        badges: [
-          { en: "PROJECT OF THE YEAR", ar: "مشروع العام" },
-          { en: "ENERGY", ar: "الطاقة" },
-        ],
-        value: "3.75B SAR",
-        year: "2023",
-        scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
-      },
-      {
-        title: { en: "Rumah 380kV BSP 9077", ar: "محطة Rumah 380 كيلوفولت BSP 9077" },
-        description: {
-          en: "Design, procure, construct, install, and commission the Rumah 380kV BSP (A&B) substation",
-          ar: "تصميم محطة Rumah 380 كيلوفولت الفرعية (A وB)، وتوريد مكوناتها، وإنشاؤها، وتركيبها، وإدخالها حيز التشغيل.",
-        },
-        image: "/images/pr-3.png",
-        badges: [{ en: "COMMS", ar: "الاتصالات" }],
-        value: "443M SAR",
-        year: "2024",
-        scope: { en: "Design+Build", ar: "التصميم والتنفيذ" },
-      },
-    ],
-  },
-  {
-    key: "data-ai",
-    label: { en: "Data & AI", ar: "البيانات والذكاء الاصطناعي" },
-    projects: [
-      {
-        title: { en: "National AI Analytics Platform", ar: "منصة التحليلات الوطنية بالذكاء الاصطناعي" },
-        description: {
-          en: "A national-scale analytics platform powering predictive insights across government services.",
-          ar: "منصة تحليلات على مستوى وطني تدعم الرؤى التنبؤية عبر الخدمات الحكومية.",
-        },
-        image: "/images/t-2.png",
-        badges: [{ en: "DATA & AI", ar: "البيانات والذكاء الاصطناعي" }],
-        value: "520M SAR",
-        year: "2024",
-        scope: { en: "EPC", ar: "EPC" },
-      },
-    ],
-  },
-  {
-    key: "erp-solutions",
-    label: { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسات" },
-    projects: [
-      {
-        title: { en: "Enterprise ERP Rollout", ar: "نشر نظام تخطيط موارد المؤسسات" },
-        description: {
-          en: "Unified ERP implementation across finance, procurement, and operations for a national enterprise.",
-          ar: "تنفيذ موحّد لنظام تخطيط موارد المؤسسات يشمل الشؤون المالية والمشتريات والعمليات لمؤسسة وطنية.",
-        },
-        image: "/images/t-3.png",
-        badges: [{ en: "ERP", ar: "تخطيط الموارد" }],
-        value: "410M SAR",
-        year: "2023",
-        scope: { en: "Design+Build", ar: "تصميم وتنفيذ" },
-      },
-    ],
-  },
-  {
-    key: "blockchain",
-    label: { en: "Blockchain", ar: "سلاسل الكتل" },
-    projects: [
-      {
-        title: { en: "Government Blockchain Registry", ar: "سجل البلوك تشين الحكومي" },
-        description: {
-          en: "A secure blockchain registry platform for verifiable government record-keeping.",
-          ar: "منصة سجل بلوك تشين آمنة لحفظ السجلات الحكومية بشكل موثّق.",
-        },
-        image: "/images/t-6.png",
-        badges: [{ en: "BLOCKCHAIN", ar: "البلوك تشين" }],
-        value: "180M SAR",
-        year: "2024",
-        scope: { en: "EPC", ar: "EPC" },
-      },
-    ],
-  },
-  {
-    key: "cloud-services",
-    label: { en: "Cloud services", ar: "الخدمات السحابية" },
-    projects: [
-      {
-        title: { en: "Tier III Data Center Build", ar: "إنشاء مركز بيانات من الفئة الثالثة" },
-        description: {
-          en: "Design and build of a Tier III data center supporting national cloud infrastructure.",
-          ar: "تصميم وإنشاء مركز بيانات من الفئة الثالثة لدعم البنية التحتية السحابية الوطنية.",
-        },
-        image: "/images/t-4.png",
-        badges: [{ en: "CLOUD", ar: "السحابة" }],
-        value: "890M SAR",
-        year: "2025",
-        scope: { en: "Design+Build", ar: "تصميم وتنفيذ" },
-      },
-    ],
-  },
-  {
-    key: "cybersecurity",
-    label: { en: "Cybersecurity", ar: "الأمن السيبراني" },
-    projects: [
-      {
-        title: { en: "National SOC Deployment", ar: "نشر مركز عمليات الأمن الوطني" },
-        description: {
-          en: "Deployment of a 24/7 security operations center protecting critical national systems.",
-          ar: "نشر مركز عمليات أمن يعمل على مدار الساعة لحماية الأنظمة الوطنية الحيوية.",
-        },
-        image: "/images/t-5.png",
-        badges: [{ en: "CYBERSECURITY", ar: "الأمن السيبراني" }],
-        value: "265M SAR",
-        year: "2024",
-        scope: { en: "EPC", ar: "EPC" },
-      },
-    ],
-  },
-  {
-    key: "managed-services",
-    label: { en: "Managed services", ar: "الخدمات المُدارة" },
-    projects: [
-      {
-        title: { en: "Enterprise Managed IT Services", ar: "خدمات تقنية معلومات مُدارة للمؤسسات" },
-        description: {
-          en: "Ongoing managed IT operations and support contract across a multi-site enterprise network.",
-          ar: "عقد تشغيل ودعم مستمر لتقنية المعلومات عبر شبكة مؤسسية متعددة المواقع.",
-        },
-        image: "/images/t-8.png",
-        badges: [{ en: "MANAGED SERVICES", ar: "الخدمات المُدارة" }],
-        value: "150M SAR",
-        year: "2023",
-        scope: { en: "O&M", ar: "تشغيل وصيانة" },
-      },
-    ],
-  },
-];
+// Same project lists as the Projects page showcase — maintained in @/data/projects.
+const categories = technologyCategories;
 
 export function TechnologyProjects() {
   const { language } = useLanguage();
@@ -308,10 +153,10 @@ export function TechnologyProjects() {
                       </div>
                       <div>
                         <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">
-                          {isAr ? "النطاق" : "Scope"}
+                          {project.completion ? (isAr ? "موعد الإنجاز" : "Completion on") : isAr ? "النطاق" : "Scope"}
                         </span>
                         <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">
-                          {isAr ? project.scope.ar : project.scope.en}
+                          {project.completion ?? (isAr ? project.scope.ar : project.scope.en)}
                         </span>
                       </div>
                     </div>
