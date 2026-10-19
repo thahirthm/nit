@@ -156,7 +156,7 @@ export function Footer() {
           <h2
             dir={isAr ? "rtl" : "ltr"}
             className={`text-white font-extralight leading-[1.15] tracking-tight ${
-              isAr ? "text-left text-[26px] sm:text-[36px] lg:text-[44px]" : "text-[35px] sm:text-[50px] lg:text-[60px]"
+              isAr ? "text-right text-[26px] sm:text-[36px] lg:text-[44px]" : "text-[35px] sm:text-[50px] lg:text-[60px]"
             }`}
           >
             {isAr ? <>رؤيتكم، نهندسها<br />ونحوّلها إلى واقع.</> : <>Your vision, Engineered<br />&amp; delivered.</>}
@@ -165,7 +165,7 @@ export function Footer() {
 
         {/* Contact form — second on mobile, right column on desktop (spans both rows) */}
         <div className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 max-w-[520px] lg:ml-auto">
-          <h3 dir={isAr ? "rtl" : "ltr"} className="text-white text-[26px] lg:text-[28px] font-normal">
+          <h3 dir={isAr ? "rtl" : "ltr"} className={`text-white text-[26px] lg:text-[28px] font-normal ${isAr ? "text-right" : "text-left"}`}>
             {isAr ? (
               <>انضم إلى مسيرة نمونا <span className="text-white/40 mx-1">|</span> استثمر في المستقبل!</>
             ) : (

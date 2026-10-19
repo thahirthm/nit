@@ -40,8 +40,8 @@ export function InvestorsDocuments() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1} duration={0.9} y={30} className="relative w-full h-[160px] sm:h-[220px] lg:h-[260px] mt-8 lg:mt-10 overflow-hidden">
-          <Image quality={95} src="/images/invest.png" alt="NIT corporate brand" fill className="object-cover" />
+        <Reveal delay={0.1} duration={0.9} y={30} className="relative w-full h-[160px] sm:h-[220px] lg:h-[260px] mt-8 lg:mt-10 overflow-hidden group">
+          <Image quality={95} src="/images/invest.png" alt="NIT corporate brand" fill className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105" />
         </Reveal>
 
         <div className="mt-2 border-t border-gray-200">

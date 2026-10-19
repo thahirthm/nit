@@ -304,9 +304,8 @@ export function GlanceSection() {
           {language === "ar" ? "21 مليار ريال سعودي" : "21B SAR"}
         </h3>
         <p
-          className={`max-h-0 opacity-0 overflow-hidden text-lg lg:text-xl text-gray-500 font-normal transition-all duration-500 ease-out group-hover:max-h-10 group-hover:opacity-100 group-hover:mt-3 ${
-            achievementActive ? "max-h-10 opacity-100 mt-3" : ""
-          }`}
+          className={`max-h-0 opacity-0 overflow-hidden text-lg lg:text-xl text-gray-500 font-normal transition-all duration-500 ease-out group-hover:max-h-10 group-hover:opacity-100 group-hover:mt-3 ${achievementActive ? "max-h-10 opacity-100 mt-3" : ""
+            }`}
         >
           {language === "ar" ? "أبرز إنجاز" : "Greatest Achievement"}
         </p>
@@ -324,9 +323,8 @@ export function GlanceSection() {
 
         <p
           dir={language === "ar" ? "rtl" : "ltr"}
-          className={`max-h-0 opacity-0 overflow-hidden text-lg lg:text-xl text-gray-900 font-normal transition-all duration-500 ease-out group-hover:max-h-10 group-hover:opacity-100 ${
-            achievementActive ? "max-h-10 opacity-100" : ""
-          }`}
+          className={`max-h-0 opacity-0 overflow-hidden text-lg lg:text-xl text-gray-900 font-normal transition-all duration-500 ease-out group-hover:max-h-10 group-hover:opacity-100 ${achievementActive ? "max-h-10 opacity-100" : ""
+            }`}
         >
           {language === "ar" ? "قرية أوكساغون" : "Oxagon Village"}
         </p>
@@ -388,9 +386,8 @@ export function GlanceSection() {
         <div dir={language === "ar" ? "rtl" : "ltr"} className="flex items-end justify-between gap-3 w-full">
           <span className="text-lg lg:text-xl font-normal opacity-80 shrink-0">(GMT+3)</span>
           <span
-            className={`font-normal leading-tight text-right ${
-              language === "ar" ? "text-xl lg:text-2xl" : "text-[40px] lg:text-[50px] leading-none"
-            }`}
+            className={`font-normal leading-tight text-right ${language === "ar" ? "text-xl lg:text-2xl" : "text-[40px] lg:text-[50px] leading-none"
+              }`}
           >
             {language === "ar" ? "جدة، المملكة العربية السعودية" : "Jeddah,Ksa"}
           </span>
@@ -403,9 +400,8 @@ export function GlanceSection() {
   const card6 = (
     <div
       onClick={() => setVisionActive((v) => !v)}
-      className={`relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 overflow-hidden group snap-start bg-[#F9F9F9] p-8 pb-10 flex flex-col ${
-        language === "ar" ? "h-[480px] lg:h-[500px]" : "h-[430px] lg:h-[450px]"
-      }`}
+      className={`relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 overflow-hidden group snap-start bg-[#F9F9F9] p-8 pb-10 flex flex-col ${language === "ar" ? "h-[480px] lg:h-[500px]" : "h-[430px] lg:h-[450px]"
+        }`}
     >
       <div dir={language === "ar" ? "rtl" : "ltr"} className="flex justify-end mb-8 lg:mb-16">
         <Image quality={95}
@@ -429,14 +425,12 @@ export function GlanceSection() {
           <span className="text-xl text-gray-400 font-normal">50%</span>
         </div>
         <div
-          className={`w-full bg-gray-200 relative mb-3 transition-all duration-500 ease-out ${
-            visionActive ? "h-[3px]" : "h-[2px] group-hover:h-[3px]"
-          }`}
+          className={`w-full bg-gray-200 relative mb-3 transition-all duration-500 ease-out ${visionActive ? "h-[3px]" : "h-[2px] group-hover:h-[3px]"
+            }`}
         >
           <div
-            className={`absolute top-0 h-full bg-[#2E368F] transition-all duration-700 ease-out ${
-              language === "ar" ? "right-0" : "left-0"
-            } ${visionActive ? "w-[37%]" : "w-[4%] group-hover:w-[37%]"}`}
+            className={`absolute top-0 h-full bg-[#2E368F] transition-all duration-700 ease-out ${language === "ar" ? "right-0" : "left-0"
+              } ${visionActive ? "w-[37%]" : "w-[4%] group-hover:w-[37%]"}`}
           />
         </div>
         <div className="flex justify-between text-xs text-gray-500">

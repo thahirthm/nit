@@ -173,12 +173,12 @@ export function InvestorsKeyMetrics() {
 
                 {/* mt-auto pins the line to the card bottom, so lines in the same row align even when a sub-label wraps */}
                 <div className="mt-auto pt-5">
-                <div className="h-px bg-white/20 relative overflow-hidden">
-                  <div
-                    className="absolute start-0 top-0 h-px bg-[#81D1E8] transition-all duration-[1600ms] ease-out"
-                    style={{ width: hasStarted ? `${metric.progress}%` : "0%" }}
-                  />
-                </div>
+                  <div className="h-px bg-white/20 relative overflow-hidden">
+                    <div
+                      className="absolute start-0 top-0 h-px bg-[#81D1E8] transition-all duration-[1600ms] ease-out"
+                      style={{ width: hasStarted ? `${metric.progress}%` : "0%" }}
+                    />
+                  </div>
                 </div>
               </Reveal>
             ))}
