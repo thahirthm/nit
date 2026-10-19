@@ -77,7 +77,7 @@ export function AboutHighlights() {
                     e.stopPropagation();
                     setLogoIndex(i);
                   }}
-                  className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${i === logoIndex ? "bg-[#2E368F]" : "bg-gray-300"}`}
+                  className={`w-1.5 h-1.5 transition-colors duration-300 ${i === logoIndex ? "bg-[#2E368F]" : "bg-gray-300"}`}
                 />
               ))}
             </div>
