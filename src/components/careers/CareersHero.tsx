@@ -55,7 +55,7 @@ export function CareersHero() {
 
         {/* Arabic (desktop): the text sits in the left half, starting at the page centre and running left */}
         <div className={`flex mt-10 lg:mt-14 ${isAr ? "justify-start lg:justify-end" : "justify-end"}`}>
-          <div dir={isAr ? "rtl" : "ltr"} className={`max-w-xl space-y-6 ${isAr ? "lg:w-1/2 lg:max-w-none lg:pe-0" : ""}`}>
+          <div dir={isAr ? "rtl" : "ltr"} className={`max-w-xl space-y-6 ${isAr ? "lg:w-1/2 lg:max-w-none" : ""}`}>
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
