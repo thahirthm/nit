@@ -145,7 +145,7 @@ export function AboutHistory() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16 lg:items-center">
           {/* Big year — slides in from the top on change */}
-          <Reveal delay={0.1} duration={0.8} y={30} dir="ltr" className="order-1 overflow-hidden h-[120px] sm:h-[160px] lg:h-[200px] flex items-center">
+          <Reveal delay={0.1} duration={0.8} y={30} dir="ltr" className={`order-1 overflow-hidden h-[120px] sm:h-[160px] lg:h-[200px] flex items-center ${isAr ? "justify-end" : ""}`}>
             <AnimatePresence mode="wait">
               <motion.h3
                 key={active.year}
