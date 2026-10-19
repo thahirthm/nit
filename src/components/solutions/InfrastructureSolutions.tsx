@@ -1,31 +1,78 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 
+// Same six services, names and images as the home page "Our solutions" section.
 const tabs = [
   {
-    tab: { en: "Energy Solution", ar: "حلول الطاقة" },
-    title: { en: "Energy Solutions", ar: "حلول الطاقة" },
+    slug: "transmission-distribution",
+    tab: { en: "Transmission and Distribution / Advanced Energy", ar: "النقل والتوزيع / الطاقة المتقدمة" },
+    title: { en: "Transmission and Distribution / Advanced Energy", ar: "النقل والتوزيع / الطاقة المتقدمة" },
     image: "/images/s-1.png",
     description: {
-      en: "EPC of electrical substations up to 380kV, combined with certified ESCO services to deliver energy-saving solutions for commercial and industrial sectors in KSA.",
-      ar: "تنفيذ محطات تحويل كهربائية حتى 380 كيلوفولت وفق نظام EPC، إلى جانب خدمات ESCO المعتمدة لتقديم حلول توفير الطاقة للقطاعين التجاري والصناعي في المملكة.",
+      en: "EPC of electrical substations up to 380kV, along with underground cables, overhead lines, and STATCOM projects for the Kingdom's power transmission and distribution networks.",
+      ar: "تنفيذ محطات تحويل كهربائية حتى 380 كيلوفولت وفق نظام EPC، إلى جانب الكابلات الأرضية وخطوط النقل الهوائية ومشاريع أنظمة STATCOM لشبكات نقل وتوزيع الطاقة في المملكة.",
     },
     items: [
       { en: "Substation projects", ar: "مشاريع محطات التحويل" },
       { en: "Underground cable & overhead lines", ar: "الكابلات الأرضية وخطوط النقل الهوائية" },
       { en: "STATCOM projects", ar: "مشاريع أنظمة STATCOM" },
       { en: "Extension & retrofit projects", ar: "مشاريع التوسعة والتحديث" },
+    ],
+  },
+  {
+    slug: "energy-efficiency",
+    tab: { en: "Energy Solutions (Energy Efficiency)", ar: "حلول الطاقة (كفاءة الطاقة)" },
+    title: { en: "Energy Solutions (Energy Efficiency)", ar: "حلول الطاقة (كفاءة الطاقة)" },
+    image: "/images/s-5.png",
+    description: {
+      en: "Certified ESCO services delivering energy-saving solutions for commercial and industrial sectors in KSA.",
+      ar: "خدمات ESCO المعتمدة لتقديم حلول توفير الطاقة للقطاعين التجاري والصناعي في المملكة.",
+    },
+    items: [
       { en: "Streetlight projects & building retrofit projects", ar: "مشاريع إنارة الشوارع وتحديث المباني" },
-      { en: "Industrial Solutions & rehabilitation Works", ar: "الحلول الصناعية وأعمال إعادة التأهيل" },
       { en: "Commercial & residential projects", ar: "المشاريع التجارية والسكنية" },
     ],
   },
   {
-    tab: { en: "Communication Solutions", ar: "حلول الاتصالات" },
-    title: { en: "Communication Solutions", ar: "حلول الاتصالات" },
+    slug: "industrial",
+    tab: { en: "Industries (Industrial Solutions)", ar: "الصناعات (الحلول الصناعية)" },
+    title: { en: "Industries (Industrial Solutions)", ar: "الصناعات (الحلول الصناعية)" },
+    image: "/images/s-4.png",
+    description: {
+      en: "Industrial equipment procurement, installation, & commissioning in continuous process industries.",
+      ar: "توريد وتركيب وتشغيل المعدات الصناعية في الصناعات ذات العمليات المستمرة.",
+    },
+    items: [
+      { en: "Manufacturing Facilities Refurbishment and Efficacy Enhancement", ar: "تجديد المنشآت التصنيعية وتعزيز كفاءتها" },
+      { en: "Industrial Solutions & rehabilitation Works", ar: "الحلول الصناعية وأعمال إعادة التأهيل" },
+      { en: "Industrial Automation & Control Systems (SCADA, PLC, DCS)", ar: "أنظمة الأتمتة والتحكم الصناعي (SCADA، PLC، DCS)" },
+      { en: "Mechanical, Electrical & Instrumentation Works", ar: "الأعمال الميكانيكية والكهربائية وأعمال الأجهزة الدقيقة" },
+      { en: "Shutdowns & Turnarounds Services", ar: "خدمات الإيقاف والصيانة الدورية" },
+    ],
+  },
+  {
+    slug: "water",
+    tab: { en: "Water Infrastructure", ar: "البنية التحتية للمياه" },
+    title: { en: "Water Infrastructure", ar: "البنية التحتية للمياه" },
+    image: "/images/s3.png",
+    description: {
+      en: "Provide seawater desalination, water distribution networks, and wastewater treatment services, and cover the infrastructure works such as stormwater drainage, concrete & steel reservoirs, and transmission systems.",
+      ar: "تقديم خدمات تحلية مياه البحر، وشبكات توزيع المياه، ومعالجة مياه الصرف الصحي، بالإضافة إلى أعمال البنية التحتية مثل تصريف مياه الأمطار، والخزانات الخرسانية والمعدنية، وأنظمة النقل.",
+    },
+    items: [
+      { en: "Water & Sewage Distribution Networks and Pipelines", ar: "شبكات وخطوط أنابيب توزيع المياه والصرف الصحي" },
+      { en: "Seawater Desalination & Wastewater Treatment", ar: "تحلية مياه البحر ومعالجة مياه الصرف الصحي" },
+      { en: "Water Strategic Storage Implementation", ar: "تنفيذ مشاريع التخزين الاستراتيجي للمياه" },
+      { en: "District Cooling", ar: "التبريد المركزي" },
+    ],
+  },
+  {
+    slug: "ict",
+    tab: { en: "Communication and Technology (ICT)", ar: "الاتصالات والتقنية (ICT)" },
+    title: { en: "Communication and Technology (ICT)", ar: "الاتصالات والتقنية (ICT)" },
     image: "/images/s-2.png",
     description: {
       en: "Comprehensive communication solutions, including OSP/ISP infrastructure, smart cities, wired/wireless networks, low current and security systems, integrating advanced technologies.",
@@ -40,38 +87,9 @@ const tabs = [
     ],
   },
   {
-    tab: { en: "Water & MEP Systems", ar: "أنظمة المياه والكهروميكانيكية" },
-    title: { en: "Water & MEP Systems", ar: "أنظمة المياه والكهروميكانيكية" },
-    image: "/images/s3.png",
-    description: {
-      en: "Provide seawater desalination, water distribution networks, and wastewater treatment services, and cover the infrastructure works such as stormwater drainage, concrete & steel reservoirs, and transmission systems.",
-      ar: "تقديم خدمات تحلية مياه البحر، وشبكات توزيع المياه، ومعالجة مياه الصرف الصحي، بالإضافة إلى أعمال البنية التحتية مثل تصريف مياه الأمطار، والخزانات الخرسانية والمعدنية، وأنظمة النقل.",
-    },
-    items: [
-      { en: "Water & Sewage Distribution Networks and Pipelines", ar: "شبكات وخطوط أنابيب توزيع المياه والصرف الصحي" },
-      { en: "Seawater Desalination & Wastewater Treatment", ar: "تحلية مياه البحر ومعالجة مياه الصرف الصحي" },
-      { en: "Water Strategic Storage Implementation", ar: "تنفيذ مشاريع التخزين الاستراتيجي للمياه" },
-      { en: "District Cooling", ar: "التبريد المركزي" },
-    ],
-  },
-  {
-    tab: { en: "Industrial Solutions", ar: "الحلول الصناعية" },
-    title: { en: "Industrial Solutions", ar: "الحلول الصناعية" },
-    image: "/images/s-4.png",
-    description: {
-      en: "Industrial equipment procurement, installation, & commissioning in continuous process industries.",
-      ar: "توريد وتركيب وتشغيل المعدات الصناعية في الصناعات ذات العمليات المستمرة.",
-    },
-    items: [
-      { en: "Manufacturing Facilities Refurbishment and Efficacy Enhancement", ar: "تجديد المنشآت التصنيعية وتعزيز كفاءتها" },
-      { en: "Industrial Automation & Control Systems (SCADA, PLC, DCS)", ar: "أنظمة الأتمتة والتحكم الصناعي (SCADA، PLC، DCS)" },
-      { en: "Mechanical, Electrical & Instrumentation Works", ar: "الأعمال الميكانيكية والكهربائية وأعمال الأجهزة الدقيقة" },
-      { en: "Shutdowns & Turnarounds Services", ar: "خدمات الإيقاف والصيانة الدورية" },
-    ],
-  },
-  {
-    tab: { en: "Operations & Maintenance", ar: "التشغيل والصيانة" },
-    title: { en: "Operations & Maintenance", ar: "التشغيل والصيانة" },
+    slug: "infrastructure-services",
+    tab: { en: "Infrastructure Services (O&M and MEP)", ar: "خدمات البنية التحتية (التشغيل والصيانة والأعمال الكهروميكانيكية)" },
+    title: { en: "Infrastructure Services (O&M and MEP)", ar: "خدمات البنية التحتية (التشغيل والصيانة والأعمال الكهروميكانيكية)" },
     image: "/images/s5.png",
     description: {
       en: "Complete range of operation, maintenance, and managed services in power transmission and distribution.",
@@ -84,17 +102,41 @@ const tabs = [
   },
 ];
 
+// Re-reads the URL once right after mount (client-side navigation can render this page a moment
+// before Next updates the address bar) and on back/forward.
+const subscribeToUrl = (onChange: () => void) => {
+  const timer = window.setTimeout(onChange, 0);
+  window.addEventListener("popstate", onChange);
+  return () => {
+    window.clearTimeout(timer);
+    window.removeEventListener("popstate", onChange);
+  };
+};
+
 export function InfrastructureSolutions() {
   const { language } = useLanguage();
   const isAr = language === "ar";
-  const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Deep link from the home page "Our solutions" capabilities (?service=<slug>) picks the starting
+  // tab; once the user clicks a tab their choice wins. Read via useSyncExternalStore so the server
+  // render (no URL) and the client render stay hydration-safe.
+  const search = useSyncExternalStore(subscribeToUrl, () => window.location.search, () => "");
+  const requestedIndex = tabs.findIndex((t) => t.slug === new URLSearchParams(search).get("service"));
+  const [selectedIndex, setActiveIndex] = useState<number | null>(null);
+  const activeIndex = selectedIndex ?? (requestedIndex >= 0 ? requestedIndex : 0);
+
+  // Bring the section into view when arriving through a deep link.
+  useEffect(() => {
+    if (requestedIndex >= 0) sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [requestedIndex]);
   const active = tabs[activeIndex];
 
-  const prevTab = () => setActiveIndex((i) => (i === 0 ? tabs.length - 1 : i - 1));
-  const nextTab = () => setActiveIndex((i) => (i === tabs.length - 1 ? 0 : i + 1));
+  const prevTab = () => setActiveIndex(activeIndex === 0 ? tabs.length - 1 : activeIndex - 1);
+  const nextTab = () => setActiveIndex(activeIndex === tabs.length - 1 ? 0 : activeIndex + 1);
 
   return (
-    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    <section ref={sectionRef} className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
         <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {isAr ? "حلول البنية التحتية" : "Infrastructure solutions"}
@@ -130,7 +172,7 @@ export function InfrastructureSolutions() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-black/0" />
             <h3
               dir={isAr ? "rtl" : "ltr"}
-              className={`absolute top-6 sm:top-8 text-white text-[28px] sm:text-[34px] lg:text-[40px] font-extralight tracking-tight ${isAr ? "right-6 sm:right-8" : "left-6 sm:left-8"}`}
+              className={`absolute top-6 sm:top-8 max-w-[85%] text-white text-[28px] sm:text-[34px] lg:text-[40px] font-extralight tracking-tight leading-tight ${isAr ? "right-6 sm:right-8" : "left-6 sm:left-8"}`}
             >
               {isAr ? active.title.ar : active.title.en}
             </h3>

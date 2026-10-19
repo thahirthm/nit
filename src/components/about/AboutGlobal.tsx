@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -28,13 +28,45 @@ const DOT_SIZE: Record<NonNullable<MapMarker["size"]>, string> = {
   lg: "w-2.5 h-2.5",
 };
 
+// Auto-cycle timing for the country label pop-up
+const CYCLE_MS = 2800;
+// How long a tapped marker stays pinned before auto-cycling resumes (touch devices)
+const TAP_HOLD_MS = 4000;
+
+function pickRandomMarker(exclude: string | null) {
+  const pool = MARKERS.filter((m) => m.name.en !== exclude);
+  return pool[Math.floor(Math.random() * pool.length)].name.en;
+}
+
 export function AboutGlobal() {
   const { language } = useLanguage();
   const isAr = language === "ar";
-  const [activeMarker, setActiveMarker] = useState<string | null>(null);
+  const [autoMarker, setAutoMarker] = useState<string | null>(null);
+  const [userMarker, setUserMarker] = useState<string | null>(null);
+  const activeMarker = userMarker ?? autoMarker;
+
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInView = useInView(mapRef, { amount: 0.3 });
+  const tapTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Randomly pop up a country label on a loop while the map is visible and the user isn't interacting
+  useEffect(() => {
+    if (!mapInView || userMarker) return;
+    const first = setTimeout(() => setAutoMarker((current) => pickRandomMarker(current)), 600);
+    const loop = setInterval(() => setAutoMarker((current) => pickRandomMarker(current)), CYCLE_MS);
+    return () => {
+      clearTimeout(first);
+      clearInterval(loop);
+    };
+  }, [mapInView, userMarker]);
+
+  useEffect(() => () => {
+    if (tapTimer.current) clearTimeout(tapTimer.current);
+  }, []);
 
   return (
-    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    // Anchor for the "Connected globally" card's arrow in AboutHighlights
+    <section id="global-reach" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="px-6 lg:px-16">
         <Reveal delay={0} duration={0.8} y={30}>
           <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-10">
@@ -43,7 +75,7 @@ export function AboutGlobal() {
         </Reveal>
 
         <Reveal delay={0.1} duration={0.9} y={30} className="relative w-full -mx-6 sm:-mx-4 lg:-mx-8 px-0 sm:px-2 lg:px-4 pt-8 sm:pt-0">
-        <div className="relative w-[135%] -ml-[17.5%] sm:w-full sm:ml-0">
+        <div ref={mapRef} className="relative w-[135%] -ml-[17.5%] sm:w-full sm:ml-0">
           <Image quality={95}
             src="/images/globe-plain.png"
             alt={isAr ? "خريطة العالم لحضور نسما للبنية التحتية والتقنية العالمي" : "World map of Nesma Infrastructure & Technology's global presence"}
@@ -57,17 +89,36 @@ export function AboutGlobal() {
             const markerName = isAr ? marker.name.ar : marker.name.en;
             const flipRight = marker.x < 50;
             const flipDown = marker.y < 25;
+            const isActive = activeMarker === marker.name.en;
             return (
               <div
                 key={marker.name.en}
                 className="absolute -translate-x-1/2 -translate-y-1/2"
                 style={{ left: `${marker.x}%`, top: `${marker.y}%` }}
-                onMouseEnter={() => setActiveMarker(marker.name.en)}
-                onMouseLeave={() => setActiveMarker((current) => (current === marker.name.en ? null : current))}
-                onClick={() =>
-                  setActiveMarker((current) => (current === marker.name.en ? null : marker.name.en))
-                }
+                onMouseEnter={() => setUserMarker(marker.name.en)}
+                onMouseLeave={() => setUserMarker((current) => (current === marker.name.en ? null : current))}
+                onClick={() => {
+                  setUserMarker(marker.name.en);
+                  setAutoMarker(marker.name.en);
+                  if (tapTimer.current) clearTimeout(tapTimer.current);
+                  tapTimer.current = setTimeout(() => setUserMarker(null), TAP_HOLD_MS);
+                }}
               >
+                {/* Soft pulse ring behind the active dot */}
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.span
+                      key="pulse"
+                      aria-hidden
+                      className="absolute left-1/2 top-1/2 w-5 h-5 -ml-2.5 -mt-2.5 rounded-full bg-[#2563EB]/25 pointer-events-none"
+                      initial={{ opacity: 0, scale: 0.3 }}
+                      animate={{ opacity: [0.7, 0], scale: [0.4, 1.6] }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut" }}
+                    />
+                  )}
+                </AnimatePresence>
+
                 <motion.button
                   type="button"
                   aria-label={markerName}
@@ -75,30 +126,42 @@ export function AboutGlobal() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.4 }}
                   transition={{ duration: 0.4, delay: 0.3 + markerIndex * 0.03, ease: [0.16, 1, 0.3, 1] }}
-                  className={`block rounded-full bg-[#81D1E8] hover:bg-[#2563EB] transition-colors cursor-pointer ${DOT_SIZE[marker.size ?? "sm"]}`}
+                  className={`relative block rounded-full transition-[background-color,transform] duration-500 ease-out cursor-pointer ${
+                    isActive ? "bg-[#2563EB] scale-125" : "bg-[#81D1E8] hover:bg-[#2563EB]"
+                  } ${DOT_SIZE[marker.size ?? "sm"]}`}
                 />
 
                 <AnimatePresence>
-                  {activeMarker === marker.name.en && (
+                  {isActive && (
                     <div className="absolute left-1/2 top-1/2 pointer-events-none">
                       <motion.svg
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeIn" } }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
                         className="absolute overflow-visible"
                         width="1"
                         height="1"
                       >
-                        <line x1={0} y1={0} x2={flipRight ? 42 : -42} y2={flipDown ? 34 : -34} stroke="#2E368F" strokeWidth={0.75} />
+                        <motion.line
+                          x1={0}
+                          y1={0}
+                          x2={flipRight ? 42 : -42}
+                          y2={flipDown ? 34 : -34}
+                          stroke="#2E368F"
+                          strokeWidth={0.75}
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        />
                       </motion.svg>
 
                       <motion.div
                         dir={isAr ? "rtl" : "ltr"}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        initial={{ opacity: 0, scale: 0.9, y: flipDown ? -4 : 4 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3, ease: "easeIn" } }}
+                        transition={{ duration: 0.45, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                         className={`absolute whitespace-nowrap px-3 py-1.5 bg-white border border-[#2E368F] text-[#2E368F] text-[10px] font-semibold tracking-widest uppercase shadow-sm ${
                           flipRight ? "ml-[42px]" : "-translate-x-full -ml-[42px]"
                         } ${flipDown ? "mt-[34px]" : "-translate-y-full -mt-[34px]"}`}

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { ProjectsHero } from "@/components/projects/ProjectsHero";
 import { ProjectsStats } from "@/components/projects/ProjectsStats";
 import { SolutionsMap } from "@/components/solutions/SolutionsMap";
@@ -20,7 +21,10 @@ export default function ProjectsPage() {
       </Reveal>
 
       <Reveal>
-        <ProjectsShowcase />
+        {/* Suspense is required because ProjectsShowcase reads the URL's search params */}
+        <Suspense>
+          <ProjectsShowcase />
+        </Suspense>
       </Reveal>
 
       <Reveal>

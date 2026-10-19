@@ -34,7 +34,7 @@ export function InvestorsStats() {
   const isAr = language === "ar";
 
   return (
-    <section className={`w-full mt-10 lg:mt-14 bg-[#F5F5F5] overflow-hidden ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    <section dir="ltr" className={`w-full mt-10 lg:mt-14 bg-[#F5F5F5] overflow-hidden ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="flex w-max py-6 lg:py-4 animate-marquee hover:[animation-play-state:paused]">
         <StatsRow isAr={isAr} />
         <StatsRow hidden isAr={isAr} />

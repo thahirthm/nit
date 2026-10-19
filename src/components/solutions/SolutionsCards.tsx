@@ -12,11 +12,12 @@ const cards = [
     slug: "infrastructure",
     image: "/images/infra-banner.png",
     capabilities: [
-      { en: "Energy Infrastructure", ar: "البنية التحتية للطاقة" },
-      { en: "Transmission & Distribution", ar: "النقل والتوزيع" },
-      { en: "Water & MEP Systems", ar: "أنظمة المياه والكهروميكانيكية" },
-      { en: "Industrial Infrastructure", ar: "البنية التحتية الصناعية" },
-      { en: "Operations & Maintenance", ar: "التشغيل والصيانة" },
+      { en: "Transmission and Distribution / Advanced Energy", ar: "النقل والتوزيع / الطاقة المتقدمة" },
+      { en: "Energy Solutions (Energy Efficiency)", ar: "حلول الطاقة (كفاءة الطاقة)" },
+      { en: "Industries (Industrial Solutions)", ar: "الصناعات (الحلول الصناعية)" },
+      { en: "Water Infrastructure", ar: "البنية التحتية للمياه" },
+      { en: "Communication and Technology (ICT)", ar: "الاتصالات والتقنية (ICT)" },
+      { en: "Infrastructure Services (O&M and MEP)", ar: "خدمات البنية التحتية (التشغيل والصيانة والأعمال الكهروميكانيكية)" },
     ],
   },
   {
@@ -26,9 +27,13 @@ const cards = [
     capabilities: [
       { en: "Digital Transformation", ar: "التحول الرقمي" },
       { en: "Data & AI", ar: "البيانات والذكاء الاصطناعي" },
+      { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسة" },
+      { en: "Blockchain", ar: "سلاسل الكتل" },
       { en: "Cloud Services", ar: "الخدمات السحابية" },
       { en: "Cybersecurity", ar: "الأمن السيبراني" },
+      { en: "Data Center Services", ar: "خدمات مراكز البيانات" },
       { en: "Managed Services", ar: "الخدمات المُدارة" },
+      { en: "Smart Cities", ar: "المدن الذكية" },
     ],
   },
 ];
@@ -52,7 +57,7 @@ export function SolutionsCards() {
               delay={cardIndex * 0.12}
               duration={0.8}
               y={40}
-              className="relative h-[460px] sm:h-[560px] lg:h-[620px] overflow-hidden"
+              className="relative h-[560px] sm:h-[600px] lg:h-[660px] overflow-hidden"
               onMouseEnter={() => setActiveCard(card.slug)}
               onMouseLeave={() => setActiveCard((current) => (current === card.slug ? null : current))}
               onClick={() => setActiveCard((current) => (current === card.slug ? null : card.slug))}
@@ -91,7 +96,7 @@ export function SolutionsCards() {
                       <span className="text-gray-600 text-[15px] sm:text-[17px] lg:text-[19px] font-light">
                         {isAr ? capability.ar : capability.en}
                       </span>
-                      <span className="text-gray-400 text-lg font-light shrink-0 ms-4">+</span>
+                      <span className="text-gray-400 text-3xl font-light leading-none shrink-0 ms-4">+</span>
                     </div>
                   ))}
                 </div>

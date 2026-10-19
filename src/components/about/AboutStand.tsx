@@ -74,7 +74,7 @@ export function AboutStand() {
                     : "To engineer and deliver critical infrastructure and technology solutions."}
                 </p>
                 <div className="shrink-0">
-                  <Button variant="primary">{isAr ? "تواصل معنا" : "CONNECT WITH US"}</Button>
+                  <Button href="/contact" variant="primary">{isAr ? "تواصل معنا" : "CONNECT WITH US"}</Button>
                 </div>
               </div>
             </Reveal>

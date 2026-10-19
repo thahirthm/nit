@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
@@ -72,8 +72,33 @@ const ManagedServicesIcon = ({ active }: IconProps) => (
   </svg>
 );
 
+const DataCenterIcon = ({ active }: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53" fill="none">
+    <rect x="9.9375" y="8.28125" width="33.125" height="11.0417" rx="1.65625" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <rect x="9.9375" y="20.9792" width="33.125" height="11.0417" rx="1.65625" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <rect x="9.9375" y="33.6771" width="33.125" height="11.0417" rx="1.65625" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M15.4583 13.8021H22.0833M15.4583 26.5H22.0833M15.4583 39.1979H22.0833" stroke={active ? "#FFFFFF" : "#81D1E8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="36.4375" cy="13.8021" r="1.10417" fill={active ? "#FFFFFF" : "#81D1E8"} />
+    <circle cx="36.4375" cy="26.5" r="1.10417" fill={active ? "#FFFFFF" : "#81D1E8"} />
+    <circle cx="36.4375" cy="39.1979" r="1.10417" fill={active ? "#FFFFFF" : "#81D1E8"} />
+  </svg>
+);
+
+const SmartCitiesIcon = ({ active }: IconProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53" fill="none">
+    <path d="M4.96875 46.375H48.0312" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9.9375 46.375V24.8438H19.875V46.375" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M19.875 46.375V16.5625H31.4688V46.375" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M31.4688 46.375V29.8125H43.0625V46.375" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M24.8438 23.1875H26.5M24.8438 29.8125H26.5M24.8438 36.4375H26.5M13.25 31.4688H16.5625M13.25 38.0938H16.5625M36.4375 36.4375H38.0938" stroke={active ? "#FFFFFF" : "#81D1E8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M20.7031 9.9375C22.2401 8.40052 24.3248 7.53711 26.5 7.53711C28.6752 7.53711 30.7599 8.40052 32.2969 9.9375" stroke={active ? "#FFFFFF" : "#81D1E8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M17.1875 6.42188C19.6575 3.95192 23.0085 2.56445 26.5 2.56445C29.9915 2.56445 33.3425 3.95192 35.8125 6.42188" stroke={active ? "#FFFFFF" : "#81D1E8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 const tabs = [
   {
+    slug: "digital-transformation",
     tab: { en: "Digital Transformation", ar: "التحول الرقمي" },
     icon: DigitalTransformationIcon,
     graphic: "/images/svg1.png",
@@ -91,6 +116,7 @@ const tabs = [
     ],
   },
   {
+    slug: "data-ai",
     tab: { en: "Data & AI", ar: "البيانات والذكاء الاصطناعي" },
     icon: DataAIIcon,
     graphic: "/images/svg2.png",
@@ -108,6 +134,7 @@ const tabs = [
     ],
   },
   {
+    slug: "erp",
     tab: { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسة" },
     icon: ERPIcon,
     graphic: "/images/svg3.png",
@@ -123,6 +150,7 @@ const tabs = [
     ],
   },
   {
+    slug: "blockchain",
     tab: { en: "Blockchain", ar: "سلاسل الكتل" },
     icon: BlockchainIcon,
     graphic: "/images/svg4.png",
@@ -139,7 +167,8 @@ const tabs = [
     ],
   },
   {
-    tab: { en: "Cloud services", ar: "الخدمات السحابية" },
+    slug: "cloud",
+    tab: { en: "Cloud Services", ar: "الخدمات السحابية" },
     icon: CloudServicesIcon,
     graphic: "/images/svg5.png",
     title: { en: "Cloud Services", ar: "الخدمات السحابية" },
@@ -155,6 +184,7 @@ const tabs = [
     ],
   },
   {
+    slug: "cybersecurity",
     tab: { en: "Cybersecurity", ar: "الأمن السيبراني" },
     icon: CybersecurityIcon,
     graphic: "/images/svg6.png",
@@ -171,7 +201,27 @@ const tabs = [
     ],
   },
   {
-    tab: { en: "Managed services", ar: "الخدمات المُدارة" },
+    slug: "data-center",
+    tab: { en: "Data Center Services", ar: "خدمات مراكز البيانات" },
+    icon: DataCenterIcon,
+    graphic: "/images/dc-graphic.png",
+    title: { en: "Data Center Services", ar: "خدمات مراكز البيانات" },
+    description: {
+      en: "End-to-end delivery of Tier III data centers, from detailed design and supply to installation, testing, and commissioning of power, cooling, security, and fire suppression systems.",
+      ar: "تنفيذ متكامل لمراكز البيانات من الفئة الثالثة، من التصميم التفصيلي والتوريد إلى تركيب أنظمة الطاقة والتبريد والأمن وإخماد الحريق واختبارها وتشغيلها.",
+    },
+    chips: [
+      { en: "Tier III Data Center Design & Build", ar: "تصميم وتنفيذ مراكز البيانات من الفئة الثالثة" },
+      { en: "Prefabricated & Modular Data Centers", ar: "مراكز البيانات مسبقة الصنع والمعيارية" },
+      { en: "Power & Electrical Systems", ar: "أنظمة الطاقة والكهرباء" },
+      { en: "Cooling & HVAC", ar: "التبريد والتكييف" },
+      { en: "Fire Suppression & Security", ar: "إخماد الحريق والأمن" },
+      { en: "Testing & Commissioning", ar: "الاختبار والتشغيل" },
+    ],
+  },
+  {
+    slug: "managed-services",
+    tab: { en: "Managed Services", ar: "الخدمات المُدارة" },
     icon: ManagedServicesIcon,
     graphic: "/images/svg7.png",
     title: { en: "Managed Services", ar: "الخدمات المُدارة" },
@@ -185,19 +235,61 @@ const tabs = [
       { en: "IT Monitoring & Reporting", ar: "مراقبة تقنية المعلومات وإعداد التقارير" },
     ],
   },
+  {
+    slug: "smart-cities",
+    tab: { en: "Smart Cities", ar: "المدن الذكية" },
+    icon: SmartCitiesIcon,
+    graphic: "/images/sc.png",
+    title: { en: "Smart Cities", ar: "المدن الذكية" },
+    description: {
+      en: "Smart city solutions that connect infrastructure, people, and services through ICT, IoT, AI, and integrated security systems.",
+      ar: "حلول المدن الذكية التي تربط البنية التحتية والأفراد والخدمات من خلال تقنية المعلومات والاتصالات وإنترنت الأشياء والذكاء الاصطناعي وأنظمة الأمن المتكاملة.",
+    },
+    chips: [
+      { en: "ICT & IoT", ar: "تقنية المعلومات والاتصالات وإنترنت الأشياء" },
+      { en: "Robotics", ar: "الروبوتات" },
+      { en: "Drones", ar: "الطائرات بدون طيار" },
+      { en: "AI Platforms", ar: "منصات الذكاء الاصطناعي" },
+      { en: "Smart Security & Surveillance", ar: "الأمن والمراقبة الذكية" },
+    ],
+  },
 ];
+
+// Re-reads the URL once right after mount (client-side navigation can render this page a moment
+// before Next updates the address bar) and on back/forward.
+const subscribeToUrl = (onChange: () => void) => {
+  const timer = window.setTimeout(onChange, 0);
+  window.addEventListener("popstate", onChange);
+  return () => {
+    window.clearTimeout(timer);
+    window.removeEventListener("popstate", onChange);
+  };
+};
 
 export function TechnologySolutions() {
   const { language } = useLanguage();
   const isAr = language === "ar";
-  const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Deep link from the home page "Our solutions" capabilities (?service=<slug>) picks the starting
+  // tab; once the user clicks a tab their choice wins. Read via useSyncExternalStore so the server
+  // render (no URL) and the client render stay hydration-safe.
+  const search = useSyncExternalStore(subscribeToUrl, () => window.location.search, () => "");
+  const requestedIndex = tabs.findIndex((t) => t.slug === new URLSearchParams(search).get("service"));
+  const [selectedIndex, setActiveIndex] = useState<number | null>(null);
+  const activeIndex = selectedIndex ?? (requestedIndex >= 0 ? requestedIndex : 0);
+
+  // Bring the section into view when arriving through a deep link.
+  useEffect(() => {
+    if (requestedIndex >= 0) sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [requestedIndex]);
   const active = tabs[activeIndex];
 
-  const prevTab = () => setActiveIndex((i) => (i === 0 ? tabs.length - 1 : i - 1));
-  const nextTab = () => setActiveIndex((i) => (i === tabs.length - 1 ? 0 : i + 1));
+  const prevTab = () => setActiveIndex(activeIndex === 0 ? tabs.length - 1 : activeIndex - 1);
+  const nextTab = () => setActiveIndex(activeIndex === tabs.length - 1 ? 0 : activeIndex + 1);
 
   return (
-    <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+    <section ref={sectionRef} className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
         {/* Heading + Nav — follow the page direction: heading on the right in Arabic, arrows on the left */}
         <div dir={isAr ? "rtl" : "ltr"} className="flex items-center justify-between">
@@ -228,7 +320,7 @@ export function TechnologySolutions() {
         </div>
 
         {/* Tabs — start on the right in Arabic */}
-        <div dir={isAr ? "rtl" : "ltr"} className="mt-8 lg:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+        <div dir={isAr ? "rtl" : "ltr"} className="mt-8 lg:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-3">
           {tabs.map((tab, i) => {
             const isActive = i === activeIndex;
             const Icon = tab.icon;

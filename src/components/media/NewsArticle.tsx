@@ -41,14 +41,16 @@ export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & {
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
-        {/* Hero image + share row */}
-        <div className="flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-8">
-          <div className="relative w-full lg:flex-1 h-[280px] sm:h-[400px] lg:h-[480px] overflow-hidden">
+        {/* Article + share column. Desktop: two columns, with the share icons in a right-hand column that
+            spans the whole article and sticks below the header while scrolling. Mobile: single column
+            (hero, share row, badges, title, body), same order as before. */}
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_140px] lg:gap-x-8">
+          <div className="relative w-full lg:col-start-1 lg:row-start-1 h-[280px] sm:h-[400px] lg:h-[480px] overflow-hidden">
             <Image quality={95} src={post.image ?? "/images/blog1.png"} alt={title} fill className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2E368F]/50 via-transparent to-transparent" />
           </div>
 
-          <div className="flex items-center gap-3 lg:flex-col lg:items-end lg:w-[140px] shrink-0">
+          <div className="mt-6 lg:mt-0 flex items-center gap-3 lg:flex-col lg:items-end lg:col-start-2 lg:row-start-1 lg:row-span-4 lg:self-start lg:sticky lg:top-32">
             <span className="text-gray-500 text-[13px] font-medium tracking-wide uppercase lg:mb-1">
               {isAr ? "شارك المقال:" : "Share Articles:"}
             </span>
@@ -64,32 +66,32 @@ export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & {
               </a>
             </div>
           </div>
+
+          {/* Badges */}
+          <div dir={isAr ? "rtl" : "ltr"} className="mt-6 lg:col-start-1 lg:row-start-2 flex flex-wrap items-center gap-2">
+            <span className="font-[family-name:var(--font-anek-latin)] px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
+              {post.formatted_date}
+            </span>
+            <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
+              {post.category.name}
+            </span>
+            <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
+              {post.location}
+            </span>
+          </div>
+
+          {/* Title + body */}
+          <h1 dir={isAr ? "rtl" : "ltr"} className="mt-8 lg:col-start-1 lg:row-start-3 text-gray-900 text-[28px] sm:text-[36px] lg:text-[42px] font-extralight tracking-tight max-w-4xl">
+            {title}
+          </h1>
+
+          {/* Body HTML is authored by NIT admins in the admin panel's rich-text editor */}
+          <div
+            dir={isAr ? "rtl" : "ltr"}
+            className="mt-6 lg:col-start-1 lg:row-start-4 max-w-4xl space-y-5 text-gray-500 text-[17px] sm:text-[18px] leading-relaxed font-light [&_strong]:font-light [&_strong]:text-gray-700 [&_strong]:underline [&_strong]:underline-offset-2 [&_a]:text-[#2E368F] [&_a]:underline [&_h2]:text-gray-900 [&_h2]:text-[26px] [&_h2]:font-extralight [&_h3]:text-gray-900 [&_h3]:text-[22px] [&_h3]:font-light [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:ps-6 [&_ol]:ps-6 [&_li]:mt-2 [&_img]:max-w-full [&_img]:h-auto"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
         </div>
-
-        {/* Badges */}
-        <div dir={isAr ? "rtl" : "ltr"} className="mt-6 flex flex-wrap items-center gap-2">
-          <span className="font-[family-name:var(--font-anek-latin)] px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-            {post.formatted_date}
-          </span>
-          <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-            {post.category.name}
-          </span>
-          <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
-            {post.location}
-          </span>
-        </div>
-
-        {/* Title + body */}
-        <h1 dir={isAr ? "rtl" : "ltr"} className="mt-8 text-gray-900 text-[28px] sm:text-[36px] lg:text-[42px] font-extralight tracking-tight max-w-4xl">
-          {title}
-        </h1>
-
-        {/* Body HTML is authored by NIT admins in the admin panel's rich-text editor */}
-        <div
-          dir={isAr ? "rtl" : "ltr"}
-          className="mt-6 max-w-4xl space-y-5 text-gray-500 text-[17px] sm:text-[18px] leading-relaxed font-light [&_strong]:font-light [&_strong]:text-gray-700 [&_strong]:underline [&_strong]:underline-offset-2 [&_a]:text-[#2E368F] [&_a]:underline [&_h2]:text-gray-900 [&_h2]:text-[26px] [&_h2]:font-extralight [&_h3]:text-gray-900 [&_h3]:text-[22px] [&_h3]:font-light [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:ps-6 [&_ol]:ps-6 [&_li]:mt-2 [&_img]:max-w-full [&_img]:h-auto"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
 
         {/* Similar news & announcements */}
         {similar.length > 0 && (

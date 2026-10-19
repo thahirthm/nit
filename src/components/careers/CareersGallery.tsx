@@ -8,7 +8,7 @@ const images = ["/images/career-1.png", "/images/career-2.png", "/images/career-
 
 function GalleryRow({ hidden, alt }: { hidden?: boolean; alt: string }) {
   return (
-    <div className="flex items-center gap-6 shrink-0" aria-hidden={hidden}>
+    <div className="flex items-center gap-6 pr-6 shrink-0" aria-hidden={hidden}>
       {images.map((src, i) => (
         <div key={i} className="relative w-[240px] sm:w-[280px] h-[300px] sm:h-[340px] overflow-hidden shrink-0">
           <Image quality={95} src={src} alt={alt} fill className="object-cover" />
@@ -37,9 +37,18 @@ export function CareersGallery() {
         </div>
       </div>
 
-      <div className="mt-10 lg:mt-14 flex w-max gap-6 animate-marquee hover:[animation-play-state:paused]">
-        <GalleryRow alt={alt} />
-        <GalleryRow hidden alt={alt} />
+      {/* The wrapper must be LTR (not just the track): an overflowing block is anchored by its parent's
+          direction, so in RTL the track would pin to the right edge and leave a gap as it slides.
+          In Arabic the loop runs in reverse so images flow left → right. */}
+      <div dir="ltr" className="mt-10 lg:mt-14">
+        <div
+          className={`flex w-max animate-marquee hover:[animation-play-state:paused] ${
+            isAr ? "[animation-direction:reverse]" : ""
+          }`}
+        >
+          <GalleryRow alt={alt} />
+          <GalleryRow hidden alt={alt} />
+        </div>
       </div>
     </section>
   );

@@ -29,7 +29,7 @@ export function AboutHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15, ease: easeOut }}
           dir={isAr ? "rtl" : "ltr"}
-          className="text-[15px] md:text-[18px] lg:text-[20px] leading-relaxed font-light text-[#727272] max-w-3xl mb-8"
+          className="text-[15px] md:text-[18px] lg:text-[20px] leading-relaxed font-light text-[#727272] lg:max-w-[88%] mb-8"
         >
           {isAr
             ? "نسما للبنية التحتية والتقنية (NIT) هي شركة سعودية متخصصة في البنية التحتية والتقنية، تقدم حلولاً محورية في قطاعات الطاقة والاتصالات والصناعة والمياه والتحول الرقمي. ومنذ عام 1988، دعمت NIT التنمية الوطنية من خلال الخبرة الهندسية والتقنية المتقدمة وموثوقية تنفيذ المشاريع."
@@ -41,7 +41,7 @@ export function AboutHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: easeOut }}
         >
-          <Button variant="primary">{isAr ? "تواصل معنا" : "CONNECT WITH US"}</Button>
+          <Button href="/contact" variant="primary">{isAr ? "تواصل معنا" : "CONNECT WITH US"}</Button>
         </motion.div>
 
         <motion.div

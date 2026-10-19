@@ -13,9 +13,9 @@ import { useApiForm } from "@/lib/useApiForm";
 const offices = [
   {
     label: { en: "Head Office", ar: "المقر الرئيس" },
-    image: "/images/glance-time.png",
+    image: "/images/headoffice.png",
     phone: "012 212 2226",
-    email: "INFO@NESMA-NIT.COM",
+    email: "info@nesma-nit.com",
     address: {
       en: ["AN NAHDAH,", "JEDDAH, SAUDI ARABIA"],
       ar: ["حي النهضة،", "جدة، المملكة العربية السعودية"],
@@ -23,9 +23,9 @@ const offices = [
   },
   {
     label: { en: "Riyadh Office", ar: "مكتب الرياض" },
-    image: "/images/fp1.png",
+    image: "/images/riyad.png",
     phone: "+966550634599",
-    email: "NIT@NIT.COM.SA",
+    email: "nit@nit.com.sa",
     address: {
       en: ["KING KHALID RD, AR RIHAB,", "DIRIYAH 13715, SAUDI ARABIA"],
       ar: ["طريق الملك خالد، الرحاب،", "الدرعية 13715، المملكة العربية السعودية"],
@@ -33,9 +33,9 @@ const offices = [
   },
   {
     label: { en: "Alkhobar Office", ar: "مكتب الخبر" },
-    image: "/images/fp1.png",
+    image: "/images/alkhobar.png",
     phone: "+966550634599",
-    email: "NIT@NIT.COM.SA",
+    email: "nit@nit.com.sa",
     address: {
       en: ["KING FAHD ROAD, AL QASHLAH,", "DHAHRAN 34232, SAUDI ARABIA"],
       ar: ["طريق الملك فهد، القشلة،", "الظهران 34232، المملكة العربية السعودية"],
@@ -69,6 +69,7 @@ const ArrowIcon = ({ className }: { className?: string }) => (
 const socials = [
   {
     name: "LinkedIn",
+    href: "https://sa.linkedin.com/company/nesma-infrastructure-and-techology",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#203366" />
@@ -80,6 +81,7 @@ const socials = [
   },
   {
     name: "Instagram",
+    href: "https://www.instagram.com/nesma_nit/?hl=en",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#203366" />
@@ -98,6 +100,7 @@ const socials = [
   },
   {
     name: "X",
+    href: "https://x.com/NesmaNit",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#203366" />
@@ -109,6 +112,7 @@ const socials = [
   },
   {
     name: "YouTube",
+    href: "",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#203366" />
@@ -156,7 +160,8 @@ export function Footer() {
           <h2
             dir={isAr ? "rtl" : "ltr"}
             className={`text-white font-extralight leading-[1.15] tracking-tight ${
-              isAr ? "text-right text-[26px] sm:text-[36px] lg:text-[44px]" : "text-[35px] sm:text-[50px] lg:text-[60px]"
+              // Arabic: same max width as the office card below, so the right-aligned heading ends at the card's right edge
+              isAr ? "text-right max-w-[460px] text-[26px] sm:text-[36px] lg:text-[44px]" : "text-[35px] sm:text-[50px] lg:text-[60px]"
             }`}
           >
             {isAr ? <>رؤيتكم، نهندسها<br />ونحوّلها إلى واقع.</> : <>Your vision, Engineered<br />&amp; delivered.</>}
@@ -224,8 +229,8 @@ export function Footer() {
 
         {/* Subtext + office card — third on mobile, under the heading on desktop */}
         <div className="order-3 lg:order-none lg:col-start-1 lg:row-start-2">
-          {/* Arabic copy stays RTL but is left-aligned to line up with the office card below */}
-          <p dir={isAr ? "rtl" : "ltr"} className={`text-white/70 text-base sm:text-lg ${isAr ? "text-left" : ""}`}>
+          {/* Arabic: right-aligned within the office card's width, so it ends at the card's right edge like the heading */}
+          <p dir={isAr ? "rtl" : "ltr"} className={`text-white/70 text-base sm:text-lg ${isAr ? "text-right max-w-[460px]" : ""}`}>
             {isAr ? "نقدّم التميز في مختلف المناطق" : "Delivering excellence across regions"}
           </p>
 
@@ -281,10 +286,13 @@ export function Footer() {
           </nav>
 
           <div className="flex items-center gap-3">
+            {/* YouTube has no channel link yet, so it stays visible with a placeholder "#" (same tab) */}
             {socials.map((social) => (
               <a
                 key={social.name}
-                href="#"
+                href={social.href || "#"}
+                target={social.href ? "_blank" : undefined}
+                rel={social.href ? "noopener noreferrer" : undefined}
                 aria-label={social.name}
                 className="block w-[38px] h-[38px] overflow-hidden opacity-90 hover:opacity-100 transition-opacity"
               >

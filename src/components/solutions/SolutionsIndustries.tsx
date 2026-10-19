@@ -20,7 +20,7 @@ const industries: Industry[] = [
       ar: "بنية تحتية للطاقة تخدم المرافق الوطنية والعمليات الصناعية.",
     },
     icon: (active) => (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="4.70 1.95 34.60 40.10" preserveAspectRatio="xMidYMid meet" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path d="M28.875 2.75V11" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.57529" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M15.125 2.75V11" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.57529" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M22 33V41.25" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.57529" strokeLinecap="round" strokeLinejoin="round" />
@@ -49,7 +49,7 @@ const industries: Industry[] = [
       ar: "بنية تحتية للشبكات تتيح الاتصال والتواصل على مستوى المملكة.",
     },
     icon: (active) => (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="8.67 1.95 26.66 38.73" preserveAspectRatio="xMidYMid meet" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path d="M9.625 39.875L22 15.125L34.375 39.875" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         <path
           d="M15.235 16.3572C15.0557 15.3668 15.096 14.349 15.3532 13.3758C15.6103 12.4027 16.0781 11.4978 16.7233 10.7253C17.3686 9.9527 18.1756 9.33124 19.0873 8.9048C19.9991 8.47835 20.9934 8.25732 22 8.25732C23.0066 8.25732 24.0009 8.47835 24.9127 8.9048C25.8244 9.33124 26.6314 9.9527 27.2767 10.7253C27.9219 11.4978 28.3897 12.4027 28.6468 13.3758C28.904 14.349 28.9443 15.3668 28.765 16.3572"
@@ -77,7 +77,7 @@ const industries: Industry[] = [
       ar: "أنظمة لمعالجة المياه وتوزيعها، مصممة لتلبية متطلبات التوسع والموثوقية.",
     },
     icon: (active) => (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="7.45 1.95 29.10 37.35" preserveAspectRatio="xMidYMid meet" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path
           d="M35.75 24.75C35.75 12.375 22 2.75 22 2.75C22 2.75 8.25 12.375 8.25 24.75C8.25 28.3967 9.69866 31.8941 12.2773 34.4727C14.8559 37.0513 18.3533 38.5 22 38.5C25.6467 38.5 29.1441 37.0513 31.7227 34.4727C34.3013 31.8941 35.75 28.3967 35.75 24.75Z"
           stroke={active ? "#FFFFFF" : "#2E368F"}
@@ -96,7 +96,7 @@ const industries: Industry[] = [
       ar: "حلول هندسية تدعم عمليات قطاعي المنبع والمصب.",
     },
     icon: (active) => (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="7.45 4.70 29.10 34.60" preserveAspectRatio="xMidYMid meet" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path
           d="M21.1939 5.5H34.375C34.7397 5.5 35.0894 5.64487 35.3473 5.90273C35.6051 6.16059 35.75 6.51033 35.75 6.875V37.125C35.75 37.4897 35.6051 37.8394 35.3473 38.0973C35.0894 38.3551 34.7397 38.5 34.375 38.5H9.625C9.26033 38.5 8.91059 38.3551 8.65273 38.0973C8.39487 37.8394 8.25 37.4897 8.25 37.125V18.4439C8.25017 18.0797 8.39481 17.7305 8.65219 17.4728L20.2228 5.90219C20.4805 5.64481 20.8297 5.50017 21.1939 5.5Z"
           stroke={active ? "#FFFFFF" : "#2E368F"}
@@ -124,7 +124,7 @@ const industries: Industry[] = [
       ar: "أنظمة نقل ذكية تربط مدن المملكة ومناطقها.",
     },
     icon: (active) => (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="1.95 6.08 40.10 30.47" preserveAspectRatio="xMidYMid meet" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path d="M2.75 19.25H41.25" stroke={active ? "#FFFFFF" : "#2E368F"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         <path
           d="M38.5 30.25V34.375C38.5 34.7397 38.3551 35.0894 38.0973 35.3473C37.8394 35.6051 37.4897 35.75 37.125 35.75H33C32.6353 35.75 32.2856 35.6051 32.0277 35.3473C31.7699 35.0894 31.625 34.7397 31.625 34.375V30.25"
@@ -159,7 +159,7 @@ const industries: Industry[] = [
       ar: "أنظمة للطاقة الشمسية وطاقة الرياح تدعم أهداف المملكة في مجال الطاقة النظيفة.",
     },
     icon: (active) => (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="4.70 1.93 34.60 38.75" preserveAspectRatio="xMidYMid meet" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path
           d="M25.4547 10.6321L12.3922 2.94073C12.2363 2.84781 12.0636 2.78667 11.8839 2.76083C11.7043 2.735 11.5213 2.74497 11.3456 2.79019C11.1698 2.83541 11.0048 2.91497 10.8599 3.02429C10.715 3.13361 10.5933 3.27052 10.5016 3.42714L8.43907 6.92308C8.34622 7.07907 8.28518 7.2519 8.25947 7.4316C8.23376 7.6113 8.24388 7.79431 8.28926 7.97008C8.33464 8.14585 8.41438 8.31089 8.52387 8.45568C8.63336 8.60047 8.77044 8.72215 8.92719 8.8137L35.0694 24.2C35.2261 24.2915 35.3632 24.4132 35.4727 24.558C35.5822 24.7028 35.6619 24.8678 35.7073 25.0436C35.7527 25.2193 35.7628 25.4024 35.7371 25.5821C35.7114 25.7618 35.6504 25.9346 35.5575 26.0906L33.495 29.5865C33.4033 29.7431 33.2815 29.88 33.1367 29.9894C32.9918 30.0987 32.8267 30.1782 32.651 30.2235C32.4752 30.2687 32.2923 30.2787 32.1126 30.2528C31.933 30.227 31.7603 30.1658 31.6044 30.0729L18.5419 22.3815"
           stroke={active ? "#FFFFFF" : "#2E368F"}
@@ -187,7 +187,7 @@ const industries: Industry[] = [
       ar: "أنظمة بالغة الأهمية مصممة وفق معايير الأمن الوطني.",
     },
     icon: (active) => (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="6.08 7.45 31.84 33.23" preserveAspectRatio="xMidYMid meet" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path d="M22 16.5V23.375" stroke={active ? "#FFFFFF" : "#81D1E8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M15.125 20.625L22 23.375" stroke={active ? "#FFFFFF" : "#81D1E8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M17.875 28.875L22 23.375" stroke={active ? "#FFFFFF" : "#81D1E8"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -210,7 +210,7 @@ const industries: Industry[] = [
       ar: "منصات رقمية وبنية تحتية تدعم مسيرة التحول في المملكة.",
     },
     icon: (active) => (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="6.08 6.08 31.84 31.84" preserveAspectRatio="xMidYMid meet" fill="none" width="36" height="36" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0">
         <path
           d="M28.875 20.625C30.3938 20.625 31.625 19.3938 31.625 17.875C31.625 16.3562 30.3938 15.125 28.875 15.125C27.3562 15.125 26.125 16.3562 26.125 17.875C26.125 19.3938 27.3562 20.625 28.875 20.625Z"
           stroke={active ? "#FFFFFF" : "#81D1E8"}
@@ -303,8 +303,10 @@ export function SolutionsIndustries() {
                   </p>
                 </div>
 
+                {/* Pinned to the card's bottom-end corner so every icon box sits in exactly the same spot,
+                    whatever the length of the (hidden) description above it */}
                 <div
-                  className={`relative z-10 self-end w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-colors duration-300 ${
+                  className={`absolute z-10 bottom-6 end-6 sm:bottom-8 sm:end-8 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-colors duration-300 ${
                     isActive ? "text-white" : "text-[#2E368F]"
                   }`}
                 >

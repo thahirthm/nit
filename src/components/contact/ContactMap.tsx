@@ -13,7 +13,7 @@ const offices = [
       ar: "برج رندا، طريق الملك عبدالعزيز، حي النهضة، جدة 23523، المملكة العربية السعودية",
     },
     phone: "+966550634599",
-    email: "info@Nesma-nit.com",
+    email: "info@nesma-nit.com",
     mapQuery: "Randa Tower, King Abdul Aziz Rd, An Nahdah, Jeddah 23523, Saudi Arabia",
   },
   {

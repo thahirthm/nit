@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Button } from "@/components/ui/Button";
@@ -34,6 +35,21 @@ export function ProjectsShowcase() {
   const [activeTab, setActiveTab] = useState<(typeof primaryTabs)[number]["en"]>("Infrastructure");
   const [activeChip, setActiveChip] = useState("whats-hot");
   const [selectedProject, setSelectedProject] = useState<ProjectOffcanvasProject | null>(null);
+  const searchParams = useSearchParams();
+
+  // Deep links from the map panel (/projects?tab=…&chip=…) pre-select a tab and sector chip.
+  // Synced during render (not in an effect) whenever the query string changes.
+  const query = searchParams.toString();
+  const [appliedQuery, setAppliedQuery] = useState<string | null>(null);
+  if (query !== appliedQuery) {
+    setAppliedQuery(query);
+    const tab = primaryTabs.find((t) => t.en === searchParams.get("tab"))?.en;
+    if (tab) {
+      const chip = searchParams.get("chip");
+      setActiveTab(tab);
+      setActiveChip(chip && tabChips[tab].some((c) => c.key === chip) ? chip : "whats-hot");
+    }
+  }
   const sectorChips = tabChips[activeTab];
   const projects = (sectorChips.find((chip) => chip.key === activeChip) ?? sectorChips[0]).projects;
 
@@ -67,7 +83,7 @@ export function ProjectsShowcase() {
         </div>
       </div>
 
-      <h3 className="mt-5 text-[26px] sm:text-[28px] font-extralight tracking-tight text-gray-900">
+      <h3 className={`mt-5 font-extralight tracking-tight text-gray-900 ${isAr ? "text-[21px] sm:text-[23px] leading-snug" : "text-[26px] sm:text-[28px]"}`}>
         {isAr ? project.title.ar : project.title.en}
       </h3>
       <p className="mt-2 min-h-[56px] sm:min-h-[60px] text-[17px] sm:text-[18px] text-gray-500 font-light leading-relaxed line-clamp-2">

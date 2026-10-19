@@ -27,7 +27,10 @@ export function AboutCeoMessage() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1} duration={0.9} y={40} className="group relative bg-[#2E368F] overflow-hidden min-h-[360px] sm:min-h-[400px] lg:min-h-[500px] xl:min-h-[560px]">
+        {/* No overflow-hidden: the CEO photo is taller than the panel on desktop and pops out above its
+            top edge, so the panel gets extra top margin to keep the head clear of the heading. */}
+        <Reveal delay={0.1} duration={0.9} y={40}
+          className="group relative bg-[#2E368F] min-h-[360px] sm:min-h-[400px] lg:min-h-[500px] xl:min-h-[560px] lg:mt-[90px] lg:flex lg:items-center">
           {/* Decorative quote mark */}
           <QuoteMark
             className={`absolute top-4 sm:top-6 w-[70px] sm:w-[100px] lg:w-[141px] h-auto pointer-events-none ${
@@ -58,7 +61,9 @@ export function AboutCeoMessage() {
                 {isAr ? "صالح الصنيدي - الرئيس التنفيذي" : "Salah Al Sunaid - CEO"}
               </span>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/salah-al-sunaid-3870668/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className="flex items-center justify-center w-8 h-8 border border-white/60 text-white text-xs font-semibold hover:bg-white/10 transition-colors"
               >
@@ -67,21 +72,25 @@ export function AboutCeoMessage() {
             </Reveal>
           </div>
 
-          {/* CEO image — bleeds slightly above the panel's top edge on desktop; sits below the text on mobile */}
+          {/* CEO image — on desktop it starts sunk into the panel and rises on hover, coming up from
+              under the panel's bottom edge until it pops out ~70px above the top edge. The clip-path
+              hides only what's below the panel (the top stays open for the pop-out).
+              Mobile/tablet: no hover, so it simply sits fully visible below the text. */}
           <Reveal
             delay={0.3}
             duration={0.9}
             y={50}
-            className={`relative mt-2 h-[260px] sm:h-[320px] w-full flex justify-center lg:absolute lg:mt-0 lg:bottom-0 lg:h-[480px] xl:h-[540px] lg:w-auto lg:block z-20 pointer-events-none ${
+            className={`relative mt-2 h-[260px] sm:h-[320px] w-full flex justify-center lg:absolute lg:mt-0 lg:bottom-0 lg:h-[570px] xl:h-[630px] lg:w-auto lg:block lg:[clip-path:inset(-200px_0_0_0)] z-20 pointer-events-none ${
               isAr ? "lg:left-6 xl:left-12" : "lg:right-6 xl:right-12"
             }`}
           >
-            <Image quality={95}
-              src="/images/abt-ceo.png"
+            <Image quality={100}
+              src="/images/new-ceo.png"
               alt={isAr ? "صالح الصنيدي، الرئيس التنفيذي" : "Salah Al Sunaid, CEO"}
-              width={496}
-              height={647}
-              className="h-full w-auto object-contain object-bottom origin-bottom transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+              width={1984}
+              height={2588}
+              sizes="(min-width: 1280px) 483px, (min-width: 1024px) 437px, 245px"
+              className="h-full w-auto object-contain object-bottom transition-transform duration-700 ease-out lg:translate-y-[18%] lg:group-hover:translate-y-0"
               priority={false}
             />
           </Reveal>

@@ -246,13 +246,17 @@ export function AboutLeadership() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") setSelectedPerson(person);
                   }}
-                  className="group relative w-full h-[380px] sm:h-[420px] lg:h-[460px] bg-gray-100 overflow-hidden cursor-pointer"
+                  className="group relative w-full h-[380px] sm:h-[420px] lg:h-[460px] bg-[#F1F1F1] overflow-hidden cursor-pointer"
                 >
+                  {/* Same effect as the CEO message: on desktop the photo starts sunk below the card's
+                      bottom edge and rises into place on hover. Mobile has no hover, so it sits fully in place.
+                      The card colour matches the photos' studio background (#F1F1F1), so the gap above a
+                      sunk photo blends in. */}
                   <Image quality={95}
                     src={person.image}
                     alt={personName}
                     fill
-                    className="object-cover transition-transform duration-500 ease-out group-hover:-translate-y-3"
+                    className="object-cover object-top transition-transform duration-700 ease-out lg:translate-y-[5%] lg:group-hover:translate-y-0"
                   />
 
                   <div

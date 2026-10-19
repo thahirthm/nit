@@ -43,10 +43,11 @@ export function SolutionsCta({ heading = defaultHeading }: SolutionsCtaProps) {
               {isAr ? "تحدث مع فريقنا" : "Talk to our team"}
             </Button>
 
+            {/* Same font switch as the shared Button: Futura has no Arabic glyphs, so Arabic uses the Arabic font */}
             <a
               href="/documents/nit-capability-deck.pdf"
               dir={isAr ? "rtl" : "ltr"}
-              className="inline-flex items-stretch gap-2.5 group font-[family-name:var(--font-futura)]"
+              className={`inline-flex items-stretch gap-2.5 group ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
             >
               <div className="relative overflow-hidden flex items-center justify-center px-4 py-2.5 text-[12px] font-medium leading-normal uppercase z-10 border border-[#2E368F] text-[#2E368F] bg-white transition-colors duration-300">
                 <div className="relative inline-flex items-center justify-center">

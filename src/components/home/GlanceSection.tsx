@@ -16,6 +16,7 @@ const ArrowIcon = ({ className }: { className?: string }) => (
 
 export function GlanceSection() {
   const { language } = useLanguage();
+  const isAr = language === "ar";
   const cardClasses = "relative w-[85vw] md:w-[400px] lg:w-[480px] shrink-0 h-[500px] lg:h-[600px] overflow-hidden group snap-start";
 
   // Desktop: scroll-jacked horizontal track (pin + translateX driven by vertical scroll).
@@ -120,13 +121,14 @@ export function GlanceSection() {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const progress = Math.min(Math.max(-rect.top, 0), maxScroll);
-      setTranslateX(-progress);
+      // Arabic runs the track right-to-left, so it slides the other way (cards move right)
+      setTranslateX(isAr ? progress : -progress);
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isDesktop, maxScroll]);
+  }, [isDesktop, maxScroll, isAr]);
 
   const heading = (
     <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
@@ -160,7 +162,8 @@ export function GlanceSection() {
   // Card 2: 30+ Alliances
   const card2 = (
     <div className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] flex flex-col justify-between p-8">
-      <h3 className="font-[family-name:var(--font-anek-latin)] text-[60px] lg:text-[80px] font-normal text-gray-900 leading-none">
+      {/* Always LTR: keeps the "+" after the number and the figure on the left in Arabic too */}
+      <h3 dir="ltr" className="font-[family-name:var(--font-anek-latin)] text-[60px] lg:text-[80px] font-normal text-gray-900 leading-none text-left">
         30+
       </h3>
 
@@ -419,7 +422,9 @@ export function GlanceSection() {
           : "Targeting 50% local content by 2027, driving digital transformation across the Kingdom's critical infrastructure sectors."}
       </p>
 
-      <div dir={language === "ar" ? "rtl" : "ltr"} className="mt-8">
+      {/* Progress row stays LTR in both languages: 37% (and its label) on the left, 50% on the right,
+          bar filling from the left */}
+      <div dir="ltr" className="mt-8">
         <div className="font-[family-name:var(--font-anek-latin)] flex justify-between text-[#2E368F] font-medium mb-3">
           <span className="text-xl">37%</span>
           <span className="text-xl text-gray-400 font-normal">50%</span>
@@ -429,13 +434,12 @@ export function GlanceSection() {
             }`}
         >
           <div
-            className={`absolute top-0 h-full bg-[#2E368F] transition-all duration-700 ease-out ${language === "ar" ? "right-0" : "left-0"
-              } ${visionActive ? "w-[37%]" : "w-[4%] group-hover:w-[37%]"}`}
+            className={`absolute top-0 left-0 h-full bg-[#2E368F] transition-all duration-700 ease-out ${visionActive ? "w-[37%]" : "w-[4%] group-hover:w-[37%]"}`}
           />
         </div>
         <div className="flex justify-between text-xs text-gray-500">
-          <span>{language === "ar" ? "نسبة المحتوى المحلي لعام 2024" : "LC score 2024"}</span>
-          <span>{language === "ar" ? "بحلول عام 2027" : "By 2027"}</span>
+          <span dir={language === "ar" ? "rtl" : "ltr"}>{language === "ar" ? "نسبة المحتوى المحلي لعام 2024" : "LC score 2024"}</span>
+          <span dir={language === "ar" ? "rtl" : "ltr"}>{language === "ar" ? "بحلول عام 2027" : "By 2027"}</span>
         </div>
       </div>
     </div>
@@ -463,19 +467,19 @@ export function GlanceSection() {
           </div>
 
           {/* Horizontal Track — driven by page scroll via translateX.
-              Always kept LTR: the scroll-jack math (translateX/scrollWidth) assumes
-              left-to-right scrolling, and card order shouldn't reorder by language. */}
+              Follows the page direction: in Arabic the first card starts on the right and the
+              track slides right as the page scrolls (translateX is positive, see onScroll). */}
           <div
             ref={trackRef}
-            dir="ltr"
-            className="flex items-start gap-6 pl-6 lg:pl-16 w-full will-change-transform overflow-visible"
+            dir={isAr ? "rtl" : "ltr"}
+            className="flex items-start gap-6 ps-6 lg:ps-16 w-full will-change-transform overflow-visible"
             style={{ transform: `translateX(${translateX}px)` }}
           >
             {cards.map((card, i) => (
               <div key={i}>{card}</div>
             ))}
 
-            {/* Trailing spacer — matches the left gutter so the last card gets the same breathing room on the right */}
+            {/* Trailing spacer — matches the leading gutter so the last card gets the same breathing room at the end */}
             <div className="w-6 shrink-0 lg:w-16" />
           </div>
         </div>
@@ -489,15 +493,15 @@ export function GlanceSection() {
       <div className="w-full px-6 lg:px-16 mb-8 lg:mb-12 flex items-center justify-between">
         {heading}
 
-        {/* Kept LTR to match the slider below (dir="ltr"): prev ← on the left, next → on the right in both languages */}
-        <div dir="ltr" className="flex items-center gap-3">
+        {/* Follows the slider direction: in Arabic "previous" sits on the right and the arrows mirror */}
+        <div dir={isAr ? "rtl" : "ltr"} className="flex items-center gap-3">
           <button
             aria-label="Previous"
             onClick={() => swiperRef.current?.slidePrev()}
             disabled={isBeginning}
             className={`transition-colors duration-300 ${isBeginning ? "text-gray-300 cursor-not-allowed" : "text-gray-400 hover:text-[#2E368F]"}`}
           >
-            <ArrowIcon className="rotate-180" />
+            <ArrowIcon className={isAr ? "" : "rotate-180"} />
           </button>
           <button
             aria-label="Next"
@@ -505,7 +509,7 @@ export function GlanceSection() {
             disabled={isEnd}
             className={`transition-colors duration-300 ${isEnd ? "text-gray-300 cursor-not-allowed" : "text-[#2E368F] hover:text-[#1c2260]"}`}
           >
-            <ArrowIcon />
+            <ArrowIcon className={isAr ? "rotate-180" : ""} />
           </button>
         </div>
       </div>
@@ -518,6 +522,9 @@ export function GlanceSection() {
           modules={[Navigation]}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
+            // Re-sync arrows after a remount (language switch) instead of keeping the previous state.
+            setIsBeginning(swiper.isBeginning);
+            setIsEnd(swiper.isEnd);
           }}
           onSlideChange={(swiper) => {
             setIsBeginning(swiper.isBeginning);
@@ -527,7 +534,9 @@ export function GlanceSection() {
           spaceBetween={24}
           slidesOffsetBefore={24}
           slidesOffsetAfter={24}
-          dir="ltr"
+          // Remount on language change so Swiper re-reads the direction (RTL in Arabic).
+          key={language}
+          dir={isAr ? "rtl" : "ltr"}
         >
           {cards.map((card, i) => (
             <SwiperSlide key={i} className="!w-auto">

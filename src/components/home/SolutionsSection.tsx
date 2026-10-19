@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -35,11 +36,12 @@ const solutions = [
     image: "/images/infra-banner.png",
     icon: <InfrastructureIcon />,
     capabilities: [
-      { en: "Energy Infrastructure", ar: "البنية التحتية للطاقة", image: "/images/s-1.png" },
-      { en: "Transmission & Distribution", ar: "النقل والتوزيع", image: "/images/s-2.png" },
-      { en: "Water & MEP Systems", ar: "أنظمة المياه والكهروميكانيكية", image: "/images/s3.png" },
-      { en: "Industrial Infrastructure", ar: "البنية التحتية الصناعية", image: "/images/s-4.png" },
-      { en: "Operations & Maintenance", ar: "التشغيل والصيانة", image: "/images/s5.png" },
+      { en: "Transmission and Distribution / Advanced Energy", slug: "transmission-distribution", ar: "النقل والتوزيع / الطاقة المتقدمة", image: "/images/s-1.png" },
+      { en: "Energy Solutions (Energy Efficiency)", slug: "energy-efficiency", ar: "حلول الطاقة (كفاءة الطاقة)", image: "/images/s-5.png" },
+      { en: "Industries (Industrial Solutions)", slug: "industrial", ar: "الصناعات (الحلول الصناعية)", image: "/images/s-4.png" },
+      { en: "Water Infrastructure", slug: "water", ar: "البنية التحتية للمياه", image: "/images/s3.png" },
+      { en: "Communication and Technology (ICT)", slug: "ict", ar: "الاتصالات والتقنية (ICT)", image: "/images/s-2.png" },
+      { en: "Infrastructure Services (O&M and MEP)", slug: "infrastructure-services", ar: "خدمات البنية التحتية (التشغيل والصيانة والأعمال الكهروميكانيكية)", image: "/images/s5.png" },
     ],
   },
   {
@@ -53,15 +55,15 @@ const solutions = [
     icon: <TechnologyIcon />,
     capLimit: 5,
     capabilities: [
-      { en: "Digital Transformation", ar: "التحول الرقمي", image: "/images/tech-1.png" },
-      { en: "Data & AI", ar: "البيانات والذكاء الاصطناعي", image: "/images/tech-2.png" },
-      { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسة", image: "/images/tech-3.png" },
-      { en: "Cloud Services", ar: "الخدمات السحابية", image: "/images/tech-4.png" },
-      { en: "Cybersecurity", ar: "الأمن السيبراني", image: "/images/tech-5.png" },
-      { en: "Blockchain", ar: "تقنية سلسلة الكتل (البلوك تشين)", image: "/images/tech-6.png" },
-      { en: "Data Center Services", ar: "خدمات مراكز البيانات", image: "/images/tech-7.png" },
-      { en: "Managed Services", ar: "الخدمات المُدارة", image: "/images/tech-8.png" },
-      { en: "Smart Cities", ar: "المدن الذكية", image: "/images/tech-9.png" },
+      { en: "Digital Transformation", slug: "digital-transformation", ar: "التحول الرقمي", image: "/images/tech-1.png" },
+      { en: "Data & AI", slug: "data-ai", ar: "البيانات والذكاء الاصطناعي", image: "/images/tech-2.png" },
+      { en: "ERP Solutions", slug: "erp", ar: "حلول تخطيط موارد المؤسسة", image: "/images/tech-3.png" },
+      { en: "Blockchain", slug: "blockchain", ar: "سلاسل الكتل", image: "/images/tech-4.png" },
+      { en: "Cloud Services", slug: "cloud", ar: "الخدمات السحابية", image: "/images/claude-service.png" },
+      { en: "Cybersecurity", slug: "cybersecurity", ar: "الأمن السيبراني", image: "/images/tech-6.png" },
+      { en: "Data Center Services", slug: "data-center", ar: "خدمات مراكز البيانات", image: "/images/data-center.png" },
+      { en: "Managed Services", slug: "managed-services", ar: "الخدمات المُدارة", image: "/images/tech-8.png" },
+      { en: "Smart Cities", slug: "smart-cities", ar: "المدن الذكية", image: "/images/smart-city.png" },
     ],
   },
 ];
@@ -74,6 +76,9 @@ export function SolutionsSection() {
   const [openCapability, setOpenCapability] = useState<string | null>(solutions[0].capabilities[0]?.en ?? null);
   const [selectedCapability, setSelectedCapability] = useState<string | null>(solutions[0].capabilities[0]?.en ?? null);
   const [capExpanded, setCapExpanded] = useState(false);
+  const router = useRouter();
+  // Each capability opens its own tab on the matching detail page (read there via ?service=)
+  const serviceHref = (slug: string) => `/solutions/${active.key}?service=${slug}`;
   const active = solutions.find((s) => s.key === activeKey) ?? solutions[0];
   const selectedCapabilityImage = active.capabilities.find((c) => c.en === selectedCapability)?.image;
   const displayedImage =
@@ -108,7 +113,8 @@ export function SolutionsSection() {
 
           {/* Tabs — kept LTR so tab order never reorders by language, but the row itself
               still aligns to the reading-start side (right in Arabic) to match the heading above it. */}
-          <div dir="ltr" className={`flex flex-wrap gap-3 mb-8 lg:mb-10 ${isAr ? "justify-end" : "justify-start"}`}>
+          {/* Follows the page direction so the first (active) tab sits on the right in Arabic */}
+          <div dir={isAr ? "rtl" : "ltr"} className="flex flex-wrap gap-3 mb-8 lg:mb-10 justify-start">
             {solutions.map((s) => {
               const isActive = s.key === activeKey;
               return (
@@ -128,8 +134,8 @@ export function SolutionsSection() {
           </div>
         </Reveal>
 
-        {/* Panel — kept LTR so the image always sits on the same side as the text */}
-        <div dir="ltr" className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-stretch">
+        {/* Panel — follows the page direction: text card on the right and image on the left in Arabic */}
+        <div dir={isAr ? "rtl" : "ltr"} className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-stretch">
           <AnimatePresence mode="wait">
             <motion.div
               key={active.key}
@@ -168,6 +174,12 @@ export function SolutionsSection() {
                           onMouseEnter={() => setHoveredImage(capability.image)}
                           onMouseLeave={() => setHoveredImage((current) => (current === capability.image ? null : current))}
                           onClick={() => {
+                            // Desktop: go straight to the capability's tab on the detail page.
+                            // Mobile/tablet: tap opens the accordion (image + "Learn more" link) instead.
+                            if (window.matchMedia("(min-width: 1024px)").matches) {
+                              router.push(serviceHref(capability.slug));
+                              return;
+                            }
                             setSelectedCapability(capability.en);
                             setOpenCapability((current) => (current === capability.en ? null : capability.en));
                           }}
@@ -212,6 +224,11 @@ export function SolutionsSection() {
                                   className="object-cover"
                                 />
                               </div>
+                              <div dir={isAr ? "rtl" : "ltr"} className="mb-4">
+                                <Button href={serviceHref(capability.slug)} variant="secondary">
+                                  {isAr ? "اقرأ المزيد" : "LEARN MORE"}
+                                </Button>
+                              </div>
                             </motion.div>
                           )}
                         </AnimatePresence>
@@ -241,7 +258,7 @@ export function SolutionsSection() {
                           : "SHOW LESS"
                         : isAr
                           ? "عرض جميع الحلول"
-                          : "SHOW ALL SOLUTIONS"}
+                          : "SHOW MORE SOLUTIONS"}
                       <span>{capExpanded ? "−" : "+"}</span>
                     </button>
                   </div>

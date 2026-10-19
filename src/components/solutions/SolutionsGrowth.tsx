@@ -38,9 +38,26 @@ export function SolutionsGrowth() {
   const [activeTab, setActiveTab] = useState(tabs[0].key);
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartVisible, setChartVisible] = useState(false);
+  // The line is drawn in a stretchable 0–100 box; dots and the arrowhead are fixed-size HTML
+  // elements on top, so they always stay round / sharp. The measured size is only used for the
+  // arrowhead's rotation angle.
+  const plotRef = useRef<HTMLDivElement>(null);
+  const [plotSize, setPlotSize] = useState({ w: 100, h: 100 });
+
+  useEffect(() => {
+    const el = plotRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      if (width > 0 && height > 0) setPlotSize({ w: width, h: height });
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const activeData = useMemo(() => tabs.find((t) => t.key === activeTab) ?? tabs[0], [activeTab]);
 
+  // Points in percent of the plot area
   const points = useMemo(
     () =>
       activeData.values.map((value, i) => {
@@ -50,6 +67,16 @@ export function SolutionsGrowth() {
       }),
     [activeData]
   );
+
+  // Direction of the last segment in real pixels, so the arrowhead follows the line
+  const arrowAngle = useMemo(() => {
+    const [x1, y1] = points[points.length - 2];
+    const [x2, y2] = points[points.length - 1];
+    const dx = ((x2 - x1) / 100) * plotSize.w;
+    const dy = ((y2 - y1) / 100) * plotSize.h;
+    return (Math.atan2(dy, dx) * 180) / Math.PI;
+  }, [points, plotSize]);
+  const arrowTip = points[points.length - 1];
 
   const pathD = useMemo(
     () => points.map(([x, y], i) => `${i === 0 ? "M" : "L"} ${x},${y}`).join(" "),
@@ -131,11 +158,23 @@ export function SolutionsGrowth() {
 
           {/* Chart stays LTR so years read oldest → newest and the axis sits on the left */}
           <div dir="ltr" className="flex gap-4">
-            {/* Y-axis labels */}
-            <div className="flex flex-col justify-between text-[13px] text-gray-500 h-[220px] sm:h-[260px] pb-6">
-              {activeData.axisLabels.map((label) => (
-                <span key={label}>{label} {isAr ? "مليون" : "M"}</span>
-              ))}
+            {/* Y-axis labels — each centred on its grid line. An invisible copy of the widest label
+                gives the column its width, since the visible labels are absolutely positioned. */}
+            <div className="relative shrink-0 h-[220px] sm:h-[260px] text-[13px] text-gray-500">
+              <span aria-hidden className="invisible block h-0 whitespace-nowrap">
+                {activeData.axisLabels.reduce((a, b) => (String(b).length > String(a).length ? b : a))} {isAr ? "مليون" : "M"}
+              </span>
+              <div className="absolute inset-x-0 top-0 bottom-6">
+                {activeData.axisLabels.map((label, i) => (
+                  <span
+                    key={label}
+                    className="absolute left-0 -translate-y-1/2 whitespace-nowrap leading-none"
+                    style={{ top: `${(i / (activeData.axisLabels.length - 1)) * 100}%` }}
+                  >
+                    {label} {isAr ? "مليون" : "M"}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {/* Chart area */}
@@ -147,50 +186,67 @@ export function SolutionsGrowth() {
                 ))}
               </div>
 
-              <div className="absolute inset-x-0 top-0 bottom-6 z-10">
-                <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full overflow-visible">
-                  <defs>
-                    <marker id="growthArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse">
-                      <path
-                        d="M0,0 L10,5 L0,10 z"
-                        fill="#2E368F"
-                        className={`transition-opacity duration-300 ease-out ${chartVisible ? "opacity-100" : "opacity-0"}`}
-                        style={{ transitionDelay: chartVisible ? "1200ms" : "0ms" }}
-                      />
-                    </marker>
-                  </defs>
+              <div ref={plotRef} className="absolute inset-x-0 top-0 bottom-6 z-10">
+                <svg
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                  className="absolute inset-0 w-full h-full overflow-visible"
+                  style={{
+                    clipPath: chartVisible ? "inset(-10px -10px -10px -10px)" : "inset(-10px 100% -10px -10px)",
+                    transition: "clip-path 1200ms ease-out",
+                  }}
+                >
                   <path
                     d={pathD}
-                    pathLength={1}
-                    strokeWidth={0.6}
-                    markerEnd="url(#growthArrow)"
+                    strokeWidth={1.2}
+                    vectorEffect="non-scaling-stroke"
                     className="stroke-[#2E368F] fill-none"
+                  />
+                </svg>
+
+                {/* Data dots — fixed-size so they never stretch */}
+                {points.slice(0, -1).map(([cx, cy], i) => (
+                  <span
+                    key={i}
+                    className="absolute w-[6px] h-[6px] -ml-[3px] -mt-[3px] rounded-full bg-[#2E368F]"
                     style={{
-                      strokeDasharray: 1,
-                      strokeDashoffset: chartVisible ? 0 : 1,
-                      transition: "stroke-dashoffset 1200ms ease-out",
+                      left: `${cx}%`,
+                      top: `${cy}%`,
+                      opacity: chartVisible ? 1 : 0,
+                      transition: `opacity 300ms ease-out ${260 + i * 200}ms`,
                     }}
                   />
-                  {points.slice(0, -1).map(([cx, cy], i) => (
-                    <circle
-                      key={i}
-                      cx={cx}
-                      cy={cy}
-                      r="1"
-                      className="fill-[#2E368F]"
-                      style={{
-                        opacity: chartVisible ? 1 : 0,
-                        transition: `opacity 300ms ease-out ${260 + i * 200}ms`,
-                      }}
-                    />
-                  ))}
+                ))}
+
+                {/* Arrowhead at the end of the line, rotated to the last segment's direction */}
+                <svg
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  className="absolute overflow-visible"
+                  style={{
+                    left: `${arrowTip[0]}%`,
+                    top: `${arrowTip[1]}%`,
+                    transform: `translate(-50%, -50%) rotate(${arrowAngle}deg)`,
+                    opacity: chartVisible ? 1 : 0,
+                    transition: "opacity 300ms ease-out",
+                    transitionDelay: chartVisible ? "1200ms" : "0ms",
+                  }}
+                >
+                  <path d="M1,1 L9,5 L1,9 z" fill="#2E368F" />
                 </svg>
               </div>
 
-              {/* X-axis labels */}
-              <div className="font-[family-name:var(--font-anek-latin)] absolute bottom-0 left-0 right-0 flex justify-between text-[13px] text-gray-500">
-                {years.map((year) => (
-                  <span key={year}>{year}</span>
+              {/* X-axis labels — each centred under its data point */}
+              <div className="font-[family-name:var(--font-anek-latin)] absolute bottom-0 left-0 right-0 h-4 text-[13px] text-gray-500">
+                {years.map((year, i) => (
+                  <span
+                    key={year}
+                    className="absolute bottom-0 -translate-x-1/2 whitespace-nowrap leading-none"
+                    style={{ left: `${(i / (years.length - 1)) * 100}%` }}
+                  >
+                    {year}
+                  </span>
                 ))}
               </div>
             </div>

@@ -26,7 +26,7 @@ export function SolutionsHero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15, ease: easeOut }}
-          className="text-[15px] md:text-[18px] lg:text-[20px] leading-relaxed font-light text-[#727272] max-w-3xl mb-8"
+          className={`text-[15px] md:text-[18px] lg:text-[20px] leading-relaxed font-light text-[#727272] mb-8 ${isAr ? "lg:max-w-[70%]" : "lg:max-w-[88%]"}`}
         >
           {isAr
             ? "ترتكز أعمال نسما للبنية التحتية والتقنية على قطاعين رئيسيين يجمعان بين الهندسة الميدانية وأنظمة المؤسسات لخدمة العمليات الحيوية في جميع أنحاء المملكة العربية السعودية. ومن الطاقة والمياه والاتصالات والمنشآت الصناعية، إلى مراكز البيانات والحوسبة السحابية والأمن السيبراني والخدمات المُدارة، تدعم أعمالنا القطاعات التي تكون فيها الموثوقية في المقام الأول."

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Map1 } from "@/components/solutions/Map1";
 import { Reveal } from "@/components/ui/Reveal";
@@ -18,6 +19,16 @@ const statLabels = {
   water: { en: "Water", ar: "المياه" },
   industrial: { en: "Industrial Installation", ar: "التركيبات الصناعية" },
   om: { en: "O&M", ar: "التشغيل والصيانة" },
+};
+
+// Each row opens the projects list on /projects, pre-filtered to the closest tab + sector chip
+// (keys from src/data/projects.ts). Energy and Industrial have no dedicated chip yet, so they
+// land on Infrastructure → What's hot until those categories exist.
+const statLinks: Record<string, string> = {
+  [statLabels.energy.en]: "/projects?tab=Infrastructure&chip=whats-hot#projects-showcase",
+  [statLabels.water.en]: "/projects?tab=Infrastructure&chip=water-mep#projects-showcase",
+  [statLabels.industrial.en]: "/projects?tab=Infrastructure&chip=whats-hot#projects-showcase",
+  [statLabels.om.en]: "/projects?tab=Infrastructure&chip=om#projects-showcase",
 };
 
 // Dot coordinates are in Map1's own viewBox space (0 0 1035 621), placed at
@@ -191,15 +202,23 @@ export function SolutionsMap() {
 
           <div className="flex flex-col divide-y divide-gray-300 border-t border-gray-300">
             {activeRegion.stats.map((item, i) => (
-              <div key={`${item.label.en}-${i}`} className="flex items-center justify-between py-4">
+              <Link
+                key={`${item.label.en}-${i}`}
+                href={statLinks[item.label.en]}
+                className="group flex items-center justify-between py-4"
+              >
                 <div className="flex items-center gap-3">
                   <span className="text-gray-400 text-sm font-normal w-6 shrink-0">{item.count}</span>
-                  <span className="text-gray-600 text-[15px] sm:text-[16px] font-light">
+                  <span className="text-gray-600 text-[15px] sm:text-[16px] font-light transition-colors duration-300 group-hover:text-[#2E368F]">
                     {isAr ? item.label.ar : item.label.en}
                   </span>
                 </div>
-                <ArrowIcon className={`text-gray-300 shrink-0 ${isAr ? "rotate-180" : ""}`} />
-              </div>
+                <ArrowIcon
+                  className={`text-gray-300 shrink-0 transition-all duration-300 group-hover:text-[#2E368F] ${
+                    isAr ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"
+                  }`}
+                />
+              </Link>
             ))}
           </div>
 

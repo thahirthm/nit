@@ -14,6 +14,7 @@ const easeOut = [0.16, 1, 0.3, 1] as const;
 const socials = [
   {
     name: "LinkedIn",
+    href: "https://sa.linkedin.com/company/nesma-infrastructure-and-techology",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#2E368F" />
@@ -25,6 +26,7 @@ const socials = [
   },
   {
     name: "Instagram",
+    href: "https://www.instagram.com/nesma_nit/?hl=en",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#2E368F" />
@@ -43,6 +45,7 @@ const socials = [
   },
   {
     name: "X",
+    href: "https://x.com/NesmaNit",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#2E368F" />
@@ -54,6 +57,7 @@ const socials = [
   },
   {
     name: "YouTube",
+    href: "",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#2E368F" />
@@ -160,7 +164,7 @@ export function ContactHero() {
                 {isAr ? "البريد الإلكتروني" : "Email Address"}
               </span>
               <span dir="ltr" className={`block mt-1 text-gray-900 text-[22px] font-light ${isAr ? "text-right" : ""}`}>
-                info@Nesma-nit.com
+                info@nesma-nit.com
               </span>
             </div>
             <div>
@@ -181,10 +185,13 @@ export function ContactHero() {
               {isAr ? "حسابات التواصل الاجتماعي" : "Socials"}
             </span>
             <div dir="ltr" className="flex items-center gap-3">
+              {/* YouTube has no channel link yet, so it stays visible with a placeholder "#" (same tab) */}
               {socials.map((social) => (
                 <a
                   key={social.name}
-                  href="#"
+                  href={social.href || "#"}
+                  target={social.href ? "_blank" : undefined}
+                  rel={social.href ? "noopener noreferrer" : undefined}
                   aria-label={social.name}
                   className="block w-[38px] h-[38px] "
                 >

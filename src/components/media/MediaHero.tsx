@@ -54,8 +54,12 @@ export function MediaHero() {
           </motion.div>
         </motion.div>
 
-        <div className={`flex mt-10 lg:mt-14 ${isAr ? "justify-start" : "justify-end"}`}>
-          <div dir={isAr ? "rtl" : "ltr"} className="max-w-xl space-y-6">
+        {/* Arabic: text sits in the 2nd (left) column of a half/half grid, starting from the page's midpoint */}
+        <div
+          dir={isAr ? "rtl" : "ltr"}
+          className={`mt-10 lg:mt-14 ${isAr ? "grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16" : "flex justify-end"}`}
+        >
+          <div dir={isAr ? "rtl" : "ltr"} className={`max-w-xl space-y-6 ${isAr ? "lg:col-start-2" : ""}`}>
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}

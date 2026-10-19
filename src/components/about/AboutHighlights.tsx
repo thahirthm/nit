@@ -7,11 +7,11 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Reveal } from "@/components/ui/Reveal";
 
 const clientLogos = [
-  { src: "/images/abt-logo.png", alt: { en: "Saudi Aramco", ar: "أرامكو السعودية" } },
-  { src: "/images/logos/l2.png", alt: { en: "NEOM", ar: "نيوم" } },
-  { src: "/images/logos/l3.png", alt: { en: "stc", ar: "stc" } },
-  { src: "/images/logos/l4.png", alt: { en: "Ministry of Culture", ar: "وزارة الثقافة" } },
-  { src: "/images/logos/l5.png", alt: { en: "Saudi Central Bank", ar: "البنك المركزي السعودي" } },
+  { src: "/images/tc-1.png", alt: { en: "Saudi Aramco", ar: "أرامكو السعودية" } },
+  { src: "/images/tc-2.png", alt: { en: "NEOM", ar: "نيوم" } },
+  { src: "/images/tc-3.png", alt: { en: "stc", ar: "stc" } },
+  { src: "/images/tc-4.png", alt: { en: "Ministry of Culture", ar: "وزارة الثقافة" } },
+  { src: "/images/tc-5.png", alt: { en: "Saudi National Bank (SNB)", ar: "البنك الأهلي السعودي" } },
 ];
 
 const ArrowIcon = ({ className }: { className?: string }) => (
@@ -28,38 +28,68 @@ export function AboutHighlights() {
   const [logoIndex, setLogoIndex] = useState(0);
 
   const nextLogo = () => setLogoIndex((i) => (i === clientLogos.length - 1 ? 0 : i + 1));
+  const scrollToClients = () =>
+    document.getElementById("clients-partners")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
     <section id="who-we-are" className={`w-full bg-white mt-5 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-6 lg:gap-8">
-        {/* Card 1: Trusted by many */}
-        <Reveal delay={0} duration={0.7} y={40} className={cardClasses}>
+        {/* Card 1: Trusted by many — clicking the card scrolls to "Trusted by leading organizations"
+            (#clients-partners) on this page; the logo dots/arrow keep cycling logos instead */}
+        <Reveal
+          delay={0}
+          duration={0.7}
+          y={40}
+          role="link"
+          tabIndex={0}
+          onClick={scrollToClients}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              scrollToClients();
+            }
+          }}
+          className={`${cardClasses} cursor-pointer`}
+        >
           <h3 dir={isAr ? "rtl" : "ltr"} className="text-[28px] lg:text-[30px] font-extralight text-[#2E368F]">
             {isAr ? "موثوق به من الكثيرين." : "Trusted by many."}
           </h3>
 
-          <div className="relative w-[65%] max-w-[280px] h-[70px] lg:h-[90px]">
+          {/* Logos are centred in a fixed box; mix-blend-multiply drops the white background baked
+              into the logo files so only the mark shows on the grey card. */}
+          <div className="relative self-center w-[80%] max-w-[300px] h-[110px] lg:h-[130px]">
             <Image quality={95}
               src={clientLogos[logoIndex].src}
               alt={isAr ? clientLogos[logoIndex].alt.ar : clientLogos[logoIndex].alt.en}
               fill
-              className="object-contain object-left"
+              className="object-contain object-center mix-blend-multiply"
             />
           </div>
 
-          <div dir="ltr" className="flex items-center justify-between">
+          {/* Follows the page direction: in Arabic the dots sit on the right (first dot rightmost) and the arrow on the left, pointing left */}
+          <div dir={isAr ? "rtl" : "ltr"} className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               {clientLogos.map((logo, i) => (
                 <button
                   key={logo.alt.en}
                   aria-label={`Show ${logo.alt.en}`}
-                  onClick={() => setLogoIndex(i)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLogoIndex(i);
+                  }}
                   className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${i === logoIndex ? "bg-[#2E368F]" : "bg-gray-300"}`}
                 />
               ))}
             </div>
-            <button aria-label="Next client" onClick={nextLogo} className="text-[#2E368F] hover:text-[#1c2260] transition-colors">
-              <ArrowIcon />
+            <button
+              aria-label="Next client"
+              onClick={(e) => {
+                e.stopPropagation();
+                nextLogo();
+              }}
+              className="text-[#2E368F] hover:text-[#1c2260] transition-colors"
+            >
+              <ArrowIcon className={isAr ? "scale-x-[-1]" : ""} />
             </button>
           </div>
         </Reveal>
@@ -71,11 +101,18 @@ export function AboutHighlights() {
           </h3>
 
           <div dir="ltr" className="flex items-end justify-between gap-3 sm:gap-6">
-            <Button variant="primary" className="shrink-0">{isAr ? "عرض الإحصائيات" : "VIEW STATS"}</Button>
+            {/* Scrolls down to the "Scale that speaks." section (#our-stats) on this page */}
+            <Button
+              variant="primary"
+              className="shrink-0"
+              onClick={() => document.getElementById("our-stats")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            >
+              {isAr ? "عرض الإحصائيات" : "VIEW STATS"}
+            </Button>
 
             <div className="text-right shrink-0">
               <div className="font-[family-name:var(--font-anek-latin)] text-[34px] sm:text-[44px] lg:text-[70px] font-light text-[#2E368F] leading-none">
-                60k +
+                60k+
               </div>
               <p className="text-gray-500 text-xs sm:text-sm lg:text-base mt-1 sm:mt-2 whitespace-nowrap">{isAr ? "الموارد داخل المملكة" : "In-Kingdom resources"}</p>
             </div>
@@ -88,12 +125,18 @@ export function AboutHighlights() {
             {isAr ? "حضور عالمي متصل" : "Connected globally"}
           </h3>
 
-          <div className="absolute inset-x-4 bottom-0 top-[70px] lg:top-[90px] pointer-events-none">
-            <Image quality={95} src="/images/abt-globe.png" alt={isAr ? "حضور عالمي متصل" : "Connected globally"} fill className="object-contain" />
+          {/* Map fills the card below the heading, edge to edge (sides crop slightly rather than leaving empty bands) */}
+          <div className="absolute inset-x-0 bottom-0 top-[70px] lg:top-[90px] pointer-events-none">
+            <Image quality={95} src="/images/abt-globe.png" alt={isAr ? "حضور عالمي متصل" : "Connected globally"} fill className="object-cover object-center" />
           </div>
 
           <div className={`relative z-10 ${isAr ? "self-start" : "self-end"}`}>
-            <button aria-label="Explore" className={`text-[#2E368F] hover:text-[#1c2260] transition-colors ${isAr ? "scale-x-[-1]" : ""}`}>
+            {/* Scrolls down to the "Local expertise. Global reach." section on this page */}
+            <button
+              aria-label="Explore"
+              onClick={() => document.getElementById("global-reach")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              className={`text-[#2E368F] hover:text-[#1c2260] transition-colors ${isAr ? "scale-x-[-1]" : ""}`}
+            >
               <ArrowIcon />
             </button>
           </div>

@@ -165,12 +165,13 @@ export function AboutHistory() {
             </AnimatePresence>
           </Reveal>
 
-          {/* Timeline track — shown right under the year on mobile; below both columns on desktop. Kept LTR so the chronological order never reverses */}
+          {/* Timeline track — shown right under the year on mobile; below both columns on desktop.
+              Follows the page direction: in Arabic it's mirrored (1979 on the right, progress fills right-to-left). */}
           <Reveal
             delay={0.25}
             duration={0.8}
             y={30}
-            dir="ltr"
+            dir={isAr ? "rtl" : "ltr"}
             className="order-2 lg:order-3 lg:col-span-2 mt-2 lg:mt-14 flex flex-col gap-3 lg:gap-6"
           >
           {/* Dots + line, and year labels — share the same width so each label sits under its dot.
@@ -180,7 +181,7 @@ export function AboutHistory() {
             <div className="block relative">
               <div className="absolute top-[8px] left-[5px] right-[5px] h-px bg-gray-200" />
               <div
-                className="absolute top-[8px] left-0 h-px bg-[#2E368F] transition-all duration-500 ease-out"
+                className="absolute top-[8px] start-0 h-px bg-[#2E368F] transition-all duration-500 ease-out"
                 style={{ width: `${(activeIndex / lastIndex) * 100}%` }}
               />
               <div className="relative flex justify-between">
@@ -224,14 +225,14 @@ export function AboutHistory() {
               onClick={goPrev}
               className="cursor-pointer transition-colors text-gray-400 hover:text-[#2E368F]"
             >
-              <ArrowIcon className="rotate-180" />
+              <ArrowIcon className={isAr ? "" : "rotate-180"} />
             </button>
             <button
               aria-label={isAr ? "التالي" : "Next"}
               onClick={goNext}
               className="cursor-pointer transition-colors text-[#2E368F] hover:text-[#1c2260]"
             >
-              <ArrowIcon />
+              <ArrowIcon className={isAr ? "rotate-180" : ""} />
             </button>
           </div>
           </Reveal>

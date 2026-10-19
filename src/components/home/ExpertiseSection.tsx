@@ -106,7 +106,7 @@ export function ExpertiseSection() {
 
       {/* Bottom Section: Stats Grid — kept LTR so card order/borders never mirror;
           only each label's own dir flips for correct Arabic alignment. */}
-      <div className="w-full border-t border-gray-100">
+      <div className="w-full border-t border-b border-gray-100">
         <div dir="ltr" className="max-w-[1440px] mx-auto w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => {
             const isLeftCol = index % 2 === 0;
@@ -125,8 +125,10 @@ export function ExpertiseSection() {
               onClick={() => setActiveIndex((prev) => (prev === index ? null : index))}
               className={`relative flex flex-col justify-between p-4 sm:p-8 min-h-[160px] sm:min-h-[220px] overflow-hidden cursor-pointer border-gray-100 lg:border-b-0 ${isLeftCol ? 'border-r' : ''} ${!isLastRow ? 'border-b' : ''} ${isLastCol4 ? 'lg:border-r-0' : 'lg:border-r'}`}
             >
-              {/* Slide-up primary bg — triggers on tap (mobile) or hover (desktop) */}
-              <div className={`absolute inset-0 transition-transform duration-500 ease-in-out bg-[#2E368F] z-0 ${isActive ? 'translate-y-0' : 'translate-y-full'}`} />
+              {/* Slide-up primary bg — triggers on tap (mobile) or hover (desktop).
+                  Hidden 2px past the bottom edge: at exactly 100% sub-pixel rounding on mobile let a
+                  hairline of blue peek out and tint the grid's bottom border. */}
+              <div className={`absolute inset-0 transition-transform duration-500 ease-in-out bg-[#2E368F] z-0 ${isActive ? 'translate-y-0' : 'translate-y-[calc(100%+2px)]'}`} />
 
               {/* Content */}
               <div className="relative z-10">
