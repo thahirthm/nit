@@ -133,13 +133,15 @@ export function AboutGlobal() {
 
                 <AnimatePresence>
                   {isActive && (
-                    <div className="absolute left-1/2 top-1/2 pointer-events-none">
+                    // LTR wrapper + explicit left/top so the label anchors to the dot in Arabic too
+                    // (in RTL an auto-positioned box starts from the right edge and drifts away from the line)
+                    <div dir="ltr" className="absolute left-1/2 top-1/2 pointer-events-none">
                       <motion.svg
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeIn" } }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute overflow-visible"
+                        className="absolute left-0 top-0 overflow-visible"
                         width="1"
                         height="1"
                       >
@@ -162,7 +164,7 @@ export function AboutGlobal() {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3, ease: "easeIn" } }}
                         transition={{ duration: 0.45, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                        className={`absolute whitespace-nowrap px-3 py-1.5 bg-white border border-[#2E368F] text-[#2E368F] text-[10px] font-semibold tracking-widest uppercase shadow-sm ${
+                        className={`absolute left-0 top-0 whitespace-nowrap px-3 py-1.5 bg-white border border-[#2E368F] text-[#2E368F] font-semibold shadow-sm ${isAr ? "text-[12px]" : "text-[10px] tracking-widest uppercase"} ${
                           flipRight ? "ml-[42px]" : "-translate-x-full -ml-[42px]"
                         } ${flipDown ? "mt-[34px]" : "-translate-y-full -mt-[34px]"}`}
                       >

@@ -90,7 +90,7 @@ export function AboutCeoMessage() {
               width={1984}
               height={2588}
               sizes="(min-width: 1280px) 483px, (min-width: 1024px) 437px, 245px"
-              className="h-full w-auto object-contain object-bottom transition-transform duration-700 ease-out lg:translate-y-[18%] lg:group-hover:translate-y-0"
+              className="h-full w-auto object-contain object-bottom transition-transform duration-700 ease-out lg:translate-y-[5%] lg:group-hover:translate-y-0"
               priority={false}
             />
           </Reveal>

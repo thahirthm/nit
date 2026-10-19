@@ -117,7 +117,6 @@ export function AboutHistory() {
   const { language } = useLanguage();
   const isAr = language === "ar";
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const active = milestones[activeIndex];
   const lastIndex = milestones.length - 1;
 
@@ -125,20 +124,16 @@ export function AboutHistory() {
   const goNext = () => setActiveIndex((i) => (i === lastIndex ? 0 : i + 1));
 
   useEffect(() => {
-    if (isPaused) return;
-
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev === lastIndex ? 0 : prev + 1));
     }, 3000);
 
     return () => clearInterval(timer);
-  }, [activeIndex, isPaused, lastIndex]);
+  }, [activeIndex, lastIndex]);
 
   return (
     <section
       id="our-history"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
       className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
     >
       <div className="px-6 lg:px-16">

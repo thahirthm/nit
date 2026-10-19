@@ -129,7 +129,7 @@ export function TechnologyProjects() {
                         <span
                           key={bi}
                           className={`px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase text-white ${
-                            bi === 0 && project.badges.length > 1 ? "bg-[#2E368F]/90" : "bg-[#81D1E8]/90 text-[#2E368F]"
+                            bi === 0 && project.badges.length > 1 ? "bg-[#2E368F]/90 border border-transparent" : "border border-white bg-transparent"
                           }`}
                         >
                           {isAr ? badge.ar : badge.en}
