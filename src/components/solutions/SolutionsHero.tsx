@@ -38,7 +38,7 @@ export function SolutionsHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: easeOut }}
         >
-          <Button variant="primary">{isAr ? "تواصل معنا" : "CONNECT WITH US"}</Button>
+          <Button href="/contact" variant="primary">{isAr ? "تواصل معنا" : "CONNECT WITH US"}</Button>
         </motion.div>
       </div>
     </section>

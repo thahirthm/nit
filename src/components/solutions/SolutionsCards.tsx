@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { useLanguage } from "@/context/LanguageContext";
@@ -12,12 +13,12 @@ const cards = [
     slug: "infrastructure",
     image: "/images/infra-banner.png",
     capabilities: [
-      { en: "Transmission and Distribution / Advanced Energy", ar: "النقل والتوزيع / الطاقة المتقدمة" },
-      { en: "Energy Solutions (Energy Efficiency)", ar: "حلول الطاقة (كفاءة الطاقة)" },
-      { en: "Industries (Industrial Solutions)", ar: "الصناعات (الحلول الصناعية)" },
-      { en: "Water Infrastructure", ar: "البنية التحتية للمياه" },
-      { en: "Communication and Technology (ICT)", ar: "الاتصالات والتقنية (ICT)" },
-      { en: "Infrastructure Services (O&M and MEP)", ar: "خدمات البنية التحتية (التشغيل والصيانة والأعمال الكهروميكانيكية)" },
+      { en: "Transmission and Distribution / Advanced Energy", slug: "transmission-distribution", ar: "النقل والتوزيع / الطاقة المتقدمة" },
+      { en: "Energy Solutions (Energy Efficiency)", slug: "energy-efficiency", ar: "حلول الطاقة (كفاءة الطاقة)" },
+      { en: "Industries (Industrial Solutions)", slug: "industrial", ar: "الصناعات (الحلول الصناعية)" },
+      { en: "Water Infrastructure", slug: "water", ar: "البنية التحتية للمياه" },
+      { en: "Communication and Technology (ICT)", slug: "ict", ar: "الاتصالات والتقنية (ICT)" },
+      { en: "Infrastructure Services (O&M and MEP)", slug: "infrastructure-services", ar: "خدمات البنية التحتية (التشغيل والصيانة والأعمال الكهروميكانيكية)" },
     ],
   },
   {
@@ -25,15 +26,15 @@ const cards = [
     slug: "technology",
     image: "/images/banner.png",
     capabilities: [
-      { en: "Digital Transformation", ar: "التحول الرقمي" },
-      { en: "Data & AI", ar: "البيانات والذكاء الاصطناعي" },
-      { en: "ERP Solutions", ar: "حلول تخطيط موارد المؤسسة" },
-      { en: "Blockchain", ar: "سلاسل الكتل" },
-      { en: "Cloud Services", ar: "الخدمات السحابية" },
-      { en: "Cybersecurity", ar: "الأمن السيبراني" },
-      { en: "Data Center Services", ar: "خدمات مراكز البيانات" },
-      { en: "Managed Services", ar: "الخدمات المُدارة" },
-      { en: "Smart Cities", ar: "المدن الذكية" },
+      { en: "Digital Transformation", slug: "digital-transformation", ar: "التحول الرقمي" },
+      { en: "Data & AI", slug: "data-ai", ar: "البيانات والذكاء الاصطناعي" },
+      { en: "ERP Solutions", slug: "erp", ar: "حلول تخطيط موارد المؤسسة" },
+      { en: "Blockchain", slug: "blockchain", ar: "سلاسل الكتل" },
+      { en: "Cloud Services", slug: "cloud", ar: "الخدمات السحابية" },
+      { en: "Cybersecurity", slug: "cybersecurity", ar: "الأمن السيبراني" },
+      { en: "Data Center Services", slug: "data-center", ar: "خدمات مراكز البيانات" },
+      { en: "Managed Services", slug: "managed-services", ar: "الخدمات المُدارة" },
+      { en: "Smart Cities", slug: "smart-cities", ar: "المدن الذكية" },
     ],
   },
 ];
@@ -89,15 +90,18 @@ export function SolutionsCards() {
                 </h4>
                 <div className="border-t border-gray-300 mt-4 sm:mt-auto">
                   {card.capabilities.map((capability) => (
-                    <div
+                    // Opens that service's tab on the solution detail page (same ?service= deep link as the home page)
+                    <Link
                       key={capability.en}
-                      className="flex items-center justify-between py-2.5 sm:py-3 border-b border-gray-300"
+                      href={`/solutions/${card.slug}?service=${capability.slug}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="group/cap flex items-center justify-between py-2.5 sm:py-3 border-b border-gray-300"
                     >
-                      <span className="text-gray-600 text-[15px] sm:text-[17px] lg:text-[19px] font-light">
+                      <span className="text-gray-600 text-[15px] sm:text-[17px] lg:text-[19px] font-light transition-colors duration-300 group-hover/cap:text-[#2E368F]">
                         {isAr ? capability.ar : capability.en}
                       </span>
-                      <span className="text-gray-400 text-3xl font-light leading-none shrink-0 ms-4">+</span>
-                    </div>
+                      <span className="text-gray-400 text-3xl font-light leading-none shrink-0 ms-4 transition-colors duration-300 group-hover/cap:text-[#2E368F]">+</span>
+                    </Link>
                   ))}
                 </div>
               </div>

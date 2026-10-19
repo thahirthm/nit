@@ -45,7 +45,7 @@ export function Banner() {
           </h1>
           <div className={`overflow-hidden pb-4 -mb-4 ${language === "ar" ? "flex justify-end" : ""}`}>
             <div className={`transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-300 ${isLoaded ? 'translate-y-0' : 'translate-y-[120%]'}`}>
-              <Button variant="secondary" iconOutline className="mt-2">
+              <Button href="/about" variant="secondary" iconOutline className="mt-2">
                 {language === "ar" ? "تعرّف علينا أكثر" : "Know more about us"}
               </Button>
             </div>

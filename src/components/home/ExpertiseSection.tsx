@@ -87,7 +87,7 @@ export function ExpertiseSection() {
               : "NIT operates across Saudi Arabia while collaborating with international partners to deliver infrastructure and technology solutions for complex projects."}
           </p>
           <div className={`pt-2 flex ${language === "ar" ? "justify-end" : "justify-start"}`}>
-            <Button variant="primary">{language === "ar" ? "من نحن" : "ABOUT US"}</Button>
+            <Button href="/about" variant="primary">{language === "ar" ? "من نحن" : "ABOUT US"}</Button>
           </div>
         </div>
 

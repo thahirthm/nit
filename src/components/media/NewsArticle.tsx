@@ -38,6 +38,18 @@ export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & {
   const similar = post.related;
   const title = post.title;
 
+  // Share buttons open the network's share dialog for this page's URL (read at click time, so no
+  // hydration mismatch). Instagram has no web share URL, so that icon links to NIT's profile instead.
+  const share = (e: React.MouseEvent, network: "linkedin" | "x") => {
+    e.preventDefault();
+    const url = encodeURIComponent(window.location.href);
+    const shareUrl =
+      network === "linkedin"
+        ? `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+        : `https://x.com/intent/post?url=${url}&text=${encodeURIComponent(title)}`;
+    window.open(shareUrl, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       <div className="w-full px-6 lg:px-16">
@@ -55,13 +67,13 @@ export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & {
               {isAr ? "شارك المقال:" : "Share Articles:"}
             </span>
             <div className="flex items-center gap-2">
-              <a href="#" aria-label="Share on LinkedIn" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
+              <a href="#" onClick={(e) => share(e, "linkedin")} aria-label="Share on LinkedIn" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
                 <LinkedInIcon />
               </a>
-              <a href="#" aria-label="Share on Instagram" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
+              <a href="https://www.instagram.com/nesma_nit/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="NIT on Instagram" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
                 <InstagramIcon />
               </a>
-              <a href="#" aria-label="Share on X" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
+              <a href="#" onClick={(e) => share(e, "x")} aria-label="Share on X" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
                 <XIcon />
               </a>
             </div>

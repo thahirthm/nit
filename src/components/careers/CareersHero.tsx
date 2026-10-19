@@ -47,14 +47,15 @@ export function CareersHero() {
             transition={{ duration: 0.8, delay: 0.4, ease: easeOut }}
             className={`absolute bottom-6 sm:bottom-8 ${isAr ? "right-6 sm:right-8" : "left-6 sm:left-8"}`}
           >
-            <Button href="#opportunities" variant="secondary">
+            <Button href="#apply-form" variant="secondary">
               {isAr ? "فرصنا الوظيفية" : "Our opportunities"}
             </Button>
           </motion.div>
         </motion.div>
 
-        <div className={`flex mt-10 lg:mt-14 ${isAr ? "justify-start" : "justify-end"}`}>
-          <div dir={isAr ? "rtl" : "ltr"} className="max-w-xl space-y-6">
+        {/* Arabic (desktop): the text sits in the left half, starting at the page centre and running left */}
+        <div className={`flex mt-10 lg:mt-14 ${isAr ? "justify-start lg:justify-end" : "justify-end"}`}>
+          <div dir={isAr ? "rtl" : "ltr"} className={`max-w-xl space-y-6 ${isAr ? "lg:w-1/2 lg:max-w-none lg:pe-0" : ""}`}>
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
