@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, Plus } from "lucide-react";
@@ -166,6 +167,9 @@ export function SolutionsSection() {
                     const isHovered = hoveredImage === capability.image;
                     const isOpen = openCapability === capability.en;
                     const isSelected = !hoveredImage && selectedCapability === capability.en;
+                    // Exactly one row is highlighted: the hovered row while hovering, otherwise the open/selected one
+                    // (previously the default-open first row kept its arrow even while another row was hovered)
+                    const isHighlighted = hoveredImage ? isHovered : isOpen || isSelected;
                     return (
                       <div key={capability.en} className="border-b border-gray-200">
                         <button
@@ -183,22 +187,24 @@ export function SolutionsSection() {
                             setSelectedCapability(capability.en);
                             setOpenCapability((current) => (current === capability.en ? null : capability.en));
                           }}
-                          className="group/row w-full flex items-center justify-between py-2.5 sm:py-3 text-left"
+                          className={`group/row -mx-3 px-3 w-[calc(100%+1.5rem)] flex items-center justify-between py-2.5 sm:py-3 text-left transition-colors duration-300 ${
+                            isHighlighted ? "bg-[#EDEDED]" : "bg-transparent"
+                          }`}
                           aria-expanded={isOpen}
                         >
                           <span
                             className={`text-[16px] sm:text-[18px] lg:text-[20px] font-extralight transition-colors duration-300 ${
-                              isHovered || isOpen || isSelected ? "text-[#2E368F]" : "text-gray-600"
+                              isHighlighted ? "text-[#2E368F]" : "text-gray-600"
                             }`}
                           >
                             {isAr ? capability.ar : capability.en}
                           </span>
                           <span
                             className={`shrink-0 transition-colors duration-300 ${
-                              isHovered || isOpen || isSelected ? "text-[#2E368F]" : "text-gray-400"
+                              isHighlighted ? "text-[#2E368F]" : "text-gray-400"
                             }`}
                           >
-                            {isOpen || isHovered ? (
+                            {isHighlighted ? (
                               <ArrowRight className={`w-5 h-5 sm:w-6 sm:h-6 ${isAr ? "scale-x-[-1]" : ""}`} strokeWidth={1.5} />
                             ) : (
                               <Plus className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} />
@@ -215,7 +221,8 @@ export function SolutionsSection() {
                               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                               className="overflow-hidden lg:hidden"
                             >
-                              <div className="relative w-full h-[200px] sm:h-[240px] mb-4">
+                              {/* Image links to the capability's detail page (no separate "Learn more" button on mobile) */}
+                              <Link href={serviceHref(capability.slug)} className="relative block w-full h-[200px] sm:h-[240px] mb-4">
                                 <Image
                                   quality={95}
                                   src={capability.image}
@@ -223,12 +230,7 @@ export function SolutionsSection() {
                                   fill
                                   className="object-cover"
                                 />
-                              </div>
-                              <div dir={isAr ? "rtl" : "ltr"} className="mb-4">
-                                <Button href={serviceHref(capability.slug)} variant="secondary">
-                                  {isAr ? "اقرأ المزيد" : "LEARN MORE"}
-                                </Button>
-                              </div>
+                              </Link>
                             </motion.div>
                           )}
                         </AnimatePresence>

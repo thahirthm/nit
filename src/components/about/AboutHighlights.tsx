@@ -127,7 +127,9 @@ export function AboutHighlights() {
 
           {/* Map fills the card below the heading, edge to edge (sides crop slightly rather than leaving empty bands) */}
           <div className="absolute inset-x-0 bottom-0 top-[70px] lg:top-[90px] pointer-events-none">
-            <Image quality={95} src="/images/abt-globe.png" alt={isAr ? "حضور عالمي متصل" : "Connected globally"} fill className="object-cover object-center" />
+            {/* Vector map (dots traced from the old abt-globe.png) so it stays sharp when scaled up on mobile.
+                SVGs aren't run through the image optimizer, hence unoptimized. */}
+            <Image unoptimized src="/images/abt-globe.svg" alt={isAr ? "حضور عالمي متصل" : "Connected globally"} fill className="object-cover object-center" />
           </div>
 
           <div className={`relative z-10 ${isAr ? "self-start" : "self-end"}`}>

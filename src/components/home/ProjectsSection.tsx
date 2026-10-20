@@ -40,22 +40,24 @@ const projects = [
     title: { en: "400 MW Wind farm", ar: "مزرعة رياح بقدرة 400 ميغاواط" },
     location: { en: "Dumat Al Jandal", ar: "دومة الجندل" },
     client: { en: "Principal Buyer", ar: "الجهة المالكة الرئيسية" },
+    // Shown as "Value" in the card's top meta (Location appears on hover)
+    metaValue: { en: "1.9 Billion SAR", ar: "1.9 مليار ريال" },
     image: "/images/pr2.png",
     hoverImage: "/images/pr2-hover.png",
-    logo: "/images/vision-2030.svg",
-    logoAlt: { en: "Vision 2030", ar: "رؤية 2030" },
-    isVision2030: true,
-    value: "2.1B SAR",
+    logo: "/images/fp-3-logo.png",
+    logoAlt: { en: "Principal Buyer", ar: "المشتري الرئيس" },
+    isVision2030: false,
+    value: "1.9B SAR",
     year: "2024",
     scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
     description: {
       en: [
-        "One of the largest wind energy facilities in the Middle East, delivering clean power to the national grid.",
-        "The project supports the Kingdom's renewable energy targets under Vision 2030, reducing carbon emissions while strengthening long-term energy security.",
+        "Delivered in partnership with EDF Renewables and Masdar, the project is the first onshore wind farm in Saudi Arabia and the largest in the Middle East, with 99 turbines creating a total generating capacity of 400 MW.",
+        "The project was awarded in the first round of competitive tendering under the Saudi Ministry of Energy renewable energy program, and will generate enough energy to power up to 70,000 homes and displace 1 million tons of CO2 emissions each year.",
       ],
       ar: [
-        "واحدة من أكبر منشآت طاقة الرياح في الشرق الأوسط، توفر طاقة نظيفة للشبكة الوطنية.",
-        "يدعم المشروع أهداف المملكة للطاقة المتجددة ضمن رؤية 2030، ويسهم في خفض الانبعاثات الكربونية وتعزيز أمن الطاقة على المدى الطويل.",
+        "نُفّذ بالشراكة مع EDF Renewables ومصدر، ويُعد المشروع أول مزرعة رياح برية في المملكة العربية السعودية والأكبر في الشرق الأوسط، إذ يضم 99 توربينًا بقدرة توليد إجمالية تبلغ 400 ميغاواط.",
+        "جرت ترسية المشروع ضمن الجولة الأولى من المناقصات التنافسية في إطار برنامج الطاقة المتجددة التابع لوزارة الطاقة السعودية، وسيولّد طاقة تكفي لتزويد ما يصل إلى 70,000 منزل وخفض مليون طن من انبعاثات ثاني أكسيد الكربون سنويًا.",
       ],
     },
   },
@@ -316,6 +318,9 @@ export function ProjectsSection() {
               ? language === "ar" ? "القيمة" : "Value"
               : language === "ar" ? "الموقع" : "Location";
             const clientLabel = language === "ar" ? "العميل" : "Client";
+            // The real location, shown on hover for projects whose first meta row is Value
+            const place = language === "ar" ? project.location.ar : project.location.en;
+            const placeLabel = language === "ar" ? "الموقع" : "Location";
             const dir = language === "ar" ? "rtl" : "ltr";
 
             return (
@@ -358,8 +363,20 @@ export function ProjectsSection() {
                     </h3>
 
                     <div dir={dir} className="mt-6 grid grid-cols-[90px_auto] gap-y-2 text-xs font-medium tracking-wider uppercase">
-                      <span className="opacity-70">{locationLabel}</span>
-                      <span>{location}</span>
+                      {project.metaValue ? (
+                        // Value by default; swaps to Location while the slide is hovered
+                        <>
+                          <span className="opacity-70 group-hover:hidden">{locationLabel}</span>
+                          <span className="group-hover:hidden">{location}</span>
+                          <span className="opacity-70 hidden group-hover:inline">{placeLabel}</span>
+                          <span className="hidden group-hover:inline">{place}</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="opacity-70">{locationLabel}</span>
+                          <span>{location}</span>
+                        </>
+                      )}
                       <span className="opacity-70">{clientLabel}</span>
                       <span>{client}</span>
                     </div>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { GlobalReachMap } from "@/components/ui/GlobalReachMap";
 
 export type SubLink = { en: string; ar: string; href: string };
 
@@ -75,13 +76,15 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
       className={`fixed inset-0 z-[100] bg-[#2E368F] overflow-hidden transition-opacity duration-500 ${
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
-      style={{
-        backgroundImage: "url(/images/mega-menu-bg.png)",
-        backgroundSize: "60%",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
     >
+      {/* Live world map (same markers + auto-cycling labels as the About page "Global reach" section),
+          replacing the old static background image. Desktop only — on mobile the nav fills the screen. */}
+      <div className="hidden lg:flex absolute inset-0 z-[5] items-center justify-center pointer-events-none">
+        <div className="w-[60%] max-w-[1100px] pointer-events-auto">
+          <GlobalReachMap tone="dark" active={isOpen} />
+        </div>
+      </div>
+
       <button
         onClick={onClose}
         aria-label={isAr ? "إغلاق" : "Close"}
@@ -91,8 +94,10 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
         <X className="w-7 h-7" strokeWidth={1.5} />
       </button>
 
-      <div className="relative z-10 h-full flex flex-col">
-        <div className="px-6 lg:px-12 pt-8 lg:pt-10">
+      {/* pointer-events-none on the layout wrappers so the map underneath stays hoverable;
+          the logo, nav and submenu columns opt back in. */}
+      <div className="relative z-10 h-full flex flex-col pointer-events-none">
+        <div className="px-6 lg:px-12 pt-8 lg:pt-10 pointer-events-auto w-fit">
           <Image quality={95} src="/images/nit-logo.svg" alt="Nesma Infrastructure & Technology" width={200} height={50} className="h-7 w-auto object-contain brightness-0 invert" />
         </div>
 
@@ -101,7 +106,7 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
           className={`flex-1 flex flex-col lg:flex-row px-6 lg:px-12 pt-10 lg:pt-16 gap-8 lg:gap-16 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
         >
           {/* Main nav column */}
-          <nav className="relative flex flex-col gap-6 lg:gap-7 shrink-0">
+          <nav className="relative flex flex-col gap-6 lg:gap-7 shrink-0 pointer-events-auto h-fit">
             {navLinks.map((link) => {
               // Highlighted = the submenu currently being hovered, or (when nothing's
               // hovered) whichever link is the current page.
@@ -141,7 +146,7 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
           </nav>
 
           {/* Submenu column */}
-          <div className="flex flex-col gap-6 lg:gap-7">
+          <div className="flex flex-col gap-6 lg:gap-7 pointer-events-auto h-fit">
             {activeSublinks?.map((sub) => (
               <Link
                 key={sub.en}

@@ -81,14 +81,18 @@ export function SolutionsCards() {
 
               {/* Capabilities panel — slides in from the end side (right in English, left in Arabic) on hover (desktop) / tap (mobile) */}
               <div
-                className={`absolute top-4 start-4 end-4 sm:start-auto sm:top-5 sm:end-5 sm:bottom-5 lg:top-6 lg:end-6 lg:bottom-6 sm:w-[65%] lg:w-[55%] bg-[#F5F5F5] flex flex-col px-5 sm:px-7 lg:px-8 py-5 sm:py-7 transition-transform duration-500 ease-out ${
+                className={`absolute top-4 start-4 end-4 bottom-[88px] sm:start-auto sm:top-5 sm:end-5 sm:bottom-5 lg:top-6 lg:end-6 lg:bottom-6 sm:w-[65%] lg:w-[55%] bg-[#F5F5F5] flex flex-col px-5 sm:px-7 lg:px-8 py-5 sm:py-7 transition-transform duration-500 ease-out ${
                   isActive ? "translate-x-0" : isAr ? "-translate-x-[calc(100%+2rem)]" : "translate-x-[calc(100%+2rem)]"
                 }`}
               >
                 <h4 className="text-gray-900 text-[22px] sm:text-[26px] lg:text-[30px] font-extralight tracking-tight">
                   {isAr ? "قدراتنا:" : "Our Capabilities:"}
                 </h4>
-                <div className="border-t border-gray-300 mt-4 sm:mt-auto">
+                {/* Fixed panel height (ends above the Read more button on mobile) — the list scrolls when it doesn't fit */}
+                <div
+                  className="border-t border-gray-300 mt-4 sm:mt-auto min-h-0 overflow-y-auto overscroll-contain [scrollbar-width:thin] [scrollbar-color:#2E368F_transparent]"
+                  onTouchMove={(e) => e.stopPropagation()}
+                >
                   {card.capabilities.map((capability) => (
                     // Opens that service's tab on the solution detail page (same ?service= deep link as the home page)
                     <Link

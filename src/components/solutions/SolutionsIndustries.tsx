@@ -261,7 +261,7 @@ export function SolutionsIndustries() {
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
           {industries.map((industry, i) => {
             const isActive = activeIndex === i;
             return (
@@ -270,7 +270,7 @@ export function SolutionsIndustries() {
                 delay={0.15 + i * 0.06}
                 duration={0.6}
                 y={30}
-                className="relative h-[220px] sm:h-[230px] lg:h-[230px] p-6 sm:p-8 flex flex-col justify-between cursor-pointer overflow-hidden bg-white border border-gray-200"
+                className="relative h-[200px] sm:h-[230px] lg:h-[230px] p-4 sm:p-8 flex flex-col justify-between cursor-pointer overflow-hidden bg-white border border-gray-200"
                 onPointerEnter={(e) => {
                   if (e.pointerType === "mouse") setActiveIndex(i);
                 }}
@@ -288,14 +288,14 @@ export function SolutionsIndustries() {
 
                 <div className="relative z-10">
                   <h3
-                    className={`text-[22px] sm:text-[26px] font-extralight tracking-tight transition-colors duration-300 ${
+                    className={`text-[18px] sm:text-[26px] leading-snug font-extralight tracking-tight transition-colors duration-300 ${
                       isActive ? "text-white" : "text-gray-700"
                     }`}
                   >
                     {isAr ? industry.title.ar : industry.title.en}
                   </h3>
                   <p
-                    className={`mt-3 text-[14px] sm:text-[16px] leading-relaxed font-light max-w-[220px] transition-opacity duration-300 ${
+                    className={`mt-2 sm:mt-3 text-[12px] sm:text-[16px] leading-relaxed line-clamp-5 sm:line-clamp-none font-light max-w-[220px] transition-opacity duration-300 ${
                       isActive ? "text-white/80 opacity-100" : "text-transparent opacity-0"
                     }`}
                   >
@@ -306,7 +306,7 @@ export function SolutionsIndustries() {
                 {/* Pinned to the card's bottom-end corner so every icon box sits in exactly the same spot,
                     whatever the length of the (hidden) description above it */}
                 <div
-                  className={`absolute z-10 bottom-6 end-6 sm:bottom-8 sm:end-8 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-colors duration-300 ${
+                  className={`absolute z-10 bottom-4 end-4 sm:bottom-8 sm:end-8 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center transition-colors duration-300 ${
                     isActive ? "text-white" : "text-[#2E368F]"
                   }`}
                 >

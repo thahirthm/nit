@@ -120,7 +120,7 @@ export function MediaNews({
               return (
                 <SwiperSlide key={post.slug}>
                   <Reveal delay={(i % 3) * 0.1} duration={0.7} y={40} className="group flex flex-col">
-                    <Link href={`/media/${post.slug}`} className="relative block w-full h-[280px] lg:h-[330px] overflow-hidden">
+                    <Link href={`/media/${post.slug}`} className="relative block w-full h-[240px] lg:h-[280px] overflow-hidden">
                       <Image quality={95}
                         src={post.image ?? "/images/blog1.png"}
                         alt={title}

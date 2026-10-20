@@ -136,7 +136,8 @@ export function SolutionsGrowth() {
             {isAr ? activeData.description.ar : activeData.description.en}
           </p>
 
-          <div className="mt-auto pt-10 lg:pt-14">
+          {/* Desktop only — on mobile the button sits below the chart instead */}
+          <div className="hidden lg:block mt-auto pt-14">
             <Button href="/projects" variant="primary">
               {isAr ? "اطّلع على مشاريعنا" : "See our projects"}
             </Button>
@@ -252,6 +253,13 @@ export function SolutionsGrowth() {
             </div>
           </div>
         </div>
+        </Reveal>
+
+        {/* Mobile/tablet: CTA below the chart */}
+        <Reveal delay={0.25} duration={0.8} y={24} className="lg:hidden">
+          <Button href="/projects" variant="primary">
+            {isAr ? "اطّلع على مشاريعنا" : "See our projects"}
+          </Button>
         </Reveal>
         </div>
       </div>

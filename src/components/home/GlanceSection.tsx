@@ -34,6 +34,7 @@ export function GlanceSection() {
 
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const endSpacerRef = useRef<HTMLDivElement>(null);
   const [maxScroll, setMaxScroll] = useState(0);
   const [translateX, setTranslateX] = useState(0);
 
@@ -97,8 +98,13 @@ export function GlanceSection() {
     if (!isDesktop) return;
 
     const measure = () => {
-      if (!trackRef.current) return;
-      const distance = trackRef.current.scrollWidth - window.innerWidth;
+      if (!trackRef.current || !endSpacerRef.current) return;
+      // Measured from the trailing spacer's own position (offsetLeft ignores the translateX),
+      // so the pin only releases once the full space after the last card is on screen.
+      const spacer = endSpacerRef.current;
+      const distance = isAr
+        ? -spacer.offsetLeft
+        : spacer.offsetLeft + spacer.offsetWidth - window.innerWidth;
       setMaxScroll(Math.max(distance, 0));
     };
     measure();
@@ -111,7 +117,7 @@ export function GlanceSection() {
       window.removeEventListener("resize", measure);
       observer.disconnect();
     };
-  }, [isDesktop]);
+  }, [isDesktop, isAr]);
 
   // Drive horizontal translation from vertical scroll position while the desktop section is pinned
   useEffect(() => {
@@ -475,12 +481,15 @@ export function GlanceSection() {
             className="flex items-start gap-6 ps-6 lg:ps-16 w-full will-change-transform overflow-visible"
             style={{ transform: `translateX(${translateX}px)` }}
           >
+            {/* shrink-0: otherwise the wrappers squeeze to fit w-full, the cards overflow them, and the
+                spacer below lands inside the overflow instead of after the last card */}
             {cards.map((card, i) => (
-              <div key={i}>{card}</div>
+              <div key={i} className="shrink-0">{card}</div>
             ))}
 
-            {/* Trailing spacer — matches the leading gutter so the last card gets the same breathing room at the end */}
-            <div className="w-6 shrink-0 lg:w-16" />
+            {/* Trailing spacer — an empty, invisible card-sized block so the track can travel past the
+                last card and leave a full card's width of space after it */}
+            <div ref={endSpacerRef} aria-hidden="true" className="w-[50px] lg:w-[50px] shrink-0" />
           </div>
         </div>
       </section>
