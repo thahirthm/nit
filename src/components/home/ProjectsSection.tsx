@@ -405,12 +405,11 @@ export function ProjectsSection() {
                     <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
                   </div>
 
-                  <div className="flex-1 space-y-3">
-                    {description.map((paragraph, idx) => (
-                      <p key={idx} className="text-base font-light leading-relaxed text-white/90">
-                        {paragraph}
-                      </p>
-                    ))}
+                  {/* Description clamped to 3 lines — full text is in the "Read more" panel */}
+                  <div className="flex-1">
+                    <p className="text-base font-light leading-relaxed text-white/90 line-clamp-3">
+                      {description.join(" ")}
+                    </p>
                   </div>
 
                   <div className="shrink-0">
