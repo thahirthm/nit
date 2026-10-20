@@ -27,15 +27,14 @@ export function AboutHighlights() {
   const isAr = language === "ar";
   const [logoIndex, setLogoIndex] = useState(0);
 
-  const nextLogo = () => setLogoIndex((i) => (i === clientLogos.length - 1 ? 0 : i + 1));
   const scrollToClients = () =>
     document.getElementById("clients-partners")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
     <section id="who-we-are" className={`w-full bg-white mt-5 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div className="px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-6 lg:gap-8">
+      <div className="px-6 lg:site-gutter grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-6 lg:gap-8">
         {/* Card 1: Trusted by many — clicking the card scrolls to "Trusted by leading organizations"
-            (#clients-partners) on this page; the logo dots/arrow keep cycling logos instead */}
+            (#clients-partners) on this page; the logo dots cycle logos and the arrow jumps to the stats section (#our-stats) */}
         <Reveal
           delay={0}
           duration={0.7}
@@ -81,11 +80,12 @@ export function AboutHighlights() {
                 />
               ))}
             </div>
+            {/* Arrow jumps down to the "Scale that speaks." stats section (#our-stats); the dots still pick logos */}
             <button
-              aria-label="Next client"
+              aria-label={isAr ? "عرض الإحصائيات" : "View stats"}
               onClick={(e) => {
                 e.stopPropagation();
-                nextLogo();
+                document.getElementById("our-stats")?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
               className="text-[#2E368F] hover:text-[#1c2260] transition-colors"
             >

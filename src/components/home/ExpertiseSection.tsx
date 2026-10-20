@@ -77,7 +77,7 @@ export function ExpertiseSection() {
       <div dir="ltr" className="relative flex flex-col lg:flex-row w-full overflow-hidden">
 
         {/* Left: Text */}
-        <div className="relative z-10 w-full lg:w-[58%] px-6 lg:px-16 lg:pr-0 pt-[60px] lg:pt-[100px] flex flex-col justify-start space-y-6">
+        <div className="relative z-10 w-full lg:w-[58%] px-6 lg:site-gutter lg:pr-0 pt-[60px] lg:pt-[100px] flex flex-col justify-start space-y-6">
           <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
             {language === "ar" ? "خبرات محلية. حضور عالمي." : "Local expertise. Global reach."}
           </h2>

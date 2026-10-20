@@ -130,7 +130,7 @@ export function ProjectsShowcase() {
   return (
     // Anchor target for the map section's "See our projects" button (/projects#projects-showcase)
     <section id="projects-showcase" className={`w-full bg-white pt-[60px] lg:pt-[100px] scroll-mt-8 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:px-16">
+      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter">
         <Reveal delay={0} duration={0.8} y={30}>
           {/* Heading + Nav */}
           <div className="flex items-center justify-between">

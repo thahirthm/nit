@@ -74,7 +74,7 @@ export function Header() {
       <header 
         className={`fixed top-0 left-0 right-0 w-full z-40 transition-all duration-300 ${isHidden && !isMobileMenuOpen ? '-translate-y-full' : 'translate-y-0'} ${isTransparent ? 'bg-transparent border-transparent' : 'bg-white border-b border-gray-100'}`}
       >
-        <div dir={language === 'ar' ? 'rtl' : 'ltr'} className="mx-auto flex h-[90px] max-w-[1440px] items-center justify-between px-6 lg:px-12">
+        <div dir={language === 'ar' ? 'rtl' : 'ltr'} className="flex h-[90px] w-full items-center justify-between px-6 lg:site-gutter">
           
           {/* Left section: Logo */}
           <div className="flex items-center gap-6 h-full py-4">
@@ -100,7 +100,7 @@ export function Header() {
                 <div key={link.name.en} className="relative group h-full flex items-center">
                   <Link
                     href={link.href}
-                    className={`flex items-center text-[11px] font-medium tracking-wider transition-colors pt-1 ${language === 'ar' ? 'font-arabic' : ''} ${isTransparent ? 'text-white hover:text-gray-200' : 'text-[#2b307d] hover:text-blue-700'}`}
+                    className={`flex items-center text-[11px] font-medium tracking-wider transition-colors pt-1 ${language === 'ar' ? 'font-arabic' : ''} ${isTransparent ? 'text-white hover:text-gray-200' : isActive ? 'text-[#81D1E8]' : 'text-[#2b307d] group-hover:text-[#81D1E8]'}`}
                   >
                     {language === 'ar' ? link.name.ar : link.name.en}
                     {link.hasDropdown && (

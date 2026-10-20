@@ -138,7 +138,7 @@ export function CareersApply() {
 
   return (
     <section id="apply-form" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div className="w-full px-6 lg:px-16">
+      <div className="w-full px-6 lg:site-gutter">
         <Reveal delay={0} duration={0.8} y={30}>
           <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-10 lg:mb-14">
             {isAr ? "فرصتك الوظيفية القادمة تبدأ من هنا" : "Your next opportunity starts here"}

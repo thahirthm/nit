@@ -89,7 +89,7 @@ export function InvestorsHero() {
 
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div dir="ltr" className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 items-start">
+      <div dir="ltr" className="w-full px-6 lg:site-gutter grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-16 items-start">
         {/* Left: headline + copy */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}

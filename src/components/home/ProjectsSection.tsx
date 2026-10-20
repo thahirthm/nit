@@ -250,7 +250,7 @@ export function ProjectsSection() {
   return (
     <section className={`w-full overflow-x-hidden bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* Heading + Nav */}
-      <div className="w-full px-6 lg:px-16 mb-8 lg:mb-12 flex items-center justify-between">
+      <div className="w-full px-6 lg:site-gutter mb-8 lg:mb-12 flex items-center justify-between">
         <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {language === "ar" ? "مشاريع مختارة" : "Featured projects"}
         </h2>

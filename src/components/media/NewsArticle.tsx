@@ -52,13 +52,23 @@ export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & {
 
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div className="w-full px-6 lg:px-16">
+      <div className="w-full px-6 lg:site-gutter">
         {/* Article + share column. Desktop: two columns, with the share icons in a right-hand column that
             spans the whole article and sticks below the header while scrolling. Mobile: single column
             (hero, share row, badges, title, body), same order as before. */}
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_140px] lg:gap-x-8">
-          <div className="relative w-full lg:col-start-1 lg:row-start-1 h-[280px] sm:h-[400px] lg:h-[480px] overflow-hidden">
-            <Image quality={95} src={post.image ?? "/images/blog1.png"} alt={title} fill className="object-cover" />
+          {/* Hero image — same width as the article text (max-w-4xl) and shown at its natural aspect
+              ratio (h-auto), so it's never cropped whatever the uploaded image's proportions */}
+          <div className="relative w-full max-w-4xl lg:col-start-1 lg:row-start-1">
+            <Image
+              quality={95}
+              src={post.image ?? "/images/blog1.png"}
+              alt={title}
+              width={0}
+              height={0}
+              sizes="(min-width: 1024px) 896px, 100vw"
+              className="block w-full h-auto"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2E368F]/50 via-transparent to-transparent" />
           </div>
 

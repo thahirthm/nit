@@ -154,7 +154,7 @@ export function Footer() {
 
   return (
     <footer className={`w-full mt-[60px] lg:mt-[100px] bg-[#2E368F] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div dir="ltr" className="w-full px-6 lg:px-16 pt-14 sm:pt-20 lg:pt-28 pb-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-12">
+      <div dir="ltr" className="w-full px-6 lg:site-gutter pt-14 sm:pt-20 lg:pt-28 pb-10 sm:pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-12">
         {/* Heading — always first */}
         <div className="order-1 lg:col-start-1 lg:row-start-1">
           <h2
@@ -266,7 +266,7 @@ export function Footer() {
       </div>
 
       {/* Nav links + socials */}
-      <div className="w-full px-6 lg:px-16 pb-10">
+      <div className="w-full px-6 lg:site-gutter pb-10">
         <div dir="ltr" className=" pt-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <nav dir={isAr ? "rtl" : "ltr"} className="flex flex-wrap gap-x-5 sm:gap-x-8 gap-y-3 border-b border-white/15 pb-5">
             {navLinks.map((link) => {
@@ -304,7 +304,7 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="w-full px-6 lg:px-16 py-8  border-white/15">
+      <div className="w-full px-6 lg:site-gutter py-8  border-white/15">
         <div dir="ltr" className="flex flex-col items-center text-center gap-4 sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <div className="flex items-center gap-3 shrink-0">
             <Image quality={95}

@@ -10,7 +10,7 @@ export default function NotFound() {
   return (
     <main className="min-h-screen">
       <section className={`w-full bg-white pt-[140px] lg:pt-[180px] pb-16 lg:pb-24 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-        <div className="w-full px-6 lg:px-16">
+        <div className="w-full px-6 lg:site-gutter">
           <div className="bg-[#F7F7F7] px-8 sm:px-12 lg:px-16 py-16 lg:py-20 min-h-[480px] lg:min-h-[620px] grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             <div
               dir={isAr ? "rtl" : "ltr"}

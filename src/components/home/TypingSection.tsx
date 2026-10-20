@@ -56,7 +56,7 @@ export function TypingSection() {
       ref={sectionRef}
       className={`w-full bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
     >
-      <div dir="ltr" className="w-full px-6 lg:px-16 !pr-0 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-10 items-center">
+      <div dir="ltr" className="w-full px-6 lg:site-gutter !pr-0 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-10 items-center">
         {/* Left: typing text */}
         <h2 dir={language === "ar" ? "rtl" : "ltr"} className={`text-[34px] sm:text-[46px] lg:text-[64px] leading-[1.2] font-extralight tracking-tight ${language === "ar" ? "text-right pr-6 lg:pr-0" : ""}`}>
           <span className="text-gray-500">{LINE_1.slice(0, line1Count)}</span>

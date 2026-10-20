@@ -12,7 +12,7 @@ export function SolutionsHero() {
 
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:px-16">
+      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter">
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

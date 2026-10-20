@@ -26,7 +26,7 @@ export function Banner() {
 
       {/* Content Container — kept LTR so the text box always bleeds from the same
           edge of the frame; only the text itself switches reading direction. */}
-      <div dir="ltr" className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 flex justify-end">
+      <div dir="ltr" className="relative z-10 w-full px-6 lg:site-gutter flex justify-end">
         <div className="max-w-[750px] pt-[90px]">
           <h1
             dir={language === "ar" ? "rtl" : "ltr"}

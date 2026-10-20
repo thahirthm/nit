@@ -10,7 +10,7 @@ type SolutionDetailHeroProps = {
 export function SolutionDetailHero({ title, description, image, capabilities }: SolutionDetailHeroProps) {
   return (
     <section className="w-full bg-white font-[family-name:var(--font-futura)] pt-[120px] lg:pt-[160px]">
-      <div className="w-full px-6 lg:px-16">
+      <div className="w-full px-6 lg:site-gutter">
         <h1 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-6 lg:mb-8">
           {title}
         </h1>

@@ -131,7 +131,7 @@ export function SolutionsMap() {
 
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-4 lg:gap-6">
+      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-4 lg:gap-6">
         {/* Map card */}
         <Reveal delay={0} duration={0.8} y={30} className="relative bg-[#2E368F] p-8 sm:p-10 lg:p-12 min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] overflow-hidden flex flex-col">
           <h3 className="relative z-10 text-white text-[20px] sm:text-[24px] lg:text-[28px] font-extralight leading-snug max-w-xs">

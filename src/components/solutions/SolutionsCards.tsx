@@ -46,7 +46,7 @@ export function SolutionsCards() {
 
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+      <div className="w-full px-6 lg:site-gutter grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         {cards.map((card, cardIndex) => {
           const isActive = activeCard === card.slug;
           const title = isAr ? card.title.ar : card.title.en;

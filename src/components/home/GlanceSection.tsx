@@ -468,7 +468,7 @@ export function GlanceSection() {
             address bar anyway, but keeps the measurement rock solid either way. */}
         <div className="sticky top-0 h-svh w-full flex flex-col justify-center overflow-hidden pt-[60px] lg:pt-[100px] pb-0">
           {/* Heading */}
-          <div className="w-full px-6 lg:px-16 mb-8 lg:mb-12">
+          <div className="w-full px-6 lg:site-gutter mb-8 lg:mb-12">
             {heading}
           </div>
 
@@ -478,7 +478,7 @@ export function GlanceSection() {
           <div
             ref={trackRef}
             dir={isAr ? "rtl" : "ltr"}
-            className="flex items-start gap-6 ps-6 lg:ps-16 w-full will-change-transform overflow-visible"
+            className="flex items-start gap-6 ps-6 lg:site-gutter-s w-full will-change-transform overflow-visible"
             style={{ transform: `translateX(${translateX}px)` }}
           >
             {/* shrink-0: otherwise the wrappers squeeze to fit w-full, the cards overflow them, and the
@@ -499,7 +499,7 @@ export function GlanceSection() {
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* Heading + nav */}
-      <div className="w-full px-6 lg:px-16 mb-8 lg:mb-12 flex items-center justify-between">
+      <div className="w-full px-6 lg:site-gutter mb-8 lg:mb-12 flex items-center justify-between">
         {heading}
 
         {/* Follows the slider direction: in Arabic "previous" sits on the right and the arrows mirror */}

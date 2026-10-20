@@ -42,14 +42,14 @@ export function NewsSection({
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* Heading */}
-      <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10">
+      <div className="w-full px-6 lg:site-gutter mb-8 lg:mb-10">
         <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {language === "ar" ? "الأخبار والإعلانات" : "News & announcements"}
         </h2>
       </div>
 
       {/* Tabs + Nav — follow the page direction: tabs start on the right in Arabic, arrows mirror to match the RTL slider */}
-      <div dir={language === "ar" ? "rtl" : "ltr"} className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
+      <div dir={language === "ar" ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <div className="flex flex-wrap gap-3">
           {categories.map((category) => {
             const isActive = category.slug === activeCategory;
@@ -95,7 +95,7 @@ export function NewsSection({
       </div>
 
       {/* Posts slider */}
-      <div className="w-full px-6 lg:px-16">
+      <div className="w-full px-6 lg:site-gutter">
         <Swiper
           key={`${activeCategory}-${language}`}
           // Explicit direction: Swiper reads it on init, which runs before LanguageProvider

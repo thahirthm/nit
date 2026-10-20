@@ -248,7 +248,7 @@ export function SolutionsIndustries() {
   return (
     <section id="industries" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* RTL in Arabic: text aligns right, cards fill from the right and each icon sits bottom-left */}
-      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:px-16">
+      <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter">
         <Reveal delay={0} duration={0.8} y={30}>
           <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-6 lg:mb-8">
             {isAr ? "القطاعات التي نخدمها" : "Industries we serve"}

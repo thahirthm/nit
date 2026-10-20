@@ -5,6 +5,17 @@
   --foreground: #171717;
 }
 
+/* Site container — on screens wider than the 1440px design width, the side gutter grows so every
+   section's content sits in the same centred 1440px column (with the usual 64px inner gutter),
+   while full-bleed backgrounds/borders still run edge to edge. Below 1440px it's just 4rem.
+   Use as `px-6 lg:site-gutter` (both sides) or `lg:site-gutter-s` (start side only). */
+@utility site-gutter {
+  padding-inline: max(4rem, calc((100% - 1440px) / 2 + 4rem));
+}
+@utility site-gutter-s {
+  padding-inline-start: max(4rem, calc((100% - 1440px) / 2 + 4rem));
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

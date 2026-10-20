@@ -115,14 +115,14 @@ export function ClientsSection() {
   return (
     <section id="clients-partners" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${language === "ar" ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* Heading */}
-      <div className="w-full px-6 lg:px-16 mb-8 lg:mb-10">
+      <div className="w-full px-6 lg:site-gutter mb-8 lg:mb-10">
         <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {language === "ar" ? "موثوقون لدى جهات رائدة" : "Trusted by leading organizations"}
         </h2>
       </div>
 
       {/* Tabs + Nav */}
-      <div className="w-full pl-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
+      <div className="w-full pl-6 lg:site-gutter mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <div className="min-w-0 flex flex-nowrap lg:flex-wrap gap-3 overflow-x-auto lg:overflow-visible pr-6 lg:pr-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {categories.map((category) => {
             const isActive = category.name.en === activeCategory;
@@ -165,7 +165,7 @@ export function ClientsSection() {
       </div>
 
       {/* Logo slider */}
-      <div className="w-full px-6 lg:px-16">
+      <div className="w-full px-6 lg:site-gutter">
         <Swiper
           // Remount on language change too, so Swiper re-reads the page direction (RTL in Arabic).
           key={`${activeCategory}-${language}`}

@@ -64,7 +64,7 @@ export function AboutScale() {
       ref={sectionRef}
       className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
     >
-      <div className="px-6 lg:px-16">
+      <div className="px-6 lg:site-gutter">
         <div className="bg-[#2E368F] p-8 sm:p-16 lg:p-20">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
             {/* Heading */}

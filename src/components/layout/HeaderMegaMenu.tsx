@@ -73,14 +73,20 @@ export function HeaderMegaMenu({ isOpen, onClose, navLinks }: HeaderMegaMenuProp
   return (
     <div
       aria-hidden={!isOpen}
-      className={`fixed inset-0 z-[100] bg-[#2E368F] overflow-hidden transition-opacity duration-500 ${
-        isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+      className={`fixed inset-0 z-[100] bg-[#2E368F] overflow-hidden transition-[opacity,visibility] duration-500 ${
+        // invisible (not just pointer-events-none) so children that opt back in with
+        // pointer-events-auto can't catch the mouse while the menu is closed
+        isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
       }`}
     >
       {/* Live world map (same markers + auto-cycling labels as the About page "Global reach" section),
           replacing the old static background image. Desktop only — on mobile the nav fills the screen. */}
       <div className="hidden lg:flex absolute inset-0 z-[5] items-center justify-center pointer-events-none">
-        <div className="w-[60%] max-w-[1100px] pointer-events-auto">
+        {/* Only interactive while open — the closed menu stays mounted (opacity-0), and an always-on
+            pointer-events-auto here would sit invisibly over the page and steal hover from the header dropdowns */}
+        {/* Zoomed in: the marker cluster only covers the middle of the map, so the map runs full width
+            (edges clipped by the overlay) and is nudged away from the nav column (left in EN, right in AR) */}
+        <div className={`w-full shrink-0 ${isAr ? "-translate-x-[5%]" : "translate-x-[5%]"} ${isOpen ? "pointer-events-auto" : ""}`}>
           <GlobalReachMap tone="dark" active={isOpen} />
         </div>
       </div>

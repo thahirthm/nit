@@ -48,7 +48,7 @@ export function LegalPageContent({
 
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] pb-16 lg:pb-24 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div className="w-full px-6 lg:px-16">
+      <div className="w-full px-6 lg:site-gutter">
         <h1 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[32px] sm:text-[44px] lg:text-[54px] font-extralight leading-[1.15] tracking-tight">
           {isAr ? title.ar : title.en}
         </h1>

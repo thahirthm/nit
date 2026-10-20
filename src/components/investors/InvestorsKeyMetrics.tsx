@@ -136,7 +136,7 @@ export function InvestorsKeyMetrics() {
       ref={sectionRef}
       className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}
     >
-      <div className="w-full px-6 lg:px-16">
+      <div className="w-full px-6 lg:site-gutter">
         <Reveal delay={0} duration={0.8} y={30} dir={isAr ? "rtl" : "ltr"} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight">
             {isAr ? "المؤشرات الرئيسية" : "Key metrics"}

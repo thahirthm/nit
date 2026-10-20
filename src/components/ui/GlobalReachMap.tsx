@@ -167,7 +167,7 @@ export function GlobalReachMap({ tone = "light", active = true, className = "" }
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3, ease: "easeIn" } }}
                     transition={{ duration: 0.45, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                    className={`absolute left-0 top-0 whitespace-nowrap px-3 py-1.5 bg-white border border-[#2E368F] text-[#2E368F] font-semibold shadow-sm ${isAr ? "text-[12px]" : "text-[10px] tracking-widest uppercase"} ${
+                    className={`absolute left-0 top-0 whitespace-nowrap px-3 py-1.5 text-[#2E368F] font-semibold shadow-sm ${isDark ? "bg-white/70 backdrop-blur-sm border border-white/40" : "bg-white border border-[#2E368F]"} ${isAr ? "text-[12px]" : "text-[10px] tracking-widest uppercase"} ${
                       flipRight ? "ml-[42px]" : "-translate-x-full -ml-[42px]"
                     } ${flipDown ? "mt-[34px]" : "-translate-y-full -mt-[34px]"}`}
                   >

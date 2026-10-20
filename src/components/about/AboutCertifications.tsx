@@ -141,14 +141,14 @@ export function AboutCertifications() {
   return (
     <section id="certifications" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
       {/* Heading */}
-      <Reveal delay={0} duration={0.8} y={30} className="w-full px-6 lg:px-16 mb-8 lg:mb-10">
+      <Reveal delay={0} duration={0.8} y={30} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10">
         <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {isAr ? "الشهادات والاعتمادات" : "Certifications & accreditations"}
         </h2>
       </Reveal>
 
       {/* Tabs + Nav — follow the page direction: tabs start on the right in Arabic, arrows mirror to match the RTL slider */}
-      <Reveal delay={0.1} duration={0.7} y={24} dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:px-16 mb-8 lg:mb-10 flex items-center justify-between gap-6">
+      <Reveal delay={0.1} duration={0.7} y={24} dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <div className="flex flex-wrap gap-3">
           {tabs.map((tab) => {
             const isActive = tab.key === activeTab;
@@ -191,7 +191,7 @@ export function AboutCertifications() {
       </Reveal>
 
       {/* Grid slider */}
-      <div className="w-full px-6 lg:px-16">
+      <div className="w-full px-6 lg:site-gutter">
         <Swiper
           // Remount on language change too, so Swiper re-reads the page direction (RTL in Arabic).
           key={`${activeTab}-${language}`}

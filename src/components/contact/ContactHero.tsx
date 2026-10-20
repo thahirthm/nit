@@ -122,7 +122,7 @@ export function ContactHero() {
 
   return (
     <section className={`w-full bg-white pt-[120px] lg:pt-[160px] pb-16 lg:pb-24 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      <div className="w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+      <div className="w-full px-6 lg:site-gutter grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
         {/* Left: intro + contact details */}
         <div dir={isAr ? "rtl" : "ltr"} className="flex flex-col">
           <motion.h1
