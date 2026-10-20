@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/context/LanguageContext";
@@ -285,7 +285,12 @@ export function ProjectsSection() {
           // Explicit direction: Swiper reads it on init, which runs before LanguageProvider
           // flips <html dir>, so relying on the inherited direction left slides offset in Arabic.
           dir={language === "ar" ? "rtl" : "ltr"}
-          modules={[Navigation]}
+          modules={[Navigation, Autoplay]}
+          // Always auto-advances every 2.5s (no hover pause), keeps running after manual navigation,
+          // and rewinds to the first project after the last one.
+          autoplay={{ delay: 2500, disableOnInteraction: false, pauseOnMouseEnter: false }}
+          rewind
+          speed={800}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
             // Re-sync arrows after a remount instead of keeping the previous state.
@@ -336,8 +341,8 @@ export function ProjectsSection() {
                   className="object-cover animate-kenburns"
                 />
 
-                {/* Hover image — slides down from the top to cover the base image */}
-                <div className="absolute inset-0 -translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out overflow-hidden">
+                {/* Hover image — smooth crossfade over the base image, settling from a slight zoom */}
+                <div className="absolute inset-0 overflow-hidden opacity-0 scale-[1.06] group-hover:opacity-100 group-hover:scale-100 transition-[opacity,transform] duration-[1000ms] ease-[cubic-bezier(0.22,1,0.36,1)]">
                   {/* Eager: the hover image sits off-screen until hover, so lazy loading
                       would only start fetching it (it's a very large file) once the user hovers. */}
                   <Image quality={95}
@@ -449,14 +454,12 @@ export function ProjectsSection() {
                   </div>
                 </div>
 
-                <div dir={dir} className="bg-[#2E368F] p-6 sm:p-8 text-white min-h-[320px] sm:min-h-[360px] flex flex-col">
-                  <div className="space-y-3">
-                    {description.map((paragraph, idx) => (
-                      <p key={idx} className="text-sm font-light leading-relaxed text-white/90">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
+                <div dir={dir} className="bg-[#2E368F] p-6 sm:p-8 text-white flex flex-col">
+                  {/* Mobile: description clamped to 3 lines (full text is in the "Read more" panel);
+                      min-h keeps every card the same height even when the text is shorter */}
+                  <p className="text-sm font-light leading-relaxed text-white/90 line-clamp-3 min-h-[3lh]">
+                    {description.join(" ")}
+                  </p>
                   <div className="mt-auto pt-6">
                     <Button variant="secondary" iconOutline onClick={() => setSelectedProject(toOffcanvasProject(project))}>{readMore}</Button>
                   </div>

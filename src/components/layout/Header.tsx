@@ -100,7 +100,7 @@ export function Header() {
                 <div key={link.name.en} className="relative group h-full flex items-center">
                   <Link
                     href={link.href}
-                    className={`flex items-center text-[11px] font-medium tracking-wider transition-colors pt-1 ${language === 'ar' ? 'font-arabic' : ''} ${isTransparent ? 'text-white hover:text-gray-200' : isActive ? 'text-[#81D1E8]' : 'text-[#2b307d] group-hover:text-[#81D1E8]'}`}
+                    className={`flex items-center text-[11px] font-medium tracking-wider transition-colors pt-1 ${language === 'ar' ? 'font-arabic' : ''} ${isTransparent ? 'text-white hover:text-gray-200' : 'text-[#2b307d] group-hover:text-[#81D1E8]'}`}
                   >
                     {language === 'ar' ? link.name.ar : link.name.en}
                     {link.hasDropdown && (
