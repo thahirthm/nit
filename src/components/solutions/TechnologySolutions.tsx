@@ -101,7 +101,7 @@ const tabs = [
     slug: "digital-transformation",
     tab: { en: "Digital Transformation", ar: "التحول الرقمي" },
     icon: DigitalTransformationIcon,
-    graphic: "/images/svg1.png",
+    graphic: "/images/dt.png",
     title: { en: "Digital Transformation", ar: "التحول الرقمي" },
     description: {
       en: "Integration of technology into all areas of a business, resulting in fundamental changes to how operations run, decisions get made, and value is delivered.",
@@ -328,14 +328,15 @@ export function TechnologySolutions() {
               <button
                 key={tab.tab.en}
                 onClick={() => setActiveIndex(i)}
-                className={`flex flex-col items-start gap-3 p-4 sm:p-5 text-left transition-colors duration-300 ${
+                className={`min-w-0 flex flex-col items-start gap-3 p-4 sm:p-5 xl:px-4 text-start transition-colors duration-300 ${
                   isActive ? "bg-[#2E368F]" : "bg-[#F7F7F7] hover:bg-gray-100"
                 }`}
               >
                 <span className="[&>svg]:w-8 [&>svg]:h-8 sm:[&>svg]:w-9 sm:[&>svg]:h-9">
                   <Icon active={isActive} />
                 </span>
-                <span className={`text-[12px] sm:text-[13px] font-semibold tracking-wide uppercase ${isActive ? "text-white" : "text-[#2E368F]"}`}>
+                {/* 9 tiles share the row on xl, so labels get a slightly smaller size/tracking there; long words wrap inside the tile instead of overflowing */}
+                <span className={`max-w-full break-words text-[12px] sm:text-[13px] xl:text-[11.5px] font-semibold tracking-wide xl:tracking-normal uppercase ${isActive ? "text-white" : "text-[#2E368F]"}`}>
                   {isAr ? tab.tab.ar : tab.tab.en}
                 </span>
               </button>

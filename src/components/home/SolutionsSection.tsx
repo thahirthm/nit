@@ -187,7 +187,7 @@ export function SolutionsSection() {
                             setSelectedCapability(capability.en);
                             setOpenCapability((current) => (current === capability.en ? null : capability.en));
                           }}
-                          className={`group/row -mx-3 px-3 w-[calc(100%+1.5rem)] flex items-center justify-between py-2.5 sm:py-3 text-left transition-colors duration-300 ${
+                          className={`group/row -mx-3 px-3 w-[calc(100%+1.5rem)] flex items-center justify-between gap-4 py-2.5 sm:py-3 text-start transition-colors duration-300 ${
                             isHighlighted ? "bg-[#EDEDED]" : "bg-transparent"
                           }`}
                           aria-expanded={isOpen}
