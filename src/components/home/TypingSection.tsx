@@ -6,7 +6,7 @@ import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 
 const LINES = {
   en: { line1: "Engineering today's needs,", line2: "delivering tomorrow's infrastructure" },
-  ar: { line1: "نهندس احتياجات اليوم،", line2: "وننفّذ البنية التحتية للغد." },
+  ar: { line1: "نصمّم احتياجات اليوم،", line2: "ونحقّق البنية التحتية للغد." },
 };
 const TYPE_SPEED_MS = 45;
 

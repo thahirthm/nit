@@ -14,8 +14,8 @@ const offices = [
   {
     label: { en: "Head Office", ar: "المقر الرئيس" },
     image: "/images/headoffice.png",
-    phone: "012 212 2226",
-    email: "info@nesma-nit.com",
+    phone: "+966 55 063 4599",
+    email: "nit@nesmainfrastructure.com",
     address: {
       en: ["AN NAHDAH,", "JEDDAH, SAUDI ARABIA"],
       ar: ["حي النهضة،", "جدة، المملكة العربية السعودية"],
@@ -25,7 +25,7 @@ const offices = [
     label: { en: "Riyadh Office", ar: "مكتب الرياض" },
     image: "/images/riyad.png",
     phone: "+966550634599",
-    email: "nit@nit.com.sa",
+    email: "nit@nesmainfrastructure.com",
     address: {
       en: ["KING KHALID RD, AR RIHAB,", "DIRIYAH 13715, SAUDI ARABIA"],
       ar: ["طريق الملك خالد، الرحاب،", "الدرعية 13715، المملكة العربية السعودية"],
@@ -35,7 +35,7 @@ const offices = [
     label: { en: "Alkhobar Office", ar: "مكتب الخبر" },
     image: "/images/alkhobar.png",
     phone: "+966550634599",
-    email: "nit@nit.com.sa",
+    email: "nit@nesmainfrastructure.com",
     address: {
       en: ["KING FAHD ROAD, AL QASHLAH,", "DHAHRAN 34232, SAUDI ARABIA"],
       ar: ["طريق الملك فهد، القشلة،", "الظهران 34232، المملكة العربية السعودية"],
@@ -81,7 +81,7 @@ const socials = [
   },
   {
     name: "Instagram",
-    href: "https://www.instagram.com/nesma_nit/?hl=en",
+    href: "https://www.instagram.com/nesmanit/",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#203366" />
@@ -164,7 +164,7 @@ export function Footer() {
               isAr ? "text-right max-w-[460px] text-[26px] sm:text-[36px] lg:text-[44px]" : "text-[35px] sm:text-[50px] lg:text-[60px]"
             }`}
           >
-            {isAr ? <>رؤيتكم، نهندسها<br />ونحوّلها إلى واقع.</> : <>Your vision, Engineered<br />&amp; delivered.</>}
+            {isAr ? <>رؤيتكم،<br />نصمّمها ونحقّقها.</> : <>Your vision, Engineered<br />&amp; delivered.</>}
           </h2>
         </div>
 

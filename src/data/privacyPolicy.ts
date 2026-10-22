@@ -237,8 +237,8 @@ export const privacyPolicySections: LegalSection[] = [
     blocks: [
       {
         type: "p",
-        en: "If you have any questions about this privacy policy, your Personal Information, or would like to exercise any of your rights, please feel free to contact us at: info@Nesma-nit.com",
-        ar: "إذا كانت لديك أي استفسارات بشأن سياسة الخصوصية هذه أو معلوماتك الشخصية، أو رغبت في ممارسة أي من حقوقك، فيُرجى التواصل معنا عبر البريد الإلكتروني التالي: info@Nesma-nit.com",
+        en: "If you have any questions about this privacy policy, your Personal Information, or would like to exercise any of your rights, please feel free to contact us at: nit@nesmainfrastructure.com",
+        ar: "إذا كانت لديك أي استفسارات بشأن سياسة الخصوصية هذه أو معلوماتك الشخصية، أو رغبت في ممارسة أي من حقوقك، فيُرجى التواصل معنا عبر البريد الإلكتروني التالي: nit@nesmainfrastructure.com",
       },
     ],
   },

@@ -99,9 +99,11 @@ export function InvestorsHero() {
         >
           <h1 className="text-gray-900 text-[32px] sm:text-[44px] lg:text-[54px] font-extralight leading-[1.15] tracking-tight">
             {isAr ? (
+              // Rotating word: clip-path (not overflow-hidden) masks the slide-in, so the inline-block keeps
+              // the text baseline and the word lines up with the rest of the headline
               <>
                 صُمم لتحقيق{" "}
-                <span className="inline-block overflow-hidden align-bottom pb-[0.2em] -mb-[0.2em]" style={{ lineHeight: 1 }}>
+                <span className="inline-block align-baseline pb-[0.2em] -mb-[0.2em] [clip-path:inset(-0.2em_-0.3em_0_-0.3em)]" style={{ lineHeight: 1 }}>
                   <span key={wordIndex} className="inline-block animate-word-in text-[#2E368F]">
                     {rotatingWords[wordIndex].ar}
                   </span>
@@ -112,7 +114,7 @@ export function InvestorsHero() {
             ) : (
               <>
                 Engineered for{" "}
-                <span className="inline-block overflow-hidden align-bottom pb-[0.2em] -mb-[0.2em]" style={{ lineHeight: 1 }}>
+                <span className="inline-block align-baseline pb-[0.2em] -mb-[0.2em] [clip-path:inset(-0.2em_-0.3em_0_-0.3em)]" style={{ lineHeight: 1 }}>
                   <span key={wordIndex} className="inline-block animate-word-in text-[#2E368F]">
                     {rotatingWords[wordIndex].en}
                   </span>

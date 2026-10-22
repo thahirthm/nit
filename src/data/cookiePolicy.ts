@@ -52,8 +52,8 @@ export const cookiePolicySections: LegalSection[] = [
       },
       {
         type: "p",
-        en: "We may also use other third-party cookies from time to time, and for more information on these, you can contact us at the email below: NIT@nesma.com",
-        ar: "قد نستخدم أيضًا، من حين إلى آخر، ملفات تعريف ارتباط أخرى تابعة لجهات خارجية. ولمزيد من المعلومات حول هذه الملفات، يمكنكم التواصل معنا عبر البريد الإلكتروني التالي: NIT@nesma.com",
+        en: "We may also use other third-party cookies from time to time, and for more information on these, you can contact us at the email below: nit@nesmainfrastructure.com",
+        ar: "قد نستخدم أيضًا، من حين إلى آخر، ملفات تعريف ارتباط أخرى تابعة لجهات خارجية. ولمزيد من المعلومات حول هذه الملفات، يمكنكم التواصل معنا عبر البريد الإلكتروني التالي: nit@nesmainfrastructure.com",
       },
     ],
   },

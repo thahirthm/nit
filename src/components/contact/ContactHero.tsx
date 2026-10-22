@@ -164,7 +164,7 @@ export function ContactHero() {
                 {isAr ? "البريد الإلكتروني" : "Email Address"}
               </span>
               <span dir="ltr" className={`block mt-1 text-gray-900 text-[22px] font-light ${isAr ? "text-right" : ""}`}>
-                info@nesma-nit.com
+                nit@nesmainfrastructure.com
               </span>
             </div>
             <div>

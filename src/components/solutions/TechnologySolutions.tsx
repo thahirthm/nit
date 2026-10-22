@@ -285,6 +285,20 @@ export function TechnologySolutions() {
   }, [requestedIndex]);
   const active = tabs[activeIndex];
 
+  // Mobile: tabs are a horizontal swipe strip — keep the active tile centred in it. Uses a relative
+  // horizontal scrollBy (never scrollIntoView) so the page itself doesn't jump, and it works in RTL too.
+  const tabStripRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const strip = tabStripRef.current;
+    if (!strip || strip.scrollWidth <= strip.clientWidth) return;
+    const tile = strip.children[activeIndex] as HTMLElement | undefined;
+    if (!tile) return;
+    const stripRect = strip.getBoundingClientRect();
+    const tileRect = tile.getBoundingClientRect();
+    const delta = tileRect.left + tileRect.width / 2 - (stripRect.left + stripRect.width / 2);
+    strip.scrollBy({ left: delta, behavior: "smooth" });
+  }, [activeIndex]);
+
   const prevTab = () => setActiveIndex(activeIndex === 0 ? tabs.length - 1 : activeIndex - 1);
   const nextTab = () => setActiveIndex(activeIndex === tabs.length - 1 ? 0 : activeIndex + 1);
 
@@ -319,8 +333,13 @@ export function TechnologySolutions() {
           </div>
         </div>
 
-        {/* Tabs — start on the right in Arabic */}
-        <div dir={isAr ? "rtl" : "ltr"} className="mt-8 lg:mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-3">
+        {/* Tabs — start on the right in Arabic. Mobile: one swipeable row of equal tiles (a 2-col grid left
+            the 9th tile alone on its own row); sm+: grid (3×3 on tablet, one row of 9 on xl). */}
+        <div
+          ref={tabStripRef}
+          dir={isAr ? "rtl" : "ltr"}
+          className="mt-8 lg:mt-10 -mx-6 px-6 scroll-px-6 sm:mx-0 sm:px-0 flex sm:grid overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {tabs.map((tab, i) => {
             const isActive = i === activeIndex;
             const Icon = tab.icon;
@@ -328,7 +347,7 @@ export function TechnologySolutions() {
               <button
                 key={tab.tab.en}
                 onClick={() => setActiveIndex(i)}
-                className={`min-w-0 flex flex-col items-start gap-3 p-4 sm:p-5 xl:px-4 text-start transition-colors duration-300 ${
+                className={`w-[156px] shrink-0 snap-start sm:w-auto sm:shrink min-w-0 flex flex-col items-start gap-3 p-4 sm:p-5 xl:px-4 text-start transition-colors duration-300 ${
                   isActive ? "bg-[#2E368F]" : "bg-[#F7F7F7] hover:bg-gray-100"
                 }`}
               >
@@ -344,8 +363,9 @@ export function TechnologySolutions() {
           })}
         </div>
 
-        {/* Panel — kept LTR so the graphic always sits on the same side as the text */}
-        <div dir="ltr" className="mt-6 lg:mt-8 bg-[#2E368F] p-8 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-10 lg:h-[560px]">
+        {/* Panel — follows the page direction: in Arabic the text column (heading, description, chips,
+            button) sits on the right, aligned to one edge, and the graphic moves to the left */}
+        <div dir={isAr ? "rtl" : "ltr"} className="mt-6 lg:mt-8 bg-[#2E368F] p-8 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-10 lg:h-[560px]">
           <div className="flex flex-col h-full">
             <h3 dir={isAr ? "rtl" : "ltr"} className="text-white text-[28px] sm:text-[34px] lg:text-[38px] font-extralight tracking-tight">
               {isAr ? active.title.ar : active.title.en}
@@ -354,11 +374,12 @@ export function TechnologySolutions() {
               {isAr ? active.description.ar : active.description.en}
             </p>
 
-            <div dir={isAr ? "rtl" : "ltr"} className="mt-6 flex flex-wrap gap-2.5">
+            {/* Chips: square corners; on mobile they stack full-width so the edges line up */}
+            <div dir={isAr ? "rtl" : "ltr"} className="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-2.5">
               {active.chips.map((chip) => (
                 <span
                   key={chip.en}
-                  className="rounded px-4 py-2 text-[13px] font-medium tracking-wide text-white/90 bg-white/10"
+                  className="w-full sm:w-auto px-4 py-2.5 sm:py-2 text-start text-[13px] font-medium tracking-wide text-white/90 bg-white/10"
                 >
                   {isAr ? chip.ar : chip.en}
                 </span>

@@ -13,7 +13,7 @@ const offices = [
       ar: "برج رندا، طريق الملك عبدالعزيز، حي النهضة، جدة 23523، المملكة العربية السعودية",
     },
     phone: "+966550634599",
-    email: "info@nesma-nit.com",
+    email: "nit@nesmainfrastructure.com",
     mapQuery: "Randa Tower, King Abdul Aziz Rd, An Nahdah, Jeddah 23523, Saudi Arabia",
   },
   {
@@ -21,7 +21,7 @@ const offices = [
     name: { en: "NIT - Riyadh Office", ar: "نسما للبنية التحتية والتقنية – مكتب الرياض" },
     address: { en: "King Khalid Rd, Ar Rihab, Diriyah 13715", ar: "طريق الملك خالد، الرحاب، الدرعية 13715" },
     phone: "+966550634599",
-    email: "nit@nit.com.sa",
+    email: "nit@nesmainfrastructure.com",
     mapQuery: "King Khalid Rd, Ar Rihab, Diriyah 13715, Saudi Arabia",
   },
   {
@@ -32,7 +32,7 @@ const offices = [
       ar: "طريق الملك فهد، القشلة، الظهران 34232",
     },
     phone: "+966550634599",
-    email: "nit@nit.com.sa",
+    email: "nit@nesmainfrastructure.com",
     mapQuery: "King Fahd Road, Al Qashlah, Dhahran 34232, Saudi Arabia",
   },
 ];

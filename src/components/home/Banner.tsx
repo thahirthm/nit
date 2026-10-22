@@ -34,7 +34,7 @@ export function Banner() {
           >
             <span className="overflow-hidden pb-2 -mb-2">
               <span className={`block transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isLoaded ? 'translate-y-0' : 'translate-y-[120%]'}`}>
-                {language === "ar" ? "نهندس البنية التحتية." : "Engineering Infrastructure."}
+                {language === "ar" ? "نصمّم البنية التحتية،" : "Engineering Infrastructure."}
               </span>
             </span>
             <span className="overflow-hidden pb-2 -mb-2">

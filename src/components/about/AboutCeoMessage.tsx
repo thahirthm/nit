@@ -41,7 +41,7 @@ export function AboutCeoMessage() {
           {/* Text content */}
           <div
             dir={isAr ? "rtl" : "ltr"}
-            className={`relative z-10 flex flex-col gap-10 lg:gap-14 py-14 sm:py-16 lg:py-20 px-8 sm:px-10 lg:px-16 max-w-full ${
+            className={`relative z-10 flex flex-col gap-10 lg:gap-14 py-14 sm:py-16 lg:py-20 ps-12 pe-8 sm:ps-20 sm:pe-10 lg:ps-32 lg:pe-16 max-w-full ${
               isAr ? "lg:max-w-[55%] lg:ml-auto" : "lg:max-w-[55%]"
             }`}
           >
