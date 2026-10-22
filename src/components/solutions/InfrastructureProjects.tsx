@@ -21,6 +21,14 @@ export function InfrastructureProjects() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  // Dot pagination: one dot per scroll position (snapGrid), so it adapts to 1/2/3 cards per view
+  // and hides when everything already fits in one view.
+  const [snapCount, setSnapCount] = useState(0);
+  const [snapIndex, setSnapIndex] = useState(0);
+  const syncDots = (swiper: SwiperType) => {
+    setSnapCount(swiper.snapGrid.length);
+    setSnapIndex(swiper.snapIndex);
+  };
   const [selectedProject, setSelectedProject] = useState<ProjectOffcanvasProject | null>(null);
 
   const active = categories.find((c) => c.key === activeCategory) ?? categories[0];
@@ -94,11 +102,15 @@ export function InfrastructureProjects() {
               swiperRef.current = swiper;
               setIsBeginning(swiper.isBeginning);
               setIsEnd(swiper.isEnd);
+              syncDots(swiper);
             }}
             onSlideChange={(swiper) => {
               setIsBeginning(swiper.isBeginning);
               setIsEnd(swiper.isEnd);
+              syncDots(swiper);
             }}
+            // Recount positions when the breakpoint (cards per view) changes
+            onSnapGridLengthChange={syncDots}
             spaceBetween={24}
             slidesPerView={1}
             breakpoints={{
@@ -183,6 +195,22 @@ export function InfrastructureProjects() {
               </SwiperSlide>
             ))}
           </Swiper>
+
+          {/* Square dot pagination (site style) — only when there's more than one position to scroll to */}
+          {snapCount > 1 && (
+            <div dir={language === "ar" ? "rtl" : "ltr"} className="flex items-center justify-start gap-2 mt-6 lg:mt-8">
+              {Array.from({ length: snapCount }, (_, i) => (
+                <button
+                  key={i}
+                  aria-label={`Go to slide ${i + 1}`}
+                  onClick={() => swiperRef.current?.slideTo(i)}
+                  className={`transition-all duration-300 ${
+                    i === snapIndex ? "w-5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

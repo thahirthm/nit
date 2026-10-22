@@ -18,7 +18,9 @@ export function AboutGlobal() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1} duration={0.9} y={30} dir="ltr" className="relative w-full -mx-6 sm:-mx-4 lg:-mx-8 px-0 sm:px-2 lg:px-4 pt-8 sm:pt-0 overflow-hidden sm:overflow-visible">
+        {/* Mobile: no w-full, so the negative margins stretch this box edge-to-edge (with w-full it only
+            shifted left and the overflow-hidden clipped the zoomed map 48px short of the right edge) */}
+        <Reveal delay={0.1} duration={0.9} y={30} dir="ltr" className="relative sm:w-full -mx-6 sm:-mx-4 lg:-mx-8 px-0 sm:px-2 lg:px-4 pt-8 sm:pt-0 overflow-hidden sm:overflow-visible">
         {/* Mobile: zoomed in (180%) and shifted so the view centres on the Middle East cluster while
             keeping the US (far left) and China (far right) markers on screen */}
         <GlobalReachMap className="w-[180%] -ml-[38%] sm:w-full sm:ml-0" />

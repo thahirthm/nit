@@ -167,14 +167,14 @@ export function AboutHistory() {
             duration={0.8}
             y={30}
             dir={isAr ? "rtl" : "ltr"}
-            className="order-2 lg:order-3 lg:col-span-2 mt-2 lg:mt-14 flex flex-col gap-3 lg:gap-6"
+            className="order-2 lg:order-3 lg:col-span-2  flex flex-col gap-7 lg:gap-10"
           >
           {/* Dots + line, and year labels — share the same width so each label sits under its dot.
               The progress line/dots show at all sizes; the year-label row below is desktop-only
               since 11 labels can't fit on mobile without overlapping. */}
           <div className="order-1 flex-1 min-w-0">
             <div className="block relative">
-              <div className="absolute top-[8px] left-[5px] right-[5px] h-px bg-gray-200" />
+              <div className="absolute top-[9px] left-[5px] right-[5px] h-px bg-gray-200" />
               <div
                 className="absolute top-[8px] start-0 h-px bg-[#2E368F] transition-all duration-500 ease-out"
                 style={{ width: `${(activeIndex / lastIndex) * 100}%` }}
@@ -198,7 +198,7 @@ export function AboutHistory() {
             </div>
 
             {/* Year labels — desktop only; 11 labels can't fit on mobile without overlapping. */}
-            <div className="hidden sm:flex justify-between mt-6">
+            <div className="hidden sm:flex justify-between mt-2.5">
               {milestones.map((m, i) => (
                 <button
                   key={m.year}
@@ -214,7 +214,7 @@ export function AboutHistory() {
           </div>
 
           {/* Arrows — sit below the progress bar / year labels at every breakpoint */}
-          <div className="order-2 flex items-center gap-4 shrink-0">
+          <div className="order-2 flex items-center gap-8 lg:gap-10 shrink-0">
             <button
               aria-label={isAr ? "السابق" : "Previous"}
               onClick={goPrev}
