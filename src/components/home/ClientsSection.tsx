@@ -8,7 +8,8 @@ import type { Swiper as SwiperType } from "swiper";
 import { useLanguage } from "@/context/LanguageContext";
 import "swiper/css";
 
-const logos: Record<string, { src: string; alt: string }> = {
+// src is optional: a partner without a logo file yet renders its name as a placeholder tile.
+const logos: Record<string, { src?: string; alt: string }> = {
   l1: { src: "/images/logos/l1.png", alt: "Saudi Aramco" },
   l2: { src: "/images/logos/l2.png", alt: "NEOM" },
   l3: { src: "/images/logos/l3.png", alt: "stc" },
@@ -61,6 +62,96 @@ const logos: Record<string, { src: string; alt: string }> = {
   l50: { src: "/images/logos/l50.png", alt: "Banking & Telecommunications Partner 50" },
 };
 
+// Partner logos — trimmed copies of public/images/partner (empty borders cropped off) so every logo
+// fills its frame; w/h are the trimmed pixel sizes, used to size each logo to the same visual weight. Several brands appear under more than one category,
+// so the same file is reused where needed.
+const P = "/images/partner-trimmed";
+const partnerLogos: Record<string, { src?: string; alt: string; w?: number; h?: number }> = {
+  alfanar: { src: `${P}/Rectangle.png`, alt: "alfanar Projects", w: 203, h: 74 },
+  abb: { src: `${P}/Rectangle-1.png`, alt: "ABB", w: 183, h: 72 },
+  tripplite: { src: `${P}/Group.png`, alt: "Tripp Lite", w: 195, h: 74 },
+  benning: { src: `${P}/Rectangle-5.png`, alt: "Benning", w: 232, h: 42 },
+  kohler: { src: `${P}/Rectangle-4.png`, alt: "Kohler Generators", w: 215, h: 66 },
+  schneider: { src: `${P}/Rectangle-9.png`, alt: "Schneider Electric", w: 235, h: 72 },
+  emerson: { src: `${P}/Rectangle-2.png`, alt: "Emerson", w: 213, h: 95 },
+  cummins: { src: `${P}/Group-1.png`, alt: "Cummins Power Generation", w: 237, h: 71 },
+  hawk: { src: `${P}/Rectangle-11.png`, alt: "Hawk Power Generation", w: 201, h: 74 },
+  contextplus: { src: `${P}/Rectangle-10.png`, alt: "Context Plus", w: 177, h: 110 },
+  zamil: { src: `${P}/Rectangle-8.png`, alt: "Zamil Air Conditioners", w: 212, h: 96 },
+  liebert: { src: `${P}/Rectangle-7.png`, alt: "Liebert", w: 229, h: 45 },
+  airedale: { src: `${P}/Rectangle-6.png`, alt: "Airedale by Modine", w: 238, h: 105 },
+  commscope: { src: `${P}/Group-2.png`, alt: "CommScope", w: 246, h: 36 },
+  panduit: { src: `${P}/Rectangle-13.png`, alt: "Panduit", w: 194, h: 58 },
+  mmc: { src: `${P}/Rectangle-12.png`, alt: "Multimedia Connect", w: 223, h: 92 },
+  huawei: { src: `${P}/Rectangle-19.png`, alt: "Huawei", w: 244, h: 58 },
+  hikvision: { src: `${P}/Rectangle-18.png`, alt: "Hikvision", w: 267, h: 36 },
+  axis: { src: `${P}/Rectangle-17.png`, alt: "Axis Communications", w: 264, h: 96 },
+  dahua: { src: `${P}/Rectangle-16.png`, alt: "Dahua Technology", w: 226, h: 70 },
+  pelco: { src: `${P}/Rectangle-15.png`, alt: "Pelco", w: 256, h: 53 },
+  barco: { src: `${P}/Rectangle-14.png`, alt: "Barco", w: 244, h: 51 },
+  cisco: { src: `${P}/Rectangle-23.png`, alt: "Cisco", w: 200, h: 108 },
+  // TODO: Fortinet logo missing from public/images/partner — placeholder until it's added
+  fortinet: { alt: "Fortinet" },
+  aruba: { src: `${P}/Rectangle-21.png`, alt: "Aruba", w: 231, h: 60 },
+  h3c: { src: `${P}/Rectangle-20.png`, alt: "H3C", w: 207, h: 55 },
+  apc: { src: `${P}/Rectangle-24.png`, alt: "APC", w: 221, h: 94 },
+  rittal: { src: `${P}/Group-3.png`, alt: "Rittal", w: 220, h: 104 },
+  rittalRacks: { src: `${P}/Group-5.png`, alt: "Rittal", w: 220, h: 104 },
+  notifier: { src: `${P}/Rectangle-32.png`, alt: "Notifier by Honeywell", w: 273, h: 74 },
+  simplex: { src: `${P}/Rectangle-31.png`, alt: "Simplex", w: 248, h: 55 },
+  kidde: { src: `${P}/Rectangle-30.png`, alt: "Kidde", w: 251, h: 79 },
+  "3m": { src: `${P}/Rectangle-29.png`, alt: "3M", w: 154, h: 81 },
+  // TODO: DuPont logo missing from public/images/partner — placeholder until it's added
+  dupont: { alt: "DuPont" },
+  paloalto: { src: `${P}/Rectangle-37.png`, alt: "Palo Alto Networks", w: 246, h: 46 },
+  sophos: { src: `${P}/Rectangle-36.png`, alt: "Sophos", w: 262, h: 47 },
+  trendmicro: { src: `${P}/Rectangle-35.png`, alt: "Trend Micro", w: 260, h: 89 },
+  // TODO: CrowdStrike logo missing from public/images/partner — placeholder until it's added
+  crowdstrike: { alt: "CrowdStrike" },
+  blackwhite: { src: `${P}/Rectangle-33.png`, alt: "black&white engineering", w: 230, h: 60 },
+  // Group-4.png contains both the SALFO and RED logos in one image
+  salfored: { src: `${P}/Group-4.png`, alt: "SALFO Engineering & Management and RED", w: 241, h: 246 },
+  legrand: { src: `${P}/Rectangle-40.png`, alt: "Legrand", w: 226, h: 56 },
+  hdl: { src: `${P}/Rectangle-43.png`, alt: "HDL", w: 224, h: 79 },
+  orvibo: { src: `${P}/Rectangle-41.png`, alt: "Orvibo", w: 236, h: 54 },
+  honeywell: { src: `${P}/Rectangle-39.png`, alt: "Honeywell", w: 245, h: 44 },
+  lutron: { src: `${P}/Rectangle-38.png`, alt: "Lutron", w: 236, h: 39 },
+};
+
+const partnerCategories = [
+  { name: { en: "Electrical Systems", ar: "الأنظمة الكهربائية" }, logos: ["alfanar", "abb", "tripplite", "benning", "kohler", "schneider", "emerson", "cummins"] },
+  { name: { en: "Mechanical Systems", ar: "الأنظمة الميكانيكية" }, logos: ["hawk", "contextplus", "schneider", "zamil", "liebert", "airedale"] },
+  { name: { en: "Structural Cabling", ar: "الكابلات الهيكلية" }, logos: ["commscope", "panduit", "mmc"] },
+  { name: { en: "Physical Security", ar: "الأمن المادي" }, logos: ["huawei", "hikvision", "axis", "dahua", "pelco", "barco"] },
+  { name: { en: "Network & Security Solution", ar: "حلول الشبكات والأمن" }, logos: ["cisco", "huawei", "fortinet", "aruba", "h3c"] },
+  { name: { en: "Data Center Power Solution", ar: "حلول طاقة مراكز البيانات" }, logos: ["huawei", "commscope", "panduit", "schneider", "apc", "rittal"] },
+  { name: { en: "Fire Fighting", ar: "مكافحة الحرائق" }, logos: ["notifier", "simplex", "kidde", "3m", "dupont"] },
+  { name: { en: "Security Solution", ar: "الحلول الأمنية" }, logos: ["paloalto", "sophos", "trendmicro", "huawei", "crowdstrike"] },
+  { name: { en: "Design and Engineering", ar: "التصميم والهندسة" }, logos: ["blackwhite", "salfored"] },
+  { name: { en: "IT Racks", ar: "خزائن تقنية المعلومات" }, logos: ["schneider", "rittalRacks", "huawei"] },
+  { name: { en: "Smart Home", ar: "المنزل الذكي" }, logos: ["legrand", "hdl", "schneider", "orvibo", "honeywell", "lutron"] },
+];
+
+// Partner logo sizing: same visual area for every logo, capped to one max box, so wide wordmarks and
+// squarer marks look equally weighted. Values are in em — the grid cell sets the font-size per breakpoint.
+const PARTNER_AREA = 17; // em²
+const PARTNER_MAX_W = 9.5; // em
+const PARTNER_MAX_H = 3.6; // em
+function partnerLogoSize(w: number, h: number) {
+  const ratio = w / h;
+  let width = Math.sqrt(PARTNER_AREA * ratio);
+  let height = width / ratio;
+  if (width > PARTNER_MAX_W) {
+    width = PARTNER_MAX_W;
+    height = width / ratio;
+  }
+  if (height > PARTNER_MAX_H) {
+    height = PARTNER_MAX_H;
+    width = height * ratio;
+  }
+  return { width: `${width.toFixed(2)}em`, height: `${height.toFixed(2)}em` };
+}
+
 const categories = [
   { name: { en: "Featured Clients", ar: "عملاء مختارون" }, logos: ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "l10"] },
   { name: { en: "Infrastructure", ar: "البنية التحتية" }, logos: ["l11", "l12", "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20"] },
@@ -80,9 +171,24 @@ const ArrowIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export function ClientsSection() {
+type ClientsSectionProps = {
+  /** About page: adds "Our clients / Our partners" tabs under the heading. The home page omits it. */
+  withPartners?: boolean;
+};
+
+export function ClientsSection({ withPartners = false }: ClientsSectionProps) {
   const { language } = useLanguage();
+  const isAr = language === "ar";
+  const [view, setView] = useState<"clients" | "partners">("clients");
+  const activeCategories = view === "partners" ? partnerCategories : categories;
+  const activeLogoMap = view === "partners" ? partnerLogos : logos;
   const [activeCategory, setActiveCategory] = useState(categories[0].name.en);
+
+  const switchView = (next: "clients" | "partners") => {
+    if (next === view) return;
+    setView(next);
+    setActiveCategory((next === "partners" ? partnerCategories : categories)[0].name.en);
+  };
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -100,8 +206,8 @@ export function ClientsSection() {
   const logosPerSlide = isMobile ? LOGOS_PER_SLIDE_MOBILE : LOGOS_PER_SLIDE_DEFAULT;
 
   const activeLogos = useMemo(
-    () => categories.find((c) => c.name.en === activeCategory)?.logos ?? [],
-    [activeCategory]
+    () => activeCategories.find((c) => c.name.en === activeCategory)?.logos ?? [],
+    [activeCategories, activeCategory]
   );
 
   const slides = useMemo(() => {
@@ -119,24 +225,67 @@ export function ClientsSection() {
         <h2 dir={language === "ar" ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {language === "ar" ? "موثوقون لدى جهات رائدة" : "Trusted by leading organizations"}
         </h2>
+
+        {/* Clients / Partners switch — main tabs use the bordered button style (filled when active) */}
+        {withPartners && (
+          <div dir={isAr ? "rtl" : "ltr"} role="tablist" className="mt-6 lg:mt-8 flex items-center gap-3">
+            {(
+              [
+                { key: "clients", en: "Our clients", ar: "عملاؤنا" },
+                { key: "partners", en: "Our partners", ar: "شركاؤنا" },
+              ] as const
+            ).map((tab) => {
+              const isActive = view === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => switchView(tab.key)}
+                  className={`px-5 py-2.5 text-xs lg:text-[13px] font-medium tracking-wide uppercase border transition-colors duration-300 whitespace-nowrap ${
+                    isActive
+                      ? "bg-[#2E368F] text-white border-[#2E368F]"
+                      : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
+                  }`}
+                >
+                  {isAr ? tab.ar : tab.en}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Tabs + Nav */}
       <div className="w-full pl-6 lg:site-gutter mb-8 lg:mb-10 flex items-center justify-between gap-6">
-        <div className="min-w-0 flex flex-nowrap lg:flex-wrap gap-3 overflow-x-auto lg:overflow-visible pr-6 lg:pr-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          {categories.map((category) => {
+        <div className={`min-w-0 flex flex-nowrap lg:flex-wrap overflow-x-auto ${withPartners ? "gap-x-7 gap-y-3 border-b border-gray-200 lg:border-b-0" : "gap-3"} lg:overflow-visible pr-6 lg:pr-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]`}>
+          {activeCategories.map((category) => {
             const isActive = category.name.en === activeCategory;
             return (
               <button
                 key={category.name.en}
                 onClick={() => setActiveCategory(category.name.en)}
-                className={`shrink-0 px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 whitespace-nowrap ${
-                  isActive
-                    ? "bg-[#2E368F] text-white border-[#2E368F]"
-                    : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
-                }`}
+                className={
+                  withPartners
+                    ? // About page: sub-tabs are plain text (no border box) with an underline on the active one
+                      `relative shrink-0 pb-2 text-xs lg:text-[13px] font-medium tracking-wide uppercase transition-colors duration-300 whitespace-nowrap ${
+                        isActive ? "text-[#2E368F]" : "text-gray-400 hover:text-[#2E368F]"
+                      }`
+                    : `shrink-0 px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 whitespace-nowrap ${
+                        isActive
+                          ? "bg-[#2E368F] text-white border-[#2E368F]"
+                          : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
+                      }`
+                }
               >
                 {language === "ar" ? category.name.ar : category.name.en}
+                {withPartners && (
+                  <span
+                    className={`absolute inset-x-0 bottom-0 h-[2px] bg-[#2E368F] transition-transform duration-300 origin-center ${
+                      isActive ? "scale-x-100" : "scale-x-0"
+                    }`}
+                  />
+                )}
               </button>
             );
           })}
@@ -168,7 +317,7 @@ export function ClientsSection() {
       <div className="w-full px-6 lg:site-gutter">
         <Swiper
           // Remount on language change too, so Swiper re-reads the page direction (RTL in Arabic).
-          key={`${activeCategory}-${language}`}
+          key={`${view}-${activeCategory}-${language}`}
           // Explicit direction: Swiper reads it on init, which runs before LanguageProvider
           // flips <html dir>, so relying on the inherited direction left slides offset in Arabic.
           dir={language === "ar" ? "rtl" : "ltr"}
@@ -190,16 +339,45 @@ export function ClientsSection() {
           {slides.map((slide, i) => (
             <SwiperSlide key={i}>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 grid-rows-2 gap-x-8 gap-y-12 py-4">
-                {slide.map((id) => (
-                  <div key={id} className="group relative w-full h-[90px] lg:h-[110px] flex items-center justify-center overflow-hidden">
-                    <Image quality={95}
-                      src={logos[id].src}
-                      alt={logos[id].alt}
-                      fill
-                      className="object-contain transition-transform duration-300 ease-out group-hover:scale-105"
-                    />
-                  </div>
-                ))}
+                {slide.map((id) => {
+                  const logo = activeLogoMap[id] as { src?: string; alt: string; w?: number; h?: number };
+                  if (view === "partners") {
+                    // Partners: every logo in an identical cell, sized by partnerLogoSize and centred
+                    return (
+                      <div key={id} className="group w-full h-[72px] lg:h-[88px] flex items-center justify-center text-[13px] sm:text-[14px] lg:text-[16px]">
+                        {logo.src && logo.w && logo.h ? (
+                          <div className="relative" style={partnerLogoSize(logo.w, logo.h)}>
+                            <Image quality={95}
+                              src={logo.src}
+                              alt={logo.alt}
+                              fill
+                              sizes="160px"
+                              className="object-contain transition-transform duration-300 ease-out group-hover:scale-105"
+                            />
+                          </div>
+                        ) : (
+                          // Placeholder until the logo file is supplied
+                          <span className="text-[1em] font-semibold tracking-wide uppercase text-gray-300">{logo.alt}</span>
+                        )}
+                      </div>
+                    );
+                  }
+                  return (
+                    <div key={id} className="group relative w-full h-[90px] lg:h-[110px] flex items-center justify-center overflow-hidden">
+                      {logo.src ? (
+                        <Image quality={95}
+                          src={logo.src}
+                          alt={logo.alt}
+                          fill
+                          className="object-contain transition-transform duration-300 ease-out group-hover:scale-105"
+                        />
+                      ) : (
+                        // Placeholder until the logo file is supplied
+                        <span className="text-[15px] lg:text-[18px] font-semibold tracking-wide uppercase text-gray-300">{logo.alt}</span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </SwiperSlide>
           ))}

@@ -96,7 +96,7 @@ const projects = [
     metaValue: { en: "8.5 Billion SAR", ar: "8.5 مليار ريال" },
     image: "/images/fp-4.png",
     hoverImage: "/images/fp-4-hover.png",
-    logo: "/images/fp-4-logo.png",
+    logo: "/images/fp-4-logo-swpc.png",
     logoAlt: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
     isVision2030: false,
     value: "8.5B SAR",

@@ -33,7 +33,7 @@ export default function AboutPage() {
       </Reveal>
 
       <Reveal>
-        <ClientsSection />
+        <ClientsSection withPartners />
       </Reveal>
 
       <Reveal>

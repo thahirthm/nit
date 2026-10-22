@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -117,10 +117,8 @@ const boardMembers: Record<string, LeadershipOffcanvasPerson> = {
   },
 };
 
-const categories = [
-  { key: "leaders", name: { en: "Our Leaders", ar: "قياداتنا" }, people: ["p1", "p2", "p3", "p4"] },
-  { key: "board", name: { en: "Board Members", ar: "أعضاء مجلس الإدارة" }, people: Object.keys(boardMembers) },
-];
+// One slider with the full team: leaders first, then board members.
+const teamIds = [...Object.keys(people), ...Object.keys(boardMembers)];
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className={className}>
@@ -131,17 +129,13 @@ const ArrowIcon = ({ className }: { className?: string }) => (
 export function AboutLeadership() {
   const { language } = useLanguage();
   const isAr = language === "ar";
-  const [activeCategory, setActiveCategory] = useState(categories[0].key);
   const swiperRef = useRef<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [selectedPerson, setSelectedPerson] = useState<LeadershipOffcanvasPerson | null>(null);
 
-  const activePeople = useMemo(
-    () => categories.find((c) => c.key === activeCategory)?.people ?? [],
-    [activeCategory]
-  );
+  const activePeople = teamIds;
 
   // Arrows only appear when the cards overflow the current view (e.g. more than 4 on desktop).
   const showNav = !(isBeginning && isEnd);
@@ -154,36 +148,11 @@ export function AboutLeadership() {
 
   return (
     <section id="our-team" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      {/* Heading */}
-      <Reveal delay={0} duration={0.8} y={30} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10">
+      {/* Heading + Nav — follow the page direction: heading on the right in Arabic, arrows mirror to match the RTL slider */}
+      <Reveal delay={0} duration={0.8} y={30} dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {isAr ? "العقول وراء المهمة" : "The minds behind the mission"}
         </h2>
-      </Reveal>
-
-      {/* Tabs + Nav — follow the page direction: tabs start on the right in Arabic, arrows mirror to match the RTL slider */}
-      <Reveal delay={0.1} duration={0.7} y={24} dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10 flex items-center justify-between gap-6">
-        <div className="flex flex-wrap gap-3">
-          {categories.map((category) => {
-            const isActive = category.key === activeCategory;
-            return (
-              <button
-                key={category.key}
-                onClick={() => {
-                  setActiveCategory(category.key);
-                  setActiveSlide(0);
-                }}
-                className={`px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 ${
-                  isActive
-                    ? "bg-[#2E368F] text-white border-[#2E368F]"
-                    : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
-                }`}
-              >
-                {isAr ? category.name.ar : category.name.en}
-              </button>
-            );
-          })}
-        </div>
 
         {showNav && (
           <div className="hidden sm:flex items-center gap-4 lg:gap-6 shrink-0">
@@ -211,14 +180,14 @@ export function AboutLeadership() {
       <div className="w-full px-6 lg:site-gutter">
         <Swiper
           // Remount on language change too, so Swiper re-reads the page direction (RTL in Arabic).
-          key={`${activeCategory}-${language}`}
+          key={language}
           // Explicit direction: Swiper reads it on init, which runs before LanguageProvider
           // flips <html dir>, so relying on the inherited direction left slides offset in Arabic.
           dir={language === "ar" ? "rtl" : "ltr"}
           modules={[Navigation]}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
-            // The slider remounts per tab, so re-sync the arrow states instead of keeping the previous tab's.
+            // The slider remounts on language change, so re-sync the arrow states.
             syncNav(swiper);
           }}
           onSlideChange={syncNav}

@@ -56,8 +56,8 @@ export function AboutCeoMessage() {
               </p>
             </Reveal>
 
-            <Reveal delay={0.4} duration={0.7} y={24} className="flex items-center gap-4">
-              <span className="text-white text-base sm:text-lg font-normal">
+            <Reveal delay={0.4} duration={0.7} y={24} className="flex items-center gap-5">
+              <span className="text-white text-lg sm:text-[22px] lg:text-[24px] font-normal">
                 {isAr ? "صالح الصنيدي - الرئيس التنفيذي" : "Salah Al Sunaid - CEO"}
               </span>
               <a
@@ -65,7 +65,7 @@ export function AboutCeoMessage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="flex items-center justify-center w-8 h-8 border border-white/60 text-white text-xs font-semibold hover:bg-white/10 transition-colors"
+                className="flex items-center justify-center w-5 h-5 sm:w-11 sm:h-11 border border-white/60 text-white text-[14px] sm:text-[24px] leading-none font-semibold hover:bg-white/10 transition-colors"
               >
                 in
               </a>
