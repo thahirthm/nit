@@ -308,7 +308,8 @@ export function GlanceSection() {
       onClick={() => setAchievementActive((v) => !v)}
       className="relative w-[70vw] md:w-[320px] lg:w-[380px] shrink-0 h-[370px] lg:h-[450px] overflow-hidden group snap-start bg-[#F9F9F9] p-8 flex flex-col justify-between"
     >
-      <div dir={language === "ar" ? "rtl" : "ltr"} className={`flex flex-col ${language === "ar" ? "items-end text-end" : "items-start text-start"}`}>
+      {/* items-start/text-start follow dir: right edge in Arabic (RTL), left in English */}
+      <div dir={language === "ar" ? "rtl" : "ltr"} className="flex flex-col items-start text-start">
         <h3 className={`font-normal text-gray-900 leading-tight ${language === "ar" ? "font-arabic text-[32px] lg:text-[40px]" : "font-[family-name:var(--font-anek-latin)] text-[50px] lg:text-[70px] leading-none"}`}>
           {language === "ar" ? "21 مليار ريال سعودي" : "21B SAR"}
         </h3>
@@ -320,7 +321,7 @@ export function GlanceSection() {
         </p>
       </div>
 
-      <div dir={language === "ar" ? "rtl" : "ltr"} className={`flex flex-col gap-3 ${language === "ar" ? "items-end" : "items-start"}`}>
+      <div dir={language === "ar" ? "rtl" : "ltr"} className="flex flex-col gap-3 items-start text-start">
         <div className="w-[70px] h-[70px] lg:w-[120px] lg:h-[120px] relative">
           <Image quality={95}
             src="/images/neom.png"

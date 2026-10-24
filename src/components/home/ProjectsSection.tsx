@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -243,6 +243,27 @@ const ArrowIcon = ({ className }: { className?: string }) => (
 export function ProjectsSection() {
   const { language } = useLanguage();
   const swiperRef = useRef<SwiperType | null>(null);
+  // Autoplay only runs while the slider is actually on screen (≥50% visible) — it starts when the user
+  // scrolls to the section and stops when they scroll away, instead of advancing unseen from page load.
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const inViewRef = useRef(false);
+
+  useEffect(() => {
+    const el = sliderRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting;
+        const autoplay = swiperRef.current?.autoplay;
+        if (!autoplay) return;
+        if (entry.isIntersecting) autoplay.start();
+        else autoplay.stop();
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [selectedProject, setSelectedProject] = useState<ProjectOffcanvasProject | null>(null);
@@ -278,7 +299,7 @@ export function ProjectsSection() {
       {/* Slider — the left gutter is applied via slidesOffsetBefore (inside the scroll track)
           instead of container padding, so it scrolls away once the user swipes past the first
           card, and cards run fully edge-to-edge on both sides from then on. */}
-      <div className="w-full">
+      <div ref={sliderRef} className="w-full">
         <Swiper
           // Remount on language change so Swiper re-reads the page direction (RTL in Arabic).
           key={language}
@@ -293,6 +314,10 @@ export function ProjectsSection() {
           speed={800}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
+            // Swiper starts autoplay on init; hold it until the slider is in view (also after a
+            // language-change remount, where the section may already be on screen)
+            if (inViewRef.current) swiper.autoplay?.start();
+            else swiper.autoplay?.stop();
             // Re-sync arrows after a remount instead of keeping the previous state.
             setIsBeginning(swiper.isBeginning);
             setIsEnd(swiper.isEnd);

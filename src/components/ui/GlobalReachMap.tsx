@@ -97,7 +97,9 @@ export function GlobalReachMap({ tone = "light", active = true, className = "" }
           <div
             key={marker.name.en}
             className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `${marker.x}%`, top: `${marker.y}%` }}
+            // Active marker (and its label) stacks above every other dot — otherwise a label that
+            // opens downward (e.g. United Kingdom) gets covered by markers rendered after it
+            style={{ left: `${marker.x}%`, top: `${marker.y}%`, zIndex: isActive ? 30 : 1 }}
             onMouseEnter={() => setUserMarker(marker.name.en)}
             onMouseLeave={() => setUserMarker((current) => (current === marker.name.en ? null : current))}
             onClick={() => {

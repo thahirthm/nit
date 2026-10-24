@@ -174,10 +174,13 @@ export function AboutHistory() {
               since 11 labels can't fit on mobile without overlapping. */}
           <div className="order-1 flex-1 min-w-0">
             <div className="block relative">
-              <div className="absolute top-[9px] left-[5px] right-[5px] h-px bg-gray-200" />
+              {/* Lines run through the dot centres: each dot is an 11px circle inside a 4px-padded button,
+                  so centres sit 9.5px from the edges/top (1px line → top 9px). The progress line starts at
+                  the first dot's centre and its width spans the centre-to-centre distance. */}
+              <div className="absolute top-[9px] left-[9.5px] right-[9.5px] h-px bg-gray-200" />
               <div
-                className="absolute top-[8px] start-0 h-px bg-[#2E368F] transition-all duration-500 ease-out"
-                style={{ width: `${(activeIndex / lastIndex) * 100}%` }}
+                className="absolute top-[9px] start-[9.5px] h-px bg-[#2E368F] transition-all duration-500 ease-out"
+                style={{ width: `calc((100% - 19px) * ${activeIndex / lastIndex})` }}
               />
               <div className="relative flex justify-between">
                 {milestones.map((m, i) => (
