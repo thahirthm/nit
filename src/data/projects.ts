@@ -13,6 +13,13 @@ const badgeOM = { en: "O & M", ar: "التشغيل والصيانة" };
 const badgeComms = { en: "COMMS", ar: "الاتصالات" };
 const badgeCyber = { en: "CYBER SECURITY", ar: "الأمن السيبراني" };
 const badgeDataCenters = { en: "DATA CENTERS", ar: "مراكز البيانات" };
+// Technology project tags
+const badgeSecurity = { en: "SECURITY", ar: "الأنظمة الأمنية" };
+const badgeAI = { en: "AI", ar: "الذكاء الاصطناعي" };
+const badgeNetworks = { en: "NETWORKS", ar: "الشبكات" };
+const badgeBlockchain = { en: "BLOCKCHAIN", ar: "البلوك تشين" };
+const badgeFiber = { en: "FIBER OPTICS", ar: "الألياف الضوئية" };
+const badgeRadar = { en: "RADAR", ar: "الرادار" };
 const scopeEpc = { en: "EPC", ar: "الهندسة والتوريد والإنشاء (EPC)" };
 const scopeDesignBuild = { en: "Design+Build", ar: "التصميم والتنفيذ" };
 
@@ -266,7 +273,7 @@ const techHotProjects: Project[] = [
       ar: "تصميم وتوريد المعدات الأمنية المادية والتقنية في هيئة الزكاة والضريبة والجمارك، بما يشمل تطوير البنية التحتية وتشغيل وصيانة كاميرات المراقبة وأجهزة الفحص بالأشعة السينية وأجهزة رصد الإشعاع (RPM) والبوابات المنزلقة والحواجز الذراعية وموانع الطرق وأنظمة الوزن أثناء الحركة ونظام إدارة المواقف.",
     },
     image: "/images/p-19.png",
-    badges: [badgeOngoing, badgeEnergy],
+    badges: [badgeOngoing, badgeSecurity],
     value: "200M SAR",
     year: "2022",
     scope: scopeEpc,
@@ -279,7 +286,7 @@ const techHotProjects: Project[] = [
       ar: "تتولى نسما للبنية التحتية والتقنية تصميم وتوريد وتركيب وتشغيل وصيانة أنظمة أمنية متكاملة، تشمل كاميرات المراقبة والرادار. وتقع سندالة قبالة ساحل نيوم في شمال غرب المملكة، وهي أول جزيرة فاخرة ووجهة لنادي اليخوت تابعة لنيوم في البحر الأحمر.",
     },
     image: "/images/p-20.png",
-    badges: [badgeCompleted, badgeEnergy],
+    badges: [badgeCompleted, badgeSecurity],
     value: "50M SAR",
     year: "2024",
     scope: scopeEpc,
@@ -292,7 +299,7 @@ const techHotProjects: Project[] = [
       ar: "تقديم طبقة الخدمات الإدراكية في ظل الطلب المتزايد على تطوير تطبيقات الذكاء الاصطناعي في مختلف القطاعات، إذ تستهدف الدفعة الأولى من الخدمات الإدراكية القدرات العامة التي يمكن اعتمادها على نطاق واسع في نيوم بعد تشغيلها. وتمثلت الحاجة الفورية في المرحلة الأولى في التعرف على الصوت والاستشعار عن بعد، وقد أنجزت نسما للبنية التحتية والتقنية المرحلتين الثانية والثالثة.",
     },
     image: "/images/p-21.png",
-    badges: [badgeCompleted, badgeEnergy],
+    badges: [badgeCompleted, badgeAI],
     value: "17M SAR",
     year: "2021",
     scope: scopeEpc,
@@ -305,7 +312,7 @@ const techHotProjects: Project[] = [
       ar: "مشروع بنظام تسليم المفتاح، تولّت فيه نسما للبنية التحتية والتقنية توريد نظام ميكروويف (من نقطة إلى نقطة) ونشره وتهيئته واختباره وتشغيله وتسليمه بكامل جاهزيته واستقراره.",
     },
     image: "/images/p-22.png",
-    badges: [badgeCompleted, badgeEnergy],
+    badges: [badgeCompleted, badgeComms],
     value: "10M SAR",
     year: "2022",
     scope: scopeEpc,
@@ -318,7 +325,7 @@ const techHotProjects: Project[] = [
       ar: "تصميم الشبكة الضوئية الثابتة في طبقات الوصول والتجميع والشبكة الأساسية في نيوم وبناؤها ونشرها وتشغيلها وصيانتها. وتعتمد البنية الموصى بها على طوبولوجيا شبكية ترتبط فيها جميع عقد الشبكة الأساسية بموقعين مركزيين رئيسيين، بما يتيح الوصول إلى مراكز البيانات والشبكة الأساسية للهاتف المحمول والشبكات الخارجية. وتُطبَّق في جميع مواقع الشبكة الأساسية حماية بتهيئة 1+1 لكل من منافذ الإرسال الضوئي DWDM ومعدات توجيه IP.",
     },
     image: "/images/p-23.png",
-    badges: [badgeCompleted, badgeEnergy],
+    badges: [badgeCompleted, badgeNetworks],
     value: "443M SAR",
     year: "2021",
     scope: scopeEpc,
@@ -331,7 +338,7 @@ const techHotProjects: Project[] = [
       ar: "تطوير منصة لتتبع الأصول بتقنية البلوك تشين لتتبع دورة حياة الأصول المادية والرقمية التي تشتريها توناموس وتدقيقها والتحقق منها رقميًا، وزيادة الشفافية من خلال إتاحة تسجيل المشاركين (الرقميين أو الفعليين) في دورة حياة الأصول على المنصة وتحديد هوياتهم.",
     },
     image: "/images/p-24.png",
-    badges: [badgeCompleted, badgeEnergy],
+    badges: [badgeCompleted, badgeBlockchain],
     value: "17M SAR",
     year: "2022",
     scope: scopeEpc,
@@ -344,7 +351,7 @@ const techHotProjects: Project[] = [
       ar: "يهدف المشروع إلى تحديث أنظمة القيادة والتحكم والاتصالات في القوات الجوية الملكية السعودية من خلال تطوير أنظمة ربط البيانات والبرمجيات الافتراضية والشبكات وأنظمة التحكم في الاتصالات الصوتية (VCCS). ويشمل تركيب واجهات محدّثة للتحكم الجوي وأدوات المراقبة والأجهزة الأساسية، إلى جانب تدريب الكوادر لضمان التشغيل الفعّال واستدامة الأنظمة على المدى الطويل.",
     },
     image: "/images/p-25.png",
-    badges: [badgeCompleted, badgeEnergy],
+    badges: [badgeCompleted, badgeComms],
     value: "83.5M SAR",
     year: "2018",
     scope: scopeEpc,
@@ -357,7 +364,7 @@ const techHotProjects: Project[] = [
       ar: "إنشاء وصلة عالية السرعة بكابلات الألياف الضوئية بين الرياض ومكة المكرمة. وشمل المشروع المنجز نشر شبكة خارجية تغطي خدمات FTTH (الألياف إلى المنازل) والبيانات وشبكة الألياف الضوئية (FON) ونقطة الشبكة الضوئية الأخيرة (LNOP)، مما عزّز بشكل كبير قدرات نقل البيانات والاتصال بين المدينتين (مكة المكرمة والرياض).",
     },
     image: "/images/p-26.png",
-    badges: [badgeCompleted, badgeEnergy],
+    badges: [badgeCompleted, badgeFiber],
     value: "307M SAR",
     year: "2014",
     scope: scopeEpc,
@@ -373,7 +380,7 @@ const telecomProjects: Project[] = [
       ar: "تصنيع غرف المعدات لشركتي STC وموبايلي وفق مواصفاتهما، بما يشمل جميع الملحقات مثل الإنارة والتحكم في الدخول ولوحات التوزيع الرئيسية (MDB) والتكييف ومكافحة الحريق ومجاري الكابلات وطاقة التيار المستمر، إضافة إلى مشاريع WiMAX وGSM وDMW (بما فيها RDU وTDVs).",
     },
     image: "/images/p-27.png",
-    badges: [badgeCompleted, badgeEnergy],
+    badges: [badgeCompleted, badgeComms],
     value: "68M SAR",
     year: "2004",
     scope: scopeEpc,
@@ -386,7 +393,7 @@ const telecomProjects: Project[] = [
       ar: "الهندسة والتوريد والإنشاء لبرج رادار مسبق الصنع من الفولاذ المجلفن على أساس من الخرسانة المسلحة، مع أنظمة تأريض كهربائي متوافقة مع معايير IEC والحماية من الصواعق وإدارة الكابلات، إلى جانب التركيب الإنشائي والدعامات الميكانيكية والاختبار النهائي والتشغيل، وفق المواصفات الفنية لشركة البحر الأحمر الدولية ومعايير الصحة والسلامة والبيئة.",
     },
     image: "/images/p-28.png",
-    badges: [badgeCompleted, badgeEnergy],
+    badges: [badgeCompleted, badgeRadar],
     value: "2.5M SAR",
     year: "2023",
     scope: scopeEpc,
@@ -478,6 +485,20 @@ const dataCenterProjects: Project[] = [
   },
 ];
 
+// Projects whose completion year is before this are shown as COMPLETED, whatever status badge
+// was entered above — so a project finishing in e.g. 2025 never shows "ONGOING".
+const COMPLETED_BEFORE_YEAR = 2026;
+
+function withDerivedStatus(projects: Project[]): Project[] {
+  return projects.map((project) => {
+    const year = Number(project.completion);
+    // Only a full 4-digit completion year counts
+    const isPast = /^\d{4}$/.test(project.completion ?? "") && year < COMPLETED_BEFORE_YEAR;
+    if (!isPast || project.badges[0] !== badgeOngoing) return project;
+    return { ...project, badges: [badgeCompleted, ...project.badges.slice(1)] };
+  });
+}
+
 export interface ProjectCategory {
   key: string;
   label: { en: string; ar: string };
@@ -485,14 +506,14 @@ export interface ProjectCategory {
 }
 
 export const infrastructureCategories: ProjectCategory[] = [
-  { key: "whats-hot", label: { en: "What's hot", ar: "الأبرز" }, projects: hotProjects },
-  { key: "water-mep", label: { en: "Water & MEP", ar: "المياه والكهروميكانيكية" }, projects: waterProjects },
-  { key: "om", label: { en: "O & M", ar: "التشغيل والصيانة" }, projects: omProjects },
+  { key: "whats-hot", label: { en: "What's hot", ar: "الأبرز" }, projects: withDerivedStatus(hotProjects) },
+  { key: "water-mep", label: { en: "Water & MEP", ar: "المياه والكهروميكانيكية" }, projects: withDerivedStatus(waterProjects) },
+  { key: "om", label: { en: "O & M", ar: "التشغيل والصيانة" }, projects: withDerivedStatus(omProjects) },
 ];
 
 export const technologyCategories: ProjectCategory[] = [
-  { key: "whats-hot", label: { en: "What's hot", ar: "الأبرز" }, projects: techHotProjects },
-  { key: "telecom-radio", label: { en: "Telcom & Radio Station", ar: "الاتصالات ومحطات الإذاعة" }, projects: telecomProjects },
-  { key: "cyber-security", label: { en: "Cyber Security", ar: "الأمن السيبراني" }, projects: cyberProjects },
-  { key: "data-centers", label: { en: "Data Centers", ar: "مراكز البيانات" }, projects: dataCenterProjects },
+  { key: "whats-hot", label: { en: "What's hot", ar: "الأبرز" }, projects: withDerivedStatus(techHotProjects) },
+  { key: "telecom-radio", label: { en: "Telcom & Radio Station", ar: "الاتصالات ومحطات الإذاعة" }, projects: withDerivedStatus(telecomProjects) },
+  { key: "cyber-security", label: { en: "Cyber Security", ar: "الأمن السيبراني" }, projects: withDerivedStatus(cyberProjects) },
+  { key: "data-centers", label: { en: "Data Centers", ar: "مراكز البيانات" }, projects: withDerivedStatus(dataCenterProjects) },
 ];

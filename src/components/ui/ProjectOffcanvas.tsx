@@ -12,7 +12,11 @@ export interface ProjectOffcanvasProject {
   badges: { en: string; ar: string }[];
   value: string;
   year: string;
+  /** Optional label override for the year stat (default "Year"), e.g. "Awarded". */
+  yearLabel?: { en: string; ar: string };
   scope: { en: string; ar: string };
+  /** Optional label override for the scope stat (default "Scope"), e.g. "Consortium". */
+  scopeLabel?: { en: string; ar: string };
   /** When set, the third stat shows "Completion on" with this year instead of the scope. */
   completion?: string;
 }
@@ -111,12 +115,14 @@ export function ProjectOffcanvas({ project, onClose }: ProjectOffcanvasProps) {
                   <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">{project.value}</span>
                 </div>
                 <div className={isAr ? "text-right" : "text-left"}>
-                  <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">{yearLabel}</span>
+                  <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">{project.yearLabel ? (isAr ? project.yearLabel.ar : project.yearLabel.en) : yearLabel}</span>
                   <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">{project.year}</span>
                 </div>
                 <div className={isAr ? "text-right" : "text-left"}>
                   <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">
-                    {project.completion ? (isAr ? "موعد الإنجاز" : "COMPLETION ON") : scopeLabel}
+                    {project.completion
+                      ? isAr ? "موعد الإنجاز" : "COMPLETION ON"
+                      : project.scopeLabel ? (isAr ? project.scopeLabel.ar : project.scopeLabel.en) : scopeLabel}
                   </span>
                   <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">
                     {project.completion ?? (isAr ? project.scope.ar : project.scope.en)}

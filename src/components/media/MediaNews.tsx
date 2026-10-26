@@ -13,6 +13,8 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Reveal } from "@/components/ui/Reveal";
 import "swiper/css";
 
+const MAX_DOTS = 7;
+
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className={className}>
     <path d="M7.4375 15.2939L14.8725 7.85886L7.4375 0.423828M14.8725 7.85886L0.00247078 7.85886" stroke="currentColor" strokeWidth="1.2" />
@@ -37,6 +39,22 @@ export function MediaNews({
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [perView, setPerView] = useState(1);
+
+  // One dot per page of visible cards. Arrows still move one card, so a page is "active"
+  // while its first card leads the view (or, at the end, the last page).
+  const pageCount = Math.max(1, Math.ceil(posts.length / perView));
+  const activePage = isEnd ? pageCount - 1 : Math.min(pageCount - 1, Math.floor(activeSlide / perView));
+  // Long categories would need dozens of dots on mobile, so show a sliding window around the active one.
+  const firstDot = Math.min(Math.max(0, activePage - Math.floor(MAX_DOTS / 2)), Math.max(0, pageCount - MAX_DOTS));
+  const visiblePages = Array.from({ length: Math.min(MAX_DOTS, pageCount) }, (_, i) => firstDot + i);
+
+  const syncSwiper = (swiper: SwiperType) => {
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
+    setActiveSlide(swiper.activeIndex);
+    setPerView(typeof swiper.params.slidesPerView === "number" ? swiper.params.slidesPerView : 1);
+  };
 
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
@@ -102,12 +120,12 @@ export function MediaNews({
             modules={[Navigation]}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
+              // Re-sync after a remount (tab or language change) instead of keeping the previous tab's state.
+              syncSwiper(swiper);
             }}
-            onSlideChange={(swiper) => {
-              setIsBeginning(swiper.isBeginning);
-              setIsEnd(swiper.isEnd);
-              setActiveSlide(swiper.activeIndex);
-            }}
+            onSlideChange={syncSwiper}
+            onBreakpoint={syncSwiper}
+            onResize={syncSwiper}
             spaceBetween={24}
             slidesPerView={1}
             breakpoints={{
@@ -163,16 +181,17 @@ export function MediaNews({
             })}
           </Swiper>
 
-          {/* Dot pagination — mobile only (slidesPerView: 1, so each dot maps to one post) */}
-          {posts.length > 1 && (
-            <div className="flex sm:hidden items-center justify-start gap-2 mt-6">
-              {posts.map((post, i) => (
+          {/* Dot pagination — under the slider at the start edge (left in English, right in Arabic) */}
+          {pageCount > 1 && (
+            <div dir={isAr ? "rtl" : "ltr"} className="flex items-center justify-start gap-2 mt-6 sm:mt-8">
+              {visiblePages.map((page) => (
                 <button
-                  key={post.slug}
-                  aria-label={`Go to slide ${i + 1}`}
-                  onClick={() => swiperRef.current?.slideTo(i)}
-                  className={`transition-all duration-300 ${
-                    i === activeSlide ? "w-1.5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
+                  key={page}
+                  aria-label={`Go to slide ${page + 1}`}
+                  aria-current={page === activePage}
+                  onClick={() => swiperRef.current?.slideTo(Math.min(page * perView, Math.max(0, posts.length - perView)))}
+                  className={`w-1.5 h-1.5 sm:w-2 sm:h-2 transition-colors duration-300 ${
+                    page === activePage ? "bg-[#2E368F]" : "bg-[#2E368F]/25 hover:bg-[#2E368F]/50"
                   }`}
                 />
               ))}

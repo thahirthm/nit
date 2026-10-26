@@ -74,9 +74,10 @@ const projects = [
     logoAlt: { en: "Principal Buyer", ar: "المشتري الرئيس" },
     isVision2030: false,
     value: "889M SAR",
-    // TODO: year and scope not provided yet — placeholders until confirmed
-    year: "—",
-    scope: { en: "—", ar: "—" },
+    year: "2021",
+    yearLabel: { en: "Awarded", ar: "سنة الترسية" },
+    scope: { en: "South Jeddah Noor", ar: "جنوب جدة نور" },
+    scopeLabel: { en: "Consortium", ar: "التحالف" },
     description: {
       en: [
         "Delivered in partnership with EDF Renewables and Masdar, the 300 MW South Jeddah solar project was awarded in the second round of competitive tendering under the Saudi Ministry of Energy renewable energy program.",
@@ -100,8 +101,7 @@ const projects = [
     logoAlt: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
     isVision2030: false,
     value: "8.5B SAR",
-    // TODO: year not provided yet — placeholder until confirmed
-    year: "—",
+    year: "2025",
     scope: { en: "BOOT", ar: "البناء والتملك والتشغيل والنقل (BOOT)" },
     description: {
       en: [
@@ -126,9 +126,10 @@ const projects = [
     logoAlt: { en: "Sana Taibah", ar: "سنا طيبة" },
     isVision2030: false,
     value: "3.75B SAR",
-    // TODO: year and scope not provided yet — placeholders until confirmed
-    year: "—",
-    scope: { en: "—", ar: "—" },
+    year: "2023",
+    yearLabel: { en: "Awarded", ar: "سنة الترسية" },
+    scope: { en: "Sana Taibah", ar: "سنا طيبة" },
+    scopeLabel: { en: "Client", ar: "العميل" },
     description: {
       en: [
         "Delivered in partnership with Masdar, EDF Renewables, and Nesma Renewable Energy, the 1,100 MW Al Henakiyah solar PV project was awarded under the fourth round of competitive tendering by the Saudi Ministry of Energy's renewable energy program.",
@@ -152,8 +153,7 @@ const projects = [
     logoAlt: { en: "Royal Commission for Makkah City and Holy Sites", ar: "الهيئة الملكية لمدينة مكة المكرمة والمشاعر المقدسة" },
     isVision2030: false,
     value: "3.2B SAR",
-    // TODO: year not provided yet — placeholder until confirmed
-    year: "—",
+    year: "2017",
     scope: { en: "Operation & Maintenance", ar: "التشغيل والصيانة" },
     description: {
       en: [
@@ -219,7 +219,11 @@ const projects = [
 // Only the first six projects are shown for now; raise this to bring the others back.
 const VISIBLE_PROJECTS = 6;
 
-type Project = (typeof projects)[number] & { metaValue?: { en: string; ar: string } };
+type Project = (typeof projects)[number] & {
+  metaValue?: { en: string; ar: string };
+  yearLabel?: { en: string; ar: string };
+  scopeLabel?: { en: string; ar: string };
+};
 
 function toOffcanvasProject(project: Project): ProjectOffcanvasProject {
   return {
@@ -230,7 +234,9 @@ function toOffcanvasProject(project: Project): ProjectOffcanvasProject {
     badges: project.isVision2030 ? [project.category, { en: "VISION 2030", ar: "رؤية 2030" }] : [project.category],
     value: project.value,
     year: project.year,
+    yearLabel: project.yearLabel,
     scope: project.scope,
+    scopeLabel: project.scopeLabel,
   };
 }
 

@@ -26,7 +26,7 @@ const socials = [
   },
   {
     name: "Instagram",
-    href: "https://www.instagram.com/nesma_nit/?hl=en",
+    href: "https://www.instagram.com/nesmanit/",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
         <rect width="38" height="38" fill="#2E368F" />

@@ -41,9 +41,15 @@ const futura = localFont({
   variable: "--font-futura",
 });
 
+// Each page sets its own title/description; the template adds the brand suffix
+// (e.g. "Infrastructure Solutions | NIT"). The default is used by any route without one.
 export const metadata: Metadata = {
-  title: "Nesma Infrastructure & Technology",
-  description: "Nesma Infrastructure & Technology",
+  title: {
+    template: "%s | NIT",
+    default: "Nesma Infrastructure & Technology (NIT)",
+  },
+  description:
+    "Nesma Infrastructure & Technology (NIT) designs and delivers critical infrastructure and technology solutions across Saudi Arabia.",
   icons: {
     icon: "/images/nit-fav.png",
   },

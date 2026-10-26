@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Banner } from "@/components/home/Banner";
 import { ExpertiseSection } from "@/components/home/ExpertiseSection";
 import { GlanceSection } from "@/components/home/GlanceSection";
@@ -8,6 +9,11 @@ import { TypingSection } from "@/components/home/TypingSection";
 import { NewsSection } from "@/components/home/NewsSection";
 import { Reveal } from "@/components/ui/Reveal";
 import { getNewsSectionData, NEWS_PAGE_SIZE } from "@/lib/api";
+
+export const metadata: Metadata = {
+  title: { absolute: "Nesma Infrastructure & Technology | Infrastructure & Technology Solutions in Saudi Arabia" },
+  description: "Nesma Infrastructure & Technology (NIT) designs and delivers critical infrastructure and technology solutions across Saudi Arabia, from energy, water and communications to data centers and smart systems.",
+};
 
 export default async function Home() {
   const news = await getNewsSectionData(NEWS_PAGE_SIZE.home);

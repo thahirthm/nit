@@ -14,7 +14,10 @@ const blogPath = (slug: string) => `/blogs/${encodeURIComponent(slug)}/`;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getJSON<BlogDetail>(blogPath(slug));
-  return post ? { title: post.meta_title, description: post.meta_description } : {};
+  // CMS SEO fields first; fall back to the article's own title/summary if they're left empty
+  return post
+    ? { title: post.meta_title || post.title, description: post.meta_description || post.short_description }
+    : { title: "Article not found" };
 }
 
 export default async function NewsArticlePage({ params }: { params: Promise<{ slug: string }> }) {
