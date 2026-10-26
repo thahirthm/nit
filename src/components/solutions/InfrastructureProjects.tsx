@@ -205,7 +205,7 @@ export function InfrastructureProjects() {
                   aria-label={`Go to slide ${i + 1}`}
                   onClick={() => swiperRef.current?.slideTo(i)}
                   className={`transition-all duration-300 ${
-                    i === snapIndex ? "w-5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
+                    i === snapIndex ? "w-1.5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
                   }`}
                 />
               ))}

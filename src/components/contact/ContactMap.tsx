@@ -12,7 +12,7 @@ const offices = [
       en: "Randa Tower, King Abdul Aziz Rd, An Nahdah, Jeddah 23523, Saudi Arabia",
       ar: "برج رندا، طريق الملك عبدالعزيز، حي النهضة، جدة 23523، المملكة العربية السعودية",
     },
-    phone: "+966550634599",
+    phone: "+966 55 063 4599",
     email: "nit@nesmainfrastructure.com",
     mapQuery: "Randa Tower, King Abdul Aziz Rd, An Nahdah, Jeddah 23523, Saudi Arabia",
   },
@@ -20,7 +20,7 @@ const offices = [
     tab: { en: "Riyadh Office", ar: "مكتب الرياض" },
     name: { en: "NIT - Riyadh Office", ar: "نسما للبنية التحتية والتقنية – مكتب الرياض" },
     address: { en: "King Khalid Rd, Ar Rihab, Diriyah 13715", ar: "طريق الملك خالد، الرحاب، الدرعية 13715" },
-    phone: "+966550634599",
+    phone: "+966 55 063 4599",
     email: "nit@nesmainfrastructure.com",
     mapQuery: "King Khalid Rd, Ar Rihab, Diriyah 13715, Saudi Arabia",
   },
@@ -31,7 +31,7 @@ const offices = [
       en: "King Fahd Road, Al Qashlah, Dhahran 34232",
       ar: "طريق الملك فهد، القشلة، الظهران 34232",
     },
-    phone: "+966550634599",
+    phone: "+966 55 063 4599",
     email: "nit@nesmainfrastructure.com",
     mapQuery: "King Fahd Road, Al Qashlah, Dhahran 34232, Saudi Arabia",
   },
@@ -126,7 +126,7 @@ export function ContactMap() {
                       {isAr ? office.address.ar : office.address.en}
                     </span>
                   </div>
-                  <a href={`tel:${office.phone}`} className="flex items-center gap-2 text-[#2E368F] hover:text-[#1c2260] transition-colors">
+                  <a href={`tel:${office.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 text-[#2E368F] hover:text-[#1c2260] transition-colors">
                     <PhoneIcon />
                     <span dir="ltr" className="text-[14px] font-light underline underline-offset-2">
                       {office.phone}

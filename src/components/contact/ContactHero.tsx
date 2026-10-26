@@ -170,7 +170,7 @@ export function ContactHero() {
             <div>
               <span className="block text-gray-400 text-[16px] font-light">{isAr ? "الهاتف" : "Phone"}</span>
               <span dir="ltr" className={`block mt-1 text-gray-900 text-[22px] font-light ${isAr ? "text-right" : ""}`}>
-                +966550634599
+                +966 55 063 4599
               </span>
             </div>
           </motion.div>

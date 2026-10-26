@@ -282,7 +282,7 @@ export function AboutLeadership() {
                 aria-label={`Go to slide ${i + 1}`}
                 onClick={() => swiperRef.current?.slideTo(i)}
                 className={`transition-all duration-300 ${
-                  i === activeSlide ? "w-5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
+                  i === activeSlide ? "w-1.5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
                 }`}
               />
             ))}

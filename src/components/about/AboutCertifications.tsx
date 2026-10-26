@@ -256,8 +256,8 @@ export function AboutCertifications() {
                 key={i}
                 aria-label={`Go to slide ${i + 1}`}
                 onClick={() => swiperRef.current?.slideTo(i)}
-                className={`w-2 h-2 transition-colors duration-300 ${
-                  i === activeSlide ? "bg-[#2E368F]" : "bg-gray-200"
+                className={`transition-all duration-300 ${
+                  i === activeSlide ? "w-1.5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
                 }`}
               />
             ))}

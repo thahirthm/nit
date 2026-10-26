@@ -165,14 +165,14 @@ export function MediaNews({
 
           {/* Dot pagination — mobile only (slidesPerView: 1, so each dot maps to one post) */}
           {posts.length > 1 && (
-            <div className="flex sm:hidden items-center justify-center gap-2 mt-6">
+            <div className="flex sm:hidden items-center justify-start gap-2 mt-6">
               {posts.map((post, i) => (
                 <button
                   key={post.slug}
                   aria-label={`Go to slide ${i + 1}`}
                   onClick={() => swiperRef.current?.slideTo(i)}
-                  className={`rounded-full transition-all duration-300 ${
-                    i === activeSlide ? "w-5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
+                  className={`transition-all duration-300 ${
+                    i === activeSlide ? "w-1.5 h-1.5 bg-[#2E368F]" : "w-1.5 h-1.5 bg-[#2E368F]/25"
                   }`}
                 />
               ))}
