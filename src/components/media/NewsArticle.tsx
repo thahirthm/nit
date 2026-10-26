@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
@@ -38,8 +39,10 @@ export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & {
   const similar = post.related;
   const title = post.title;
 
+  const [copied, setCopied] = useState(false);
+
   // Share buttons open the network's share dialog for this page's URL (read at click time, so no
-  // hydration mismatch). Instagram has no web share URL, so that icon links to NIT's profile instead.
+  // hydration mismatch).
   const share = (e: React.MouseEvent, network: "linkedin" | "x") => {
     e.preventDefault();
     const url = encodeURIComponent(window.location.href);
@@ -48,6 +51,25 @@ export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & {
         ? `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
         : `https://x.com/intent/post?url=${url}&text=${encodeURIComponent(title)}`;
     window.open(shareUrl, "_blank", "noopener,noreferrer");
+  };
+
+  // Instagram has no web share URL. On phones, the native share sheet lists Instagram (stories, DMs);
+  // elsewhere, copy the post link and open Instagram so it can be pasted there.
+  const shareToInstagram = () => {
+    const url = window.location.href;
+    if (navigator.share && window.matchMedia("(pointer: coarse)").matches) {
+      navigator.share({ title, url }).catch(() => {}); // rejects when the user closes the sheet
+      return;
+    }
+    navigator.clipboard?.writeText(url).then(
+      () => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 3000);
+      },
+      () => {}
+    );
+    // Opened synchronously in the click so popup blockers allow it
+    window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -69,7 +91,7 @@ export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & {
               sizes="(min-width: 1024px) 896px, 100vw"
               className="block w-full h-auto"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#2E368F]/50 via-transparent to-transparent" />
+            {/* <div className="absolute inset-0 bg-gradient-to-t from-[#2E368F]/50 via-transparent to-transparent" /> */}
           </div>
 
           <div className="mt-6 lg:mt-0 flex items-center gap-3 lg:flex-col lg:items-end lg:col-start-2 lg:row-start-1 lg:row-span-4 lg:self-start lg:sticky lg:top-32">
@@ -80,13 +102,16 @@ export function NewsArticle({ initialPost }: { initialPost: Seed<BlogDetail> & {
               <a href="#" onClick={(e) => share(e, "linkedin")} aria-label="Share on LinkedIn" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
                 <LinkedInIcon />
               </a>
-              <a href="https://www.instagram.com/nesma_nit/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="NIT on Instagram" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
+              <button type="button" onClick={shareToInstagram} aria-label="Share on Instagram" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
                 <InstagramIcon />
-              </a>
+              </button>
               <a href="#" onClick={(e) => share(e, "x")} aria-label="Share on X" className="w-7 h-7 flex items-center justify-center bg-[#2E368F] hover:bg-[#1c2260] transition-colors duration-300">
                 <XIcon />
               </a>
             </div>
+            <span role="status" aria-live="polite" className={`text-[12px] text-[#2E368F] lg:text-end transition-opacity duration-300 ${copied ? "opacity-100" : "opacity-0"}`}>
+              {isAr ? "تم نسخ الرابط، الصقه في إنستغرام" : "Link copied — paste it in Instagram"}
+            </span>
           </div>
 
           {/* Badges */}
