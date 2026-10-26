@@ -16,47 +16,25 @@ const people: Record<string, LeadershipOffcanvasPerson> = {
     role: { en: "COO", ar: "الرئيس التنفيذي للعمليات" },
     image: "/images/abt-t1.png",
     linkedin: "https://www.linkedin.com/in/majed-alfaiya/",
-    bio: {
-      en: "Awarded the Jubail–Buraydah Independent Water Transmission Pipeline — 587km, 650,000 m³/day capacity — the first large-scale private-sector potable water link in KSA. Two substations — Rumah 380kV BSP (SAR 915M) and Bisha PV 380/132kV BSP (SAR 644M) — also awarded.",
-      ar: "أشرف على خط أنابيب نقل المياه المستقل بين الجبيل وبريدة بطول 587 كم وبطاقة 650,000 م³/يوم، وهو أول رابط مياه شرب خاص واسع النطاق في المملكة. كما أُسندت له محطتا تحويل روضة 380 كيلوفولت (915 مليون ريال) وبيشا الكهروضوئية 380/132 كيلوفولت (644 مليون ريال).",
-    },
   },
   p2: {
     name: { en: "Khalid Mengash", ar: "خالد منقاش" },
     role: { en: "CHRO", ar: "الرئيس التنفيذي للموارد البشرية" },
     image: "/images/abt-t2.png",
     linkedin: "https://www.linkedin.com/in/kmengash/",
-    bio: {
-      en: "Leads NIT's workforce strategy across infrastructure and technology, building talent pipelines that support national-scale projects and the Kingdom's Vision 2030 local content goals.",
-      ar: "يقود استراتيجية القوى العاملة في NIT عبر قطاعي البنية التحتية والتقنية، ويبني مسارات للمواهب تدعم المشاريع ذات النطاق الوطني وأهداف المحتوى المحلي ضمن رؤية 2030.",
-    },
   },
   p3: {
-    name: { en: "Hassan El Melegi", ar: "حسن الملجي" },
+    name: { en: "Hassan El Melegi", ar: "حسن المليجي" },
     role: { en: "CFO", ar: "الرئيس التنفيذي المالي" },
     image: "/images/abt-t3.png",
     linkedin: "https://www.linkedin.com/in/hassan-el-melegi-00090b13/",
-    bio: {
-      en: "Oversees financial strategy and capital structure across NIT's project portfolio, ensuring disciplined investment in giga-projects and long-term financial resilience.",
-      ar: "يشرف على الاستراتيجية المالية وهيكل رأس المال عبر محفظة مشاريع NIT، ويضمن انضباط الاستثمار في المشاريع العملاقة والمتانة المالية على المدى الطويل.",
-    },
   },
   p4: {
-    name: { en: "Nahil Bakri", ar: "نهيل بكري" },
+    name: { en: "Nahil Bakri", ar: "ناهل بكري" },
     role: { en: "Chief Audit Executive", ar: "الرئيس التنفيذي للتدقيق" },
     image: "/images/abt-t4.png",
     linkedin: "https://www.linkedin.com/in/nahil-bakri-31973357/",
-    bio: {
-      en: "Leads independent assurance and risk oversight across NIT's operations, strengthening governance standards in line with regulatory and Vision 2030 compliance requirements.",
-      ar: "تقود أعمال التدقيق المستقل والإشراف على المخاطر في عمليات NIT، وتعزز معايير الحوكمة بما يتماشى مع متطلبات الامتثال التنظيمي ورؤية 2030.",
-    },
   },
-};
-
-// The design uses the same bio copy for every board card; give a member their own `bio` to override it.
-const boardBio = {
-  en: "Awarded the Jubail–Buraydah Independent Water Transmission Pipeline — 587km, 650,000 m³/day capacity — the first large-scale private-sector potable water link in KSA. Two substations — Rumah 380kV BSP (SAR 915M) and Bisha PV 380/132kV BSP (SAR 644M) — also awarded.",
-  ar: "أشرف على خط أنابيب نقل المياه المستقل بين الجبيل وبريدة بطول 587 كم وبطاقة 650,000 م³/يوم، وهو أول رابط مياه شرب خاص واسع النطاق في المملكة. كما أُسندت له محطتا تحويل روضة 380 كيلوفولت (915 مليون ريال) وبيشا الكهروضوئية 380/132 كيلوفولت (644 مليون ريال).",
 };
 
 const boardMembers: Record<string, LeadershipOffcanvasPerson> = {
@@ -65,55 +43,104 @@ const boardMembers: Record<string, LeadershipOffcanvasPerson> = {
     role: { en: "Strategy and Business Development Executive Manager", ar: "المدير التنفيذي للاستراتيجية وتطوير الأعمال" },
     image: "/images/bm-1.png",
     linkedin: "https://www.linkedin.com/in/eng-rayan-alamoudi/",
-    bio: boardBio,
   },
   b2: {
     name: { en: "Bander Al Shehri", ar: "بندر الشهري" },
     role: { en: "QEHS Executive Manager", ar: "المدير التنفيذي للجودة والصحة والسلامة والبيئة" },
     image: "/images/bm-2.png",
     linkedin: "https://www.linkedin.com/in/bandar-al-shehri-ba73a5105/",
-    bio: boardBio,
   },
   b3: {
     name: { en: "Mogbel Al Mogbel", ar: "مقبل المقبل" },
     role: { en: "Sales Executive Manager", ar: "المدير التنفيذي للمبيعات" },
     image: "/images/bm-3.png",
     linkedin: "https://www.linkedin.com/in/mogbel-almogbel-57b61a217/",
-    bio: boardBio,
   },
   b4: {
     name: { en: "Mohammed Abbas", ar: "محمد عباس" },
     role: { en: "Supply Chain Executive Manager", ar: "المدير التنفيذي لسلاسل الإمداد" },
     image: "/images/bm-4.png",
     linkedin: "https://www.linkedin.com/in/mohamed-fekry-12a11196/",
-    bio: boardBio,
   },
   b5: {
     name: { en: "Mohammed Al Sibaee", ar: "محمد السباعي" },
     role: { en: "Advanced Energy System Executive Manager", ar: "المدير التنفيذي لأنظمة الطاقة المتقدمة" },
     image: "/images/bm-5.png",
     linkedin: "https://www.linkedin.com/in/mohamed-al-sebay-b24a94119/",
-    bio: boardBio,
   },
   b6: {
-    name: { en: "Khalid Al Jomaih", ar: "خالد الجميح" },
+    name: { en: "Khalid Al Jomaih", ar: "خالد الجميعة" },
     role: { en: "Eastern Region Manager", ar: "مدير المنطقة الشرقية" },
     image: "/images/bm-6.png",
     linkedin: "https://www.linkedin.com/in/khalid-al-jomiah-22b815a4/",
-    bio: boardBio,
   },
   b7: {
     name: { en: "Salem Al Shehri", ar: "سالم الشهري" },
     role: { en: "Central Region Manager", ar: "مدير المنطقة الوسطى" },
     image: "/images/bm-7.png",
-    bio: boardBio,
   },
   b8: {
     name: { en: "Faisal Alwahabi", ar: "فيصل الوهابي" },
     role: { en: "Western & Southern Region Manager", ar: "مدير المنطقتين الغربية والجنوبية" },
     image: "/images/bm-8.png",
     linkedin: "https://www.linkedin.com/in/faisal-al-wahabi-0b444952/",
-    bio: boardBio,
+  },
+  // Board of Directors — added at the end of the slider
+  b9: {
+    name: { en: "Fouad Al Sherebi", ar: "فؤاد الشريبي" },
+    role: { en: "Chairman of the Board", ar: "رئيس مجلس الإدارة" },
+    image: "/images/bm2.png",
+    bio: {
+      en: "He holds a Bachelor’s and Master’s degree in Electrical Engineering from the University of California, Santa Barbara, and California State University, respectively, along with executive education from IMD and Harvard Business School. He has held senior leadership positions at Saudi Electricity Company, including Vice President of Power Generation, and currently serves as Chairman of Modern Buses Company. He also chairs the boards of Nesma Infrastructure and Technology and Nesma Projects, serves as Chairman of Nesma’s Advisory Council, and holds advisory roles with the Saudi Council of Engineers and IEEE.",
+      // TODO: Arabic copy was cut off at "لدى الهيئة السعودية" — ending completed from the English; confirm wording
+      ar: "يحمل درجة البكالوريوس والماجستير في الهندسة الكهربائية من جامعة كاليفورنيا، سانتا باربرا، وجامعة ولاية كاليفورنيا، على التوالي، كما تلقّى تعليمًا تنفيذيًا من معهد IMD وكلية هارفارد للأعمال. وشغل مناصب قيادية عليا في الشركة السعودية للكهرباء، من بينها منصب نائب الرئيس لتوليد الطاقة، ويشغل حاليًا منصب رئيس مجلس إدارة شركة الحافلات الحديثة. كما يرأس مجلسَي إدارة نسما للبنية التحتية والتقنية ونسما للمشاريع، ويتولى رئاسة المجلس الاستشاري لنسما، إضافةً إلى أدواره الاستشارية لدى الهيئة السعودية للمهندسين ومعهد مهندسي الكهرباء والإلكترونيات (IEEE).",
+    },
+  },
+  b10: {
+    name: { en: "Mohammad Al Sada", ar: "محمد السادة" },
+    role: { en: "Vice Chairman", ar: "نائب رئيس مجلس الإدارة" },
+    image: "/images/bm3.png",
+    bio: {
+      en: "He holds a PhD and Master’s degree in Materials Science and Engineering from the University of Manchester, and a Bachelor’s degree in Marine Science and Geology from Qatar University. He served as Qatar’s Minister of State for Energy and Industry Affairs and Managing Director of Qatar Petroleum, with extensive leadership experience in the energy sector. He currently serves as Chairman of Rosneft, Chairman of the GCC Supreme Council’s Advisory Board, and holds leadership roles at the University of Doha for Science and Technology and Qatar Solar Technologies.",
+      // TODO: Arabic copy was cut off at "في ج" — ending completed from the English; confirm wording
+      ar: "يحمل درجة الدكتوراه والماجستير في علوم وهندسة المواد من جامعة مانشستر، ودرجة البكالوريوس في العلوم البحرية والجيولوجيا من جامعة قطر. وشغل منصب وزير الدولة لشؤون الطاقة والصناعة في دولة قطر، ومنصب العضو المنتدب لشركة قطر للبترول، ويتمتع بخبرة قيادية واسعة في قطاع الطاقة. ويشغل حاليًا منصب رئيس مجلس إدارة شركة روسنفت، ورئيس المجلس الاستشاري للمجلس الأعلى لمجلس التعاون لدول الخليج العربية، كما يتولى مناصب قيادية في جامعة الدوحة للعلوم والتكنولوجيا وشركة قطر للتقنيات الشمسية.",
+    },
+  },
+  b11: {
+    name: { en: "Yousef Al Salmi", ar: "يوسف السالمي" },
+    role: { en: "Board Member – Non-Executive", ar: "عضو مجلس إدارة غير تنفيذي" },
+    image: "/images/bm4.png",
+    bio: {
+      en: "He holds a Bachelor’s degree in Industrial Engineering from King Abdulaziz University. He has served as Chief Strategy Officer at Nesma since 2019, following his role as Chief Commercial Officer at Nesma Airlines and several economic regulation and assessment positions at the General Authority of Civil Aviation (GACA). He also serves on the boards of South Jeddah Noor and Kaefer KSA.",
+      ar: "يحمل درجة البكالوريوس في الهندسة الصناعية من جامعة الملك عبدالعزيز. ويشغل منصب الرئيس التنفيذي للاستراتيجية في نسما منذ عام 2019، بعد أن شغل منصب الرئيس التنفيذي للشؤون التجارية في نسما للطيران، وتولى عددًا من المناصب في مجالي التنظيم الاقتصادي والتقييم لدى الهيئة العامة للطيران المدني. كما يشغل عضوية مجلسَي إدارة شركة جنوب جدة نور وشركة كيفر السعودية (Kaefer KSA).",
+    },
+  },
+  b12: {
+    name: { en: "Paris Deletraz", ar: "باريس ديليتراز" },
+    role: { en: "Board Member – Non-Executive", ar: "عضو مجلس إدارة غير تنفيذي" },
+    image: "/images/bm5.png",
+    bio: {
+      en: "He holds a Bachelor’s degree in Computer Science from Boston University and a doctorate in Management Sciences from ESADE Business School. He has extensive experience in investment banking, including senior mergers and acquisitions roles at UBS and ABN AMRO. He currently serves as President of Amazing Lab, Managing Director of Venture Lab at IE University, and Chairman of the Applied Innovation Institute. He also serves on the boards of Qatar Science & Technology Park and IVY & Company.",
+      ar: "يحمل درجة البكالوريوس في علوم الحاسب من جامعة بوسطن، ودرجة الدكتوراه في علوم الإدارة من كلية إيسادي للأعمال (ESADE). ويتمتع بخبرة واسعة في مجال الخدمات المصرفية الاستثمارية، بما في ذلك تولّي مناصب قيادية في مجال الاندماج والاستحواذ لدى كل من UBS وABN AMRO. ويشغل حاليًا منصب رئيس شركة Amazing Lab، والعضو المنتدب لـ Venture Lab في جامعة IE، ورئيس مجلس إدارة معهد الابتكار التطبيقي. كما يشغل عضوية مجلسَي إدارة حديقة قطر للعلوم والتكنولوجيا وشركة IVY & Company.",
+    },
+  },
+  b13: {
+    name: { en: "Omar Hifni", ar: "عمر حفني" },
+    role: { en: "Board Member – Non-Executive", ar: "عضو مجلس إدارة غير تنفيذي" },
+    image: "/images/bm6.png",
+    bio: {
+      en: "He holds an MSc in Finance, Investment and Risk from the University of Kent and a BSc in Finance and Investment from the University of Brighton, along with a Capital Market Qualification (CME-1). He has served as Chief Investment Officer at KUN Investment Holding since April 2023, following several investment roles at KUN, SEDCO Holding, and Vision Capital Group. He also holds board and committee positions at Anfas Medical Care, Dr. Samir Abbas Hospital, KUN Sports, Air Arabia DMM, and Western Luluha for Logistics Services.",
+      ar: "يحمل درجة الماجستير في التمويل والاستثمار وإدارة المخاطر من جامعة كِنت، ودرجة البكالوريوس في التمويل والاستثمار من جامعة برايتون، إضافةً إلى شهادة التأهيل في سوق المال (CME-1). ويشغل منصب الرئيس التنفيذي للاستثمار في شركة كُنّ للاستثمار القابضة (KUN Investment Holding) منذ أبريل 2023، بعد أن شغل عدة مناصب استثمارية في كل من شركة كُنّ، وسيدكو القابضة، ومجموعة فيجن كابيتال. كما يشغل عضويات في مجالس الإدارة واللجان لدى عدد من الجهات، منها شركة أنفاس للرعاية الطبية، ومستشفى الدكتور سمير عباس، وكُنّ الرياضية، والعربية للطيران – الدمام (Air Arabia DMM)، وشركة لؤلؤة الغربية للخدمات اللوجستية.",
+    },
+  },
+  b14: {
+    name: { en: "Tariq Ibrahim Khoshhal", ar: "طارق ابراهيم خوش حال" },
+    role: { en: "Board Member – Non-Executive", ar: "عضو مجلس إدارة غير تنفيذي" },
+    image: "/images/bm7.png",
+    bio: {
+      en: "He holds an MBA in Finance from the University of Quebec, a BSc in Management Science from King Faisal University, and executive leadership and board director qualifications from Harvard Business School, IMD, and GCC BDI. He has extensive experience in investment management, private equity, and corporate leadership, having held senior roles at SEDCO, Alkhabeer Capital, and Autoworld. He has served as CEO of Dallah Albaraka Investment Holding since 2023 and holds board leadership positions at Taajeer Group, Nesma United Industries, Cool Inc., Benchmark, Dallah Driving Company, Anfas Medical Company, and Nun Academy.",
+      ar: "يحمل درجة الماجستير في إدارة الأعمال تخصص التمويل من جامعة كيبيك، ودرجة البكالوريوس في العلوم الإدارية من جامعة الملك فيصل، إضافةً إلى مؤهلات في القيادة التنفيذية وعضوية مجالس الإدارة من كلية هارفارد للأعمال ومعهد IMD والمعهد الخليجي لمجالس الإدارات (GCC BDI). ويتمتع بخبرة واسعة في إدارة الاستثمارات والاستثمار في الملكية الخاصة والقيادة المؤسسية، حيث شغل مناصب قيادية عليا لدى كل من سيدكو، والخُبير كابيتال، وأوتوورلد. ويشغل منصب الرئيس التنفيذي لشركة دله البركة القابضة للاستثمار منذ عام 2023، كما يتولى مناصب قيادية في مجالس إدارة مجموعة تأجير، ونسما للصناعات المتحدة، وكول إنك (Cool Inc.)، وبنشمارك، وشركة دله لتعليم القيادة، وشركة أنفاس الطبية، وأكاديمية نون.",
+    },
   },
 };
 
@@ -151,7 +178,7 @@ export function AboutLeadership() {
       {/* Heading + Nav — follow the page direction: heading on the right in Arabic, arrows mirror to match the RTL slider */}
       <Reveal delay={0} duration={0.8} y={30} dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10 flex items-center justify-between gap-6">
         <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
-          {isAr ? "العقول وراء المهمة" : "The minds behind the mission"}
+          {isAr ? "قادتنا" : "The minds behind the mission"}
         </h2>
 
         {showNav && (

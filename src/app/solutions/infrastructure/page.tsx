@@ -9,7 +9,7 @@ export default function InfrastructurePage() {
       <InfrastructureHero />
       <InfrastructureSolutions />
       <InfrastructureProjects />
-      <SolutionsCta heading={{ en: "Any infrastructure project in mind?", ar: "هل لديك مشروع بنية تحتية في ذهنك؟" }} />
+      <SolutionsCta />
     </main>
   );
 }

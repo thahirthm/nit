@@ -15,7 +15,8 @@ interface SolutionsCtaProps {
   heading?: { en: string; ar: string };
 }
 
-const defaultHeading = { en: "Engineering an energy project?", ar: "تخطط لمشروع طاقة؟" };
+// One unified heading on every page that uses this CTA
+const defaultHeading = { en: "Any project in mind?", ar: "هل لديك مشروع؟" };
 
 export function SolutionsCta({ heading = defaultHeading }: SolutionsCtaProps) {
   const { language } = useLanguage();

@@ -63,7 +63,7 @@ export function CareersHero() {
               className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light"
             >
               {isAr
-                ? "على مدى أكثر من ثلاثة عقود، نفّذت فرق نسما للبنية التحتية والتقنية أعمالًا تدعم العمليات الحيوية في مختلف أنحاء المملكة العربية السعودية. ويجمع موظفونا بين الانضباط الهندسي والخبرة التقنية والخبرة الميدانية في مشروعات البنية التحتية والتقنية."
+                ? "على مدى أكثر من ثلاثة عقود، نفّذت فرق نسما للبنية التحتية والتقنية أعمالًا تدعم العمليات الحيوية في مختلف أنحاء المملكة العربية السعودية. ويجمع موظفونا بين الانضباط الهندسي والخبرة التقنية والخبرة الميدانية في مشاريع البنية التحتية والتقنية."
                 : "For more than three decades, NIT teams have delivered work that supports critical operations across Saudi Arabia. Our people bring engineering discipline, technical expertise, and field experience to projects across infrastructure and technology."}
             </motion.p>
             <motion.p
@@ -73,7 +73,7 @@ export function CareersHero() {
               className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light"
             >
               {isAr
-                ? "انضم إلى فريق تسهم أعماله في تنفيذ مشروعات على نطاق وطني، وتعزيز موثوقية العمليات، ودعم المرحلة المقبلة من نمو المملكة."
+                ? "انضم إلى فريق تسهم أعماله في تنفيذ مشاريع على نطاق وطني، وتعزيز موثوقية العمليات، ودعم المرحلة المقبلة من نمو المملكة."
                 : "Join a team where your work contributes to national-scale projects, reliable operations, and the Kingdom's next phase of growth."}
             </motion.p>
 

@@ -8,7 +8,8 @@ export interface LeadershipOffcanvasPerson {
   name: { en: string; ar: string };
   role: { en: string; ar: string };
   image: string;
-  bio: { en: string; ar: string };
+  /** Optional — profiles without a bio show just name, role and LinkedIn. */
+  bio?: { en: string; ar: string };
   linkedin?: string;
 }
 
@@ -60,7 +61,7 @@ export function LeadershipOffcanvas({ person, onClose }: LeadershipOffcanvasProp
           still on-screen. Adding the inset to the translate distance clears it fully. */}
       <div
         dir="ltr"
-        className={`absolute top-6 bottom-6 sm:top-10 sm:bottom-10 ${isAr ? "left-4 sm:left-10" : "right-4 sm:right-10"} w-[calc(100%-2rem)] sm:w-full max-w-[480px] bg-white shadow-2xl transition-transform duration-500 ease-in-out overflow-y-auto ${
+        className={`absolute top-6 bottom-6 sm:top-10 sm:bottom-10 ${isAr ? "left-4 sm:left-10" : "right-4 sm:right-10"} w-[calc(100%-2rem)] sm:w-full max-w-[480px] bg-white shadow-2xl transition-transform duration-500 ease-in-out overflow-hidden p-4 sm:p-6 ${
           isOpen
             ? "translate-x-0"
             : isAr
@@ -73,14 +74,15 @@ export function LeadershipOffcanvas({ person, onClose }: LeadershipOffcanvasProp
             <button
               onClick={onClose}
               aria-label={closeLabel}
-              className="absolute top-5 right-5 z-10 flex items-center justify-center w-10 h-10 bg-white/90 hover:bg-white text-[#2E368F] transition-colors duration-300"
+              className="absolute top-8 right-8 sm:top-10 sm:right-10 z-10 flex items-center justify-center w-10 h-10 bg-white/90 hover:bg-white text-[#2E368F] transition-colors duration-300"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="none">
                 <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" strokeWidth="1.4" />
               </svg>
             </button>
 
-            <div className={`p-4 sm:p-6 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+            {/* Scroll area sits inside the panel's fixed padding, so the white frame stays on all sides while the content scrolls */}
+            <div className={`h-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
               <div className="relative w-full h-[380px] sm:h-[440px] bg-gray-100">
                 <Image
                   quality={95}
@@ -113,9 +115,11 @@ export function LeadershipOffcanvas({ person, onClose }: LeadershipOffcanvasProp
                   {isAr ? person.name.ar : person.name.en}
                 </h3>
 
-                <p className="mt-6 text-[15px] sm:text-[16px] text-gray-500 font-light leading-relaxed">
-                  {isAr ? person.bio.ar : person.bio.en}
-                </p>
+                {person.bio && (
+                  <p className="mt-6 text-[15px] sm:text-[16px] text-gray-500 font-light leading-relaxed">
+                    {isAr ? person.bio.ar : person.bio.en}
+                  </p>
+                )}
               </div>
             </div>
           </>

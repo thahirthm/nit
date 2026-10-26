@@ -83,7 +83,7 @@ export function ExpertiseSection() {
           </h2>
           <p dir={language === "ar" ? "rtl" : "ltr"} className="text-[15px] md:text-[18px] lg:text-[23px] leading-normal font-light  text-[#727272]">
             {language === "ar"
-              ? "تعمل نسما للبنية التحتية والتقنية في مختلف أنحاء المملكة العربية السعودية، وتتعاون مع شركاء دوليين لتقديم حلول البنية التحتية والتقنية للمشاريع المعقدة."
+              ? "تعمل نسما للبنية التحتية والتقنية في مختلف أنحاء المملكة العربية السعودية، وتتعاون مع شركاء محليين ودوليين لتقديم حلول البنية التحتية والتقنية للمشاريع المعقدة."
               : "NIT operates across Saudi Arabia while collaborating with international partners to deliver infrastructure and technology solutions for complex projects."}
           </p>
           <div className={`pt-2 flex ${language === "ar" ? "justify-end" : "justify-start"}`}>

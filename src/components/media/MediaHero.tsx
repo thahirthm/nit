@@ -67,7 +67,7 @@ export function MediaHero() {
               className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light"
             >
               {isAr
-                ? "اطّلع على أحدث إعلانات نسما للبنية التحتية والتقنية، وإنجازاتها، وجوائزها، وأخبارها المؤسسية في مكان واحد."
+                ? "اطّلع على أحدث أخبار نسما للبنية التحتية والتقنية، وإنجازاتها، وجوائزها، وأخبارها المؤسسية في مكان واحد."
                 : "Discover NIT's latest announcements, milestones, awards, and corporate news—all in one place."}
             </motion.p>
             <motion.p

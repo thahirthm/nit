@@ -46,19 +46,17 @@ export function AboutCeoMessage() {
             }`}
           >
             <Reveal delay={0.25} duration={0.7} y={24} className="space-y-8">
-              <p className="text-white text-xl sm:text-2xl lg:text-3xl font-light leading-snug">
-                {isAr ? "بنية الغد لا تشبه بنية اليوم." : "Tomorrow's infrastructure looks nothing like today's."}
-              </p>
-              <p className="text-white text-xl sm:text-2xl lg:text-3xl font-light leading-snug">
+              {/* One longer paragraph in both languages, so it runs a step smaller with roomier leading */}
+              <p className="text-white text-lg sm:text-xl lg:text-2xl font-light leading-relaxed">
                 {isAr
-                  ? "نبنيها بدقة، ونستشرف ما تحتاجه المملكة لاحقًا، ونحققها قبل أن يطلبها السوق."
-                  : "We build it with precision, anticipate what the Kingdom needs next, and deliver before the market asks."}
+                  ? "منذ تأسيسها، سعت نسما للبنية التحتية والتقنية إلى تعزيز التنمية الاقتصادية وتحسين جودة الحياة من خلال تلبية احتياجات المملكة. وقد أسهمت دورات أعمالنا المتكررة في بناء ما نحن عليه اليوم. وتعتمد مبادرتنا التشغيلية على توازن مثالي بين توقعات عملائنا واحتياجات السوق، حيث نتبع نهجاً عملياً لتحقيق الأهداف مع ترك التفاصيل لفريقنا المختص."
+                  : "Since its inception NIT has endeavored to promote economic development to improve the quality of life by anticipating the kingdom’s needs. It is through the repetition of this business cycle that we have managed to make NIT what it is today. Our operational initiative is inspired by an ideal balance between what our customers expect of us and the needs of the market. Based on those parameters, we follow a pragmatic approach to getting things done, while entrusting the details to the discretion of our team."}
               </p>
             </Reveal>
 
             <Reveal delay={0.4} duration={0.7} y={24} className="flex items-center gap-5">
               <span className="text-white text-lg sm:text-[22px] lg:text-[24px] font-normal">
-                {isAr ? "صالح الصنيدي - الرئيس التنفيذي" : "Salah Al Sunaid - CEO"}
+                {isAr ? "صلاح السنيد - الرئيس التنفيذي" : "Salah Al Sunaid - CEO"}
               </span>
               <a
                 href="https://www.linkedin.com/in/salah-al-sunaid-3870668/"
@@ -86,7 +84,7 @@ export function AboutCeoMessage() {
           >
             <Image quality={100}
               src="/images/new-ceo.png"
-              alt={isAr ? "صالح الصنيدي، الرئيس التنفيذي" : "Salah Al Sunaid, CEO"}
+              alt={isAr ? "صلاح السنيد، الرئيس التنفيذي" : "Salah Al Sunaid, CEO"}
               width={1984}
               height={2588}
               sizes="(min-width: 1280px) 483px, (min-width: 1024px) 437px, 245px"

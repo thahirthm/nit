@@ -251,7 +251,7 @@ export function SolutionsIndustries() {
       <div dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter">
         <Reveal delay={0} duration={0.8} y={30}>
           <h2 className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[48px] font-extralight tracking-tight mb-6 lg:mb-8">
-            {isAr ? "القطاعات التي نخدمها" : "Industries we serve"}
+            {isAr ? "نطاق أعمالنا" : "Industries we serve"}
           </h2>
 
           <p className="text-[17px] sm:text-[19px] leading-relaxed font-light text-[#727272] max-w-2xl mb-10 lg:mb-14">

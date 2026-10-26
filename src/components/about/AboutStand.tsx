@@ -19,7 +19,7 @@ export function AboutStand() {
       <div className="px-6 lg:site-gutter">
         <Reveal delay={0} duration={0.8} y={30}>
           <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight mb-8 lg:mb-10">
-            {isAr ? "ما نقوم عليه" : "What we stand on"}
+            {isAr ? "ما يميّزنا" : "What we stand on"}
           </h2>
         </Reveal>
 
@@ -27,7 +27,7 @@ export function AboutStand() {
           <Reveal delay={0.1} duration={0.9} y={40} className="relative w-full h-[320px] sm:h-[440px] lg:h-auto">
             <Image quality={95}
               src="/images/abt-stand.png"
-              alt={isAr ? "ما نقوم عليه" : "What we stand on"}
+              alt={isAr ? "ما يميّزنا" : "What we stand on"}
               fill
               className="object-cover"
             />

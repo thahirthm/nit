@@ -135,7 +135,7 @@ export function SolutionsMap() {
         {/* Map card */}
         <Reveal delay={0} duration={0.8} y={30} className="relative bg-[#2E368F] p-8 sm:p-10 lg:p-12 min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] overflow-hidden flex flex-col">
           <h3 className="relative z-10 text-white text-[20px] sm:text-[24px] lg:text-[28px] font-extralight leading-snug max-w-xs">
-            {isAr ? "مشروعات نسما للبنية التحتية والتقنية الحالية في مختلف أنحاء المملكة" : "NIT current projects across the kingdom"}
+            {isAr ? "مشاريع نسما للبنية التحتية والتقنية الحالية في مختلف أنحاء المملكة" : "NIT current projects across the kingdom"}
           </h3>
 
           <div className="absolute inset-0 flex items-center justify-center">
@@ -197,7 +197,7 @@ export function SolutionsMap() {
         {/* Info panel */}
         <Reveal delay={0.12} duration={0.8} y={30} className="bg-[#F5F5F5] p-8 sm:p-10 flex flex-col">
           <h3 className="text-gray-900 text-[22px] sm:text-[26px] font-extralight tracking-tight mb-8 lg:mb-10">
-            {isAr ? `المشروعات في المنطقة ${activeRegion.name.ar}` : `Projects in the ${activeRegion.name.en} area`}
+            {isAr ? `المشاريع في المنطقة ${activeRegion.name.ar}` : `Projects in the ${activeRegion.name.en} area`}
           </h3>
 
           <div className="flex flex-col divide-y divide-gray-300 border-t border-gray-300">
@@ -225,7 +225,7 @@ export function SolutionsMap() {
           <div className="mt-auto pt-10 lg:pt-14">
             {/* Jumps to the projects list — scrolls down on /projects, navigates there from /solutions */}
             <Button href="/projects#projects-showcase" variant="primary">
-              {isAr ? "استكشفوا مشروعاتنا" : "See our projects"}
+              {isAr ? "استكشفوا مشاريعنا" : "See our projects"}
             </Button>
           </div>
         </Reveal>

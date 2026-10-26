@@ -24,7 +24,7 @@ const offices = [
   {
     label: { en: "Riyadh Office", ar: "مكتب الرياض" },
     image: "/images/riyad.png",
-    phone: "+966550634599",
+    phone: "+966 55 063 4599",
     email: "nit@nesmainfrastructure.com",
     address: {
       en: ["KING KHALID RD, AR RIHAB,", "DIRIYAH 13715, SAUDI ARABIA"],
@@ -34,7 +34,7 @@ const offices = [
   {
     label: { en: "Alkhobar Office", ar: "مكتب الخبر" },
     image: "/images/alkhobar.png",
-    phone: "+966550634599",
+    phone: "+966 55 063 4599",
     email: "nit@nesmainfrastructure.com",
     address: {
       en: ["KING FAHD ROAD, AL QASHLAH,", "DHAHRAN 34232, SAUDI ARABIA"],

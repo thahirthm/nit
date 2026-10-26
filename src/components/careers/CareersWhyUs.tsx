@@ -42,7 +42,7 @@ const HourglassIcon = ({ active }: IconProps) => (
 const reasons = [
   {
     icon: BriefcaseIcon,
-    title: { en: "Meaningful Projects", ar: "مشروعات ذات أثر" },
+    title: { en: "Meaningful Projects", ar: "مشاريع ذات أثر" },
     description: {
       en: "Work on high-impact national infrastructure and technology initiatives across energy, telecom, transportation, and smart systems.",
       ar: "اعمل على مبادرات وطنية مؤثرة في مجالات البنية التحتية والتقنية، تشمل الطاقة والاتصالات والنقل والأنظمة الذكية.",

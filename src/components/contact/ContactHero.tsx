@@ -149,7 +149,7 @@ export function ContactHero() {
             className="mt-6 text-gray-500 text-[17px] sm:text-[18px] leading-relaxed font-light max-w-sm"
           >
             {isAr
-              ? "للاستفسارات المتعلقة بالمشروعات، أو الشراكات، أو علاقات المستثمرين، أو للحصول على معلومات عامة، يُرجى التواصل مع الفريق المختص في نسما للبنية التحتية والتقنية."
+              ? "للاستفسارات المتعلقة بالمشاريع، أو الشراكات، أو علاقات المستثمرين، أو للحصول على معلومات عامة، يُرجى التواصل مع الفريق المختص في نسما للبنية التحتية والتقنية."
               : "For project inquiries, partnerships, investor relations, or general information, connect with the relevant NIT team."}
           </motion.p>
 

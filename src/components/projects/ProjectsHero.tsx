@@ -38,7 +38,7 @@ export function ProjectsHero() {
           >
             {isAr ? (
               <>
-                مشروعات نُفِّذت
+                مشاريع نُفِّذت
                 <br />
                 في مختلف أنحاء المملكة
               </>
@@ -76,7 +76,7 @@ export function ProjectsHero() {
               className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light"
             >
               {isAr
-                ? "تعرّفوا على المشروعات الجارية والمكتملة التي تنفذها نسما للبنية التحتية والتقنية في مختلف أنحاء المملكة العربية السعودية، والمصنّفة حسب القطاع والمنطقة وحالة التنفيذ، بدءًا من الأعمال المستمرة وصولًا إلى الإنجازات المكتملة."
+                ? "تعرّفوا على المشاريع الجارية والمكتملة التي تنفذها نسما للبنية التحتية والتقنية في مختلف أنحاء المملكة العربية السعودية، والمصنّفة حسب القطاع والمنطقة وحالة التنفيذ، بدءًا من الأعمال المستمرة وصولًا إلى الإنجازات المكتملة."
                 : "Explore NIT's active and completed projects across Saudi Arabia, organized by sector, region, and delivery status. From ongoing work to completed milestones."}
             </motion.p>
             <motion.p
@@ -86,7 +86,7 @@ export function ProjectsHero() {
               className="text-gray-500 text-[17px] sm:text-[19px] leading-relaxed font-light"
             >
               {isAr
-                ? "تعكس محفظة المشروعات سجل إنجازات نسما للبنية التحتية والتقنية في قطاعَي البنية التحتية والتقنية."
+                ? "تعكس محفظة المشاريع سجل إنجازات نسما للبنية التحتية والتقنية في قطاعَي البنية التحتية والتقنية."
                 : "The portfolio reflects NIT's delivery record across Infrastructure and Technology."}
             </motion.p>
           </div>
