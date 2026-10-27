@@ -10,24 +10,26 @@ import { Reveal } from "@/components/ui/Reveal";
 import { LeadershipOffcanvas, type LeadershipOffcanvasPerson } from "@/components/about/LeadershipOffcanvas";
 import "swiper/css";
 
-const people: Record<string, LeadershipOffcanvasPerson> = {
+type Team = Record<string, LeadershipOffcanvasPerson>;
+
+const leadership: Team = {
   p1: {
     name: { en: "Majed Al Faiya", ar: "ماجد الفايع" },
     role: { en: "COO", ar: "الرئيس التنفيذي للعمليات" },
     image: "/images/abt-t1.png",
     linkedin: "https://www.linkedin.com/in/majed-alfaiya/",
   },
-  p2: {
-    name: { en: "Khalid Mengash", ar: "خالد منقاش" },
-    role: { en: "CHRO", ar: "الرئيس التنفيذي للموارد البشرية" },
-    image: "/images/abt-t2.png",
-    linkedin: "https://www.linkedin.com/in/kmengash/",
-  },
   p3: {
     name: { en: "Hassan El Melegi", ar: "حسن المليجي" },
     role: { en: "CFO", ar: "الرئيس التنفيذي المالي" },
     image: "/images/abt-t3.png",
     linkedin: "https://www.linkedin.com/in/hassan-el-melegi-00090b13/",
+  },
+  p2: {
+    name: { en: "Khalid Mengash", ar: "خالد منقاش" },
+    role: { en: "CHRO", ar: "الرئيس التنفيذي للموارد البشرية" },
+    image: "/images/abt-t2.png",
+    linkedin: "https://www.linkedin.com/in/kmengash/",
   },
   p4: {
     name: { en: "Nahil Bakri", ar: "ناهل بكري" },
@@ -37,7 +39,7 @@ const people: Record<string, LeadershipOffcanvasPerson> = {
   },
 };
 
-const boardMembers: Record<string, LeadershipOffcanvasPerson> = {
+const executiveTeam: Team = {
   b1: {
     name: { en: "Rayan Al Amoudi", ar: "ريان العمودي" },
     role: { en: "Strategy and Business Development Executive Manager", ar: "المدير التنفيذي للاستراتيجية وتطوير الأعمال" },
@@ -85,7 +87,9 @@ const boardMembers: Record<string, LeadershipOffcanvasPerson> = {
     image: "/images/bm-8.png",
     linkedin: "https://www.linkedin.com/in/faisal-al-wahabi-0b444952/",
   },
-  // Board of Directors — added at the end of the slider
+};
+
+const boardOfDirectors: Team = {
   b9: {
     name: { en: "Fouad Al Sherebi", ar: "فؤاد الشريبي" },
     role: { en: "Chairman of the Board", ar: "رئيس مجلس الإدارة" },
@@ -144,8 +148,11 @@ const boardMembers: Record<string, LeadershipOffcanvasPerson> = {
   },
 };
 
-// One slider with the full team: leaders first, then board members.
-const teamIds = [...Object.keys(people), ...Object.keys(boardMembers)];
+const tabs = [
+  { key: "leadership", name: { en: "Our Leadership", ar: "قيادتنا" }, team: leadership },
+  { key: "board", name: { en: "Board of Directors", ar: "مجلس الإدارة" }, team: boardOfDirectors },
+  { key: "executive", name: { en: "Executive Team", ar: "الفريق التنفيذي" }, team: executiveTeam },
+];
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none" className={className}>
@@ -161,8 +168,10 @@ export function AboutLeadership() {
   const [isEnd, setIsEnd] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [selectedPerson, setSelectedPerson] = useState<LeadershipOffcanvasPerson | null>(null);
+  const [activeTab, setActiveTab] = useState(tabs[0].key);
 
-  const activePeople = teamIds;
+  const activeTeam = tabs.find((t) => t.key === activeTab)?.team ?? tabs[0].team;
+  const activePeople = Object.keys(activeTeam);
 
   // Arrows only appear when the cards overflow the current view (e.g. more than 4 on desktop).
   const showNav = !(isBeginning && isEnd);
@@ -175,11 +184,33 @@ export function AboutLeadership() {
 
   return (
     <section id="our-team" className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
-      {/* Heading + Nav — follow the page direction: heading on the right in Arabic, arrows mirror to match the RTL slider */}
-      <Reveal delay={0} duration={0.8} y={30} dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10 flex items-center justify-between gap-6">
+      {/* Heading */}
+      <Reveal delay={0} duration={0.8} y={30} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10">
         <h2 dir={isAr ? "rtl" : "ltr"} className="text-gray-900 text-[26px] leading-[1.15] md:text-[38px] lg:text-[54px] font-extralight tracking-tight">
           {isAr ? "قادتنا" : "The minds behind the mission"}
         </h2>
+      </Reveal>
+
+      {/* Tabs + Nav — follow the page direction: tabs start on the right in Arabic, arrows mirror to match the RTL slider */}
+      <Reveal delay={0.1} duration={0.7} y={24} dir={isAr ? "rtl" : "ltr"} className="w-full px-6 lg:site-gutter mb-8 lg:mb-10 flex items-center justify-between gap-6">
+        <div className="flex flex-wrap gap-3">
+          {tabs.map((tab) => {
+            const isActive = tab.key === activeTab;
+            return (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`px-4 py-2 text-xs font-medium tracking-wide uppercase border transition-colors duration-300 ${
+                  isActive
+                    ? "bg-[#2E368F] text-white border-[#2E368F]"
+                    : "bg-white text-[#2E368F] border-[#2E368F] hover:bg-[#2E368F]/5"
+                }`}
+              >
+                {isAr ? tab.name.ar : tab.name.en}
+              </button>
+            );
+          })}
+        </div>
 
         {showNav && (
           <div className="hidden sm:flex items-center gap-4 lg:gap-6 shrink-0">
@@ -207,14 +238,14 @@ export function AboutLeadership() {
       <div className="w-full px-6 lg:site-gutter">
         <Swiper
           // Remount on language change too, so Swiper re-reads the page direction (RTL in Arabic).
-          key={language}
+          key={`${activeTab}-${language}`}
           // Explicit direction: Swiper reads it on init, which runs before LanguageProvider
           // flips <html dir>, so relying on the inherited direction left slides offset in Arabic.
           dir={language === "ar" ? "rtl" : "ltr"}
           modules={[Navigation]}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
-            // The slider remounts on language change, so re-sync the arrow states.
+            // The slider remounts on tab and language change, so re-sync the arrow states.
             syncNav(swiper);
           }}
           onSlideChange={syncNav}
@@ -228,7 +259,7 @@ export function AboutLeadership() {
           }}
         >
           {activePeople.map((id, i) => {
-            const person = people[id] ?? boardMembers[id];
+            const person = activeTeam[id];
             const personName = isAr ? person.name.ar : person.name.en;
             return (
               <SwiperSlide key={id}>
