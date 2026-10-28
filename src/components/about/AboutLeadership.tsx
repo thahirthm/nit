@@ -16,31 +16,31 @@ const leadership: Team = {
   p0: {
     name: { en: "Salah Al Sunaid", ar: "صلاح السنيد" },
     role: { en: "CEO", ar: "الرئيس التنفيذي" },
-    image: "/images/new-ceo-team.png",
+    image: "/images/team/salah-al-sunaid.png",
     linkedin: "https://www.linkedin.com/in/salah-al-sunaid-3870668/",
   },
   p1: {
     name: { en: "Majed Al Faiya", ar: "ماجد الفايع" },
     role: { en: "COO", ar: "الرئيس التنفيذي للعمليات" },
-    image: "/images/abt-t1.png",
+    image: "/images/team/majed-al-faiya.png",
     linkedin: "https://www.linkedin.com/in/majed-alfaiya/",
   },
   p3: {
     name: { en: "Hassan El Melegi", ar: "حسن المليجي" },
     role: { en: "CFO", ar: "الرئيس التنفيذي المالي" },
-    image: "/images/abt-t3.png",
+    image: "/images/team/hassan-el-melegi.png",
     linkedin: "https://www.linkedin.com/in/hassan-el-melegi-00090b13/",
   },
   p2: {
     name: { en: "Khalid Mengash", ar: "خالد منقاش" },
     role: { en: "CHRO", ar: "الرئيس التنفيذي للموارد البشرية" },
-    image: "/images/abt-t2.png",
+    image: "/images/team/khalid-mengash.png",
     linkedin: "https://www.linkedin.com/in/kmengash/",
   },
   p4: {
     name: { en: "Nahil Bakri", ar: "ناهل بكري" },
     role: { en: "Chief Audit Executive", ar: "الرئيس التنفيذي للتدقيق" },
-    image: "/images/abt-t4.png",
+    image: "/images/team/nahil-bakri.png",
     linkedin: "https://www.linkedin.com/in/nahil-bakri-31973357/",
   },
 };
@@ -49,48 +49,48 @@ const executiveTeam: Team = {
   b1: {
     name: { en: "Rayan Al Amoudi", ar: "ريان العمودي" },
     role: { en: "Strategy and Business Development Executive Manager", ar: "المدير التنفيذي للاستراتيجية وتطوير الأعمال" },
-    image: "/images/bm-1.png",
+    image: "/images/team/rayan-al-amoudi.png",
     linkedin: "https://www.linkedin.com/in/eng-rayan-alamoudi/",
   },
   b2: {
     name: { en: "Bander Al Shehri", ar: "بندر الشهري" },
     role: { en: "QEHS Executive Manager", ar: "المدير التنفيذي للجودة والصحة والسلامة والبيئة" },
-    image: "/images/bm-2.png",
+    image: "/images/team/bander-al-shehri.png",
     linkedin: "https://www.linkedin.com/in/bandar-al-shehri-ba73a5105/",
   },
   b3: {
     name: { en: "Mogbel Al Mogbel", ar: "مقبل المقبل" },
     role: { en: "Sales Executive Manager", ar: "المدير التنفيذي للمبيعات" },
-    image: "/images/bm-3.png",
+    image: "/images/team/mogbel-al-mogbel.png",
     linkedin: "https://www.linkedin.com/in/mogbel-almogbel-57b61a217/",
   },
   b4: {
     name: { en: "Mohammed Abbas", ar: "محمد عباس" },
     role: { en: "Supply Chain Executive Manager", ar: "المدير التنفيذي لسلاسل الإمداد" },
-    image: "/images/bm-4.png",
+    image: "/images/team/mohammed-abbas.png",
     linkedin: "https://www.linkedin.com/in/mohamed-fekry-12a11196/",
   },
   b5: {
     name: { en: "Mohammed Al Sibaee", ar: "محمد السباعي" },
     role: { en: "Advanced Energy System Executive Manager", ar: "المدير التنفيذي لأنظمة الطاقة المتقدمة" },
-    image: "/images/bm-5.png",
+    image: "/images/team/mohammed-al-sibaee.png",
     linkedin: "https://www.linkedin.com/in/mohamed-al-sebay-b24a94119/",
   },
   b6: {
     name: { en: "Khalid Al Jomaih", ar: "خالد الجميعة" },
     role: { en: "Eastern Region Manager", ar: "مدير المنطقة الشرقية" },
-    image: "/images/bm-6.png",
+    image: "/images/team/khalid-al-jomaih.png",
     linkedin: "https://www.linkedin.com/in/khalid-al-jomiah-22b815a4/",
   },
   b7: {
     name: { en: "Salem Al Shehri", ar: "سالم الشهري" },
     role: { en: "Central Region Manager", ar: "مدير المنطقة الوسطى" },
-    image: "/images/bm-7.png",
+    image: "/images/team/salem-al-shehri.png",
   },
   b8: {
     name: { en: "Faisal Alwahabi", ar: "فيصل الوهابي" },
     role: { en: "Western & Southern Region Manager", ar: "مدير المنطقتين الغربية والجنوبية" },
-    image: "/images/bm-8.png",
+    image: "/images/team/faisal-alwahabi.png",
     linkedin: "https://www.linkedin.com/in/faisal-al-wahabi-0b444952/",
   },
 };
@@ -99,7 +99,7 @@ const boardOfDirectors: Team = {
   b9: {
     name: { en: "Fouad Al Sherebi", ar: "فؤاد الشريبي" },
     role: { en: "Chairman of the Board", ar: "رئيس مجلس الإدارة" },
-    image: "/images/bm2.png",
+    image: "/images/team/fouad-al-sherebi.png",
     bio: {
       en: "He holds a Bachelor’s and Master’s degree in Electrical Engineering from the University of California, Santa Barbara, and California State University, respectively, along with executive education from IMD and Harvard Business School. He has held senior leadership positions at Saudi Electricity Company, including Vice President of Power Generation, and currently serves as Chairman of Modern Buses Company. He also chairs the boards of Nesma Infrastructure and Technology and Nesma Projects, serves as Chairman of Nesma’s Advisory Council, and holds advisory roles with the Saudi Council of Engineers and IEEE.",
       // TODO: Arabic copy was cut off at "لدى الهيئة السعودية" — ending completed from the English; confirm wording
@@ -109,7 +109,7 @@ const boardOfDirectors: Team = {
   b10: {
     name: { en: "Mohammad Al Sada", ar: "محمد السادة" },
     role: { en: "Vice Chairman", ar: "نائب رئيس مجلس الإدارة" },
-    image: "/images/bm3.png",
+    image: "/images/team/mohammad-al-sada.png",
     bio: {
       en: "He holds a PhD and Master’s degree in Materials Science and Engineering from the University of Manchester, and a Bachelor’s degree in Marine Science and Geology from Qatar University. He served as Qatar’s Minister of State for Energy and Industry Affairs and Managing Director of Qatar Petroleum, with extensive leadership experience in the energy sector. He currently serves as Chairman of Rosneft, Chairman of the GCC Supreme Council’s Advisory Board, and holds leadership roles at the University of Doha for Science and Technology and Qatar Solar Technologies.",
       // TODO: Arabic copy was cut off at "في ج" — ending completed from the English; confirm wording
@@ -119,7 +119,7 @@ const boardOfDirectors: Team = {
   b11: {
     name: { en: "Yousef Al Salmi", ar: "يوسف السالمي" },
     role: { en: "Board Member – Non-Executive", ar: "عضو مجلس إدارة غير تنفيذي" },
-    image: "/images/bm4.png",
+    image: "/images/team/yousef-al-salmi.png",
     bio: {
       en: "He holds a Bachelor’s degree in Industrial Engineering from King Abdulaziz University. He has served as Chief Strategy Officer at Nesma since 2019, following his role as Chief Commercial Officer at Nesma Airlines and several economic regulation and assessment positions at the General Authority of Civil Aviation (GACA). He also serves on the boards of South Jeddah Noor and Kaefer KSA.",
       ar: "يحمل درجة البكالوريوس في الهندسة الصناعية من جامعة الملك عبدالعزيز. ويشغل منصب الرئيس التنفيذي للاستراتيجية في نسما منذ عام 2019، بعد أن شغل منصب الرئيس التنفيذي للشؤون التجارية في نسما للطيران، وتولى عددًا من المناصب في مجالي التنظيم الاقتصادي والتقييم لدى الهيئة العامة للطيران المدني. كما يشغل عضوية مجلسَي إدارة شركة جنوب جدة نور وشركة كيفر السعودية (Kaefer KSA).",
@@ -128,7 +128,7 @@ const boardOfDirectors: Team = {
   b12: {
     name: { en: "Paris Deletraz", ar: "باريس ديليتراز" },
     role: { en: "Board Member – Non-Executive", ar: "عضو مجلس إدارة غير تنفيذي" },
-    image: "/images/bm5.png",
+    image: "/images/team/paris-deletraz.png",
     bio: {
       en: "He holds a Bachelor’s degree in Computer Science from Boston University and a doctorate in Management Sciences from ESADE Business School. He has extensive experience in investment banking, including senior mergers and acquisitions roles at UBS and ABN AMRO. He currently serves as President of Amazing Lab, Managing Director of Venture Lab at IE University, and Chairman of the Applied Innovation Institute. He also serves on the boards of Qatar Science & Technology Park and IVY & Company.",
       ar: "يحمل درجة البكالوريوس في علوم الحاسب من جامعة بوسطن، ودرجة الدكتوراه في علوم الإدارة من كلية إيسادي للأعمال (ESADE). ويتمتع بخبرة واسعة في مجال الخدمات المصرفية الاستثمارية، بما في ذلك تولّي مناصب قيادية في مجال الاندماج والاستحواذ لدى كل من UBS وABN AMRO. ويشغل حاليًا منصب رئيس شركة Amazing Lab، والعضو المنتدب لـ Venture Lab في جامعة IE، ورئيس مجلس إدارة معهد الابتكار التطبيقي. كما يشغل عضوية مجلسَي إدارة حديقة قطر للعلوم والتكنولوجيا وشركة IVY & Company.",
@@ -137,7 +137,7 @@ const boardOfDirectors: Team = {
   b13: {
     name: { en: "Omar Hifni", ar: "عمر حفني" },
     role: { en: "Board Member – Non-Executive", ar: "عضو مجلس إدارة غير تنفيذي" },
-    image: "/images/bm6.png",
+    image: "/images/team/omar-hifni.png",
     bio: {
       en: "He holds an MSc in Finance, Investment and Risk from the University of Kent and a BSc in Finance and Investment from the University of Brighton, along with a Capital Market Qualification (CME-1). He has served as Chief Investment Officer at KUN Investment Holding since April 2023, following several investment roles at KUN, SEDCO Holding, and Vision Capital Group. He also holds board and committee positions at Anfas Medical Care, Dr. Samir Abbas Hospital, KUN Sports, Air Arabia DMM, and Western Luluha for Logistics Services.",
       ar: "يحمل درجة الماجستير في التمويل والاستثمار وإدارة المخاطر من جامعة كِنت، ودرجة البكالوريوس في التمويل والاستثمار من جامعة برايتون، إضافةً إلى شهادة التأهيل في سوق المال (CME-1). ويشغل منصب الرئيس التنفيذي للاستثمار في شركة كُنّ للاستثمار القابضة (KUN Investment Holding) منذ أبريل 2023، بعد أن شغل عدة مناصب استثمارية في كل من شركة كُنّ، وسيدكو القابضة، ومجموعة فيجن كابيتال. كما يشغل عضويات في مجالس الإدارة واللجان لدى عدد من الجهات، منها شركة أنفاس للرعاية الطبية، ومستشفى الدكتور سمير عباس، وكُنّ الرياضية، والعربية للطيران – الدمام (Air Arabia DMM)، وشركة لؤلؤة الغربية للخدمات اللوجستية.",
@@ -146,7 +146,7 @@ const boardOfDirectors: Team = {
   b14: {
     name: { en: "Tariq Ibrahim Khoshhal", ar: "طارق ابراهيم خوش حال" },
     role: { en: "Board Member – Non-Executive", ar: "عضو مجلس إدارة غير تنفيذي" },
-    image: "/images/bm7.png",
+    image: "/images/team/tariq-khoshhal.png",
     bio: {
       en: "He holds an MBA in Finance from the University of Quebec, a BSc in Management Science from King Faisal University, and executive leadership and board director qualifications from Harvard Business School, IMD, and GCC BDI. He has extensive experience in investment management, private equity, and corporate leadership, having held senior roles at SEDCO, Alkhabeer Capital, and Autoworld. He has served as CEO of Dallah Albaraka Investment Holding since 2023 and holds board leadership positions at Taajeer Group, Nesma United Industries, Cool Inc., Benchmark, Dallah Driving Company, Anfas Medical Company, and Nun Academy.",
       ar: "يحمل درجة الماجستير في إدارة الأعمال تخصص التمويل من جامعة كيبيك، ودرجة البكالوريوس في العلوم الإدارية من جامعة الملك فيصل، إضافةً إلى مؤهلات في القيادة التنفيذية وعضوية مجالس الإدارة من كلية هارفارد للأعمال ومعهد IMD والمعهد الخليجي لمجالس الإدارات (GCC BDI). ويتمتع بخبرة واسعة في إدارة الاستثمارات والاستثمار في الملكية الخاصة والقيادة المؤسسية، حيث شغل مناصب قيادية عليا لدى كل من سيدكو، والخُبير كابيتال، وأوتوورلد. ويشغل منصب الرئيس التنفيذي لشركة دله البركة القابضة للاستثمار منذ عام 2023، كما يتولى مناصب قيادية في مجالس إدارة مجموعة تأجير، ونسما للصناعات المتحدة، وكول إنك (Cool Inc.)، وبنشمارك، وشركة دله لتعليم القيادة، وشركة أنفاس الطبية، وأكاديمية نون.",
