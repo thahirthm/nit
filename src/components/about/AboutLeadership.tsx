@@ -13,6 +13,12 @@ import "swiper/css";
 type Team = Record<string, LeadershipOffcanvasPerson>;
 
 const leadership: Team = {
+  p0: {
+    name: { en: "Salah Al Sunaid", ar: "صلاح السنيد" },
+    role: { en: "CEO", ar: "الرئيس التنفيذي" },
+    image: "/images/new-ceo-team.png",
+    linkedin: "https://www.linkedin.com/in/salah-al-sunaid-3870668/",
+  },
   p1: {
     name: { en: "Majed Al Faiya", ar: "ماجد الفايع" },
     role: { en: "COO", ar: "الرئيس التنفيذي للعمليات" },
