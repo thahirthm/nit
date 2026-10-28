@@ -283,7 +283,9 @@ export function AboutLeadership() {
                     src={person.image}
                     alt={personName}
                     fill
-                    className="object-cover object-top transition-transform duration-700 ease-out lg:translate-y-[5%] lg:group-hover:translate-y-0"
+                    // Mobile/tablet: lifted ~9% (scaled from the top so the bottom stays covered) so the face sits
+                    // above the name box instead of behind it. Desktop keeps the sunk-then-rise hover.
+                    className="object-cover object-top origin-top transition-transform duration-700 ease-out scale-[1.1] -translate-y-[9%] lg:scale-100 lg:translate-y-[5%] lg:group-hover:translate-y-0"
                   />
 
                   <div

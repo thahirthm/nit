@@ -6,6 +6,21 @@ import type { LegalSection, Localized } from "@/data/legalTypes";
 
 const HEADER_OFFSET = 120;
 
+const EMAIL = /([A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+)/;
+
+/** Turns email addresses inside policy copy into mailto links (dir="ltr" keeps them readable in Arabic). */
+function linkify(text: string) {
+  return text.split(EMAIL).map((part, i) =>
+    i % 2 === 1 ? (
+      <a key={i} href={`mailto:${part}`} dir="ltr" className="text-[#2E368F] underline underline-offset-2 hover:text-[#1c2260]">
+        {part}
+      </a>
+    ) : (
+      part
+    )
+  );
+}
+
 export function LegalPageContent({
   title,
   intro,
@@ -112,7 +127,7 @@ export function LegalPageContent({
                   {s.blocks.map((block, i) =>
                     block.type === "p" ? (
                       <p key={i} className="text-gray-500 text-[16px] sm:text-[17px] leading-relaxed font-light">
-                        {isAr ? block.ar : block.en}
+                        {linkify(isAr ? block.ar : block.en)}
                       </p>
                     ) : (
                       <ul
@@ -122,7 +137,7 @@ export function LegalPageContent({
                         }`}
                       >
                         {(isAr ? block.ar : block.en).map((item, j) => (
-                          <li key={j}>{item}</li>
+                          <li key={j}>{linkify(item)}</li>
                         ))}
                       </ul>
                     )

@@ -163,15 +163,15 @@ export function ContactHero() {
               <span className="block text-gray-400 text-[16px] font-light">
                 {isAr ? "البريد الإلكتروني" : "Email Address"}
               </span>
-              <span dir="ltr" className={`block mt-1 text-gray-900 text-[22px] font-light ${isAr ? "text-right" : ""}`}>
+              <a href="mailto:nit@nesmainfrastructure.com" dir="ltr" className={`block mt-1 text-gray-900 text-[22px] font-light hover:text-[#2E368F] transition-colors ${isAr ? "text-right" : ""}`}>
                 nit@nesmainfrastructure.com
-              </span>
+              </a>
             </div>
             <div>
               <span className="block text-gray-400 text-[16px] font-light">{isAr ? "الهاتف" : "Phone"}</span>
-              <span dir="ltr" className={`block mt-1 text-gray-900 text-[22px] font-light ${isAr ? "text-right" : ""}`}>
+              <a href="tel:+966550634599" dir="ltr" className={`block mt-1 text-gray-900 text-[22px] font-light hover:text-[#2E368F] transition-colors ${isAr ? "text-right" : ""}`}>
                 +966 55 063 4599
-              </span>
+              </a>
             </div>
           </motion.div>
 
