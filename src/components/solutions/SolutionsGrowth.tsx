@@ -7,6 +7,10 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const years = ["2020", "2021", "2022", "2023", "2024", "2025"];
 
+// Values below are in millions of SAR; the axis shows them as billions, truncated to 2 decimals
+// (2995 → "2.99") so a label never rounds up past the value it marks.
+const toBillions = (millions: number) => (Math.floor(millions / 10) / 100).toFixed(2);
+
 const tabs = [
   {
     key: "infrastructure",
@@ -153,7 +157,7 @@ export function SolutionsGrowth() {
 
           <div className="flex justify-end mb-4">
             <div className="flex items-center gap-2 text-[11px] font-medium tracking-wide uppercase text-gray-500">
-              <span className="w-4 h-[1px] bg-[#2E368F]" /> {isAr ? "قيمة المشاريع (مليون ريال)" : "Project value million (SAR)"}
+              <span className="w-4 h-[1px] bg-[#2E368F]" /> {isAr ? "قيمة المشاريع (مليار ريال)" : "Project value billion (SAR)"}
             </div>
           </div>
 
@@ -163,7 +167,7 @@ export function SolutionsGrowth() {
                 gives the column its width, since the visible labels are absolutely positioned. */}
             <div className="relative shrink-0 h-[220px] sm:h-[260px] text-[13px] text-gray-500">
               <span aria-hidden className="invisible block h-0 whitespace-nowrap">
-                {activeData.axisLabels.reduce((a, b) => (String(b).length > String(a).length ? b : a))} {isAr ? "مليون" : "M"}
+                {toBillions(activeData.axisLabels[0])} {isAr ? "مليار" : "B"}
               </span>
               <div className="absolute inset-x-0 top-0 bottom-6">
                 {activeData.axisLabels.map((label, i) => (
@@ -172,7 +176,7 @@ export function SolutionsGrowth() {
                     className="absolute left-0 -translate-y-1/2 whitespace-nowrap leading-none"
                     style={{ top: `${(i / (activeData.axisLabels.length - 1)) * 100}%` }}
                   >
-                    {label} {isAr ? "مليون" : "M"}
+                    {toBillions(label)} {isAr ? "مليار" : "B"}
                   </span>
                 ))}
               </div>

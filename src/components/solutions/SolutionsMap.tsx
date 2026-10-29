@@ -15,103 +15,47 @@ type Region = {
 };
 
 const statLabels = {
+  efficiency: { en: "Energy Efficiency", ar: "كفاءة الطاقة" },
   energy: { en: "Energy Solutions", ar: "حلول الطاقة" },
-  water: { en: "Water", ar: "المياه" },
+  ict: { en: "ICT", ar: "الاتصالات وتقنية المعلومات" },
   industrial: { en: "Industrial Installation", ar: "التركيبات الصناعية" },
-  om: { en: "O&M", ar: "التشغيل والصيانة" },
+  mep: { en: "MEP", ar: "الأعمال الكهروميكانيكية" },
+  om: { en: "Operations & Maintenance (O&M)", ar: "التشغيل والصيانة" },
 };
 
 // Each row opens the projects list on /projects, pre-filtered to the closest tab + sector chip
 // (keys from src/data/projects.ts). Energy and Industrial have no dedicated chip yet, so they
 // land on Infrastructure → What's hot until those categories exist.
 const statLinks: Record<string, string> = {
+  [statLabels.efficiency.en]: "/projects?tab=Infrastructure&chip=whats-hot#projects-showcase",
   [statLabels.energy.en]: "/projects?tab=Infrastructure&chip=whats-hot#projects-showcase",
-  [statLabels.water.en]: "/projects?tab=Infrastructure&chip=water-mep#projects-showcase",
+  [statLabels.ict.en]: "/projects?tab=Technology&chip=whats-hot#projects-showcase",
   [statLabels.industrial.en]: "/projects?tab=Infrastructure&chip=whats-hot#projects-showcase",
+  [statLabels.mep.en]: "/projects?tab=Infrastructure&chip=water-mep#projects-showcase",
   [statLabels.om.en]: "/projects?tab=Infrastructure&chip=om#projects-showcase",
 };
 
+// Counts in statLabels order: efficiency, energy, ICT, industrial, MEP, O&M.
+const toStats = (counts: number[]): Region["stats"] =>
+  Object.values(statLabels).map((label, i) => ({ count: String(counts[i]).padStart(2, "0"), label }));
+
 // Dot coordinates are in Map1's own viewBox space (0 0 1035 621), placed at
 // the visually verified centre of each region's own fill path on that map.
+// Southwestern and Najran aren't broken out in the supplied project data, so they show zeros.
 const regions: Region[] = [
-  {
-    id: "northern",
-    name: { en: "northern", ar: "الشمالية" },
-    dot: [380, 100],
-    stats: [
-      { count: "09", label: statLabels.energy },
-      { count: "02", label: statLabels.water },
-      { count: "01", label: statLabels.industrial },
-      { count: "01", label: statLabels.om },
-    ],
-  },
-  {
-    id: "eastern",
-    name: { en: "eastern", ar: "الشرقية" },
-    dot: [790, 340],
-    stats: [
-      { count: "21", label: statLabels.energy },
-      { count: "01", label: statLabels.water },
-      { count: "01", label: statLabels.industrial },
-      { count: "02", label: statLabels.om },
-    ],
-  },
-  {
-    id: "southern",
-    name: { en: "southern", ar: "الجنوبية" },
-    dot: [400, 430],
-    stats: [
-      { count: "06", label: statLabels.energy },
-      { count: "02", label: statLabels.water },
-      { count: "01", label: statLabels.industrial },
-      { count: "01", label: statLabels.om },
-    ],
-  },
-  {
-    id: "central",
-    name: { en: "central", ar: "الوسطى" },
-    dot: [470, 270],
-    stats: [
-      { count: "17", label: statLabels.energy },
-      { count: "04", label: statLabels.water },
-      { count: "02", label: statLabels.industrial },
-      { count: "03", label: statLabels.om },
-    ],
-  },
-  {
-    id: "western",
-    name: { en: "western", ar: "الغربية" },
-    dot: [200, 170],
-    stats: [
-      { count: "14", label: statLabels.energy },
-      { count: "03", label: statLabels.water },
-      { count: "02", label: statLabels.industrial },
-      { count: "01", label: statLabels.om },
-    ],
-  },
-  {
-    id: "southwestern",
-    name: { en: "southwestern", ar: "الجنوبية الغربية" },
-    dot: [290, 330],
-    stats: [
-      { count: "11", label: statLabels.energy },
-      { count: "03", label: statLabels.water },
-      { count: "01", label: statLabels.industrial },
-      { count: "02", label: statLabels.om },
-    ],
-  },
-  {
-    id: "najran",
-    name: { en: "najran", ar: "نجران" },
-    dot: [520, 450],
-    stats: [
-      { count: "04", label: statLabels.energy },
-      { count: "01", label: statLabels.water },
-      { count: "00", label: statLabels.industrial },
-      { count: "01", label: statLabels.om },
-    ],
-  },
+  { id: "northern", name: { en: "northern", ar: "الشمالية" }, dot: [380, 100], stats: toStats([0, 3, 1, 0, 0, 1]) },
+  { id: "eastern", name: { en: "eastern", ar: "الشرقية" }, dot: [790, 340], stats: toStats([0, 28, 1, 2, 0, 1]) },
+  { id: "southern", name: { en: "southern", ar: "الجنوبية" }, dot: [400, 430], stats: toStats([0, 5, 1, 0, 0, 1]) },
+  { id: "central", name: { en: "central", ar: "الوسطى" }, dot: [470, 270], stats: toStats([5, 16, 2, 0, 1, 0]) },
+  { id: "western", name: { en: "western", ar: "الغربية" }, dot: [200, 170], stats: toStats([1, 10, 0, 1, 0, 0]) },
+  { id: "southwestern", name: { en: "southwestern", ar: "الجنوبية الغربية" }, dot: [290, 330], stats: toStats([0, 0, 0, 0, 0, 0]) },
+  { id: "najran", name: { en: "najran", ar: "نجران" }, dot: [520, 450], stats: toStats([0, 0, 0, 0, 0, 0]) },
 ];
+
+const totalProjects = regions.reduce(
+  (sum, r) => sum + r.stats.reduce((regionSum, s) => regionSum + Number(s.count), 0),
+  0
+);
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className={className}>
@@ -187,7 +131,7 @@ export function SolutionsMap() {
           </div>
 
           <div className="relative z-10 mt-auto">
-            <div className="text-white text-[42px] sm:text-[52px] lg:text-[64px] font-extralight leading-none">25+</div>
+            <div className="text-white text-[42px] sm:text-[52px] lg:text-[64px] font-extralight leading-none">{totalProjects}</div>
             <div className="text-[#81D1E8] text-[15px] sm:text-[16px] font-light mt-1">
               {isAr ? "مشروعًا قيد التنفيذ" : "Active projects"}
             </div>
@@ -196,7 +140,7 @@ export function SolutionsMap() {
 
         {/* Info panel */}
         <Reveal delay={0.12} duration={0.8} y={30} className="bg-[#F5F5F5] p-8 sm:p-10 flex flex-col">
-          <h3 className="text-gray-900 text-[22px] sm:text-[26px] font-extralight tracking-tight mb-8 lg:mb-10">
+          <h3 className="text-gray-900 text-[20px] sm:text-[24px] font-extralight tracking-tight whitespace-nowrap mb-8 lg:mb-10">
             {isAr ? `المشاريع في المنطقة ${activeRegion.name.ar}` : `Projects in the ${activeRegion.name.en} area`}
           </h3>
 
