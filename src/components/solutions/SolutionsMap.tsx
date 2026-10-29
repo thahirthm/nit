@@ -51,6 +51,8 @@ const regions: Region[] = [
 
 const regionTotal = (region: Region) => region.stats.reduce((sum, s) => sum + Number(s.count), 0);
 
+const totalProjects = regions.reduce((sum, r) => sum + regionTotal(r), 0);
+
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className={className}>
@@ -62,11 +64,16 @@ export function SolutionsMap() {
   const { language } = useLanguage();
   const isAr = language === "ar";
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
+  // Click/tap pins a region so it stays active after the pointer leaves; hover previews on top of it.
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
-  const activeRegion = useMemo(
-    () => regions.find((r) => r.id === hoveredRegion) ?? regions[1],
-    [hoveredRegion]
+  // Region the visitor has pointed at, if any — until then the counter shows the kingdom total.
+  const focusedRegion = useMemo(
+    () => regions.find((r) => r.id === (hoveredRegion ?? selectedRegion)) ?? null,
+    [hoveredRegion, selectedRegion]
   );
+  // Region shown on the map highlight and in the side panel — Eastern by default.
+  const activeRegion = focusedRegion ?? regions[1];
 
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
@@ -84,6 +91,7 @@ export function SolutionsMap() {
                 className="absolute inset-0 w-full h-full select-none"
                 hoveredRegion={activeRegion.id}
                 onHoverRegion={setHoveredRegion}
+                onSelectRegion={setSelectedRegion}
               />
 
               {/* Hit-area overlay, aligned to the map's own viewBox (0 0 1035 621).
@@ -106,26 +114,42 @@ export function SolutionsMap() {
                   style={{ pointerEvents: "all", cursor: "pointer" }}
                   onMouseEnter={() => setHoveredRegion("eastern")}
                   onMouseLeave={() => setHoveredRegion((current) => (current === "eastern" ? null : current))}
-                  onClick={() => setHoveredRegion("eastern")}
+                  onClick={() => setSelectedRegion("eastern")}
                 />
               </svg>
 
-              {/* Region markers — a dot with the region name under it, like the original map.
+              {/* Region markers — a small dot with a soft, low-opacity pulse that runs on its own
+                  (staggered per region), plus a ring and brighter name on the active region.
                   HTML rather than SVG text so the type keeps a readable size however small the map gets. */}
-              {regions.map((region) => {
+              {regions.map((region, i) => {
                 const isActive = activeRegion.id === region.id;
                 return (
                   <div
                     key={region.id}
-                    className="absolute -translate-x-1/2 -translate-y-[5px] flex flex-col items-center pointer-events-none"
+                    className="absolute -translate-x-1/2 -translate-y-[8px] flex flex-col items-center pointer-events-none"
                     style={{ left: `${(region.label[0] / 1035) * 100}%`, top: `${(region.label[1] / 621) * 100}%` }}
                   >
+                    <span className="relative flex items-center justify-center w-[16px] h-[16px]">
+                      <span
+                        className="absolute w-[6px] h-[6px] rounded-full bg-[#81D1E8] opacity-40 animate-ping"
+                        style={{ animationDuration: "2.4s", animationDelay: `${i * 0.45}s` }}
+                      />
+                      <span
+                        className={`absolute inset-0 rounded-full border border-[#81D1E8] transition-all duration-300 ease-out ${
+                          isActive ? "opacity-70 scale-100" : "opacity-0 scale-50"
+                        }`}
+                      />
+                      <span
+                        className={`relative rounded-full bg-[#81D1E8] transition-all duration-300 ease-out ${
+                          isActive ? "w-[8px] h-[8px]" : "w-[6px] h-[6px] opacity-80"
+                        }`}
+                      />
+                    </span>
                     <span
-                      className={`block rounded-full bg-[#81D1E8] transition-all duration-300 ease-out ${
-                        isActive ? "w-[12px] h-[12px] -mt-[1px]" : "w-[10px] h-[10px]"
+                      className={`text-[10px] sm:text-[12px] lg:text-[13px] mt-0.5 capitalize whitespace-nowrap transition-colors duration-300 ${
+                        isActive ? "text-white font-normal" : "text-[#81D1E8] font-light"
                       }`}
-                    />
-                    <span className="text-[#81D1E8] text-[10px] sm:text-[12px] lg:text-[13px] font-light mt-1 capitalize whitespace-nowrap">
+                    >
                       {isAr ? region.name.ar : region.name.en}
                     </span>
                   </div>
@@ -134,16 +158,23 @@ export function SolutionsMap() {
             </div>
           </div>
 
-          {/* Count for the region shown in the side panel (Eastern until another region is hovered) */}
-          <div className="relative z-10 mt-auto">
+          {/* Kingdom-wide total until a region is hovered or tapped, then that region's count.
+              Keyed so each change fades in. */}
+          <div key={focusedRegion?.id ?? "total"} className="relative z-10 mt-auto animate-fade-in">
             <div className="text-white text-[42px] sm:text-[52px] lg:text-[64px] font-extralight leading-none">
-              {regionTotal(activeRegion)}
+              {focusedRegion ? regionTotal(focusedRegion) : totalProjects}
             </div>
             <div className="text-[#81D1E8] text-[15px] sm:text-[16px] font-light mt-1">
-              {isAr ? (
-                `المنطقة ${activeRegion.name.ar} (قيد التنفيذ)`
+              {focusedRegion ? (
+                isAr ? (
+                  `المنطقة ${focusedRegion.name.ar} (قيد التنفيذ)`
+                ) : (
+                  <><span className="capitalize">{focusedRegion.name.en}</span> region (ongoing)</>
+                )
+              ) : isAr ? (
+                "إجمالي المملكة (قيد التنفيذ)"
               ) : (
-                <><span className="capitalize">{activeRegion.name.en}</span> region (ongoing)</>
+                "Overall Kingdom (ongoing)"
               )}
             </div>
           </div>
