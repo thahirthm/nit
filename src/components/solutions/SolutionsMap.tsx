@@ -10,7 +10,7 @@ import { useLanguage } from "@/context/LanguageContext";
 type Region = {
   id: string;
   name: { en: string; ar: string };
-  dot: [number, number];
+  label: [number, number];
   stats: { count: string; label: { en: string; ar: string } }[];
 };
 
@@ -39,23 +39,18 @@ const statLinks: Record<string, string> = {
 const toStats = (counts: number[]): Region["stats"] =>
   Object.values(statLabels).map((label, i) => ({ count: String(counts[i]).padStart(2, "0"), label }));
 
-// Dot coordinates are in Map1's own viewBox space (0 0 1035 621), placed at
-// the visually verified centre of each region's own fill path on that map.
-// Southwestern and Najran aren't broken out in the supplied project data, so they show zeros.
+// Label positions are in Map1's own viewBox space (0 0 1035 621). Map1 groups its provinces into
+// these five regions, so hovering any province of a region highlights the whole region.
 const regions: Region[] = [
-  { id: "northern", name: { en: "northern", ar: "الشمالية" }, dot: [380, 100], stats: toStats([0, 3, 1, 0, 0, 1]) },
-  { id: "eastern", name: { en: "eastern", ar: "الشرقية" }, dot: [790, 340], stats: toStats([0, 28, 1, 2, 0, 1]) },
-  { id: "southern", name: { en: "southern", ar: "الجنوبية" }, dot: [400, 430], stats: toStats([0, 5, 1, 0, 0, 1]) },
-  { id: "central", name: { en: "central", ar: "الوسطى" }, dot: [470, 270], stats: toStats([5, 16, 2, 0, 1, 0]) },
-  { id: "western", name: { en: "western", ar: "الغربية" }, dot: [200, 170], stats: toStats([1, 10, 0, 1, 0, 0]) },
-  { id: "southwestern", name: { en: "southwestern", ar: "الجنوبية الغربية" }, dot: [290, 330], stats: toStats([0, 0, 0, 0, 0, 0]) },
-  { id: "najran", name: { en: "najran", ar: "نجران" }, dot: [520, 450], stats: toStats([0, 0, 0, 0, 0, 0]) },
+  { id: "northern", name: { en: "northern", ar: "الشمالية" }, label: [300, 125], stats: toStats([0, 3, 1, 0, 0, 1]) },
+  { id: "eastern", name: { en: "eastern", ar: "الشرقية" }, label: [800, 350], stats: toStats([0, 28, 1, 2, 0, 1]) },
+  { id: "southern", name: { en: "southern", ar: "الجنوبية" }, label: [470, 448], stats: toStats([0, 5, 1, 0, 0, 1]) },
+  { id: "central", name: { en: "central", ar: "الوسطى" }, label: [490, 290], stats: toStats([5, 16, 2, 0, 1, 0]) },
+  { id: "western", name: { en: "western", ar: "الغربية" }, label: [320, 305], stats: toStats([1, 10, 0, 1, 0, 0]) },
 ];
 
-const totalProjects = regions.reduce(
-  (sum, r) => sum + r.stats.reduce((regionSum, s) => regionSum + Number(s.count), 0),
-  0
-);
+const regionTotal = (region: Region) => region.stats.reduce((sum, s) => sum + Number(s.count), 0);
+
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className={className}>
@@ -87,11 +82,11 @@ export function SolutionsMap() {
               {/* Base map artwork — each province is its own path and highlights on hover/tap */}
               <Map1
                 className="absolute inset-0 w-full h-full select-none"
-                hoveredRegion={hoveredRegion}
+                hoveredRegion={activeRegion.id}
                 onHoverRegion={setHoveredRegion}
               />
 
-              {/* Location dots, aligned to the map's own viewBox (0 0 1035 621).
+              {/* Hit-area overlay, aligned to the map's own viewBox (0 0 1035 621).
                   pointer-events: none on the root so this overlay doesn't block clicks/hover
                   on the province paths in Map1 underneath it — only the hit-circle below
                   (which sets its own pointer-events: all) should ever intercept. */}
@@ -113,27 +108,43 @@ export function SolutionsMap() {
                   onMouseLeave={() => setHoveredRegion((current) => (current === "eastern" ? null : current))}
                   onClick={() => setHoveredRegion("eastern")}
                 />
-
-                {regions.map((region) => {
-                  const isHovered = hoveredRegion === region.id;
-                  return (
-                    <circle
-                      key={region.id}
-                      cx={region.dot[0]}
-                      cy={region.dot[1]}
-                      r={isHovered ? 7 : 5}
-                      className="fill-[#81D1E8] transition-all duration-300 ease-out pointer-events-none"
-                    />
-                  );
-                })}
               </svg>
+
+              {/* Region markers — a dot with the region name under it, like the original map.
+                  HTML rather than SVG text so the type keeps a readable size however small the map gets. */}
+              {regions.map((region) => {
+                const isActive = activeRegion.id === region.id;
+                return (
+                  <div
+                    key={region.id}
+                    className="absolute -translate-x-1/2 -translate-y-[5px] flex flex-col items-center pointer-events-none"
+                    style={{ left: `${(region.label[0] / 1035) * 100}%`, top: `${(region.label[1] / 621) * 100}%` }}
+                  >
+                    <span
+                      className={`block rounded-full bg-[#81D1E8] transition-all duration-300 ease-out ${
+                        isActive ? "w-[12px] h-[12px] -mt-[1px]" : "w-[10px] h-[10px]"
+                      }`}
+                    />
+                    <span className="text-[#81D1E8] text-[10px] sm:text-[12px] lg:text-[13px] font-light mt-1 capitalize whitespace-nowrap">
+                      {isAr ? region.name.ar : region.name.en}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
+          {/* Count for the region shown in the side panel (Eastern until another region is hovered) */}
           <div className="relative z-10 mt-auto">
-            <div className="text-white text-[42px] sm:text-[52px] lg:text-[64px] font-extralight leading-none">{totalProjects}</div>
+            <div className="text-white text-[42px] sm:text-[52px] lg:text-[64px] font-extralight leading-none">
+              {regionTotal(activeRegion)}
+            </div>
             <div className="text-[#81D1E8] text-[15px] sm:text-[16px] font-light mt-1">
-              {isAr ? "مشروعًا قيد التنفيذ" : "Active projects"}
+              {isAr ? (
+                `المنطقة ${activeRegion.name.ar} (قيد التنفيذ)`
+              ) : (
+                <><span className="capitalize">{activeRegion.name.en}</span> region (ongoing)</>
+              )}
             </div>
           </div>
         </Reveal>
