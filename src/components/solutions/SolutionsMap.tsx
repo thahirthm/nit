@@ -53,6 +53,11 @@ const regionTotal = (region: Region) => region.stats.reduce((sum, s) => sum + Nu
 
 const totalProjects = regions.reduce((sum, r) => sum + regionTotal(r), 0);
 
+// Sector counts summed over every region — shown in the side panel until a region is picked.
+const kingdomStats: Region["stats"] = toStats(
+  Object.values(statLabels).map((_, i) => regions.reduce((sum, r) => sum + Number(r.stats[i].count), 0))
+);
+
 
 const ArrowIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className={className}>
@@ -72,8 +77,8 @@ export function SolutionsMap() {
     () => regions.find((r) => r.id === (hoveredRegion ?? selectedRegion)) ?? null,
     [hoveredRegion, selectedRegion]
   );
-  // Region shown on the map highlight and in the side panel — Eastern by default.
-  const activeRegion = focusedRegion ?? regions[1];
+  // Sectors with no projects are left out of the list.
+  const panelStats = (focusedRegion?.stats ?? kingdomStats).filter((s) => Number(s.count) > 0);
 
   return (
     <section className={`w-full bg-white pt-[60px] lg:pt-[100px] ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
@@ -89,7 +94,7 @@ export function SolutionsMap() {
               {/* Base map artwork — each province is its own path and highlights on hover/tap */}
               <Map1
                 className="absolute inset-0 w-full h-full select-none"
-                hoveredRegion={activeRegion.id}
+                hoveredRegion={focusedRegion?.id ?? null}
                 onHoverRegion={setHoveredRegion}
                 onSelectRegion={setSelectedRegion}
               />
@@ -122,7 +127,7 @@ export function SolutionsMap() {
                   (staggered per region), plus a ring and brighter name on the active region.
                   HTML rather than SVG text so the type keeps a readable size however small the map gets. */}
               {regions.map((region, i) => {
-                const isActive = activeRegion.id === region.id;
+                const isActive = focusedRegion?.id === region.id;
                 return (
                   <div
                     key={region.id}
@@ -183,11 +188,17 @@ export function SolutionsMap() {
         {/* Info panel */}
         <Reveal delay={0.12} duration={0.8} y={30} className="bg-[#F5F5F5] p-8 sm:p-10 flex flex-col">
           <h3 className="text-gray-900 text-[20px] sm:text-[24px] font-extralight tracking-tight whitespace-nowrap mb-8 lg:mb-10">
-            {isAr ? `المشاريع في المنطقة ${activeRegion.name.ar}` : `Projects in the ${activeRegion.name.en} area`}
+            {focusedRegion
+              ? isAr
+                ? `المشاريع في المنطقة ${focusedRegion.name.ar}`
+                : `Projects in the ${focusedRegion.name.en} area`
+              : isAr
+                ? "المشاريع في مختلف أنحاء المملكة"
+                : "Projects across the kingdom"}
           </h3>
 
           <div className="flex flex-col divide-y divide-gray-300 border-t border-gray-300">
-            {activeRegion.stats.map((item, i) => (
+            {panelStats.map((item, i) => (
               <Link
                 key={`${item.label.en}-${i}`}
                 href={statLinks[item.label.en]}
@@ -205,6 +216,14 @@ export function SolutionsMap() {
                   }`}
                 />
               </Link>
+            ))}
+            {/* Invisible filler rows so the panel always has room for every sector — keeps the
+                section height fixed when a region with fewer sectors is hovered. */}
+            {Array.from({ length: Object.keys(statLabels).length - panelStats.length }, (_, i) => (
+              <div key={`filler-${i}`} aria-hidden className="invisible flex items-center justify-between py-4">
+                <span className="text-[15px] sm:text-[16px] font-light">&nbsp;</span>
+                <ArrowIcon className="shrink-0" />
+              </div>
             ))}
           </div>
 
