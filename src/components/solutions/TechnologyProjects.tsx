@@ -12,8 +12,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import "swiper/css";
 
 // Same project lists as the Projects page showcase — maintained in @/data/projects.
-// Data Centers is hidden here for now; drop the filter to bring the tab back.
-const categories = technologyCategories.filter((c) => c.key !== "data-centers");
+const categories = technologyCategories;
 
 export function TechnologyProjects() {
   const { language } = useLanguage();

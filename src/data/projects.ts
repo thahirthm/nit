@@ -499,6 +499,10 @@ function withDerivedStatus(projects: Project[]): Project[] {
   });
 }
 
+// Only NEOM Connect Teleco Park is shown under Data Centers for now; the other entries stay in
+// dataCenterProjects so they can be brought back by widening this filter.
+const visibleDataCenterProjects = dataCenterProjects.filter((p) => p.title.en === "NEOM Connect Teleco Park");
+
 export interface ProjectCategory {
   key: string;
   label: { en: string; ar: string };
@@ -515,5 +519,5 @@ export const technologyCategories: ProjectCategory[] = [
   { key: "whats-hot", label: { en: "What's hot", ar: "الأبرز" }, projects: withDerivedStatus(techHotProjects) },
   { key: "telecom-radio", label: { en: "Telcom & Radio Station", ar: "الاتصالات ومحطات الإذاعة" }, projects: withDerivedStatus(telecomProjects) },
   { key: "cyber-security", label: { en: "Cyber Security", ar: "الأمن السيبراني" }, projects: withDerivedStatus(cyberProjects) },
-  { key: "data-centers", label: { en: "Data Centers", ar: "مراكز البيانات" }, projects: withDerivedStatus(dataCenterProjects) },
+  { key: "data-centers", label: { en: "Data Centers", ar: "مراكز البيانات" }, projects: withDerivedStatus(visibleDataCenterProjects) },
 ];
