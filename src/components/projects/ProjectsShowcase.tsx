@@ -20,7 +20,8 @@ const primaryTabs = [
 // Sector chips per primary tab — each chip shows its own projects; the count is derived from the list.
 const tabChips: Record<(typeof primaryTabs)[number]["en"], ProjectCategory[]> = {
   Infrastructure: infrastructureCategories,
-  Technology: technologyCategories,
+  // Data Centers is hidden for now (also on the Technology page); drop the filter to bring it back.
+  Technology: technologyCategories.filter((c) => c.key !== "data-centers"),
 };
 
 const ArrowIcon = ({ className }: { className?: string }) => (
