@@ -148,7 +148,7 @@ export function MediaNews({
                     </Link>
 
                     <div dir={isAr ? "rtl" : "ltr"} className="mt-5 flex flex-wrap items-center gap-2">
-                      <span className="font-[family-name:var(--font-anek-latin)] px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
+                      <span className={`${isAr ? "" : "font-[family-name:var(--font-anek-latin)]"} px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]`}>
                         {post.formatted_date}
                       </span>
                       <span className="px-3 py-1.5 text-[13px] font-medium tracking-wide uppercase bg-gray-100 text-[#2E368F]">
