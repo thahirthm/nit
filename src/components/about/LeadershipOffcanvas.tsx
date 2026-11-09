@@ -89,7 +89,9 @@ export function LeadershipOffcanvas({ person, onClose }: LeadershipOffcanvasProp
                   src={person.image}
                   alt={isAr ? person.name.ar : person.name.en}
                   fill
-                  className="object-cover"
+                  // Anchored to the top: the portraits are taller than this frame, so cropping from the
+                  // centre cut off the top of the head. Any crop now falls at the shoulders instead.
+                  className="object-cover object-top"
                 />
               </div>
 

@@ -11,6 +11,8 @@ type Region = {
   id: string;
   name: { en: string; ar: string };
   label: [number, number];
+  /** Puts the name beside the dot instead of under it, where the space below is tight. */
+  side?: "left" | "right";
   stats: { count: string; label: { en: string; ar: string } }[];
 };
 
@@ -42,9 +44,9 @@ const toStats = (counts: number[]): Region["stats"] =>
 // Label positions are in Map1's own viewBox space (0 0 1035 621). Map1 groups its provinces into
 // these five regions, so hovering any province of a region highlights the whole region.
 const regions: Region[] = [
-  { id: "northern", name: { en: "northern", ar: "الشمالية" }, label: [300, 125], stats: toStats([0, 3, 1, 0, 0, 1]) },
+  { id: "northern", name: { en: "northern", ar: "الشمالية" }, label: [300, 125], side: "left", stats: toStats([0, 3, 1, 0, 0, 1]) },
   { id: "eastern", name: { en: "eastern", ar: "الشرقية" }, label: [800, 350], stats: toStats([0, 28, 1, 2, 0, 1]) },
-  { id: "southern", name: { en: "southern", ar: "الجنوبية" }, label: [470, 448], stats: toStats([0, 5, 1, 0, 0, 1]) },
+  { id: "southern", name: { en: "southern", ar: "الجنوبية" }, label: [470, 448], side: "right", stats: toStats([0, 5, 1, 0, 0, 1]) },
   { id: "central", name: { en: "central", ar: "الوسطى" }, label: [490, 290], stats: toStats([5, 16, 2, 0, 1, 0]) },
   { id: "western", name: { en: "western", ar: "الغربية" }, label: [320, 305], stats: toStats([1, 10, 0, 1, 0, 0]) },
 ];
@@ -131,7 +133,16 @@ export function SolutionsMap() {
                 return (
                   <div
                     key={region.id}
-                    className="absolute -translate-x-1/2 -translate-y-[8px] flex flex-col items-center pointer-events-none"
+                    // The dot (16px box) stays on the region's point whichever side the name sits. dir="ltr"
+                    // keeps "left" and "right" physical on the map in Arabic too.
+                    dir="ltr"
+                    className={`absolute flex items-center gap-1.5 pointer-events-none ${
+                      region.side === "left"
+                        ? "flex-row-reverse -translate-x-[calc(100%-8px)] -translate-y-1/2"
+                        : region.side === "right"
+                        ? "-translate-x-[8px] -translate-y-1/2"
+                        : "flex-col gap-0 -translate-x-1/2 -translate-y-[8px]"
+                    }`}
                     style={{ left: `${(region.label[0] / 1035) * 100}%`, top: `${(region.label[1] / 621) * 100}%` }}
                   >
                     <span className="relative flex items-center justify-center w-[16px] h-[16px]">
@@ -151,7 +162,7 @@ export function SolutionsMap() {
                       />
                     </span>
                     <span
-                      className={`text-[10px] sm:text-[12px] lg:text-[13px] mt-0.5 capitalize whitespace-nowrap transition-colors duration-300 ${
+                      className={`text-[10px] sm:text-[12px] lg:text-[13px] ${region.side ? "" : "mt-0.5"} capitalize whitespace-nowrap transition-colors duration-300 ${
                         isActive ? "text-white font-normal" : "text-[#81D1E8] font-light"
                       }`}
                     >
