@@ -3,7 +3,9 @@ import { Banner } from "@/components/home/Banner";
 import { ExpertiseSection } from "@/components/home/ExpertiseSection";
 import { GlanceSection } from "@/components/home/GlanceSection";
 import { SolutionsSection } from "@/components/home/SolutionsSection";
-import { ProjectsSection } from "@/components/home/ProjectsSection";
+// Old "Featured projects" section — replaced by CapabilitiesSection below; kept for reference.
+// import { ProjectsSection } from "@/components/home/ProjectsSection";
+import { CapabilitiesSection } from "@/components/home/CapabilitiesSection";
 import { ClientsSection } from "@/components/home/ClientsSection";
 import { TypingSection } from "@/components/home/TypingSection";
 import { NewsSection } from "@/components/home/NewsSection";
@@ -38,9 +40,15 @@ export default async function Home() {
         <SolutionsSection />
       </Reveal>
 
-      {/* Fifth Section: Featured Projects */}
+      {/* Fifth Section: Featured Projects (old version, replaced by Nesma Group Capabilities below)
       <Reveal>
         <ProjectsSection />
+      </Reveal>
+      */}
+
+      {/* Fifth Section: Nesma Group Capabilities — tabbed projects */}
+      <Reveal>
+        <CapabilitiesSection />
       </Reveal>
 
       {/* Sixth Section: Trusted by Leading Organizations */}
