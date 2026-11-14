@@ -56,14 +56,17 @@ const projects = [
     client: { en: "Principal Buyer", ar: "الجهة المالكة الرئيسية" },
     // Shown as "Value" in the card's top meta (Location appears on hover)
     metaValue: { en: "1.9 Billion SAR", ar: "1.9 مليار ريال" },
+    consortium: { en: "Dumat Aljandal Wind Company For Energy", ar: "شركة رياح دومة الجندل للطاقة" },
     image: "/images/pr2.png",
     hoverImage: "/images/pr2-hover.png",
     logo: "/images/fp-3-logo.png",
     logoAlt: { en: "Principal Buyer", ar: "المشتري الرئيس" },
     isVision2030: false,
     value: "1.9B SAR",
-    year: "2024",
-    scope: { en: "EPC", ar: "الهندسة والمشتريات والإنشاءات (EPC)" },
+    year: "2019",
+    yearLabel: { en: "Awarded", ar: "سنة الترسية" },
+    scope: { en: "Dumat Aljandal Wind Company For Energy", ar: "شركة رياح دومة الجندل للطاقة" },
+    scopeLabel: { en: "Consortium", ar: "التحالف" },
     description: {
       en: [
         "Established as a special purpose company by a consortium of Nesma, Masdar, and EDF Renewables, the Dumat Al Jandal Power Company was developed under the public-private partnership (PPP) model to build and operate the first onshore wind power plant in Saudi Arabia with a capacity of 400 MW in Al Jouf. It is the first and largest of its kind in the Kingdom.",
@@ -83,6 +86,7 @@ const projects = [
     client: { en: "Principal Buyer", ar: "الجهة المالكة الرئيسية" },
     // Shown as "Value" in the card's top meta (instead of Location)
     metaValue: { en: "889 Million SAR", ar: "889 مليون ريال" },
+    consortium: { en: "South Jeddah Noor", ar: "نور جنوب جدة" },
     image: "/images/s-solar.png",
     hoverImage: "/images/fp3-hover.png",
     logo: "/images/fp-3-logo.png",
@@ -91,7 +95,7 @@ const projects = [
     value: "889M SAR",
     year: "2021",
     yearLabel: { en: "Awarded", ar: "سنة الترسية" },
-    scope: { en: "South Jeddah Noor", ar: "جنوب جدة نور" },
+    scope: { en: "South Jeddah Noor", ar: "نور جنوب جدة" },
     scopeLabel: { en: "Consortium", ar: "التحالف" },
     description: {
       en: [
@@ -111,6 +115,7 @@ const projects = [
     location: { en: "Jubail & Al-Qassim", ar: "الجبيل والقصيم" },
     client: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
     metaValue: { en: "8.5 Billion SAR", ar: "8.5 مليار ريال" },
+    consortium: { en: "Stream Water Transmission Co", ar: "شركة ستريم لنقل المياه" },
     image: "/images/fp-4.png",
     hoverImage: "/images/fp-4-hover.png",
     logo: "/images/fp-4-logo-swpc.png",
@@ -118,7 +123,9 @@ const projects = [
     isVision2030: false,
     value: "8.5B SAR",
     year: "2025",
-    scope: { en: "BOOT", ar: "البناء والتملك والتشغيل والنقل (BOOT)" },
+    yearLabel: { en: "Awarded", ar: "سنة الترسية" },
+    scope: { en: "Stream Water Transmission Co", ar: "شركة ستريم لنقل المياه" },
+    scopeLabel: { en: "Consortium", ar: "التحالف" },
     description: {
       en: [
         "The Jubail–Buraydah Independent Water Transmission Pipeline (IWTP) is a 587 km bidirectional pipeline with a transmission capacity of 650,000 m³/day and storage facilities of about 1.63 million m³ across Jubail and Al-Qassim.",
@@ -165,6 +172,7 @@ const projects = [
     location: { en: "Makkah", ar: "مكة المكرمة" },
     client: { en: "Royal Commission for Makkah City and Holy Sites", ar: "الهيئة الملكية لمدينة مكة المكرمة والمشاعر المقدسة" },
     metaValue: { en: "3.2 Billion SAR", ar: "3.2 مليار ريال" },
+    consortium: { en: "Modern Bus Company Limited", ar: "شركة الحافلات الحديثة المحدودة" },
     image: "/images/makkah-new.png",
     hoverImage: "/images/fp-6-hover.png",
     logo: "/images/fp-6-logo.png",
@@ -172,7 +180,9 @@ const projects = [
     isVision2030: false,
     value: "3.2B SAR",
     year: "2017",
-    scope: { en: "Operation & Maintenance", ar: "التشغيل والصيانة" },
+    yearLabel: { en: "Awarded", ar: "سنة الترسية" },
+    scope: { en: "Modern Bus Company Limited", ar: "شركة الحافلات الحديثة المحدودة" },
+    scopeLabel: { en: "Consortium", ar: "التحالف" },
     description: {
       en: [
         "Established as a special-purpose company to operate the Makkah Public Transportation Program after the formation of a Saudi-Spanish consortium including Nesma Co. Ltd, Maghrabi Group, and Spanish partners Imathia, Consultrans, and TCC.",
