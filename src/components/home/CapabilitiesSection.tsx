@@ -29,8 +29,8 @@ const projects = [
     consortium: { en: "Nesma Oxagon Village Company", ar: "شركة نسما لقرية أوكساچون المحدودة" },
     image: "/images/oxagon-new1.png",
     hoverImage: "/images/h-fp.png",
-    logo: "/images/neom-white.png",
-    logoAlt: { en: "NEOM", ar: "نيوم" },
+    logo: "/images/ppp-logos/oxagon.png",
+    logoAlt: { en: "Nesma Oxagon Village Company", ar: "شركة نسما لقرية أوكساچون المحدودة" },
     isVision2030: false,
     value: "21B SAR",
     year: "2023",
@@ -57,8 +57,8 @@ const projects = [
     consortium: { en: "Nesma Coastal CO. LTD.", ar: "شركة نسما الساحلية المحدودة" },
     image: "/images/community-1.png",
     hoverImage: "/images/community-1.png",
-    logo: "/images/neom-white.png",
-    logoAlt: { en: "NEOM", ar: "نيوم" },
+    logo: "/images/ppp-logos/community-1.png",
+    logoAlt: { en: "Nesma Coastal CO. LTD.", ar: "شركة نسما الساحلية المحدودة" },
     isVision2030: false,
     // No value / award year yet — the detail panel shows Client and Location in their place
     showClientLocation: true,
@@ -86,8 +86,8 @@ const projects = [
     consortium: { en: "Nesma Al Aqaba City CO. LTD.", ar: "شركة مدينة نسما العقبة المحدودة" },
     image: "/images/community-2.png",
     hoverImage: "/images/community-2.png",
-    logo: "/images/neom-white.png",
-    logoAlt: { en: "NEOM", ar: "نيوم" },
+    logo: "/images/ppp-logos/community-2.png",
+    logoAlt: { en: "Nesma Al Aqaba City CO. LTD.", ar: "شركة مدينة نسما العقبة المحدودة" },
     isVision2030: false,
     // No value / award year yet — the detail panel shows Client and Location in their place
     showClientLocation: true,
@@ -117,8 +117,8 @@ const projects = [
     consortium: { en: "Dumat Aljandal Wind Company For Energy", ar: "شركة رياح دومة الجندل للطاقة" },
     image: "/images/pr2.png",
     hoverImage: "/images/pr2-hover.png",
-    logo: "/images/fp-3-logo.png",
-    logoAlt: { en: "Principal Buyer", ar: "المشتري الرئيس" },
+    logo: "/images/ppp-logos/dumat-al-jandal.png",
+    logoAlt: { en: "Dumat Aljandal Wind Company For Energy", ar: "شركة رياح دومة الجندل للطاقة" },
     isVision2030: false,
     value: "1.9B SAR",
     year: "2019",
@@ -147,8 +147,8 @@ const projects = [
     consortium: { en: "South Jeddah Noor", ar: "نور جنوب جدة" },
     image: "/images/s-solar.png",
     hoverImage: "/images/fp3-hover.png",
-    logo: "/images/fp-3-logo.png",
-    logoAlt: { en: "Principal Buyer", ar: "المشتري الرئيس" },
+    logo: "/images/ppp-logos/south-jeddah-noor.svg",
+    logoAlt: { en: "South Jeddah Noor", ar: "نور جنوب جدة" },
     isVision2030: false,
     value: "889M SAR",
     year: "2021",
@@ -175,8 +175,8 @@ const projects = [
     consortium: { en: "Yanbu Int' Water Company", ar: "شركة ينبع الدولية للمياه" },
     image: "/images/yanbu-4.png",
     hoverImage: "/images/yanbu-4.png",
-    logo: "/images/fp-4-logo-swpc.png",
-    logoAlt: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
+    logo: "/images/ppp-logos/yanbu-4.png",
+    logoAlt: { en: "Yanbu Int' Water Company", ar: "شركة ينبع الدولية للمياه" },
     isVision2030: false,
     // No value / award year yet — the detail panel shows Client and Location in their place
     showClientLocation: true,
@@ -204,8 +204,8 @@ const projects = [
     consortium: { en: "Al Jubail International Water Company", ar: "شركة الجبيل الدولية للمياه" },
     image: "/images/jubail.png",
     hoverImage: "/images/jubail.png",
-    logo: "/images/fp-4-logo-swpc.png",
-    logoAlt: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
+    logo: "/images/ppp-logos/jubail-3b.png",
+    logoAlt: { en: "Al Jubail International Water Company", ar: "شركة الجبيل الدولية للمياه" },
     isVision2030: false,
     // No value / award year yet — the detail panel shows Client and Location in their place
     showClientLocation: true,
@@ -234,8 +234,8 @@ const projects = [
     consortium: { en: "Stream Water Transmission Co", ar: "شركة ستريم لنقل المياه" },
     image: "/images/fp-4.png",
     hoverImage: "/images/fp-4-hover.png",
-    logo: "/images/fp-4-logo-swpc.png",
-    logoAlt: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
+    logo: "/images/ppp-logos/stream.png",
+    logoAlt: { en: "Stream Water Transmission Co", ar: "شركة ستريم لنقل المياه" },
     isVision2030: false,
     value: "8.5B SAR",
     year: "2025",
@@ -262,7 +262,7 @@ const projects = [
     metaValue: { en: "3.75 Billion SAR", ar: "3.75 مليار ريال" },
     image: "/images/solar.png",
     hoverImage: "/images/fp-5-hover.png",
-    logo: "/images/fp-5-logo.png",
+    logo: "/images/ppp-logos/sana-taibah.png",
     logoAlt: { en: "Sana Taibah", ar: "سنا طيبة" },
     isVision2030: false,
     value: "3.75B SAR",
@@ -291,8 +291,8 @@ const projects = [
     consortium: { en: "Modern Bus Company Limited", ar: "شركة الحافلات الحديثة المحدودة" },
     image: "/images/makkah-new.png",
     hoverImage: "/images/fp-6-hover.png",
-    logo: "/images/fp-6-logo.png",
-    logoAlt: { en: "Royal Commission for Makkah City and Holy Sites", ar: "الهيئة الملكية لمدينة مكة المكرمة والمشاعر المقدسة" },
+    logo: "/images/ppp-logos/modern-bus.png",
+    logoAlt: { en: "Modern Bus Company Limited", ar: "شركة الحافلات الحديثة المحدودة" },
     isVision2030: false,
     value: "3.2B SAR",
     year: "2017",
@@ -377,6 +377,7 @@ function toOffcanvasProject(project: Project): ProjectOffcanvasProject {
     description: { en: project.description.en[0], ar: project.description.ar[0] },
     detail: { en: project.description.en[1], ar: project.description.ar[1] },
     image: project.image,
+    logo: { src: project.logo, alt: project.logoAlt },
     badges: project.isVision2030 ? [project.category, { en: "VISION 2030", ar: "رؤية 2030" }] : [project.category],
     scope: project.scope,
     scopeLabel: project.scopeLabel,
@@ -439,6 +440,8 @@ export function CapabilitiesSection() {
       : language === "ar" ? project.location.ar : project.location.en;
     const client = language === "ar" ? project.client.ar : project.client.en;
     const logoAlt = language === "ar" ? project.logoAlt.ar : project.logoAlt.en;
+    // Cards sit on dark photos, so they use the all-white logo; the "Read more" panel keeps the colour one.
+    const logoWhite = project.logo.replace("/ppp-logos/", "/ppp-logos/text-white/");
     const description = language === "ar" ? project.description.ar : project.description.en;
     const readMore = language === "ar" ? "اقرأ المزيد" : "READ MORE";
     const locationLabel = project.metaValue
@@ -512,10 +515,8 @@ export function CapabilitiesSection() {
 
             {/* Bottom: logo + CTA (default state) */}
             <div dir="ltr" className="flex items-end justify-between transition-opacity duration-300 group-hover:opacity-0">
-              <div className="flex flex-col items-start gap-2">
-                <div className="relative w-[90px] h-[90px]">
-                  <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
-                </div>
+              <div className="relative w-[170px] h-[80px]">
+                <Image quality={95} src={logoWhite} alt={logoAlt} fill sizes="170px" className="object-contain object-left" />
               </div>
 
               <Button variant="secondary" onClick={() => setSelectedProject(toOffcanvasProject(project))}>{readMore}</Button>
@@ -524,8 +525,8 @@ export function CapabilitiesSection() {
 
           {/* Hover panel — description slides up from the bottom */}
           <div dir={dir} className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out delay-150 bg-white/15 backdrop-blur-md p-8 flex flex-col sm:flex-row sm:items-end gap-6 text-white">
-            <div className="relative w-[90px] h-[90px] shrink-0">
-              <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
+            <div className="relative w-[170px] h-[80px] shrink-0">
+              <Image quality={95} src={logoWhite} alt={logoAlt} fill sizes="170px" className="object-contain object-left" />
             </div>
 
             {/* Description clamped to 3 lines — full text is in the "Read more" panel */}
@@ -564,8 +565,8 @@ export function CapabilitiesSection() {
 
               {/* Mobile shows only the logo here — Value / Client / Consortium are in the "Read more" panel */}
               <div dir="ltr" className="flex items-end justify-end">
-                <div className="relative w-[64px] h-[64px] shrink-0">
-                  <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
+                <div className="relative w-[120px] h-[56px] shrink-0">
+                  <Image quality={95} src={logoWhite} alt={logoAlt} fill sizes="120px" className="object-contain object-right" />
                 </div>
               </div>
             </div>

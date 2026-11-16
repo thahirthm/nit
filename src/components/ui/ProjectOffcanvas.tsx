@@ -9,6 +9,8 @@ export interface ProjectOffcanvasProject {
   description: { en: string; ar: string };
   detail?: { en: string; ar: string };
   image: string;
+  /** Optional project/company logo, shown above the title. */
+  logo?: { src: string; alt: { en: string; ar: string } };
   badges: { en: string; ar: string }[];
   /** Plain string, or per-language text when the stat isn't a number (e.g. a client name). */
   value: string | { en: string; ar: string };
@@ -109,6 +111,17 @@ export function ProjectOffcanvas({ project, onClose }: ProjectOffcanvasProps) {
             </div>
 
             <div dir={isAr ? "rtl" : "ltr"} className={`p-6 sm:p-10 ${isAr ? "font-arabic" : "font-[family-name:var(--font-futura)]"}`}>
+              {project.logo && (
+                <div className="relative w-[180px] h-[72px] mb-6">
+                  <Image
+                    src={project.logo.src}
+                    alt={isAr ? project.logo.alt.ar : project.logo.alt.en}
+                    fill
+                    sizes="180px"
+                    className={`object-contain ${isAr ? "object-right" : "object-left"}`}
+                  />
+                </div>
+              )}
               <h3 className="text-[28px] sm:text-[34px] font-extralight tracking-tight text-gray-900">
                 {isAr ? project.title.ar : project.title.en}
               </h3>
