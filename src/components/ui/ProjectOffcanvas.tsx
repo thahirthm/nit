@@ -10,8 +10,11 @@ export interface ProjectOffcanvasProject {
   detail?: { en: string; ar: string };
   image: string;
   badges: { en: string; ar: string }[];
-  value: string;
-  year: string;
+  /** Plain string, or per-language text when the stat isn't a number (e.g. a client name). */
+  value: string | { en: string; ar: string };
+  /** Optional label override for the value stat (default "Value"), e.g. "Client". */
+  valueLabel?: { en: string; ar: string };
+  year: string | { en: string; ar: string };
   /** Optional label override for the year stat (default "Year"), e.g. "Awarded". */
   yearLabel?: { en: string; ar: string };
   scope: { en: string; ar: string };
@@ -48,6 +51,10 @@ export function ProjectOffcanvas({ project, onClose }: ProjectOffcanvasProps) {
   const valueLabel = isAr ? "القيمة" : "VALUE";
   const yearLabel = isAr ? "السنة" : "YEAR";
   const scopeLabel = isAr ? "النطاق" : "SCOPE";
+  const localize = (v: string | { en: string; ar: string }) => (typeof v === "string" ? v : isAr ? v.ar : v.en);
+  // Anek Latin has no Arabic glyphs, so per-language (word) stats use the page font in Arabic.
+  const statFont = (v: string | { en: string; ar: string }) =>
+    typeof v === "string" || !isAr ? "font-[family-name:var(--font-anek-latin)]" : "";
 
   return (
     <div
@@ -105,18 +112,15 @@ export function ProjectOffcanvas({ project, onClose }: ProjectOffcanvasProps) {
               <h3 className="text-[28px] sm:text-[34px] font-extralight tracking-tight text-gray-900">
                 {isAr ? project.title.ar : project.title.en}
               </h3>
-              <p className="mt-3 text-[16px] sm:text-[17px] text-gray-500 font-light leading-relaxed">
-                {isAr ? project.description.ar : project.description.en}
-              </p>
-
-              <div dir="ltr" className="mt-8 grid grid-cols-3 gap-4 pt-6 border-t border-gray-200">
+              {/* Key figures sit right under the title, separated by the divider line */}
+              <div dir="ltr" className="mt-6 grid grid-cols-3 gap-4 pt-6 border-t border-gray-200">
                 <div className={isAr ? "text-right" : "text-left"}>
-                  <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">{valueLabel}</span>
-                  <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">{project.value}</span>
+                  <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">{project.valueLabel ? (isAr ? project.valueLabel.ar : project.valueLabel.en) : valueLabel}</span>
+                  <span className={`${statFont(project.value)} block mt-1 text-[20px] font-normal text-[#2E368F]`}>{localize(project.value)}</span>
                 </div>
                 <div className={isAr ? "text-right" : "text-left"}>
                   <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">{project.yearLabel ? (isAr ? project.yearLabel.ar : project.yearLabel.en) : yearLabel}</span>
-                  <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">{project.year}</span>
+                  <span className={`${statFont(project.year)} block mt-1 text-[20px] font-normal text-[#2E368F]`}>{localize(project.year)}</span>
                 </div>
                 <div className={isAr ? "text-right" : "text-left"}>
                   <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">
@@ -129,6 +133,10 @@ export function ProjectOffcanvas({ project, onClose }: ProjectOffcanvasProps) {
                   </span>
                 </div>
               </div>
+
+              <p className="mt-6 text-[16px] sm:text-[17px] text-gray-500 font-light leading-relaxed">
+                {isAr ? project.description.ar : project.description.en}
+              </p>
 
               {project.detail && (
                 <p className="mt-6 text-[15px] sm:text-[16px] text-gray-600 font-light leading-relaxed">

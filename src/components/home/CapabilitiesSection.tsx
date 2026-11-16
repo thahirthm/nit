@@ -12,21 +12,21 @@ import "swiper/css";
 
 // Tabs above the slider — each project is listed under the tab named in its `tab` field.
 const tabs = [
-  { key: "social", label: { en: "Social Infrastructure", ar: "البنية التحتية الاجتماعية" } },
+  { key: "social", label: { en: "Social Infrastructure", ar: "البنية التحتية المجتمعية" } },
   { key: "renewable", label: { en: "Renewable Energy", ar: "الطاقة المتجددة" } },
   { key: "water", label: { en: "Water & Utilities", ar: "المياه والمرافق" } },
-  { key: "transportation", label: { en: "Transportation", ar: "النقل" } },
+  { key: "transportation", label: { en: "Transportation", ar: "النقل والمواصلات" } },
 ];
 
 const projects = [
   {
     category: { en: "INFRASTRUCTURAL", ar: "البنية التحتية" },
     tab: "social",
-    title: { en: "Oxagon Village", ar: "قرية أوكساغون" },
+    title: { en: "Oxagon Village", ar: "أوكساچون" },
     location: { en: "KSA", ar: "المملكة العربية السعودية" },
     client: { en: "NEOM", ar: "نيوم" },
     metaValue: { en: "21 Billion SAR", ar: "21 مليار ريال" },
-    consortium: { en: "Nesma Oxagon Village Company", ar: "شركة نسما لقرية أوكساغون" },
+    consortium: { en: "Nesma Oxagon Village Company", ar: "شركة نسما لقرية أوكساچون المحدودة" },
     image: "/images/oxagon-new1.png",
     hoverImage: "/images/h-fp.png",
     logo: "/images/neom-white.png",
@@ -35,7 +35,7 @@ const projects = [
     value: "21B SAR",
     year: "2023",
     yearLabel: { en: "Awarded", ar: "سنة الترسية" },
-    scope: { en: "Nesma Oxagon Village Company", ar: "شركة نسما لقرية أوكساغون" },
+    scope: { en: "Nesma Oxagon Village Company", ar: "شركة نسما لقرية أوكساچون المحدودة" },
     scopeLabel: { en: "Consortium", ar: "التحالف" },
     description: {
       en: [
@@ -43,15 +43,73 @@ const projects = [
         "The project integrates schools, healthcare, retail, hospitality, and walkable smart mobility systems, creating a sustainable urban environment that connects directly with Oxagon's industrial and innovation hub.",
       ],
       ar: [
-        "مجتمع سكني متكامل داخل أوكساغون بمدينة نيوم، مصمم لاستيعاب نحو 20,000 نسمة.",
-        "يضم المشروع مدارس ومرافق صحية ومنافذ تجارية وضيافة وأنظمة تنقل ذكية قابلة للمشي، لتشكيل بيئة حضرية مستدامة تتصل مباشرة بمركز أوكساغون الصناعي والابتكاري.",
+        "تأسست \"شركة نسما لقرية أوكساچون المحدودة\" ضمن نموذج الشراكة بين القطاعين العام والخاص (PPP) لتنفيذ مشروع المجتمع السكني الأول في \"نيوم\". يشمل المشروع إنشاء وحدات سكنية ومرافق خدمية بطاقة استيعابية تبلغ 20,000 ساكن، على ثماني مراحل، ويستمر تشغيله حتى ديسمبر 2030، بنظام الدفع القائم على الجاهزية.",
+        "تم توقيع العقود في أكتوبر 2023، وتم الوصول إلى الإغلاق المالي في مايو 2024. وفي عام 2024، صُنّف المشروع كأحد أفضل مشاريع الشراكة بين القطاعين العام والخاص في منطقة الشرق الأوسط وأفريقيا. وعند انتهاء العقد، سيتم إزالة المجمع السكني وإعادة الأرض إلى حالتها الطبيعية.",
+      ],
+    },
+  },
+  {
+    category: { en: "INFRASTRUCTURAL", ar: "البنية التحتية" },
+    tab: "social",
+    title: { en: "NEOM Residential Community 1", ar: "مجمع نيوم السكني 1" },
+    location: { en: "KSA", ar: "المملكة العربية السعودية" },
+    client: { en: "NEOM", ar: "نيوم" },
+    consortium: { en: "Nesma Coastal CO. LTD.", ar: "شركة نسما الساحلية المحدودة" },
+    image: "/images/community-1.png",
+    hoverImage: "/images/community-1.png",
+    logo: "/images/neom-white.png",
+    logoAlt: { en: "NEOM", ar: "نيوم" },
+    isVision2030: false,
+    // No value / award year yet — the detail panel shows Client and Location in their place
+    showClientLocation: true,
+    value: "",
+    year: "",
+    scope: { en: "Nesma Coastal CO. LTD.", ar: "شركة نسما الساحلية المحدودة" },
+    scopeLabel: { en: "Consortium", ar: "التحالف" },
+    description: {
+      en: [
+        "Established as a special purpose company to construct the NEOM Residential Community Project 1, which will build and maintain housing units and support facilities for 10,000 residents. The project will span 5 phases.",
+        "Upon the contract expiry in Dec. 2030, the residential community will be removed, and the area will be returned to NEOM at its natural state.",
+      ],
+      ar: [
+        "تأسست كشركة ذات مسؤولية محدودة لأغراض خاصة لتنفيذ مشروع إنشاء مجمع \"نيوم السكني 1\" بسعة إجمالية تبلغ 10 آلاف ساكن.",
+        "ويمتد على خمس مراحل. وعند انتهاء العقد في ديسمبر 2030، ستتم إزالة المجمع وإعادة المنطقة إلى نيوم في حالتها الطبيعية.",
+      ],
+    },
+  },
+  {
+    category: { en: "INFRASTRUCTURAL", ar: "البنية التحتية" },
+    tab: "social",
+    title: { en: "NEOM Residential Community 2", ar: "مجمع نيوم السكني 2" },
+    location: { en: "KSA", ar: "المملكة العربية السعودية" },
+    client: { en: "NEOM", ar: "نيوم" },
+    consortium: { en: "Nesma Al Aqaba City CO. LTD.", ar: "شركة مدينة نسما العقبة المحدودة" },
+    image: "/images/community-2.png",
+    hoverImage: "/images/community-2.png",
+    logo: "/images/neom-white.png",
+    logoAlt: { en: "NEOM", ar: "نيوم" },
+    isVision2030: false,
+    // No value / award year yet — the detail panel shows Client and Location in their place
+    showClientLocation: true,
+    value: "",
+    year: "",
+    scope: { en: "Nesma Al Aqaba City CO. LTD.", ar: "شركة مدينة نسما العقبة المحدودة" },
+    scopeLabel: { en: "Consortium", ar: "التحالف" },
+    description: {
+      en: [
+        "Established as a special purpose company to construct the NEOM Residential Community Project 2, which will build and maintain housing units and support facilities for 5,000 residents.",
+        "Upon the contract expiry in Dec. 2030, the residential complexes will be removed, and the area will be returned to NEOM at its natural state.",
+      ],
+      ar: [
+        "تأسست كشركة ذات مسؤولية محدودة لأغراض خاصة لتنفيذ مشروع إنشاء مجمع \"نيوم السكني 2\"، بسعة إجمالية تبلغ 5 آلاف ساكن.",
+        "ويمتد على خمس مراحل. وعند انتهاء العقد في ديسمبر 2030، ستتم إزالة المجمعات السكنية وإعادة المنطقة إلى \"نيوم\" في حالتها الطبيعية.",
       ],
     },
   },
   {
     category: { en: "INFRASTRUCTURAL", ar: "البنية التحتية" },
     tab: "renewable",
-    title: { en: "Dumat Al Jandal Wind Farm", ar: "مزرعة رياح دومة الجندل" },
+    title: { en: "Dumat Al Jandal Wind Farm", ar: "دومة الجندل لطاقة الرياح" },
     location: { en: "Dumat Al Jandal", ar: "دومة الجندل" },
     client: { en: "Principal Buyer", ar: "الجهة المالكة الرئيسية" },
     // Shown as "Value" in the card's top meta (Location appears on hover)
@@ -73,15 +131,15 @@ const projects = [
         "The project began commercial operations in the summer of 2022 under a 20-year power purchase agreement with the Saudi Power Procurement Company (SPPC). It supplies power to about 70,000 homes annually and offsets nearly 1 million tonnes of CO₂ emissions each year.",
       ],
       ar: [
-        "أُسّست شركة دومة الجندل للطاقة كشركة ذات غرض خاص من قِبل تحالف يضم نسما ومصدر وEDF Renewables، وطُوّرت وفق نموذج الشراكة بين القطاعين العام والخاص لإنشاء وتشغيل أول محطة لطاقة الرياح البرية في المملكة العربية السعودية بقدرة 400 ميغاواط في منطقة الجوف، وهي الأولى والأكبر من نوعها في المملكة.",
-        "بدأ المشروع التشغيل التجاري في صيف عام 2022 بموجب اتفاقية شراء طاقة مدتها 20 عامًا مع الشركة السعودية لشراء الطاقة. ويزوّد نحو 70,000 منزل بالطاقة سنويًا، ويخفض قرابة مليون طن من انبعاثات ثاني أكسيد الكربون كل عام.",
+        "تأسست \"شركة دومة الجندل للطاقة\" لتطوير أول مشروع لطاقة الرياح البرية في المملكة، وذلك ضمن نموذج الشراكة بين القطاعين العام والخاص، من خلال تحالف يضم \"نسما\"، \"مصدر\"، و\"إي دي إف رينوبلز\". يقع المشروع في منطقة الجوف، وتبلغ قدرته الإنتاجية 400 ميجاواط، ليكون المشروع الأول والأكبر من نوعه في المملكة.",
+        "بدأ التشغيل التجاري في صيف عام 2022 بموجب اتفاقية شراء طاقة لمدة 20 عامًا مع الشركة السعودية لشراء الطاقة. ويُسهم المشروع في تزويد نحو 70,000 منزل بالكهرباء سنويًا، كما يُسهم في خفض ما يقارب مليون طن من انبعاثات ثاني أكسيد الكربون سنويًا.",
       ],
     },
   },
   {
     category: { en: "INFRASTRUCTURAL", ar: "البنية التحتية" },
     tab: "renewable",
-    title: { en: "South Jeddah Solar", ar: "جنوب جدة للطاقة الشمسية" },
+    title: { en: "South Jeddah Solar", ar: "محطة جنوب جدة الكهروضوئية للطاقة" },
     location: { en: "Jeddah", ar: "جدة" },
     client: { en: "Principal Buyer", ar: "الجهة المالكة الرئيسية" },
     // Shown as "Value" in the card's top meta (instead of Location)
@@ -103,15 +161,73 @@ const projects = [
         "The project reached the whole commercial operation in the summer of 2023 and operates under a 25-year Power Purchase Agreement with the Saudi Power Procurement Company (SPPC). It powers around 45,000 homes annually and offsets approximately 400,000 tonnes of CO₂ emissions.",
       ],
       ar: [
-        "أُسّس مشروع جدة للطاقة الشمسية كشركة ذات غرض خاص من قِبل تحالف يضم نسما ومصدر وEDF Renewables، وطُوّر وفق نموذج الشراكة بين القطاعين العام والخاص لإنشاء وتمويل وتشغيل محطة طاقة شمسية كهروضوئية بقدرة 300 ميغاواط تقع جنوب جدة.",
-        "بلغ المشروع التشغيل التجاري الكامل في صيف عام 2023، ويعمل بموجب اتفاقية شراء طاقة مدتها 25 عامًا مع الشركة السعودية لشراء الطاقة. ويزوّد نحو 45,000 منزل بالطاقة سنويًا، ويخفض قرابة 400,000 طن من انبعاثات ثاني أكسيد الكربون.",
+        "تأسست شركة \"نور جنوب جدة\" لتطوير محطة طاقة شمسية كهروضوئية بقدرة 300 ميجاواط، وذلك ضمن نموذج الشراكة بين القطاعين العام والخاص، من خلال تحالف يضم \"نسما\"، \"مصدر\"، و\"إي دي إف رينوبلز\".",
+        "تقع المحطة جنوب مدينة جدة، وقد وصلت إلى التشغيل التجاري الكامل في صيف عام 2023، وتعمل بموجب اتفاقية شراء طاقة لمدة 25 عامًا مع الشركة السعودية لشراء الطاقة. توفر المحطة الكهرباء لنحو 45,000 منزل بالكهرباء سنويًا، وتُسهم في خفض ما يقارب 400,000 طن من انبعاثات ثاني أكسيد الكربون، دعمًا لأهداف المملكة في الطاقة النظيفة.",
       ],
     },
   },
   {
     category: { en: "INFRASTRUCTURAL", ar: "البنية التحتية" },
     tab: "water",
-    title: { en: "Jubail-Buraydah IWTP", ar: "خط نقل المياه المستقل بين الجبيل وبريدة" },
+    title: { en: "Yanbu 4 Independent Water", ar: "ينبع 4 لتحلية المياه" },
+    location: { en: "Al Rais, Al Madinah", ar: "الرايس، المدينة المنورة" },
+    client: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
+    consortium: { en: "Yanbu Int' Water Company", ar: "شركة ينبع الدولية للمياه" },
+    image: "/images/yanbu-4.png",
+    hoverImage: "/images/yanbu-4.png",
+    logo: "/images/fp-4-logo-swpc.png",
+    logoAlt: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
+    isVision2030: false,
+    // No value / award year yet — the detail panel shows Client and Location in their place
+    showClientLocation: true,
+    value: "",
+    year: "",
+    scope: { en: "Yanbu Int' Water Company", ar: "شركة ينبع الدولية للمياه" },
+    scopeLabel: { en: "Consortium", ar: "التحالف" },
+    description: {
+      en: [
+        "Established as a special purpose company following the formation of a consortium between Engie, Nesma, and Mowah, Yanbu 4 was developed to construct and operate a seawater desalination plant in Al Rais, Al Madinah, under the public-private partnership (PPP) model.",
+        "The plant has a daily capacity of 450,000 m³, a 42 km transmission pipeline, and an 11 MWp solar power facility. It supplies potable water to Makkah and Madinah, serving up to 3 million people. The project reached financial close in March 2021 and began commercial operations in May 2023 under a 25-year Water Purchase Agreement.",
+      ],
+      ar: [
+        "تأسست شركة ينبع الدولية للمياه لتطوير مشروع \"ينبع 4\" لتحلية المياه، بعد تشكيل تحالف يضم \"إنجي\"، \"نسما\"، و\"موه\"، وذلك ضمن نموذج الشراكة بين القطاعين العام والخاص (PPP).",
+        "يشمل المشروع إنشاء وتشغيل محطة لتحلية مياه البحر في منطقة الرايس بالمدينة المنورة، بسعة إنتاجية تبلغ 450,000 متر مكعب يوميًا، بالإضافة إلى محطة طاقة شمسية بقدرة 11 ميجاواط، وخط نقل بطول 42 كيلومترًا. يُسهم المشروع في تزويد نحو 3 ملايين نسمة بالمياه، وقد حقق الإغلاق المالي في مارس 2021، وبدأ التشغيل التجاري في مايو 2023، بموجب اتفاقية شراء مياه لمدة 25 عامًا.",
+      ],
+    },
+  },
+  {
+    category: { en: "INFRASTRUCTURAL", ar: "البنية التحتية" },
+    tab: "water",
+    title: { en: "Jubail 3B Independent Water", ar: "الجبيل 3B لتحلية المياه" },
+    location: { en: "Jubail", ar: "الجبيل" },
+    client: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
+    consortium: { en: "Al Jubail International Water Company", ar: "شركة الجبيل الدولية للمياه" },
+    image: "/images/jubail.png",
+    hoverImage: "/images/jubail.png",
+    logo: "/images/fp-4-logo-swpc.png",
+    logoAlt: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
+    isVision2030: false,
+    // No value / award year yet — the detail panel shows Client and Location in their place
+    showClientLocation: true,
+    value: "",
+    year: "",
+    scope: { en: "Al Jubail International Water Company", ar: "شركة الجبيل الدولية للمياه" },
+    scopeLabel: { en: "Consortium", ar: "التحالف" },
+    description: {
+      en: [
+        "Established as a special purpose company to develop the Jubail 3B Independent Water Project, following a consortium of Engie, Nesma, and Al Ajlan & Bros, the project was implemented under the public-private partnership (PPP) model. It involves constructing and operating a reverse osmosis desalination plant in Jubail with a capacity of 570,000 m³ per day.",
+        "The project includes a 61 MWp solar facility—the largest for a desalination plant in the Kingdom, along with transmission lines and a substation. It serves 2 million people in Riyadh and Qassim. Financial close was reached in June 2022, and the plant began operations in March 2024 under a 25-year Water Purchase Agreement.",
+      ],
+      ar: [
+        "تأسست شركة الجبيل الدولية للمياه لتطوير مشروع الجبيل 3B لتحلية المياه المستقلة ضمن نموذج الشراكة بين القطاعين العام والخاص (PPP)، بعد تشكيل تحالف يضم \"إنجي\"، \"نسما\"، و\"مجموعة العجلان وإخوانه\". يشمل المشروع إنشاء وتشغيل محطة تحلية بتقنية التناضح العكسي في مدينة الجبيل، بسعة إنتاجية تبلغ 570,000 متر مكعب يوميًا.",
+        "ويضم المشروع محطة طاقة شمسية تبلغ قدرتها 61 ميجاواط، وخطوط نقل، ومحطة تحويل كهربائية. يخدم المشروع نحو مليوني نسمة في منطقتي الرياض والقصيم، وقد حقق الإغلاق المالي في يونيو 2022، وبدأ التشغيل التجاري في مارس 2024، بموجب اتفاقية شراء مياه لمدة 25 عامًا مع الشركة السعودية لشراكات المياه.",
+      ],
+    },
+  },
+  {
+    category: { en: "INFRASTRUCTURAL", ar: "البنية التحتية" },
+    tab: "water",
+    title: { en: "Jubail-Buraydah IWTP", ar: "خط أنابيب نقل المياه المستقل الجبيل-بريدة" },
     location: { en: "Jubail & Al-Qassim", ar: "الجبيل والقصيم" },
     client: { en: "Saudi Water Partnership Company", ar: "الشركة السعودية لشراكات المياه" },
     metaValue: { en: "8.5 Billion SAR", ar: "8.5 مليار ريال" },
@@ -132,8 +248,8 @@ const projects = [
         "The project covers the design, financing, construction, operation, and transfer (BOOT model), providing the first large-scale private-sector potable water transmission link.",
       ],
       ar: [
-        "خط أنابيب نقل المياه المستقل بين الجبيل وبريدة هو خط ثنائي الاتجاه بطول 587 كم، بطاقة نقل تبلغ 650,000 م³/يوم ومرافق تخزين تبلغ نحو 1.63 مليون م³ في الجبيل والقصيم.",
-        "يشمل المشروع التصميم والتمويل والإنشاء والتشغيل ونقل الملكية (نموذج BOOT)، ليكون أول رابط واسع النطاق لنقل مياه الشرب ينفّذه القطاع الخاص.",
+        "أحد أكبر مشاريع نقل المياه في المملكة، لنقل المياه المحلاة من الجبيل إلى القصيم عبر خط أنابيب بطول 587 كم وبطاقة 650,000 م³ يوميًا. يتم تطوير المشروع وفق نظام BOOT من قبل شركة الجميح للطاقة والمياه، ونسما، وبُحُر للاستثمار.",
+        "وقد حقق المشروع الإغلاق المالي في أكتوبر 2025. ومن المقرر أن يبدأ التشغيل التجاري في الربع الثاني من عام 2029، مع خاصية الضخ العكسي لتعزيز الكفاءة ودعم النمو الاقتصادي في منطقة القصيم.",
       ],
     },
   },
@@ -160,8 +276,8 @@ const projects = [
         "It will operate under a 25-year Power Purchase Agreement with SPPC, supplying electricity to 190,000 homes annually and offsetting 1.8 million tonnes of CO₂ emissions, contributing to Saudi Arabia's renewable energy targets under Vision 2030.",
       ],
       ar: [
-        "أُسّست شركة ذات غرض خاص لتطوير محطة الحناكية للطاقة الشمسية الكهروضوئية، بعد تشكيل تحالف يضم نسما ومصدر وEDF Renewables، ويُنفَّذ المشروع وفق نموذج الشراكة بين القطاعين العام والخاص. وتقع المحطة في منطقة المدينة المنورة بقدرة 1.1 جيجاواط، وهي قيد الإنشاء حاليًا، وتُعد من أكبر المشاريع من نوعها في المنطقة.",
-        "ستعمل المحطة بموجب اتفاقية شراء طاقة مدتها 25 عامًا مع الشركة السعودية لشراء الطاقة، لتزوّد 190,000 منزل بالكهرباء سنويًا وتخفض 1.8 مليون طن من انبعاثات ثاني أكسيد الكربون، بما يسهم في تحقيق مستهدفات المملكة للطاقة المتجددة ضمن رؤية 2030.",
+        "تأسست \"شركة سَنا طَيْبَة\" لتطوير محطة \"الحناكية\" للطاقة الشمسية الكهروضوئية بقدرة 1.1 جيجاواط، وذلك ضمن نموذج الشراكة بين القطاعين العام والخاص (PPP) من خلال تحالف يضم \"نسما\"، \"مصدر\"، و\"إي دي إف رينوبلز\". تقع المحطة في منطقة المدينة المنورة، وتُعد من أكبر المشاريع من نوعها في المنطقة.",
+        "المشروع قيد الإنشاء حاليًا، ويعمل بموجب اتفاقية شراء طاقة لمدة 25 عامًا مع الشركة السعودية لشراء الطاقة. ومن المتوقع أن يُسهم في تزويد نحو 190,000 منزل بالكهرباء سنويًا، وتقليل ما يصل إلى 1.8 مليون طن من انبعاثات ثاني أكسيد الكربون، دعمًا لرؤية المملكة 2030.",
       ],
     },
   },
@@ -189,8 +305,8 @@ const projects = [
         "The company was awarded the contract for the design, procurement, and operation of public buses in the Holy City of Makkah.",
       ],
       ar: [
-        "أُسّست شركة ذات غرض خاص لتشغيل برنامج النقل العام في مكة المكرمة، بعد تشكيل تحالف سعودي إسباني يضم شركة نسما المحدودة ومجموعة المغربي، والشركاء الإسبان إيماثيا وكونسلترانس وTCC.",
-        "وقد فازت الشركة بعقد تصميم وتوريد وتشغيل الحافلات العامة في مكة المكرمة.",
+        "تأسست كشركة ذات غرض خاص لتنفيذ عمليات برنامج النقل العام في مكة المكرمة، بعد تشكيل ائتلاف سعودي-إسباني يضم شركة نسما المحدودة، مجموعة المغربي، والشركاء الإسبان: شركة إماثيا، كونسلت ترانس، وترانسبورتس سيوتات كوميتال (TCC).",
+        "وقد فازت على عقد تصميم وشراء وتشغيل الحافلات في مدينة مكة المكرمة.",
       ],
     },
   },
@@ -249,6 +365,7 @@ type Project = (typeof projects)[number] & {
   tab?: string;
   // When set, the card's meta shows Value, Client and Consortium (no Location)
   consortium?: { en: string; ar: string };
+  showClientLocation?: boolean;
   metaValue?: { en: string; ar: string };
   yearLabel?: { en: string; ar: string };
   scopeLabel?: { en: string; ar: string };
@@ -261,11 +378,16 @@ function toOffcanvasProject(project: Project): ProjectOffcanvasProject {
     detail: { en: project.description.en[1], ar: project.description.ar[1] },
     image: project.image,
     badges: project.isVision2030 ? [project.category, { en: "VISION 2030", ar: "رؤية 2030" }] : [project.category],
-    value: project.value,
-    year: project.year,
-    yearLabel: project.yearLabel,
     scope: project.scope,
     scopeLabel: project.scopeLabel,
+    ...(project.showClientLocation
+      ? {
+          value: project.client,
+          valueLabel: { en: "Client", ar: "العميل" },
+          year: project.location,
+          yearLabel: { en: "Location", ar: "الموقع" },
+        }
+      : { value: project.value, year: project.year, yearLabel: project.yearLabel }),
   };
 }
 
