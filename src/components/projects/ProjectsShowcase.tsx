@@ -53,7 +53,7 @@ export function ProjectsShowcase() {
   const sectorChips = tabChips[activeTab];
   const projects = (sectorChips.find((chip) => chip.key === activeChip) ?? sectorChips[0]).projects;
 
-  const renderCard = (project: ProjectOffcanvasProject) => (
+  const renderCard = (project: ProjectCategory["projects"][number]) => (
     // The whole card opens the details panel, not just the READ MORE button.
     <div
       role="button"

@@ -562,19 +562,8 @@ export function CapabilitiesSection() {
                 </h3>
               </div>
 
-              <div dir="ltr" className="flex items-end justify-between gap-4">
-                <div dir={dir} className={`grid ${consortium ? "grid-cols-[100px_auto]" : "grid-cols-[80px_auto]"} gap-y-2 text-xs font-medium tracking-wider uppercase`}>
-                  <span className="opacity-70">{locationLabel}</span>
-                  <span>{location}</span>
-                  <span className="opacity-70">{clientLabel}</span>
-                  <span>{client}</span>
-                  {consortium && (
-                    <>
-                      <span className="opacity-70">{consortiumLabel}</span>
-                      <span>{consortium}</span>
-                    </>
-                  )}
-                </div>
+              {/* Mobile shows only the logo here — Value / Client / Consortium are in the "Read more" panel */}
+              <div dir="ltr" className="flex items-end justify-end">
                 <div className="relative w-[64px] h-[64px] shrink-0">
                   <Image quality={95} src={project.logo} alt={logoAlt} fill className="object-contain" />
                 </div>

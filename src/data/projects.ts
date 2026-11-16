@@ -3,7 +3,9 @@ import type { ProjectOffcanvasProject } from "@/components/ui/ProjectOffcanvas";
 // Project listings shared by the Projects page showcase and the Infrastructure / Technology
 // solutions pages, so each project is maintained in one place.
 
-type Project = ProjectOffcanvasProject;
+// Value and year are always plain strings here (the cards render them directly); the offcanvas
+// type also allows per-language text for those fields, which only the home section uses.
+type Project = Omit<ProjectOffcanvasProject, "value" | "year"> & { value: string; year: string };
 
 const badgeOngoing = { en: "ONGOING", ar: "قيد التنفيذ" };
 const badgeCompleted = { en: "COMPLETED", ar: "مكتمل" };
