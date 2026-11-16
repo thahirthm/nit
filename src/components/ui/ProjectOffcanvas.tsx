@@ -112,23 +112,24 @@ export function ProjectOffcanvas({ project, onClose }: ProjectOffcanvasProps) {
               <h3 className="text-[28px] sm:text-[34px] font-extralight tracking-tight text-gray-900">
                 {isAr ? project.title.ar : project.title.en}
               </h3>
-              {/* Key figures sit right under the title, separated by the divider line */}
-              <div dir="ltr" className="mt-6 grid grid-cols-3 gap-4 pt-6 border-t border-gray-200">
-                <div className={isAr ? "text-right" : "text-left"}>
-                  <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">{project.valueLabel ? (isAr ? project.valueLabel.ar : project.valueLabel.en) : valueLabel}</span>
-                  <span className={`${statFont(project.value)} block mt-1 text-[20px] font-normal text-[#2E368F]`}>{localize(project.value)}</span>
+              {/* Key figures sit right under the title, separated by the divider line.
+                  Phones: three rows (label beside value). sm+: three columns. */}
+              <div dir="ltr" className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-y-3 sm:gap-4 pt-6 border-t border-gray-200">
+                <div dir={isAr ? "rtl" : "ltr"} className="flex items-baseline gap-4 sm:block">
+                  <span className="block w-[90px] shrink-0 sm:w-auto text-[11px] font-medium tracking-wider uppercase text-gray-400">{project.valueLabel ? (isAr ? project.valueLabel.ar : project.valueLabel.en) : valueLabel}</span>
+                  <span className={`${statFont(project.value)} block sm:mt-1 text-[16px] sm:text-[20px] leading-snug font-normal text-[#2E368F]`}>{localize(project.value)}</span>
                 </div>
-                <div className={isAr ? "text-right" : "text-left"}>
-                  <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">{project.yearLabel ? (isAr ? project.yearLabel.ar : project.yearLabel.en) : yearLabel}</span>
-                  <span className={`${statFont(project.year)} block mt-1 text-[20px] font-normal text-[#2E368F]`}>{localize(project.year)}</span>
+                <div dir={isAr ? "rtl" : "ltr"} className="flex items-baseline gap-4 sm:block">
+                  <span className="block w-[90px] shrink-0 sm:w-auto text-[11px] font-medium tracking-wider uppercase text-gray-400">{project.yearLabel ? (isAr ? project.yearLabel.ar : project.yearLabel.en) : yearLabel}</span>
+                  <span className={`${statFont(project.year)} block sm:mt-1 text-[16px] sm:text-[20px] leading-snug font-normal text-[#2E368F]`}>{localize(project.year)}</span>
                 </div>
-                <div className={isAr ? "text-right" : "text-left"}>
-                  <span className="block text-[11px] font-medium tracking-wider uppercase text-gray-400">
+                <div dir={isAr ? "rtl" : "ltr"} className="flex items-baseline gap-4 sm:block">
+                  <span className="block w-[90px] shrink-0 sm:w-auto text-[11px] font-medium tracking-wider uppercase text-gray-400">
                     {project.completion
                       ? isAr ? "موعد الإنجاز" : "COMPLETION ON"
                       : project.scopeLabel ? (isAr ? project.scopeLabel.ar : project.scopeLabel.en) : scopeLabel}
                   </span>
-                  <span className="font-[family-name:var(--font-anek-latin)] block mt-1 text-[20px] font-normal text-[#2E368F]">
+                  <span className={`${statFont(project.completion ?? project.scope)} block sm:mt-1 text-[16px] sm:text-[20px] leading-snug font-normal text-[#2E368F]`}>
                     {project.completion ?? (isAr ? project.scope.ar : project.scope.en)}
                   </span>
                 </div>
