@@ -63,7 +63,7 @@ export function Header() {
     { name: { en: 'ABOUT', ar: 'من نحن' }, href: '/about', hasDropdown: true, key: 'about' },
     { name: { en: 'SOLUTIONS', ar: 'الحلول' }, href: '/solutions', hasDropdown: true, key: 'solutions' },
     { name: { en: 'PROJECTS', ar: 'المشاريع' }, href: '/projects' },
-    { name: { en: 'INVESTORS', ar: 'المستثمرون' }, href: '/investors' },
+    // { name: { en: 'INVESTORS', ar: 'المستثمرون' }, href: '/investors' },
     { name: { en: 'MEDIA CENTRE', ar: 'المركز الإعلامي' }, href: '/media' },
     { name: { en: 'CAREERS', ar: 'الوظائف' }, href: '/careers' },
     { name: { en: 'CONTACT', ar: 'تواصل معنا' }, href: '/contact' },

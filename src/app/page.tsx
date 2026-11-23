@@ -47,9 +47,9 @@ export default async function Home() {
       */}
 
       {/* Fifth Section: Nesma Group Capabilities — tabbed projects */}
-      <Reveal>
+      {/* <Reveal>
         <CapabilitiesSection />
-      </Reveal>
+      </Reveal> */}
 
       {/* Sixth Section: Trusted by Leading Organizations */}
       <Reveal>
