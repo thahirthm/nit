@@ -48,7 +48,7 @@ const navLinks = [
   { en: "ABOUT", ar: "من نحن", href: "/about" },
   { en: "SOLUTIONS", ar: "الحلول", href: "/solutions" },
   { en: "PROJECTS", ar: "المشاريع", href: "/projects" },
-  { en: "INVESTORS", ar: "المستثمرون", href: "/investors" },
+  // { en: "INVESTORS", ar: "المستثمرون", href: "/investors" },
   { en: "MEDIA CENTRE", ar: "المركز الإعلامي", href: "/media" },
   { en: "CAREERS", ar: "الوظائف", href: "/careers" },
   { en: "CONTACT", ar: "تواصل معنا", href: "/contact" },
