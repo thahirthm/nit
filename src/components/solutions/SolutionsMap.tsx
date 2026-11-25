@@ -198,7 +198,7 @@ export function SolutionsMap() {
 
         {/* Info panel */}
         <Reveal delay={0.12} duration={0.8} y={30} className="bg-[#F5F5F5] p-8 sm:p-10 flex flex-col">
-          <h3 className="text-gray-900 text-[20px] sm:text-[24px] font-extralight tracking-tight whitespace-nowrap mb-8 lg:mb-10">
+          <h3 className="text-gray-900 text-[20px] sm:text-[20px] font-extralight tracking-tight whitespace-nowrap mb-8 lg:mb-10">
             {focusedRegion
               ? isAr
                 ? `المشاريع في المنطقة ${focusedRegion.name.ar}`
