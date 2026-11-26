@@ -44,6 +44,15 @@ const futura = localFont({
 // Each page sets its own title/description; the template adds the brand suffix
 // (e.g. "Infrastructure Solutions | NIT"). The default is used by any route without one.
 export const metadata: Metadata = {
+  // Makes the share image (src/app/opengraph-image.png) an absolute URL for WhatsApp/LinkedIn/etc.
+  metadataBase: new URL("https://nesmainfrastructure.com"),
+  openGraph: {
+    type: "website",
+    siteName: "Nesma Infrastructure & Technology",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
   title: {
     template: "%s | NIT",
     default: "Nesma Infrastructure & Technology (NIT)",
