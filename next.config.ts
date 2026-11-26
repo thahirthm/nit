@@ -15,7 +15,20 @@ const nextConfig: NextConfig = {
     // so any <Image quality={...}> prop outside this list gets rejected by the optimizer.
     qualities: [75, 90, 95, 100],
     // Blog images uploaded through the NIT admin panel.
-    remotePatterns: [{ protocol: "https", hostname: "nit-admin.zakhf.com", pathname: "/media/**" }],
+    // remotePatterns: [{ protocol: "https", hostname: "nit-admin.zakhf.com", pathname: "/media/**" }],
+    remotePatterns: [
+    {
+      protocol: "https",
+      hostname: "nit-admin.zakhf.com",
+      pathname: "/media/**",
+    },
+    {
+      protocol: "https",
+      hostname: "admin.nesmainfrastructure.com",
+      pathname: "/media/**",
+    },
+  ],
+
   },
 };
 

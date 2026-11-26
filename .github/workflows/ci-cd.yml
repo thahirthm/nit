@@ -1,0 +1,75 @@
+name: CI / CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Lint & build
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API_URL: https://admin.nesmainfrastructure.com/api
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      # Lint is reported but does not block deploys yet (existing errors in the codebase).
+      - name: Lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Build
+        run: npm run build
+
+  deploy:
+    name: Deploy to production
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ vars.PRODUCTION_URL || 'https://nesmainfrastructure.com' }}
+    steps:
+      - name: Validate SSH key
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
+          HOST: ${{ secrets.HOST }}
+        run: |
+          [ -n "$SSH_KEY" ] && [ -n "$SSH_HOST_KEY" ] && [ -n "$HOST" ] || { echo "Missing HOST / SSH_KEY / SSH_HOST_KEY secret"; exit 1; }
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
+          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null
+          echo "$HOST $SSH_HOST_KEY" > ~/.ssh/known_hosts
+
+      - name: Deploy over SSH
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+        run: |
+          # The key is restricted on the server to running deploy.sh only.
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o ServerAliveInterval=30 "${USERNAME:-nesma}@$HOST"
+
+      - name: Smoke test
+        run: |
+          url="${{ vars.PRODUCTION_URL || 'https://nesmainfrastructure.com' }}"
+          for i in 1 2 3 4 5; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$url/") && [ "$code" = 200 ] && { echo "$url -> 200"; exit 0; }
+            sleep 5
+          done
+          echo "$url returned $code"; exit 1

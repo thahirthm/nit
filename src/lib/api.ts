@@ -1,7 +1,9 @@
 import type { Language } from "@/context/LanguageContext";
 
 // Backend: NIT admin API (Django). See NIT_API_Integration_Guide.pdf.
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://nit-admin.zakhf.com/api";
+// export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://nit-admin.zakhf.com/api";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://admin.nesmainfrastructure.com/api";
+
 
 /* ---------------------------------- Types --------------------------------- */
 
