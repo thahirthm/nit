@@ -31,10 +31,42 @@ export function BackgroundVideo({
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  // The video file is only attached once it's useful, so it doesn't compete with the page's first
+  // paint: the hero (priority) video after the page has loaded, others when they're near the viewport.
+  // The poster covers it until it plays, so nothing looks different.
+  const [load, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (priority) {
+      if (document.readyState === "complete") {
+        setLoad(true);
+        return;
+      }
+      const onLoad = () => setLoad(true);
+      window.addEventListener("load", onLoad, { once: true });
+      return () => window.removeEventListener("load", onLoad);
+    }
+    const video = ref.current;
+    if (!video || typeof IntersectionObserver === "undefined") {
+      setLoad(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setLoad(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+    io.observe(video);
+    return () => io.disconnect();
+  }, [priority]);
 
   useEffect(() => {
     const video = ref.current;
-    if (!video) return;
+    if (!video || !load) return;
 
     video.muted = true;
     video.defaultMuted = true;
@@ -58,7 +90,7 @@ export function BackgroundVideo({
       removeRetry();
       video.removeEventListener("playing", onPlaying);
     };
-  }, []);
+  }, [load]);
 
   return (
     <>
@@ -74,7 +106,7 @@ export function BackgroundVideo({
       />
       <video
         ref={ref}
-        src={src}
+        src={load ? src : undefined}
         autoPlay
         muted
         loop

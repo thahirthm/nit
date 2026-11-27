@@ -6,14 +6,17 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
 
+// Geist is only a fallback (body text uses Arial/Futura/Anek), so don't preload it.
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  preload: false,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
 });
 
 const anekLatin = Anek_Latin({
@@ -26,17 +29,19 @@ const notoKufiArabic = Noto_Kufi_Arabic({
   variable: "--font-arabic",
   subsets: ["arabic"],
   weight: ["300", "400", "500", "600", "700"],
+  // Only needed in Arabic mode; loaded on demand instead of on every English page view.
+  preload: false,
 });
 
 const futura = localFont({
   src: [
-    { path: "../../public/fonts/fonnts.com-Futura_PT_Light.otf", weight: "300", style: "normal" },
-    { path: "../../public/fonts/fonnts.com-Futura_PT_Book.otf", weight: "400", style: "normal" },
-    { path: "../../public/fonts/fonnts.com-Futura_PT_Medium.otf", weight: "500", style: "normal" },
-    { path: "../../public/fonts/fonnts.com-Futura_PT_Demi.otf", weight: "600", style: "normal" },
-    { path: "../../public/fonts/fonnts.com-Futura_PT_Bold.otf", weight: "700", style: "normal" },
-    { path: "../../public/fonts/fonnts.com-Futura_PT_Heavy.otf", weight: "800", style: "normal" },
-    { path: "../../public/fonts/fonnts.com-Futura_PT_Extra_Bold.otf", weight: "900", style: "normal" },
+    { path: "../../public/fonts/Futura_PT_Light.woff2", weight: "300", style: "normal" },
+    { path: "../../public/fonts/Futura_PT_Book.woff2", weight: "400", style: "normal" },
+    { path: "../../public/fonts/Futura_PT_Medium.woff2", weight: "500", style: "normal" },
+    { path: "../../public/fonts/Futura_PT_Demi.woff2", weight: "600", style: "normal" },
+    { path: "../../public/fonts/Futura_PT_Bold.woff2", weight: "700", style: "normal" },
+    { path: "../../public/fonts/Futura_PT_Heavy.woff2", weight: "800", style: "normal" },
+    { path: "../../public/fonts/Futura_PT_Extra_Bold.woff2", weight: "900", style: "normal" },
   ],
   variable: "--font-futura",
 });
